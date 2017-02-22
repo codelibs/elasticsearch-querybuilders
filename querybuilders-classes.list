@@ -1,0 +1,41 @@
+org.elasticsearch.Build
+org.elasticsearch.ElasticsearchException
+org.elasticsearch.ExceptionsHelper
+org.elasticsearch.ElasticsearchParseException
+org.elasticsearch.ElasticsearchWrapperException
+org.elasticsearch.Version
+
+# index
+org.elasticsearch.index.query
+org.elasticsearch.index.mapper
+
+# action
+org.elasticsearch.action.ShardOperationFailedException
+org.elasticsearch.action.support.ToXContentToBytes
+
+# client
+org.elasticsearch.client.Requests
+
+# common
+org.elasticsearch.common.ParsingException
+org.elasticsearch.common.ParseField
+org.elasticsearch.common.ParseFieldMatcherSupplier
+org.elasticsearch.common.ParseFieldMatcher
+org.elasticsearch.common.Nullable
+org.elasticsearch.common.Strings
+org.elasticsearch.common.breaker
+org.elasticsearch.common.bytes
+org.elasticsearch.common.geo
+org.elasticsearch.common.regex
+org.elasticsearch.common.io
+org.elasticsearch.common.lease
+org.elasticsearch.common.logging
+org.elasticsearch.common.lucene
+org.elasticsearch.common.settings
+org.elasticsearch.common.text
+org.elasticsearch.common.unit
+org.elasticsearch.common.util
+org.elasticsearch.common.xcontent
+
+# rest
+org.elasticsearch.rest.RestStatus

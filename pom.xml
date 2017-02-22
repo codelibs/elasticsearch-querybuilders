@@ -75,7 +75,7 @@
             <configuration>
               <artifactSet>
                 <includes>
-                  <include>org.codelibs:querybuilders</include>
+                  <include>org.codelibs:*</include>
                 </includes>
               </artifactSet>
               <relocations>
@@ -99,9 +99,10 @@
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>org.codelibs</groupId>
-      <artifactId>querybuilders</artifactId>
+      <groupId>org.elasticsearch</groupId>
+      <artifactId>elasticsearch</artifactId>
       <version>5.2.1</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -178,6 +179,16 @@
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-spatial</artifactId>
       <version>6.4.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.locationtech.spatial4j</groupId>
+      <artifactId>spatial4j</artifactId>
+      <version>0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>com.vividsolutions</groupId>
+      <artifactId>jts</artifactId>
+      <version>1.13</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

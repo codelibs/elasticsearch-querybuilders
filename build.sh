@@ -5,89 +5,90 @@ export LC_ALL=en_US.UTF-8
 
 VERSION=5.2.1
 
-BASE_DIR=`pwd`
 ES_DIR=elasticsearch-${VERSION}
-ES_BINARY_URL=https://artifacts.elastic.co/downloads/elasticsearch/${ES_DIR}.zip
 ES_SOURCE_URL=https://github.com/elastic/elasticsearch/archive/v${VERSION}.zip
-
-ARCHIVE_NAME=querybuilders-${VERSION}.jar
-
-LIB_DIR=lib
 WORK_DIR=work
-CLASSES_DIR=$WORK_DIR/classes
-ES_CLASSES_DIR=$WORK_DIR/es_classes
+SOURCE_DIR=src/main/java
+ES_SOURCE_DIR=$WORK_DIR/$ES_DIR/core/src/main/java
 
-rm -r $WORK_DIR
-rm -r $LIB_DIR
-mkdir -p $LIB_DIR
+ORIG_PACKAGE="org.elasticsearch"
+DST_PACKAGE="org.codelibs.elasticsearch"
+ORIG_DIR=`echo $ORIG_PACKAGE | sed -e s#\\\\.#/#g`
+DST_DIR=`echo $DST_PACKAGE | sed -e s#\\\\.#/#g`
+
+rm -r $SOURCE_DIR
 mkdir -p $WORK_DIR
-mkdir -p $CLASSES_DIR
-mkdir -p $ES_CLASSES_DIR
+mkdir -p $SOURCE_DIR
 
 # Download zip
-if [ ! -f ${ES_DIR}.zip ] ; then
-  wget $ES_BINARY_URL
+if [ ! -f v${VERSION}.zip ] ; then
+  wget $ES_SOURCE_URL
+fi
+if [ ! -d $WORK_DIR/$ES_DIR ] ; then
+  unzip -d $WORK_DIR v${VERSION}.zip
 fi
 
-unzip -d $WORK_DIR ${ES_DIR}.zip
-unzip -d $ES_CLASSES_DIR $WORK_DIR/${ES_DIR}/lib/$ES_DIR.jar
 
+COPY_LIST=`cat querybuilders-classes.list`
 
-########## Start: extract querybuilders classes ############################################################
+PRE_IFS=$IFS
+IFS=$'\n'
 
-mkdir -p $CLASSES_DIR/org/elasticsearch
-cp $ES_CLASSES_DIR/org/elasticsearch/ElasticsearchException.class $CLASSES_DIR/org/elasticsearch
-cp $ES_CLASSES_DIR/org/elasticsearch/ElasticsearchParseException.class $CLASSES_DIR/org/elasticsearch
-cp $ES_CLASSES_DIR/org/elasticsearch/Version.class $CLASSES_DIR/org/elasticsearch
+echo "Start copying source codes..."
+for target in $COPY_LIST
+do
+  if [ "x$target" = "x" ] ; then
+    continue
+  fi
+  if [[ "$target" =~ ^#.* ]] ; then
+    continue
+  fi
 
-## index
-mkdir -p $CLASSES_DIR/org/elasticsearch/index
+  src_path=$ES_SOURCE_DIR/`echo $target | sed -e s#\\\\.#/#g`
+  if [ -f $src_path.java ] ; then
+    src_path=$src_path.java
+  elif [ -d $src_path ] ; then
+    src_path="$src_path/*"
+  else
+    echo "does not exist. $path"
+    continue;
+  fi
+  dst_path=`echo "$src_path" | sed -e s#$ORIG_DIR#$DST_DIR#g | sed -e s#$ES_SOURCE_DIR#$SOURCE_DIR#g | sed -e s#\\\\*##g`
+  path_dir=`echo "$dst_path" | sed -e s#/[^/]*\\\\.java##g`
+  mkdir -p $path_dir
+  echo "cp -r $src_path $dst_path"
+  cp -r $src_path $dst_path
+done
 
-### query
-cp -r $ES_CLASSES_DIR/org/elasticsearch/index/query $CLASSES_DIR/org/elasticsearch/index
+echo "Start replacing package..."
+SOURCE_FILE_LIST=`find $SOURCE_DIR -name "*.java"`
+for target in $COPY_LIST
+do
+  if [ "x$target" = "x" ] ; then
+    continue
+  fi
+  if [[ "$target" =~ ^#.* ]] ; then
+    continue
+  fi
 
-### mapper
-cp -r $ES_CLASSES_DIR/org/elasticsearch/index/mapper $CLASSES_DIR/org/elasticsearch/index
+  dst_package=`echo "$target" | sed -e s#$ORIG_PACKAGE#$DST_PACKAGE#g`
+  echo "replacing source code. $target to $dst_package"
+  for source_file in $SOURCE_FILE_LIST
+  do
+    sed -i '_sedbk' -e s/$target/$dst_package/g $source_file
+  done
+done
 
-## action
-mkdir -p $CLASSES_DIR/org/elasticsearch/action/support
-cp $ES_CLASSES_DIR/org/elasticsearch/action/support/ToXContentToBytes.class $CLASSES_DIR/org/elasticsearch/action/support/
+for source_file in $SOURCE_FILE_LIST
+do
+  sed -i '_sedbk' -e "s/package $ORIG_PACKAGE/package $DST_PACKAGE/g" $source_file
+done
 
-## client
-mkdir -p $CLASSES_DIR/org/elasticsearch/client
-cp $ES_CLASSES_DIR/org/elasticsearch/client/Requests.class $CLASSES_DIR/org/elasticsearch/client
+IFS=$PRE_IFS
 
-## common
-mkdir -p $CLASSES_DIR/org/elasticsearch/common
-cp $ES_CLASSES_DIR/org/elasticsearch/common/ParsingException.class $CLASSES_DIR/org/elasticsearch/common
-cp $ES_CLASSES_DIR/org/elasticsearch/common/ParseField.class $CLASSES_DIR/org/elasticsearch/common
-cp $ES_CLASSES_DIR/org/elasticsearch/common/ParseFieldMatcherSupplier.class $CLASSES_DIR/org/elasticsearch/common
-cp $ES_CLASSES_DIR/org/elasticsearch/common/Nullable.class $CLASSES_DIR/org/elasticsearch/common
-cp $ES_CLASSES_DIR/org/elasticsearch/common/Strings.class $CLASSES_DIR/org/elasticsearch/common
-cp -r $ES_CLASSES_DIR/org/elasticsearch/common/breaker $CLASSES_DIR/org/elasticsearch/common/breaker
-cp -r $ES_CLASSES_DIR/org/elasticsearch/common/bytes $CLASSES_DIR/org/elasticsearch/common/bytes
-cp -r $ES_CLASSES_DIR/org/elasticsearch/common/geo $CLASSES_DIR/org/elasticsearch/common/geo
-cp -r $ES_CLASSES_DIR/org/elasticsearch/common/regex $CLASSES_DIR/org/elasticsearch/common/regex
-cp -r $ES_CLASSES_DIR/org/elasticsearch/common/io $CLASSES_DIR/org/elasticsearch/common/io
-cp -r $ES_CLASSES_DIR/org/elasticsearch/common/lease $CLASSES_DIR/org/elasticsearch/common/lease
-cp -r $ES_CLASSES_DIR/org/elasticsearch/common/logging $CLASSES_DIR/org/elasticsearch/common/logging
-cp -r $ES_CLASSES_DIR/org/elasticsearch/common/lucene $CLASSES_DIR/org/elasticsearch/common/lucene
-cp -r $ES_CLASSES_DIR/org/elasticsearch/common/settings $CLASSES_DIR/org/elasticsearch/common/settings
-cp -r $ES_CLASSES_DIR/org/elasticsearch/common/text $CLASSES_DIR/org/elasticsearch/common/text
-cp -r $ES_CLASSES_DIR/org/elasticsearch/common/unit $CLASSES_DIR/org/elasticsearch/common/unit
-cp -r $ES_CLASSES_DIR/org/elasticsearch/common/util $CLASSES_DIR/org/elasticsearch/common/util
-cp -r $ES_CLASSES_DIR/org/elasticsearch/common/xcontent $CLASSES_DIR/org/elasticsearch/common/xcontent
+echo "Finished."
 
-## rest
-mkdir -p $CLASSES_DIR/org/elasticsearch/rest
-cp $ES_CLASSES_DIR/org/elasticsearch/rest/RestStatus.class $CLASSES_DIR/org/elasticsearch/rest
+find . -name "*_sedbk" | xargs rm
 
-########## End: extract querybuilders classes ############################################################
-
-
-# archive elasticsearch-querybuilders.jar
-cd $CLASSES_DIR
-zip -r $BASE_DIR/$LIB_DIR/$ARCHIVE_NAME *
-cd $BASE_DIR
-
-mvn install:install-file -Dfile=$LIB_DIR/$ARCHIVE_NAME -DpomFile=querybuilders_pom.xml
+mvn clean package
+exit;
