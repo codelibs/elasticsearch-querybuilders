@@ -27,6 +27,16 @@
     <developerConnection>scm:git:git@github.com:codelibs/elasticsearch-querybuilders.git</developerConnection>
     <url>https://github.com/codelibs/elasticsearch-querybuilders</url>
   </scm>
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>9</version>
+  </parent>
+  <properties>
+    <elasticsearch.version>5.2.1</elasticsearch.version>
+    <lucene.version>6.4.1</lucene.version>
+    <log4j.version>2.7</log4j.version>
+  </properties>
   <build>
     <plugins>
       <plugin>
@@ -58,52 +68,12 @@
           <charset>UTF-8</charset>
           <links>
             <link>http://docs.oracle.com/javase/8/docs/api/</link>
-            <link>http://docs.oracle.com/javaee/7/api/</link>
           </links>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>2.4.3</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <artifactSet>
-                <includes>
-                  <include>org.codelibs:*</include>
-                </includes>
-              </artifactSet>
-              <relocations>
-                <relocation>
-                  <pattern>org.elasticsearch</pattern>
-                  <shadedPattern>org.codelibs.elasticsearch</shadedPattern>
-                </relocation>
-              </relocations>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
-  <repositories>
-    <repository>
-      <id>codelibs.org</id>
-      <name>CodeLibs Repository</name>
-      <url>http://maven.codelibs.org/</url>
-    </repository>
-  </repositories>
   <dependencies>
-    <dependency>
-      <groupId>org.elasticsearch</groupId>
-      <artifactId>elasticsearch</artifactId>
-      <version>5.2.1</version>
-      <scope>provided</scope>
-    </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>

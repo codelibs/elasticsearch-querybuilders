@@ -3,92 +3,94 @@
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-VERSION=5.2.1
-
+cd `dirname $0`
+BASE_DIR=`pwd`
+VERSION=`grep elasticsearch.version pom.xml | sed -e "s/.*elasticsearch.version>\(.*\)<\/elasticsearch.version.*/\1/"`
 ES_DIR=elasticsearch-${VERSION}
 ES_SOURCE_URL=https://github.com/elastic/elasticsearch/archive/v${VERSION}.zip
-WORK_DIR=work
-SOURCE_DIR=src/main/java
+WORK_DIR=$BASE_DIR/work
+SOURCE_DIR=$BASE_DIR/src/main/java
 ES_SOURCE_DIR=$WORK_DIR/$ES_DIR/core/src/main/java
 
 ORIG_PACKAGE="org.elasticsearch"
 DST_PACKAGE="org.codelibs.elasticsearch"
 ORIG_DIR=`echo $ORIG_PACKAGE | sed -e s#\\\\.#/#g`
 DST_DIR=`echo $DST_PACKAGE | sed -e s#\\\\.#/#g`
+CLASS_LIST=$BASE_DIR/querybuilders-classes.list
 
-rm -r $SOURCE_DIR
-mkdir -p $WORK_DIR
-mkdir -p $SOURCE_DIR
+clean_all() {
+  rm -r $SOURCE_DIR
+  mkdir -p $WORK_DIR
+  mkdir -p $SOURCE_DIR
+}
 
-# Download zip
-if [ ! -f v${VERSION}.zip ] ; then
-  wget $ES_SOURCE_URL
-fi
-if [ ! -d $WORK_DIR/$ES_DIR ] ; then
-  unzip -d $WORK_DIR v${VERSION}.zip
-fi
-
-
-COPY_LIST=`cat querybuilders-classes.list`
-
-PRE_IFS=$IFS
-IFS=$'\n'
-
-echo "Start copying source codes..."
-for target in $COPY_LIST
-do
-  if [ "x$target" = "x" ] ; then
-    continue
+download_es() {
+  if [ ! -f v${VERSION}.zip ] ; then
+    wget $ES_SOURCE_URL
   fi
-  if [[ "$target" =~ ^#.* ]] ; then
-    continue
+  if [ ! -d $WORK_DIR/$ES_DIR ] ; then
+    unzip -d $WORK_DIR v${VERSION}.zip
   fi
+}
 
-  src_path=$ES_SOURCE_DIR/`echo $target | sed -e s#\\\\.#/#g`
-  if [ -f $src_path.java ] ; then
-    src_path=$src_path.java
-  elif [ -d $src_path ] ; then
-    src_path="$src_path/*"
-  else
-    echo "does not exist. $path"
-    continue;
-  fi
-  dst_path=`echo "$src_path" | sed -e s#$ORIG_DIR#$DST_DIR#g | sed -e s#$ES_SOURCE_DIR#$SOURCE_DIR#g | sed -e s#\\\\*##g`
-  path_dir=`echo "$dst_path" | sed -e s#/[^/]*\\\\.java##g`
-  mkdir -p $path_dir
-  echo "cp -r $src_path $dst_path"
-  cp -r $src_path $dst_path
-done
+copy_classfiles() {
+  for target in `cat $CLASS_LIST` ; do
+    if [ "x$target" = "x" ] ; then
+      continue
+    fi
+    if [[ "$target" =~ ^#.* ]] ; then
+      continue
+    fi
 
-echo "Start replacing package..."
-SOURCE_FILE_LIST=`find $SOURCE_DIR -name "*.java"`
-for target in $COPY_LIST
-do
-  if [ "x$target" = "x" ] ; then
-    continue
-  fi
-  if [[ "$target" =~ ^#.* ]] ; then
-    continue
-  fi
+    src_paths=$ES_SOURCE_DIR/`echo $target | sed -e s#\\\\.#/#g`
+    if [ -f ${src_paths}.java ] ; then
+      src_paths=${src_paths}.java
+    elif [ -d $src_paths ] ; then
+      src_paths=`find $src_paths -type f | grep \.java$`
+    else
+      src_paths=`echo $src_paths | sed -e 's#/[^/]*$#.java#'`
+      while [ ! -f ${src_paths} ] ; do
+        src_paths=`echo $src_paths | sed -e 's#/[^/]*$#.java#'`
+        echo "Finding: $src_paths"
+        if [ x"$src_paths" = "x.java" ] ; then
+          echo "Not found: $target"
+          break
+        fi
+      done
+      if [ x"$src_paths" = "x.java" ] ; then
+        continue
+      fi
+    fi
 
-  dst_package=`echo "$target" | sed -e s#$ORIG_PACKAGE#$DST_PACKAGE#g`
-  echo "replacing source code. $target to $dst_package"
-  for source_file in $SOURCE_FILE_LIST
-  do
-    sed -i '_sedbk' -e s/$target/$dst_package/g $source_file
+    for src_path in $src_paths ; do
+      dst_path=`echo "$src_path" | sed -e s#$ORIG_DIR#$DST_DIR#g -e s#$ES_SOURCE_DIR#$SOURCE_DIR#g`
+      mkdir -p `dirname $dst_path`
+      echo "Generate $dst_path"
+      sed -e "s/$ORIG_PACKAGE/$DST_PACKAGE/g" $src_path > $dst_path
+    done
   done
+}
+
+clean_all
+download_es
+
+MAX_NUM=0
+COUNT=1
+while [ $COUNT -lt 21 ] ; do
+  echo "Epoch $COUNT"
+  copy_classfiles
+  find $BASE_DIR/src/main/java/ -type f \
+    | xargs grep "^import .*$DST_PACKAGE" \
+    | sed -e "s/ static//" -e "s/.*import \(.*\);/\1/" -e "s/$DST_PACKAGE/$ORIG_PACKAGE/g" \
+    | sort -u > $CLASS_LIST
+  NUM=`wc -l $CLASS_LIST | awk '{ print $1 }'`
+  echo "Remaining "`expr $NUM - $MAX_NUM`" classes"
+  if [ $NUM = $MAX_NUM ] ; then
+    echo "Finished at Epoch $COUNT"
+    break
+  fi
+  MAX_NUM=$NUM
+  COUNT=`expr $COUNT + 1`
 done
-
-for source_file in $SOURCE_FILE_LIST
-do
-  sed -i '_sedbk' -e "s/package $ORIG_PACKAGE/package $DST_PACKAGE/g" $source_file
-done
-
-IFS=$PRE_IFS
-
-echo "Finished."
-
-find . -name "*_sedbk" | xargs rm
 
 mvn clean package
-exit;
