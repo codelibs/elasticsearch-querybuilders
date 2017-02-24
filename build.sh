@@ -65,11 +65,67 @@ copy_classfiles() {
     for src_path in $src_paths ; do
       dst_path=`echo "$src_path" | sed -e s#$ORIG_DIR#$DST_DIR#g -e s#$ES_SOURCE_DIR#$SOURCE_DIR#g`
       mkdir -p `dirname $dst_path`
-      echo "Generate $dst_path"
+      #echo "Generate $dst_path"
       sed -e "s/$ORIG_PACKAGE/$DST_PACKAGE/g" $src_path > $dst_path
     done
   done
 }
+
+add_class_list_from_build_error() {
+  JAVA_OPT_BK=$_JAVA_OPTIONS
+  export _JAVA_OPTIONS="$_JAVA_OPTIONS -Duser.language=en"
+  PRE_IFS=$IFS
+  IFS=$'\n'
+  PACKAGE_NAME=""
+  CLASS_NAME=""
+  PREV_CLASS_NAME=""
+  ERROR_COUNT=0
+  for line in `mvn package` ; do
+    if [[ "$line" =~ ^\[ERROR\].*\.java.* ]] ; then
+      if [[ "$line" =~ .*package\ .*\..* ]] ; then
+        PACKAGE_NAME=`echo $line | sed -e s/.*package\ //g -e s/\.[A-Z].*//g`
+        CLASS_NAME=`echo $line | sed -e s/.*package\ //g -e s/$PACKAGE_NAME\.//g -e s/[\.\ ].*//g`
+      elif [[ "$line" =~ .*package\ .* ]] ; then
+        PACKAGE_NAME=`echo $line | sed -e s#^.*$SOURCE_DIR/##g -e s#/[^/]*\.java.*##g -e s#/#.#g`
+        CLASS_NAME=`echo $line | sed -e s/.*package\ //g -e s/\ .*//g`
+      else
+        PACKAGE_NAME=`echo $line | sed -e s#^.*$SOURCE_DIR/##g -e s#/[^/]*\.java.*##g -e s#/#.#g`
+      fi
+    elif [[ "$line" =~ ^\[ERROR\]\ +symbol:\ +class.* ]] ; then
+      CLASS_NAME=`echo $line | sed -e s/^.*class\ //g`
+    elif [[ "$line" =~ ^\[ERROR\]\ +symbol:\ +variable.* ]] ; then
+      CLASS_NAME=`echo $line | sed -e s/^.*variable\ //g -e s/\.java//g`
+    elif [[ "$line" =~ ^\[ERROR\]\ +location:\ package.* ]] ; then
+      PACKAGE_NAME=`echo $line | sed -e s/.*package\ //g`
+      CLASS_NAME=$PREV_CLASS_NAME
+    else
+      continue
+    fi
+
+    PREV_CLASS_NAME=""
+    if [ x$PACKAGE_NAME != "x" -a x$CLASS_NAME != "x" ] ; then
+      CLASS_PATH=`echo $PACKAGE_NAME.$CLASS_NAME | sed -e s#org\\\\.codelibs#org#g`
+      file_path=$ES_SOURCE_DIR/`echo $CLASS_PATH | sed -e s#\\\\.#/#g`.java
+      if [ -f $file_path ] ; then
+        grep "$CLASS_PATH$" $CLASS_LIST > /dev/null
+        if [ $? -ne 0 ] ; then
+          echo "Add class from build error. $CLASS_PATH"
+          echo $CLASS_PATH >> $CLASS_LIST
+          ERROR_COUNT=`expr $ERROR_COUNT + 1`
+        fi
+      else
+        PREV_CLASS_NAME=$CLASS_NAME
+        echo "does not exist. $file_path"
+      fi
+      PACKAGE_NAME=""
+      CLASS_NAME=""
+    fi
+  done
+  export _JAVA_OPTIONS=$JAVA_OPT_BK
+  IFS=$PRE_IFS
+  return $ERROR_COUNT
+}
+
 
 clean_all
 download_es
@@ -84,8 +140,11 @@ while [ $COUNT -lt 21 ] ; do
     | sed -e "s/ static//" -e "s/.*import \(.*\);/\1/" -e "s/$DST_PACKAGE/$ORIG_PACKAGE/g" \
     | sort -u > $CLASS_LIST
   NUM=`wc -l $CLASS_LIST | awk '{ print $1 }'`
+  add_class_list_from_build_error
+  ERROR_NUM=$?
+  echo "NUM:$NUM MAX_NUM:$MAX_NUM ERROR_NUM:$ERROR_NUM"
   echo "Remaining "`expr $NUM - $MAX_NUM`" classes"
-  if [ $NUM = $MAX_NUM ] ; then
+  if [ $NUM = $MAX_NUM -a $ERROR_NUM -eq 0 ] ; then
     echo "Finished at Epoch $COUNT"
     break
   fi
@@ -93,4 +152,4 @@ while [ $COUNT -lt 21 ] ; do
   COUNT=`expr $COUNT + 1`
 done
 
-mvn clean package
+#mvn clean package
