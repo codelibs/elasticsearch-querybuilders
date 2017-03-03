@@ -7,7 +7,6 @@ import org.codelibs.elasticsearch.common.geo.builders.ShapeBuilders;
 import org.codelibs.elasticsearch.common.lucene.search.function.FieldValueFactorFunction;
 import org.codelibs.elasticsearch.common.unit.DistanceUnit;
 import org.codelibs.elasticsearch.common.unit.Fuzziness;
-import org.codelibs.elasticsearch.index.query.*;
 import org.codelibs.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
 import org.codelibs.elasticsearch.index.query.functionscore.ScoreFunctionBuilder;
 import org.codelibs.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
