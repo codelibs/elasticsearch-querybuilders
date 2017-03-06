@@ -21,10 +21,9 @@ package org.codelibs.elasticsearch.index.engine;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Locale;
 import java.util.Set;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.apache.lucene.index.ConcurrentMergeScheduler;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.MergePolicy;
@@ -33,8 +32,6 @@ import org.codelibs.elasticsearch.common.logging.Loggers;
 import org.codelibs.elasticsearch.common.metrics.CounterMetric;
 import org.codelibs.elasticsearch.common.metrics.MeanMetric;
 import org.codelibs.elasticsearch.common.settings.Settings;
-import org.codelibs.elasticsearch.common.unit.ByteSizeValue;
-import org.codelibs.elasticsearch.common.unit.TimeValue;
 import org.codelibs.elasticsearch.common.util.concurrent.ConcurrentCollections;
 import org.codelibs.elasticsearch.common.util.concurrent.EsExecutors;
 import org.codelibs.elasticsearch.index.IndexSettings;

@@ -19,9 +19,9 @@
 
 package org.codelibs.elasticsearch.indices.cluster;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.apache.lucene.store.LockObtainFailedException;
 import org.codelibs.elasticsearch.cluster.ClusterChangedEvent;
 import org.codelibs.elasticsearch.cluster.ClusterState;

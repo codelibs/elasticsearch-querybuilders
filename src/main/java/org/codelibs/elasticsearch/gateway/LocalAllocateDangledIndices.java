@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.gateway;
 
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.cluster.ClusterState;
 import org.codelibs.elasticsearch.cluster.ClusterStateUpdateTask;
@@ -29,7 +29,6 @@ import org.codelibs.elasticsearch.cluster.metadata.IndexMetaData;
 import org.codelibs.elasticsearch.cluster.metadata.MetaData;
 import org.codelibs.elasticsearch.cluster.metadata.MetaDataIndexUpgradeService;
 import org.codelibs.elasticsearch.cluster.node.DiscoveryNode;
-import org.codelibs.elasticsearch.cluster.node.DiscoveryNodes;
 import org.codelibs.elasticsearch.cluster.routing.RoutingTable;
 import org.codelibs.elasticsearch.cluster.routing.allocation.AllocationService;
 import org.codelibs.elasticsearch.cluster.service.ClusterService;

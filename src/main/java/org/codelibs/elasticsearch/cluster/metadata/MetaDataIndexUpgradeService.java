@@ -18,9 +18,8 @@
  */
 package org.codelibs.elasticsearch.cluster.metadata;
 
-import com.carrotsearch.hppc.cursors.ObjectCursor;
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.apache.lucene.analysis.Analyzer;
 import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.component.AbstractComponent;

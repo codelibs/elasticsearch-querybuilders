@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.index.shard;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.MergePolicy;
 import org.apache.lucene.index.MergeTrigger;

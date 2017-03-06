@@ -20,8 +20,8 @@
 package org.codelibs.elasticsearch.snapshots;
 
 import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.apache.lucene.index.IndexCommit;
 import org.codelibs.elasticsearch.ExceptionsHelper;
 import org.codelibs.elasticsearch.cluster.ClusterChangedEvent;

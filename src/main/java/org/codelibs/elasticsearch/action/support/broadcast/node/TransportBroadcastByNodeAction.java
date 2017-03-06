@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.action.support.broadcast.node;
 
-import org.apache.logging.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
 import org.codelibs.elasticsearch.action.ActionListener;
 import org.codelibs.elasticsearch.action.FailedNodeException;
 import org.codelibs.elasticsearch.action.IndicesRequest;
@@ -365,7 +365,7 @@ public abstract class TransportBroadcastByNodeAction<Request extends BroadcastRe
             String nodeId = node.getId();
             if (logger.isDebugEnabled() && !(t instanceof NodeShouldNotConnectException)) {
                 logger.debug(
-                    (org.apache.logging.log4j.util.Supplier<?>)
+                    (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
                         () -> new ParameterizedMessage("failed to execute [{}] on node [{}]", actionName, nodeId), t);
             }
 
@@ -445,7 +445,7 @@ public abstract class TransportBroadcastByNodeAction<Request extends BroadcastRe
                 if (TransportActions.isShardNotAvailableException(e)) {
                     if (logger.isTraceEnabled()) {
                         logger.trace(
-                            (org.apache.logging.log4j.util.Supplier<?>)
+                            (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
                                 () -> new ParameterizedMessage(
                                     "[{}] failed to execute operation for shard [{}]",
                                     actionName,
@@ -455,7 +455,7 @@ public abstract class TransportBroadcastByNodeAction<Request extends BroadcastRe
                 } else {
                     if (logger.isDebugEnabled()) {
                         logger.debug(
-                            (org.apache.logging.log4j.util.Supplier<?>)
+                            (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
                                 () -> new ParameterizedMessage(
                                     "[{}] failed to execute operation for shard [{}]",
                                     actionName,

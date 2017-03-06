@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.monitor.fs;
 
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.apache.lucene.util.Constants;
 import org.codelibs.elasticsearch.common.SuppressForbidden;
 import org.codelibs.elasticsearch.common.collect.Tuple;

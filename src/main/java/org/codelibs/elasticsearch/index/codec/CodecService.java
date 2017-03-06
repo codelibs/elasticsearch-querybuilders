@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.index.codec;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.apache.lucene.codecs.Codec;
 import org.apache.lucene.codecs.lucene50.Lucene50StoredFieldsFormat.Mode;
 import org.apache.lucene.codecs.lucene62.Lucene62Codec;

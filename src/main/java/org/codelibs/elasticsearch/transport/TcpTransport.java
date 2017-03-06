@@ -20,8 +20,8 @@ package org.codelibs.elasticsearch.transport;
 
 import com.carrotsearch.hppc.IntHashSet;
 import com.carrotsearch.hppc.IntSet;
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.apache.lucene.util.IOUtils;
 import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.ExceptionsHelper;

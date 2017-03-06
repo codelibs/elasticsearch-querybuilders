@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.action.support.nodes;
 
-import org.apache.logging.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
 import org.codelibs.elasticsearch.action.ActionListener;
 import org.codelibs.elasticsearch.action.FailedNodeException;
 import org.codelibs.elasticsearch.action.NoSuchNodeException;
@@ -241,7 +241,7 @@ public abstract class TransportNodesAction<NodesRequest extends BaseNodesRequest
         private void onFailure(int idx, String nodeId, Throwable t) {
             if (logger.isDebugEnabled() && !(t instanceof NodeShouldNotConnectException)) {
                 logger.debug(
-                    (org.apache.logging.log4j.util.Supplier<?>)
+                    (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
                         () -> new ParameterizedMessage("failed to execute on node [{}]", nodeId), t);
             }
             responses.set(idx, new FailedNodeException(nodeId, "Failed node [" + nodeId + "]", t));

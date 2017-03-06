@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.common.lucene;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.apache.lucene.util.InfoStream;
 import org.codelibs.elasticsearch.common.logging.Loggers;
 

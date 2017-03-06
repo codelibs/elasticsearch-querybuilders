@@ -19,16 +19,14 @@
 
 package org.codelibs.elasticsearch.discovery.local;
 
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.codelibs.elasticsearch.cluster.ClusterChangedEvent;
 import org.codelibs.elasticsearch.cluster.ClusterName;
 import org.codelibs.elasticsearch.cluster.ClusterState;
-import org.codelibs.elasticsearch.cluster.ClusterStateUpdateTask;
 import org.codelibs.elasticsearch.cluster.Diff;
 import org.codelibs.elasticsearch.cluster.IncompatibleClusterStateVersionException;
 import org.codelibs.elasticsearch.cluster.LocalClusterUpdateTask;
-import org.codelibs.elasticsearch.cluster.block.ClusterBlocks;
 import org.codelibs.elasticsearch.cluster.node.DiscoveryNode;
 import org.codelibs.elasticsearch.cluster.node.DiscoveryNodes;
 import org.codelibs.elasticsearch.cluster.routing.allocation.AllocationService;

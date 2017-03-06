@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.monitor.os;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.apache.lucene.util.Constants;
 import org.codelibs.elasticsearch.common.SuppressForbidden;
 import org.codelibs.elasticsearch.common.io.PathUtils;

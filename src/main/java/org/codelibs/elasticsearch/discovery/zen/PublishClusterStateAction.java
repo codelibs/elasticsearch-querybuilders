@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.discovery.zen;
 
-import org.apache.logging.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
 import org.apache.lucene.util.IOUtils;
 import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.Version;
@@ -254,7 +254,7 @@ public class PublishClusterStateAction extends AbstractComponent {
                 serializedStates.put(node.getVersion(), bytes);
             } catch (Exception e) {
                 logger.warn(
-                    (org.apache.logging.log4j.util.Supplier<?>) () ->
+                    (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>) () ->
                         new ParameterizedMessage("failed to serialize cluster_state before publishing it to node {}", node), e);
                 sendingController.onNodeSendFailed(node, e);
                 return;
@@ -303,7 +303,7 @@ public class PublishClusterStateAction extends AbstractComponent {
                                 logger.debug("resending full cluster state to node {} reason {}", node, exp.getDetailedMessage());
                                 sendFullClusterState(clusterState, serializedStates, node, publishTimeout, sendingController);
                             } else {
-                                logger.debug((org.apache.logging.log4j.util.Supplier<?>) () ->
+                                logger.debug((org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>) () ->
                                     new ParameterizedMessage("failed to send cluster state to {}", node), exp);
                                 sendingController.onNodeSendFailed(node, exp);
                             }
@@ -311,7 +311,7 @@ public class PublishClusterStateAction extends AbstractComponent {
                     });
         } catch (Exception e) {
             logger.warn(
-                (org.apache.logging.log4j.util.Supplier<?>) () ->
+                (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>) () ->
                     new ParameterizedMessage("error sending cluster state to {}", node), e);
             sendingController.onNodeSendFailed(node, e);
         }
@@ -339,14 +339,14 @@ public class PublishClusterStateAction extends AbstractComponent {
 
                         @Override
                         public void handleException(TransportException exp) {
-                            logger.debug((org.apache.logging.log4j.util.Supplier<?>) () ->
+                            logger.debug((org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>) () ->
                                 new ParameterizedMessage("failed to commit cluster state (uuid [{}], version [{}]) to {}",
                                     clusterState.stateUUID(), clusterState.version(), node), exp);
                             sendingController.getPublishResponseHandler().onFailure(node, exp);
                         }
                     });
         } catch (Exception t) {
-            logger.warn((org.apache.logging.log4j.util.Supplier<?>) () ->
+            logger.warn((org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>) () ->
                 new ParameterizedMessage("error sending cluster state commit (uuid [{}], version [{}]) to {}",
                     clusterState.stateUUID(), clusterState.version(), node), t);
             sendingController.getPublishResponseHandler().onFailure(node, t);
@@ -658,7 +658,7 @@ public class PublishClusterStateAction extends AbstractComponent {
             if (committedOrFailed()) {
                 return committed == false;
             }
-            logger.trace((org.apache.logging.log4j.util.Supplier<?>) () -> new ParameterizedMessage("failed to commit version [{}]. {}",
+            logger.trace((org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>) () -> new ParameterizedMessage("failed to commit version [{}]. {}",
                 clusterState.version(), details), reason);
             committed = false;
             committedOrFailedLatch.countDown();

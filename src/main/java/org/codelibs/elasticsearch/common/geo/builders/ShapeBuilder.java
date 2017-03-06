@@ -22,7 +22,7 @@ package org.codelibs.elasticsearch.common.geo.builders;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.codelibs.elasticsearch.ElasticsearchParseException;
 import org.codelibs.elasticsearch.action.support.ToXContentToBytes;
 import org.codelibs.elasticsearch.common.io.stream.NamedWriteable;

@@ -14,14 +14,14 @@
  * See the license for the specific language governing permissions and
  * limitations under the license.
  */
-package org.apache.logging.log4j.spi;
+package org.codelibs.elasticsearch.querybuilders.log4j.spi;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.message.Message;
-import org.apache.logging.log4j.util.MessageSupplier;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.Level;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Marker;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.Message;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.MessageSupplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 
 /**
  * Extends the {@code Logger} interface with methods that facilitate implementing or extending {@code Logger}s. Users

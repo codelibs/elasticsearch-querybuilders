@@ -18,7 +18,7 @@
  */
 package org.codelibs.elasticsearch.index.mapper;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.apache.lucene.document.InetAddressPoint;
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.IndexReader;

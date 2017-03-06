@@ -18,7 +18,7 @@
  */
 package org.codelibs.elasticsearch.common.util.concurrent;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.codelibs.elasticsearch.common.component.Lifecycle;
 
 import java.util.Objects;

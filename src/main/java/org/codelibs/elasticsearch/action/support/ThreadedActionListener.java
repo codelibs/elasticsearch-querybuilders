@@ -19,9 +19,9 @@
 
 package org.codelibs.elasticsearch.action.support;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.codelibs.elasticsearch.action.ActionListener;
 import org.codelibs.elasticsearch.client.Client;
 import org.codelibs.elasticsearch.client.transport.TransportClient;

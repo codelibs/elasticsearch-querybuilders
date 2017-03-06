@@ -1,6 +1,6 @@
-package org.apache.logging.log4j.util;
+package org.codelibs.elasticsearch.querybuilders.log4j.util;
 
-import org.apache.logging.log4j.message.Message;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.Message;
 
 /**
  * Classes implementing this interface know how to supply {@link Message}s.

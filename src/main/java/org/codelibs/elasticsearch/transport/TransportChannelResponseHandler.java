@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.transport;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
 import org.codelibs.elasticsearch.threadpool.ThreadPool;
 
 import java.io.IOException;
@@ -64,7 +64,7 @@ public class TransportChannelResponseHandler<T extends TransportResponse> implem
             channel.sendResponse(exp);
         } catch (IOException e) {
             logger.debug(
-                (org.apache.logging.log4j.util.Supplier<?>)
+                (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
                     () -> new ParameterizedMessage(
                         "failed to send failure {}",
                         extraInfoOnError == null ? "" : "(" + extraInfoOnError + ")"),

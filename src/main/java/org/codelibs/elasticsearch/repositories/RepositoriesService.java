@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.repositories;
 
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.codelibs.elasticsearch.action.ActionListener;
 import org.codelibs.elasticsearch.cluster.AckedClusterStateUpdateTask;
 import org.codelibs.elasticsearch.cluster.ClusterChangedEvent;

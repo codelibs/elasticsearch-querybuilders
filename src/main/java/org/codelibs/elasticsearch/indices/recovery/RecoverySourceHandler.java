@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.indices.recovery;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexCommit;
 import org.apache.lucene.index.IndexFormatTooNewException;
@@ -317,7 +317,7 @@ public class RecoverySourceHandler {
                                 "checksums are ok", null);
                         exception.addSuppressed(targetException);
                         logger.warn(
-                            (org.apache.logging.log4j.util.Supplier<?>) () -> new ParameterizedMessage(
+                            (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>) () -> new ParameterizedMessage(
                                 "{} Remote file corruption during finalization of recovery on node {}. local checksum OK",
                                 shard.shardId(),
                                 request.targetNode()),
@@ -564,7 +564,7 @@ public class RecoverySourceHandler {
                                     "checksums are ok", null);
                             exception.addSuppressed(e);
                             logger.warn(
-                                (org.apache.logging.log4j.util.Supplier<?>) () -> new ParameterizedMessage(
+                                (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>) () -> new ParameterizedMessage(
                                     "{} Remote file corruption on node {}, recovering {}. local checksum OK",
                                     shardId,
                                     request.targetNode(),

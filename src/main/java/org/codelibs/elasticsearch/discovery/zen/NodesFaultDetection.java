@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.discovery.zen;
 
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.codelibs.elasticsearch.cluster.ClusterName;
 import org.codelibs.elasticsearch.cluster.ClusterState;
 import org.codelibs.elasticsearch.cluster.node.DiscoveryNode;

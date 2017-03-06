@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.index;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.codelibs.elasticsearch.common.logging.DeprecationLogger;
 import org.codelibs.elasticsearch.common.logging.Loggers;
 

@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.gateway;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.codelibs.elasticsearch.cluster.routing.RoutingNode;
 import org.codelibs.elasticsearch.cluster.routing.RoutingNodes;
 import org.codelibs.elasticsearch.cluster.routing.ShardRouting;

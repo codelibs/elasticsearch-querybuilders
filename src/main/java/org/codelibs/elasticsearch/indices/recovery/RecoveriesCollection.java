@@ -19,14 +19,13 @@
 
 package org.codelibs.elasticsearch.indices.recovery;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.codelibs.elasticsearch.ElasticsearchTimeoutException;
 import org.codelibs.elasticsearch.cluster.node.DiscoveryNode;
 import org.codelibs.elasticsearch.common.unit.TimeValue;
 import org.codelibs.elasticsearch.common.util.Callback;
-import org.codelibs.elasticsearch.common.util.CancellableThreads;
 import org.codelibs.elasticsearch.common.util.concurrent.AbstractRunnable;
 import org.codelibs.elasticsearch.common.util.concurrent.ConcurrentCollections;
 import org.codelibs.elasticsearch.index.shard.IndexShard;

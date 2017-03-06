@@ -18,7 +18,7 @@
  */
 package org.codelibs.elasticsearch.action.bulk;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.codelibs.elasticsearch.ExceptionsHelper;
 import org.codelibs.elasticsearch.action.ActionFuture;
 import org.codelibs.elasticsearch.action.ActionListener;

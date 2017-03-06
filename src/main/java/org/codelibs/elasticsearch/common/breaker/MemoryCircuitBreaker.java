@@ -18,7 +18,7 @@
  */
 package org.codelibs.elasticsearch.common.breaker;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.codelibs.elasticsearch.common.unit.ByteSizeValue;
 
 import java.util.concurrent.atomic.AtomicLong;

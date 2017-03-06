@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.index.fielddata.ordinals;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.MultiDocValues.OrdinalMap;

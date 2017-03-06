@@ -19,7 +19,6 @@
 
 package org.codelibs.elasticsearch.action;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,7 @@ import java.util.Set;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.codelibs.elasticsearch.action.admin.cluster.allocation.ClusterAllocationExplainAction;
 import org.codelibs.elasticsearch.action.admin.cluster.allocation.TransportClusterAllocationExplainAction;
 import org.codelibs.elasticsearch.action.admin.cluster.health.ClusterHealthAction;

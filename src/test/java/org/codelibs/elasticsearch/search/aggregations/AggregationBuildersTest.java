@@ -246,7 +246,6 @@ public class AggregationBuildersTest {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.aggregation(aggregationBuilder);
         searchSourceBuilder.query(QueryBuilders.matchAllQuery());
-        System.out.println(XContentHelper.convertToJson(searchSourceBuilder.buildAsBytes(), false));
         return XContentHelper.convertToJson(searchSourceBuilder.buildAsBytes(), false);
     }
 }

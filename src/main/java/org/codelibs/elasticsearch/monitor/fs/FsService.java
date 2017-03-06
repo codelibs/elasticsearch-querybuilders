@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.monitor.fs;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.codelibs.elasticsearch.common.component.AbstractComponent;
 import org.codelibs.elasticsearch.common.settings.Setting;
 import org.codelibs.elasticsearch.common.settings.Setting.Property;

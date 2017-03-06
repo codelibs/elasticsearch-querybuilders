@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.action.admin.indices.open;
 
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.codelibs.elasticsearch.action.ActionListener;
 import org.codelibs.elasticsearch.action.support.ActionFilters;
 import org.codelibs.elasticsearch.action.support.DestructiveOperations;

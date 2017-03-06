@@ -18,7 +18,7 @@
  */
 package org.codelibs.elasticsearch.index;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.apache.lucene.index.MergePolicy;
 import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.cluster.metadata.IndexMetaData;

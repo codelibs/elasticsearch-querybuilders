@@ -22,7 +22,7 @@ package org.codelibs.elasticsearch.gateway;
 import com.carrotsearch.hppc.ObjectFloatHashMap;
 import com.carrotsearch.hppc.cursors.ObjectCursor;
 
-import org.apache.logging.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
 import org.codelibs.elasticsearch.action.FailedNodeException;
 import org.codelibs.elasticsearch.cluster.ClusterChangedEvent;
 import org.codelibs.elasticsearch.cluster.ClusterState;
@@ -137,7 +137,7 @@ public class Gateway extends AbstractComponent implements ClusterStateApplier {
                     } catch (Exception e) {
                         final Index electedIndex = electedIndexMetaData.getIndex();
                         logger.warn(
-                            (org.apache.logging.log4j.util.Supplier<?>)
+                            (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
                                 () -> new ParameterizedMessage("recovering index {} failed - recovering as closed", electedIndex), e);
                         electedIndexMetaData = IndexMetaData.builder(electedIndexMetaData).state(IndexMetaData.State.CLOSE).build();
                     }
@@ -168,7 +168,7 @@ public class Gateway extends AbstractComponent implements ClusterStateApplier {
 
     private void logInvalidSetting(String settingType, Map.Entry<String, String> e, IllegalArgumentException ex) {
         logger.warn(
-            (org.apache.logging.log4j.util.Supplier<?>)
+            (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
                 () -> new ParameterizedMessage("ignoring invalid {} setting: [{}] with value [{}]; archiving",
                     settingType,
                     e.getKey(),

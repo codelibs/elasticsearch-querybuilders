@@ -19,13 +19,12 @@
 
 package org.codelibs.elasticsearch.index.translog;
 
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.TwoPhaseCommit;
 import org.apache.lucene.store.AlreadyClosedException;
 import org.apache.lucene.util.IOUtils;
-import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.action.index.IndexRequest;
 import org.codelibs.elasticsearch.common.UUIDs;
 import org.codelibs.elasticsearch.common.bytes.BytesArray;
@@ -39,7 +38,6 @@ import org.codelibs.elasticsearch.common.lease.Releasables;
 import org.codelibs.elasticsearch.common.lucene.uid.Versions;
 import org.codelibs.elasticsearch.common.util.BigArrays;
 import org.codelibs.elasticsearch.common.util.concurrent.ConcurrentCollections;
-import org.codelibs.elasticsearch.common.util.concurrent.FutureUtils;
 import org.codelibs.elasticsearch.common.util.concurrent.ReleasableLock;
 import org.codelibs.elasticsearch.index.VersionType;
 import org.codelibs.elasticsearch.index.engine.Engine;
@@ -49,7 +47,6 @@ import org.codelibs.elasticsearch.index.shard.IndexShardComponent;
 import java.io.Closeable;
 import java.io.EOFException;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;

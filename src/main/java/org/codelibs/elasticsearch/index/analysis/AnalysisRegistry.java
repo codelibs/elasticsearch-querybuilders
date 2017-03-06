@@ -18,7 +18,7 @@
  */
 package org.codelibs.elasticsearch.index.analysis;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.util.IOUtils;
 import org.codelibs.elasticsearch.ElasticsearchException;

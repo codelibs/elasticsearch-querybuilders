@@ -14,20 +14,11 @@
  * See the license for the specific language governing permissions and
  * limitations under the license.
  */
-package org.apache.logging.log4j.core.appender;
+package org.codelibs.elasticsearch.querybuilders.log4j.core.appender;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Constructor;
 import java.nio.charset.Charset;
-import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.logging.log4j.core.Appender;
+import org.codelibs.elasticsearch.querybuilders.log4j.core.Appender;
 
 public final class ConsoleAppender implements Appender {
 

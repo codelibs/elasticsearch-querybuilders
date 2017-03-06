@@ -14,14 +14,11 @@
  * See the license for the specific language governing permissions and
  * limitations under the license.
  */
-package org.apache.logging.log4j;
+package org.codelibs.elasticsearch.querybuilders.log4j;
 
 import java.net.URI;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
-import org.apache.logging.log4j.spi.LoggerContext;
+import org.codelibs.elasticsearch.querybuilders.log4j.spi.LoggerContext;
 
 public class LogManager {
 

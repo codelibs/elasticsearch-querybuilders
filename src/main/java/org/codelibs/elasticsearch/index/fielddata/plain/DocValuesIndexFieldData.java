@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.index.fielddata.plain;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.RandomAccessOrds;
 import org.codelibs.elasticsearch.common.logging.Loggers;

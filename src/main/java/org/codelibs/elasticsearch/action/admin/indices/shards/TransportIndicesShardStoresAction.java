@@ -18,7 +18,7 @@
  */
 package org.codelibs.elasticsearch.action.admin.indices.shards;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.apache.lucene.util.CollectionUtil;
 import org.codelibs.elasticsearch.action.ActionListener;
 import org.codelibs.elasticsearch.action.FailedNodeException;
@@ -29,7 +29,6 @@ import org.codelibs.elasticsearch.cluster.block.ClusterBlockException;
 import org.codelibs.elasticsearch.cluster.block.ClusterBlockLevel;
 import org.codelibs.elasticsearch.cluster.health.ClusterHealthStatus;
 import org.codelibs.elasticsearch.cluster.health.ClusterShardHealth;
-import org.codelibs.elasticsearch.cluster.metadata.IndexMetaData;
 import org.codelibs.elasticsearch.cluster.metadata.IndexNameExpressionResolver;
 import org.codelibs.elasticsearch.cluster.node.DiscoveryNode;
 import org.codelibs.elasticsearch.cluster.node.DiscoveryNodes;

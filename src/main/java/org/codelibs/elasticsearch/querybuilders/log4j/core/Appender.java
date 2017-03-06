@@ -14,7 +14,7 @@
  * See the license for the specific language governing permissions and
  * limitations under the license.
  */
-package org.apache.logging.log4j.core;
+package org.codelibs.elasticsearch.querybuilders.log4j.core;
 
 public interface Appender {
     String getName();

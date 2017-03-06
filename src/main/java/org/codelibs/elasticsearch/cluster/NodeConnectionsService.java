@@ -18,8 +18,8 @@
  */
 package org.codelibs.elasticsearch.cluster;
 
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.codelibs.elasticsearch.cluster.node.DiscoveryNode;
 import org.codelibs.elasticsearch.common.component.AbstractLifecycleComponent;
 import org.codelibs.elasticsearch.common.inject.Inject;
@@ -37,7 +37,6 @@ import org.codelibs.elasticsearch.threadpool.ThreadPool;
 import org.codelibs.elasticsearch.transport.TransportService;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ScheduledFuture;

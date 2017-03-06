@@ -19,9 +19,9 @@
 
 package org.codelibs.elasticsearch.indices.recovery;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexFormatTooNewException;
 import org.apache.lucene.index.IndexFormatTooOldException;
@@ -36,7 +36,6 @@ import org.codelibs.elasticsearch.common.UUIDs;
 import org.codelibs.elasticsearch.common.bytes.BytesReference;
 import org.codelibs.elasticsearch.common.logging.Loggers;
 import org.codelibs.elasticsearch.common.lucene.Lucene;
-import org.codelibs.elasticsearch.common.unit.TimeValue;
 import org.codelibs.elasticsearch.common.util.Callback;
 import org.codelibs.elasticsearch.common.util.CancellableThreads;
 import org.codelibs.elasticsearch.common.util.concurrent.AbstractRefCounted;
@@ -57,8 +56,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 

@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.action.bulk;
 
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.apache.lucene.util.SparseFixedBitSet;
 import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.ElasticsearchParseException;
@@ -73,7 +73,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.LongSupplier;
-import java.util.stream.Collectors;
 
 /**
  * Groups bulk request items by shard, optionally creating non-existent indices and

@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.common.component;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.LogManager;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.codelibs.elasticsearch.common.Strings;
 import org.codelibs.elasticsearch.common.logging.DeprecationLogger;
 import org.codelibs.elasticsearch.common.logging.Loggers;

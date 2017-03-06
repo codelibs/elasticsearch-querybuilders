@@ -19,10 +19,10 @@
 
 package org.codelibs.elasticsearch.common.logging;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.spi.ExtendedLogger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Level;
+import org.codelibs.elasticsearch.querybuilders.log4j.LogManager;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.spi.ExtendedLogger;
 import org.codelibs.elasticsearch.common.settings.Setting;
 import org.codelibs.elasticsearch.common.settings.Setting.Property;
 

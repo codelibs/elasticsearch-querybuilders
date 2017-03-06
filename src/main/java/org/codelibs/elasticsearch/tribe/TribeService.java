@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.tribe;
 
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.action.support.master.TransportMasterNodeReadAction;

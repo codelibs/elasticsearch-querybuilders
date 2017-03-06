@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.index.engine;
 
-import org.apache.logging.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexCommit;
 import org.apache.lucene.index.IndexFormatTooOldException;
@@ -61,7 +61,6 @@ import org.codelibs.elasticsearch.index.VersionType;
 import org.codelibs.elasticsearch.index.mapper.Uid;
 import org.codelibs.elasticsearch.index.merge.MergeStats;
 import org.codelibs.elasticsearch.index.merge.OnGoingMerge;
-import org.codelibs.elasticsearch.index.shard.DocsStats;
 import org.codelibs.elasticsearch.index.shard.ElasticsearchMergePolicy;
 import org.codelibs.elasticsearch.index.shard.ShardId;
 import org.codelibs.elasticsearch.index.shard.TranslogRecoveryPerformer;

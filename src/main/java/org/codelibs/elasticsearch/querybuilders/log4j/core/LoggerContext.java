@@ -14,30 +14,20 @@
  * See the license for the specific language governing permissions and
  * limitations under the license.
  */
-package org.apache.logging.log4j.core;
+package org.codelibs.elasticsearch.querybuilders.log4j.core;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.net.URI;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.config.Configuration;
-import org.apache.logging.log4j.message.MessageFactory;
+import org.codelibs.elasticsearch.querybuilders.log4j.LogManager;
+import org.codelibs.elasticsearch.querybuilders.log4j.core.config.Configuration;
 
 /**
  * The LoggerContext is the anchor for the logging system. It maintains a list of all the loggers requested by
  * applications and a reference to the Configuration. The Configuration will contain the configured loggers, appenders,
  * filters, etc and will be atomically updated whenever a reconfigure occurs.
  */
-public class LoggerContext  extends org.apache.logging.log4j.spi.LoggerContext {
+public class LoggerContext  extends org.codelibs.elasticsearch.querybuilders.log4j.spi.LoggerContext {
     public LoggerContext(final String name) {
         this(name, null, (URI) null);
     }

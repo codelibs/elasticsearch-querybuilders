@@ -19,28 +19,24 @@
 
 package org.codelibs.elasticsearch.common.logging;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.Appender;
-import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.config.Configuration;
-import org.apache.logging.log4j.core.config.Configurator;
-import org.apache.logging.log4j.core.config.LoggerConfig;
-import org.apache.logging.log4j.message.MessageFactory;
-import org.codelibs.elasticsearch.common.Classes;
+import org.codelibs.elasticsearch.querybuilders.log4j.Level;
+import org.codelibs.elasticsearch.querybuilders.log4j.LogManager;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.core.Appender;
+import org.codelibs.elasticsearch.querybuilders.log4j.core.LoggerContext;
+import org.codelibs.elasticsearch.querybuilders.log4j.core.config.Configuration;
+import org.codelibs.elasticsearch.querybuilders.log4j.core.config.Configurator;
+import org.codelibs.elasticsearch.querybuilders.log4j.core.config.LoggerConfig;
 import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.index.Index;
 import org.codelibs.elasticsearch.index.shard.ShardId;
 import org.codelibs.elasticsearch.node.Node;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import static java.util.Arrays.asList;
-import static javax.security.auth.login.Configuration.getConfiguration;
 import static org.codelibs.elasticsearch.common.util.CollectionUtils.asArrayList;
 
 /**

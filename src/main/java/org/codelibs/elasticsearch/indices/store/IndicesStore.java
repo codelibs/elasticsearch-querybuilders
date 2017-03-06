@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.indices.store;
 
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.codelibs.elasticsearch.cluster.ClusterChangedEvent;
 import org.codelibs.elasticsearch.cluster.ClusterName;
 import org.codelibs.elasticsearch.cluster.ClusterState;

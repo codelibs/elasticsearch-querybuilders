@@ -19,12 +19,9 @@
 
 package org.codelibs.elasticsearch.common.logging;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.config.Configurator;
+import org.codelibs.elasticsearch.querybuilders.log4j.Level;
+import org.codelibs.elasticsearch.querybuilders.log4j.LogManager;
 import org.codelibs.elasticsearch.Version;
-import org.codelibs.elasticsearch.cli.ExitCodes;
 import org.codelibs.elasticsearch.cli.UserException;
 import org.codelibs.elasticsearch.cluster.ClusterName;
 import org.codelibs.elasticsearch.common.SuppressForbidden;
@@ -38,7 +35,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;

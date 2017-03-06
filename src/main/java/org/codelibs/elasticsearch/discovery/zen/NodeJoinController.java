@@ -18,9 +18,9 @@
  */
 package org.codelibs.elasticsearch.discovery.zen;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.apache.logging.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
 import org.apache.lucene.store.AlreadyClosedException;
 import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.cluster.ClusterChangedEvent;
@@ -38,7 +38,6 @@ import org.codelibs.elasticsearch.common.component.AbstractComponent;
 import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.transport.LocalTransportAddress;
 import org.codelibs.elasticsearch.common.unit.TimeValue;
-import org.codelibs.elasticsearch.discovery.DiscoverySettings;
 
 import java.util.ArrayList;
 import java.util.Collections;
