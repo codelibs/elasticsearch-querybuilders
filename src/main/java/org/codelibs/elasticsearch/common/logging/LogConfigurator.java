@@ -22,14 +22,7 @@ package org.codelibs.elasticsearch.common.logging;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.config.AbstractConfiguration;
 import org.apache.logging.log4j.core.config.Configurator;
-import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilder;
-import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilderFactory;
-import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
-import org.apache.logging.log4j.core.config.composite.CompositeConfiguration;
-import org.apache.logging.log4j.core.config.properties.PropertiesConfiguration;
-import org.apache.logging.log4j.core.config.properties.PropertiesConfigurationFactory;
 import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.cli.ExitCodes;
 import org.codelibs.elasticsearch.cli.UserException;
@@ -84,45 +77,11 @@ public class LogConfigurator {
     }
 
     private static void configure(final Settings settings, final Path configsPath, final Path logsPath) throws IOException, UserException {
-        Objects.requireNonNull(settings);
-        Objects.requireNonNull(configsPath);
-        Objects.requireNonNull(logsPath);
-
-        setLogConfigurationSystemProperty(logsPath, settings);
-        // we initialize the status logger immediately otherwise Log4j will complain when we try to get the context
-        configureStatusLogger();
-
-        final LoggerContext context = (LoggerContext) LogManager.getContext(false);
-
-        final List<AbstractConfiguration> configurations = new ArrayList<>();
-        final PropertiesConfigurationFactory factory = new PropertiesConfigurationFactory();
-        final Set<FileVisitOption> options = EnumSet.of(FileVisitOption.FOLLOW_LINKS);
-        Files.walkFileTree(configsPath, options, Integer.MAX_VALUE, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                if (file.getFileName().toString().equals("log4j2.properties")) {
-                    configurations.add((PropertiesConfiguration) factory.getConfiguration(context, file.toString(), file.toUri()));
-                }
-                return FileVisitResult.CONTINUE;
-            }
-        });
-
-        if (configurations.isEmpty()) {
-            throw new UserException(
-                    ExitCodes.CONFIG,
-                    "no log4j2.properties found; tried [" + configsPath + "] and its subdirectories");
-        }
-
-        context.start(new CompositeConfiguration(configurations));
-        warnIfOldConfigurationFilePresent(configsPath);
-
-        configureLoggerLevels(settings);
+        throw new UnsupportedOperationException();
     }
 
     private static void configureStatusLogger() {
-        final ConfigurationBuilder<BuiltConfiguration> builder = ConfigurationBuilderFactory.newConfigurationBuilder();
-        builder.setStatusLevel(Level.ERROR);
-        Configurator.initialize(builder.build());
+        throw new UnsupportedOperationException();
     }
 
     private static void configureLoggerLevels(Settings settings) {

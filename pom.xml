@@ -406,6 +406,7 @@
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
@@ -443,6 +444,7 @@
       </exclusions>
       <optional>true</optional>
     </dependency>
+    -->
     <dependency>
       <groupId>net.java.dev.jna</groupId>
       <artifactId>jna</artifactId>
