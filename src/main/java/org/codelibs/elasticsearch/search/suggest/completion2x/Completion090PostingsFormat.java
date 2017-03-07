@@ -18,7 +18,7 @@
  */
 package org.codelibs.elasticsearch.search.suggest.completion2x;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.codecs.FieldsConsumer;
 import org.apache.lucene.codecs.FieldsProducer;

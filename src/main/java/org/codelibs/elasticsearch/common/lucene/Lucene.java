@@ -19,9 +19,9 @@
 
 package org.codelibs.elasticsearch.common.lucene;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.codecs.CodecUtil;

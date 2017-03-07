@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.bootstrap;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.SuppressForbidden;
 import org.codelibs.elasticsearch.common.io.PathUtils;

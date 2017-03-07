@@ -20,8 +20,8 @@
 package org.codelibs.elasticsearch.cluster.metadata;
 
 import com.carrotsearch.hppc.cursors.ObjectCursor;
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 import org.apache.lucene.util.IOUtils;
 import org.codelibs.elasticsearch.action.ActionListener;
 import org.codelibs.elasticsearch.action.admin.indices.mapping.put.PutMappingClusterStateUpdateRequest;

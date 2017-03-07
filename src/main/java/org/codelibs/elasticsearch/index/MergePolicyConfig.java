@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.index;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.apache.lucene.index.MergePolicy;
 import org.apache.lucene.index.NoMergePolicy;
 import org.apache.lucene.index.TieredMergePolicy;

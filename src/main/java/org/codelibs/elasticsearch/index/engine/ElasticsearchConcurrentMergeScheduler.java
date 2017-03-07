@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Set;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.apache.lucene.index.ConcurrentMergeScheduler;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.MergePolicy;

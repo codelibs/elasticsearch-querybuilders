@@ -18,8 +18,8 @@
  */
 package org.codelibs.elasticsearch.indices.analysis;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 import org.apache.lucene.analysis.hunspell.Dictionary;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.SimpleFSDirectory;

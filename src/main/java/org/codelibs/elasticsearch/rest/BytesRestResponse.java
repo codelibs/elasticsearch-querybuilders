@@ -19,9 +19,9 @@
 
 package org.codelibs.elasticsearch.rest;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.ExceptionsHelper;
 import org.codelibs.elasticsearch.common.bytes.BytesArray;

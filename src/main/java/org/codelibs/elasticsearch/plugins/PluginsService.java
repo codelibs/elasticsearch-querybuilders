@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.plugins;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.apache.lucene.analysis.util.CharFilterFactory;
 import org.apache.lucene.analysis.util.TokenFilterFactory;
 import org.apache.lucene.analysis.util.TokenizerFactory;

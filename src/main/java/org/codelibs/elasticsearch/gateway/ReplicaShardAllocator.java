@@ -23,7 +23,7 @@ import com.carrotsearch.hppc.ObjectLongHashMap;
 import com.carrotsearch.hppc.ObjectLongMap;
 import com.carrotsearch.hppc.cursors.ObjectCursor;
 import com.carrotsearch.hppc.cursors.ObjectLongCursor;
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.cluster.metadata.IndexMetaData;
 import org.codelibs.elasticsearch.cluster.metadata.MetaData;
 import org.codelibs.elasticsearch.cluster.node.DiscoveryNode;

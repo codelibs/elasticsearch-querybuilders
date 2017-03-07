@@ -21,7 +21,7 @@ package org.codelibs.elasticsearch.index.mapper;
 
 import com.carrotsearch.hppc.ObjectHashSet;
 import com.carrotsearch.hppc.cursors.ObjectCursor;
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.DelegatingAnalyzerWrapper;
 import org.codelibs.elasticsearch.ElasticsearchGenerationException;
@@ -206,7 +206,7 @@ public class MapperService extends AbstractIndexComponent implements Closeable {
             // only update entries if needed
             updatedEntries = internalMerge(indexMetaData, MergeReason.MAPPING_RECOVERY, true, true);
         } catch (Exception e) {
-            logger.warn((org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>) () -> new ParameterizedMessage("[{}] failed to apply mappings", index()), e);
+            logger.warn((org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier<?>) () -> new ParameterizedMessage("[{}] failed to apply mappings", index()), e);
             throw e;
         }
 

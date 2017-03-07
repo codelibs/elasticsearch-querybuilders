@@ -19,9 +19,9 @@
 
 package org.codelibs.elasticsearch.common.util;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 import org.apache.lucene.util.IOUtils;
 import org.codelibs.elasticsearch.cluster.metadata.IndexMetaData;
 import org.codelibs.elasticsearch.common.logging.Loggers;

@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.action.support.replication;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
 import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.action.ActionListener;
 import org.codelibs.elasticsearch.action.ActionListenerResponseHandler;
@@ -233,7 +233,7 @@ public abstract class TransportReplicationAction<
                     } catch (Exception inner) {
                         inner.addSuppressed(e);
                         logger.warn(
-                            (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
+                            (org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier<?>)
                                 () -> new ParameterizedMessage("Failed to send response for {}", actionName), inner);
                     }
                 }
@@ -478,7 +478,7 @@ public abstract class TransportReplicationAction<
         public void onFailure(Exception e) {
             if (e instanceof RetryOnReplicaException) {
                 logger.trace(
-                    (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
+                    (org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier<?>)
                         () -> new ParameterizedMessage(
                             "Retrying operation on replica, action [{}], request [{}]",
                             transportReplicaAction,
@@ -521,7 +521,7 @@ public abstract class TransportReplicationAction<
             } catch (IOException responseException) {
                 responseException.addSuppressed(e);
                 logger.warn(
-                    (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
+                    (org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier<?>)
                         () -> new ParameterizedMessage(
                             "failed to send error message back to client for action [{}]",
                             transportReplicaAction),
@@ -748,7 +748,7 @@ public abstract class TransportReplicationAction<
                         if (cause instanceof ConnectTransportException || cause instanceof NodeClosedException ||
                             (isPrimaryAction && retryPrimaryException(cause))) {
                             logger.trace(
-                                (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>) () -> new ParameterizedMessage(
+                                (org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier<?>) () -> new ParameterizedMessage(
                                     "received an error from node [{}] for request [{}], scheduling a retry",
                                     node.getId(),
                                     requestToPerform),
@@ -797,7 +797,7 @@ public abstract class TransportReplicationAction<
             if (finished.compareAndSet(false, true)) {
                 setPhase(task, "failed");
                 logger.trace(
-                    (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
+                    (org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier<?>)
                         () -> new ParameterizedMessage("operation failed. action [{}], request [{}]", actionName, request), failure);
                 listener.onFailure(failure);
             } else {
@@ -807,7 +807,7 @@ public abstract class TransportReplicationAction<
 
         void finishWithUnexpectedFailure(Exception failure) {
             logger.warn(
-                (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
+                (org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier<?>)
                     () -> new ParameterizedMessage(
                         "unexpected error during the primary phase for action [{}], request [{}]",
                         actionName,

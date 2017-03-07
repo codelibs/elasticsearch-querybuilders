@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.indices;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.util.CollectionUtil;

@@ -18,7 +18,7 @@
  */
 package org.codelibs.elasticsearch.index.shard;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.action.ActionListener;
 import org.codelibs.elasticsearch.action.support.ThreadedActionListener;
 import org.codelibs.elasticsearch.common.Nullable;

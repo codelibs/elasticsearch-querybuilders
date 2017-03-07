@@ -21,7 +21,7 @@ package org.codelibs.elasticsearch.cluster.routing;
 
 import com.carrotsearch.hppc.ObjectIntHashMap;
 import com.carrotsearch.hppc.cursors.ObjectCursor;
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.apache.lucene.util.CollectionUtil;
 import org.codelibs.elasticsearch.cluster.ClusterState;
 import org.codelibs.elasticsearch.cluster.metadata.IndexMetaData;

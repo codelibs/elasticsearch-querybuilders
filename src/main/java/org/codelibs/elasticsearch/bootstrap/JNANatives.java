@@ -21,7 +21,7 @@ package org.codelibs.elasticsearch.bootstrap;
 
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.apache.lucene.util.Constants;
 import org.codelibs.elasticsearch.common.logging.Loggers;
 import org.codelibs.elasticsearch.monitor.jvm.JvmInfo;

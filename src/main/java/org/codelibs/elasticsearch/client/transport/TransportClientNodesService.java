@@ -20,8 +20,8 @@
 package org.codelibs.elasticsearch.client.transport;
 
 import com.carrotsearch.hppc.cursors.ObjectCursor;
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 import org.codelibs.elasticsearch.ExceptionsHelper;
 import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.action.ActionListener;

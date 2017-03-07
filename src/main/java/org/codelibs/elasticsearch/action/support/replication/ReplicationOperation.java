@@ -18,8 +18,8 @@
  */
 package org.codelibs.elasticsearch.action.support.replication;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
 import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.ExceptionsHelper;
 import org.codelibs.elasticsearch.action.ActionListener;
@@ -191,7 +191,7 @@ public class ReplicationOperation<
             @Override
             public void onFailure(Exception replicaException) {
                 logger.trace(
-                    (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>) () -> new ParameterizedMessage(
+                    (org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier<?>) () -> new ParameterizedMessage(
                         "[{}] failure while performing [{}] on replica {}, request [{}]",
                         shard.shardId(),
                         opType,
@@ -206,7 +206,7 @@ public class ReplicationOperation<
                         shard.shardId(), shard.currentNodeId(), replicaException, restStatus, false));
                     String message = String.format(Locale.ROOT, "failed to perform %s on replica %s", opType, shard);
                     logger.warn(
-                        (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
+                        (org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier<?>)
                             () -> new ParameterizedMessage("[{}] {}", shard.shardId(), message), replicaException);
                     replicasProxy.failShard(shard, replicaRequest.primaryTerm(), message, replicaException,
                         ReplicationOperation.this::decPendingAndFinishIfNeeded,

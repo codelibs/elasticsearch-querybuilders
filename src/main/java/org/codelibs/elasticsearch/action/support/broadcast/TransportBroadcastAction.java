@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.action.support.broadcast;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
 import org.codelibs.elasticsearch.action.ActionListener;
 import org.codelibs.elasticsearch.action.NoShardAvailableActionException;
 import org.codelibs.elasticsearch.action.support.ActionFilters;
@@ -227,7 +227,7 @@ public abstract class TransportBroadcastAction<Request extends BroadcastRequest<
                     if (logger.isTraceEnabled()) {
                         if (!TransportActions.isShardNotAvailableException(e)) {
                             logger.trace(
-                                (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
+                                (org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier<?>)
                                     () -> new ParameterizedMessage(
                                         "{}: failed to execute [{}]",
                                         shard != null ? shard.shortSummary() : shardIt.shardId(),
@@ -242,7 +242,7 @@ public abstract class TransportBroadcastAction<Request extends BroadcastRequest<
                     if (e != null) {
                         if (!TransportActions.isShardNotAvailableException(e)) {
                             logger.debug(
-                                (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
+                                (org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier<?>)
                                     () -> new ParameterizedMessage(
                                         "{}: failed to execute [{}]",
                                         shard != null ? shard.shortSummary() : shardIt.shardId(),

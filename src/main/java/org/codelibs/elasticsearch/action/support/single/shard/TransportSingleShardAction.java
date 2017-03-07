@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.action.support.single.shard;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
 import org.codelibs.elasticsearch.action.ActionListener;
 import org.codelibs.elasticsearch.action.ActionResponse;
 import org.codelibs.elasticsearch.action.NoShardAvailableActionException;
@@ -190,7 +190,7 @@ public abstract class TransportSingleShardAction<Request extends SingleShardRequ
         private void onFailure(ShardRouting shardRouting, Exception e) {
             if (logger.isTraceEnabled() && e != null) {
                 logger.trace(
-                    (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
+                    (org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier<?>)
                         () -> new ParameterizedMessage("{}: failed to execute [{}]", shardRouting, internalRequest.request()), e);
             }
             perform(e);
@@ -210,7 +210,7 @@ public abstract class TransportSingleShardAction<Request extends SingleShardRequ
                 } else {
                     if (logger.isDebugEnabled()) {
                         logger.debug(
-                            (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
+                            (org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier<?>)
                                 () -> new ParameterizedMessage("{}: failed to execute [{}]", null, internalRequest.request()), failure);
                     }
                 }

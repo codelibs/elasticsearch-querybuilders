@@ -14,11 +14,11 @@
  * See the license for the specific language governing permissions and
  * limitations under the license.
  */
-package org.codelibs.elasticsearch.querybuilders.log4j.core.appender;
+package org.codelibs.elasticsearch.querybuilders.mock.log4j.core.appender;
 
 import java.nio.charset.Charset;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.core.Appender;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.core.Appender;
 
 public final class ConsoleAppender implements Appender {
 

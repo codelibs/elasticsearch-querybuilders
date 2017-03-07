@@ -1,10 +1,10 @@
-package org.codelibs.elasticsearch.querybuilders.log4j;
+package org.codelibs.elasticsearch.querybuilders.mock.log4j;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.message.Message;
-import org.codelibs.elasticsearch.querybuilders.log4j.message.MessageFactory;
-import org.codelibs.elasticsearch.querybuilders.log4j.spi.ExtendedLogger;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.MessageSupplier;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.Message;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.MessageFactory;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.spi.ExtendedLogger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.MessageSupplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 
 public class MockLogger implements ExtendedLogger {
     @Override

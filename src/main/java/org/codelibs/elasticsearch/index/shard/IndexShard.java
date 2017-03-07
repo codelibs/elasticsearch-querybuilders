@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.index.shard;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.apache.lucene.codecs.PostingsFormat;
 import org.apache.lucene.index.CheckIndex;
 import org.apache.lucene.index.CorruptIndexException;

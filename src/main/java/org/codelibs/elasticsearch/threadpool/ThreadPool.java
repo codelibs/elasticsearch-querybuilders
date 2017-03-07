@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.threadpool;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 import org.apache.lucene.util.Counter;
 import org.apache.lucene.util.IOUtils;
 import org.codelibs.elasticsearch.common.Nullable;

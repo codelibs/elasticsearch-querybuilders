@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.common.network;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.common.logging.Loggers;
 
 import java.io.IOException;

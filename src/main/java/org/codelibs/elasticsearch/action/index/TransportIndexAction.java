@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.action.index;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 import org.codelibs.elasticsearch.ExceptionsHelper;
 import org.codelibs.elasticsearch.ResourceAlreadyExistsException;
 import org.codelibs.elasticsearch.action.ActionListener;

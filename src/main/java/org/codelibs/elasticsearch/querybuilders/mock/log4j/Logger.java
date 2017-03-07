@@ -14,12 +14,12 @@
  * See the license for the specific language governing permissions and
  * limitations under the license.
  */
-package org.codelibs.elasticsearch.querybuilders.log4j;
+package org.codelibs.elasticsearch.querybuilders.mock.log4j;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.message.Message;
-import org.codelibs.elasticsearch.querybuilders.log4j.message.MessageFactory;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.MessageSupplier;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.Message;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.MessageFactory;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.MessageSupplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 
 /**
  * This is the central interface in the log4j package. Most logging operations, except configuration, are done through
@@ -43,7 +43,7 @@ import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
  * </p>
  * <p>
  * For service provider implementations, it is recommended to extend the
- * {@link org.codelibs.elasticsearch.querybuilders.log4j.spi.AbstractLogger} class rather than implementing this interface directly.
+ * {@link org.codelibs.elasticsearch.querybuilders.mock.log4j.spi.AbstractLogger} class rather than implementing this interface directly.
  * </p>
  *
  * Since 2.4, methods have been added to the {@code Logger} interface to support lambda expressions. The new methods

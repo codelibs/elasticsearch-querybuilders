@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.gateway;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.action.support.nodes.BaseNodeResponse;
 import org.codelibs.elasticsearch.action.support.nodes.BaseNodesResponse;
 import org.codelibs.elasticsearch.cluster.node.DiscoveryNode;

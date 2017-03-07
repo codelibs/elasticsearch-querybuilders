@@ -18,7 +18,7 @@
  */
 package org.codelibs.elasticsearch.index.store;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.lucene.store.StoreRateLimiting;
 import org.codelibs.elasticsearch.common.logging.Loggers;
 import org.codelibs.elasticsearch.common.settings.Setting;

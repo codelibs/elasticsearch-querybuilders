@@ -14,20 +14,20 @@
  * See the license for the specific language governing permissions and
  * limitations under the license.
  */
-package org.codelibs.elasticsearch.querybuilders.log4j.core;
+package org.codelibs.elasticsearch.querybuilders.mock.log4j.core;
 
 import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.LogManager;
-import org.codelibs.elasticsearch.querybuilders.log4j.core.config.Configuration;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.LogManager;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.core.config.Configuration;
 
 /**
  * The LoggerContext is the anchor for the logging system. It maintains a list of all the loggers requested by
  * applications and a reference to the Configuration. The Configuration will contain the configured loggers, appenders,
  * filters, etc and will be atomically updated whenever a reconfigure occurs.
  */
-public class LoggerContext  extends org.codelibs.elasticsearch.querybuilders.log4j.spi.LoggerContext {
+public class LoggerContext  extends org.codelibs.elasticsearch.querybuilders.mock.log4j.spi.LoggerContext {
     public LoggerContext(final String name) {
         this(name, null, (URI) null);
     }

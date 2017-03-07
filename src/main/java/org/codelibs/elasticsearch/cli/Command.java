@@ -23,7 +23,7 @@ import joptsimple.OptionException;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
-import org.codelibs.elasticsearch.querybuilders.log4j.Level;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Level;
 import org.apache.lucene.util.SetOnce;
 import org.codelibs.elasticsearch.common.SuppressForbidden;
 import org.codelibs.elasticsearch.common.logging.LogConfigurator;

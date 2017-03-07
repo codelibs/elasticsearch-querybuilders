@@ -14,11 +14,11 @@
  * See the license for the specific language governing permissions and
  * limitations under the license.
  */
-package org.codelibs.elasticsearch.querybuilders.log4j;
+package org.codelibs.elasticsearch.querybuilders.mock.log4j;
 
 import java.net.URI;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.spi.LoggerContext;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.spi.LoggerContext;
 
 public class LogManager {
 

@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.common.breaker;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.common.unit.ByteSizeValue;
 import org.codelibs.elasticsearch.indices.breaker.BreakerSettings;
 import org.codelibs.elasticsearch.indices.breaker.HierarchyCircuitBreakerService;

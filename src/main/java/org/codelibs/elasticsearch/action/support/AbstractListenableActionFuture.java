@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.action.support;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.action.ActionListener;
 import org.codelibs.elasticsearch.action.ListenableActionFuture;
 import org.codelibs.elasticsearch.common.logging.Loggers;

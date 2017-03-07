@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.http;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 import org.codelibs.elasticsearch.client.node.NodeClient;
 import org.codelibs.elasticsearch.common.Nullable;
 import org.codelibs.elasticsearch.common.breaker.CircuitBreaker;

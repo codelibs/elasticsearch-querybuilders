@@ -18,7 +18,7 @@
  */
 package org.codelibs.elasticsearch.action.support;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
 import org.codelibs.elasticsearch.action.ActionListener;
 import org.codelibs.elasticsearch.action.ActionRequest;
 import org.codelibs.elasticsearch.action.ActionResponse;
@@ -77,7 +77,7 @@ public abstract class HandledTransportAction<Request extends ActionRequest, Resp
                         channel.sendResponse(e);
                     } catch (Exception e1) {
                         logger.warn(
-                            (org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier<?>)
+                            (org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier<?>)
                                 () -> new ParameterizedMessage(
                                     "Failed to send error response for action [{}] and request [{}]",
                                     actionName,

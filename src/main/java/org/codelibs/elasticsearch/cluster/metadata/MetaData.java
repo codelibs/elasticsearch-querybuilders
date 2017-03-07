@@ -22,7 +22,7 @@ package org.codelibs.elasticsearch.cluster.metadata;
 import com.carrotsearch.hppc.ObjectHashSet;
 import com.carrotsearch.hppc.cursors.ObjectCursor;
 import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.apache.lucene.util.CollectionUtil;
 import org.codelibs.elasticsearch.cluster.Diff;
 import org.codelibs.elasticsearch.cluster.Diffable;

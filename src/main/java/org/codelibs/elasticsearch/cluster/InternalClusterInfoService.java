@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.cluster;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.action.ActionListener;
 import org.codelibs.elasticsearch.action.LatchedActionListener;
 import org.codelibs.elasticsearch.action.admin.cluster.node.stats.NodeStats;

@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.common.settings;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.common.inject.Binder;
 import org.codelibs.elasticsearch.common.inject.Module;
 import org.codelibs.elasticsearch.common.logging.Loggers;

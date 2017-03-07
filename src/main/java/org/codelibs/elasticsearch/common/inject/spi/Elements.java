@@ -16,7 +16,7 @@
 
 package org.codelibs.elasticsearch.common.inject.spi;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.common.inject.AbstractModule;
 import org.codelibs.elasticsearch.common.inject.Binder;
 import org.codelibs.elasticsearch.common.inject.Binding;

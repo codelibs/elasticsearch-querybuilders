@@ -14,7 +14,7 @@
  * See the license for the specific language governing permissions and
  * limitations under the license.
  */
-package org.codelibs.elasticsearch.querybuilders.log4j.message;
+package org.codelibs.elasticsearch.querybuilders.mock.log4j.message;
 
 import java.io.Serializable;
 

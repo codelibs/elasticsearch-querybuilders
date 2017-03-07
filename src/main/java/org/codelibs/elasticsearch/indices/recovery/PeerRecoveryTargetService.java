@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.indices.recovery;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 import org.apache.lucene.store.AlreadyClosedException;
 import org.apache.lucene.store.RateLimiter;
 import org.codelibs.elasticsearch.ElasticsearchException;

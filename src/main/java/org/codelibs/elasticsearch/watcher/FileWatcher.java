@@ -18,7 +18,7 @@
  */
 package org.codelibs.elasticsearch.watcher;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.common.io.FileSystemUtils;
 import org.codelibs.elasticsearch.common.logging.Loggers;
 

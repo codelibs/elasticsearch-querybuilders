@@ -18,7 +18,7 @@
  */
 package org.codelibs.elasticsearch.index.shard;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.apache.lucene.util.IOUtils;
 import org.codelibs.elasticsearch.cluster.metadata.IndexMetaData;
 import org.codelibs.elasticsearch.common.xcontent.NamedXContentRegistry;

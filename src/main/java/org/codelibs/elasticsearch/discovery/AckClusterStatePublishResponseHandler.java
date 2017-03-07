@@ -18,9 +18,9 @@
  */
 package org.codelibs.elasticsearch.discovery;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 import org.codelibs.elasticsearch.cluster.node.DiscoveryNode;
 import org.codelibs.elasticsearch.common.logging.ESLoggerFactory;
 

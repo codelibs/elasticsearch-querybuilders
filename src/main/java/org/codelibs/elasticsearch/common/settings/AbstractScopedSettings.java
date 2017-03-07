@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.common.settings;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 import org.apache.lucene.search.spell.LevensteinDistance;
 import org.apache.lucene.util.CollectionUtil;
 import org.codelibs.elasticsearch.ExceptionsHelper;

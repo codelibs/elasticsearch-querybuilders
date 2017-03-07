@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.discovery.zen;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.cluster.ClusterState;
 import org.codelibs.elasticsearch.cluster.node.DiscoveryNode;

@@ -19,8 +19,7 @@
 
 package org.codelibs.elasticsearch.common.logging;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Level;
-import org.codelibs.elasticsearch.querybuilders.log4j.LogManager;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Level;
 import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.cli.UserException;
 import org.codelibs.elasticsearch.cluster.ClusterName;

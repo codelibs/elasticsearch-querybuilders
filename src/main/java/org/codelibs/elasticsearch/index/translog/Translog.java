@@ -19,8 +19,8 @@
 
 package org.codelibs.elasticsearch.index.translog;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.TwoPhaseCommit;
 import org.apache.lucene.store.AlreadyClosedException;

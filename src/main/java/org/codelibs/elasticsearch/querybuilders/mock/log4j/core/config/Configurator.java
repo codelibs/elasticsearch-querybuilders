@@ -14,14 +14,12 @@
  * See the license for the specific language governing permissions and
  * limitations under the license.
  */
-package org.codelibs.elasticsearch.querybuilders.log4j.core.config;
+package org.codelibs.elasticsearch.querybuilders.mock.log4j.core.config;
 
 import java.util.Map;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Level;
-import org.codelibs.elasticsearch.querybuilders.log4j.LogManager;
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
-import org.codelibs.elasticsearch.querybuilders.log4j.core.LoggerContext;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Level;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.core.LoggerContext;
 
 /**
  * Initializes and configure the Logging system. This class provides several ways to construct a LoggerContext using

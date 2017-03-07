@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.index.warmer;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.common.metrics.CounterMetric;
 import org.codelibs.elasticsearch.common.metrics.MeanMetric;
 import org.codelibs.elasticsearch.index.IndexSettings;

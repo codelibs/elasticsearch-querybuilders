@@ -19,12 +19,11 @@
 
 package org.codelibs.elasticsearch.common.logging;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Level;
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
-import org.codelibs.elasticsearch.querybuilders.log4j.Marker;
-import org.codelibs.elasticsearch.querybuilders.log4j.MockLogger;
-import org.codelibs.elasticsearch.querybuilders.log4j.message.Message;
-import org.codelibs.elasticsearch.querybuilders.log4j.spi.ExtendedLogger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Level;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Marker;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.MockLogger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.Message;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.spi.ExtendedLogger;
 
 import java.lang.ref.WeakReference;
 import java.util.WeakHashMap;

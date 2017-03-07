@@ -19,14 +19,14 @@
 
 package org.codelibs.elasticsearch.common.logging;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Level;
-import org.codelibs.elasticsearch.querybuilders.log4j.LogManager;
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
-import org.codelibs.elasticsearch.querybuilders.log4j.core.Appender;
-import org.codelibs.elasticsearch.querybuilders.log4j.core.LoggerContext;
-import org.codelibs.elasticsearch.querybuilders.log4j.core.config.Configuration;
-import org.codelibs.elasticsearch.querybuilders.log4j.core.config.Configurator;
-import org.codelibs.elasticsearch.querybuilders.log4j.core.config.LoggerConfig;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Level;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.LogManager;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.core.Appender;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.core.LoggerContext;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.core.config.Configuration;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.core.config.Configurator;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.core.config.LoggerConfig;
 import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.index.Index;
 import org.codelibs.elasticsearch.index.shard.ShardId;

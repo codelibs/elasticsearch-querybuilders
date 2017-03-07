@@ -19,9 +19,9 @@
 
 package org.codelibs.elasticsearch.indices.recovery;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 import org.codelibs.elasticsearch.ElasticsearchTimeoutException;
 import org.codelibs.elasticsearch.cluster.node.DiscoveryNode;
 import org.codelibs.elasticsearch.common.unit.TimeValue;

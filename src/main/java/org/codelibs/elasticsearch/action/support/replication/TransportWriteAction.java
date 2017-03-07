@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.action.support.replication;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.action.ActionListener;
 import org.codelibs.elasticsearch.action.support.ActionFilters;
 import org.codelibs.elasticsearch.action.support.WriteRequest;

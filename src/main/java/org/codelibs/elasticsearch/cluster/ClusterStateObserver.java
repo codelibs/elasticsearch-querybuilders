@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.cluster;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.cluster.service.ClusterService;
 import org.codelibs.elasticsearch.common.Nullable;

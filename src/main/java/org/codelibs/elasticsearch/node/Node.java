@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.node;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.apache.lucene.util.Constants;
 import org.apache.lucene.util.IOUtils;
 import org.codelibs.elasticsearch.Build;

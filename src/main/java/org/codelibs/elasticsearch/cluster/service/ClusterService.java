@@ -19,9 +19,9 @@
 
 package org.codelibs.elasticsearch.cluster.service;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
-import org.codelibs.elasticsearch.querybuilders.log4j.message.ParameterizedMessage;
-import org.codelibs.elasticsearch.querybuilders.log4j.util.Supplier;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 import org.codelibs.elasticsearch.cluster.AckedClusterStateTaskListener;
 import org.codelibs.elasticsearch.cluster.ClusterChangedEvent;
 import org.codelibs.elasticsearch.cluster.ClusterName;

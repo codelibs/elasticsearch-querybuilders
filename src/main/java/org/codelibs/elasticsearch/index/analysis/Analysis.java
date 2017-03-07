@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.index.analysis;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.ar.ArabicAnalyzer;
 import org.apache.lucene.analysis.bg.BulgarianAnalyzer;

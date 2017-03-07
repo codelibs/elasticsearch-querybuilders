@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.indices.recovery;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.codelibs.elasticsearch.common.lease.Releasable;
 import org.codelibs.elasticsearch.index.shard.IndexShard;
 import org.codelibs.elasticsearch.index.translog.Translog;

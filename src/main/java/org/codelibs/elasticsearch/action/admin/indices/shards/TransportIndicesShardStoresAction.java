@@ -18,7 +18,7 @@
  */
 package org.codelibs.elasticsearch.action.admin.indices.shards;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.apache.lucene.util.CollectionUtil;
 import org.codelibs.elasticsearch.action.ActionListener;
 import org.codelibs.elasticsearch.action.FailedNodeException;

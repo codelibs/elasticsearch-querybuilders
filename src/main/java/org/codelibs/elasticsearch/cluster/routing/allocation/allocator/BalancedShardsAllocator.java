@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.cluster.routing.allocation.allocator;
 
-import org.codelibs.elasticsearch.querybuilders.log4j.Logger;
+import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
 import org.apache.lucene.util.ArrayUtil;
 import org.apache.lucene.util.IntroSorter;
 import org.codelibs.elasticsearch.cluster.metadata.IndexMetaData;
