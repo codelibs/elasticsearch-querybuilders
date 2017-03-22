@@ -1,9 +1,9 @@
-elasticsearch-querybuilders
+Elasticsearch QueryBuilders
 ===============
 
-## Build
+Elasticsearch QueryBuilders allows you to build Query DSL with Java API.
+This library contains QueryBuilders extracted from Elasticsearch source codes and discards unneeded dependencies.
 
-```
-$ sh build.sh
-$ mvn package
-```
+## Getting Started
+
+TBD
