@@ -37,12 +37,7 @@ import org.codelibs.elasticsearch.common.unit.DistanceUnit;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.index.fielddata.IndexGeoPointFieldData;
-import org.codelibs.elasticsearch.index.mapper.BaseGeoPointFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.GeoPointFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.LatLonPointFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.LegacyGeoPointFieldMapper;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-import org.codelibs.elasticsearch.index.search.geo.GeoDistanceRangeQuery;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -272,50 +267,7 @@ public class GeoDistanceQueryBuilder extends AbstractQueryBuilder<GeoDistanceQue
 
     @Override
     protected Query doToQuery(QueryShardContext shardContext) throws IOException {
-        MappedFieldType fieldType = shardContext.fieldMapper(fieldName);
-        if (fieldType == null) {
-            if (ignoreUnmapped) {
-                return new MatchNoDocsQuery();
-            } else {
-                throw new QueryShardException(shardContext, "failed to find geo_point field [" + fieldName + "]");
-            }
-        }
-
-        if (!(fieldType instanceof BaseGeoPointFieldMapper.GeoPointFieldType)) {
-            throw new QueryShardException(shardContext, "field [" + fieldName + "] is not a geo_point field");
-        }
-
-        final Version indexVersionCreated = shardContext.indexVersionCreated();
-        QueryValidationException exception = checkLatLon(shardContext.indexVersionCreated().before(Version.V_2_0_0));
-        if (exception != null) {
-            throw new QueryShardException(shardContext, "couldn't validate latitude/ longitude values", exception);
-        }
-
-        if (indexVersionCreated.onOrAfter(Version.V_2_2_0) || GeoValidationMethod.isCoerce(validationMethod)) {
-            GeoUtils.normalizePoint(center, true, true);
-        }
-
-        double normDistance = geoDistance.normalize(this.distance, DistanceUnit.DEFAULT);
-
-        if (indexVersionCreated.onOrAfter(LatLonPointFieldMapper.LAT_LON_FIELD_VERSION)) {
-            return LatLonPoint.newDistanceQuery(fieldType.name(), center.lat(), center.lon(), normDistance);
-        } else if (indexVersionCreated.before(Version.V_2_2_0)) {
-            LegacyGeoPointFieldMapper.LegacyGeoPointFieldType geoFieldType = (LegacyGeoPointFieldMapper.LegacyGeoPointFieldType) fieldType;
-            IndexGeoPointFieldData indexFieldData = shardContext.getForField(fieldType);
-            String bboxOptimization = Strings.isEmpty(optimizeBbox) ? DEFAULT_OPTIMIZE_BBOX : optimizeBbox;
-            return new GeoDistanceRangeQuery(center, null, normDistance, true, false, geoDistance,
-                    geoFieldType, indexFieldData, bboxOptimization, shardContext);
-        }
-
-        // if index created V_2_2 use (soon to be legacy) numeric encoding postings format
-        // if index created V_2_3 > use prefix encoded postings format
-        final GeoPointField.TermEncoding encoding = (indexVersionCreated.before(Version.V_2_3_0)) ?
-            GeoPointField.TermEncoding.NUMERIC : GeoPointField.TermEncoding.PREFIX;
-        // Lucene 6.0 and earlier requires a radial restriction
-        if (indexVersionCreated.before(Version.V_5_0_0_alpha4)) {
-            normDistance = GeoUtils.maxRadialDistance(center, normDistance);
-        }
-        return new GeoPointDistanceQuery(fieldType.name(), encoding, center.lat(), center.lon(), normDistance);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
@@ -334,121 +286,7 @@ public class GeoDistanceQueryBuilder extends AbstractQueryBuilder<GeoDistanceQue
     }
 
     public static Optional<GeoDistanceQueryBuilder> fromXContent(QueryParseContext parseContext) throws IOException {
-        XContentParser parser = parseContext.parser();
-
-        XContentParser.Token token;
-
-        float boost = AbstractQueryBuilder.DEFAULT_BOOST;
-        String queryName = null;
-        String currentFieldName = null;
-        GeoPoint point = new GeoPoint(Double.NaN, Double.NaN);
-        String fieldName = null;
-        Object vDistance = null;
-        DistanceUnit unit = GeoDistanceQueryBuilder.DEFAULT_DISTANCE_UNIT;
-        GeoDistance geoDistance = GeoDistanceQueryBuilder.DEFAULT_GEO_DISTANCE;
-        String optimizeBbox = null;
-        boolean coerce = GeoValidationMethod.DEFAULT_LENIENT_PARSING;
-        boolean ignoreMalformed = GeoValidationMethod.DEFAULT_LENIENT_PARSING;
-        GeoValidationMethod validationMethod = null;
-        boolean ignoreUnmapped = DEFAULT_IGNORE_UNMAPPED;
-
-        while ((token = parser.nextToken()) != XContentParser.Token.END_OBJECT) {
-            if (token == XContentParser.Token.FIELD_NAME) {
-                currentFieldName = parser.currentName();
-            } else if (parseContext.isDeprecatedSetting(currentFieldName)) {
-                // skip
-            } else if (token == XContentParser.Token.START_ARRAY) {
-                fieldName = currentFieldName;
-                GeoUtils.parseGeoPoint(parser, point);
-            } else if (token == XContentParser.Token.START_OBJECT) {
-                throwParsingExceptionOnMultipleFields(NAME, parser.getTokenLocation(), fieldName, currentFieldName);
-                // the json in the format of -> field : { lat : 30, lon : 12 }
-                String currentName = parser.currentName();
-                fieldName = currentFieldName;
-                while ((token = parser.nextToken()) != XContentParser.Token.END_OBJECT) {
-                    if (token == XContentParser.Token.FIELD_NAME) {
-                        currentName = parser.currentName();
-                    } else if (token.isValue()) {
-                        if (currentName.equals(GeoPointFieldMapper.Names.LAT)) {
-                            point.resetLat(parser.doubleValue());
-                        } else if (currentName.equals(GeoPointFieldMapper.Names.LON)) {
-                            point.resetLon(parser.doubleValue());
-                        } else if (currentName.equals(GeoPointFieldMapper.Names.GEOHASH)) {
-                            point.resetFromGeoHash(parser.text());
-                        } else {
-                            throw new ParsingException(parser.getTokenLocation(),
-                                    "[geo_distance] query does not support [" + currentFieldName + "]");
-                        }
-                    }
-                }
-            } else if (token.isValue()) {
-                if (DISTANCE_FIELD.match(currentFieldName)) {
-                    if (token == XContentParser.Token.VALUE_STRING) {
-                        vDistance = parser.text(); // a String
-                    } else {
-                        vDistance = parser.numberValue(); // a Number
-                    }
-                } else if (UNIT_FIELD.match(currentFieldName)) {
-                    unit = DistanceUnit.fromString(parser.text());
-                } else if (DISTANCE_TYPE_FIELD.match(currentFieldName)) {
-                    geoDistance = GeoDistance.fromString(parser.text());
-                } else if (currentFieldName.endsWith(GeoPointFieldMapper.Names.LAT_SUFFIX)) {
-                    point.resetLat(parser.doubleValue());
-                    fieldName = currentFieldName.substring(0, currentFieldName.length() - GeoPointFieldMapper.Names.LAT_SUFFIX.length());
-                } else if (currentFieldName.endsWith(GeoPointFieldMapper.Names.LON_SUFFIX)) {
-                    point.resetLon(parser.doubleValue());
-                    fieldName = currentFieldName.substring(0, currentFieldName.length() - GeoPointFieldMapper.Names.LON_SUFFIX.length());
-                } else if (AbstractQueryBuilder.NAME_FIELD.match(currentFieldName)) {
-                    queryName = parser.text();
-                } else if (AbstractQueryBuilder.BOOST_FIELD.match(currentFieldName)) {
-                    boost = parser.floatValue();
-                } else if (OPTIMIZE_BBOX_FIELD.match(currentFieldName)) {
-                    optimizeBbox = parser.textOrNull();
-                } else if (COERCE_FIELD.match(currentFieldName)) {
-                    coerce = parser.booleanValue();
-                    if (coerce) {
-                        ignoreMalformed = true;
-                    }
-                } else if (IGNORE_MALFORMED_FIELD.match(currentFieldName)) {
-                    ignoreMalformed = parser.booleanValue();
-                } else if (IGNORE_UNMAPPED_FIELD.match(currentFieldName)) {
-                    ignoreUnmapped = parser.booleanValue();
-                } else if (VALIDATION_METHOD_FIELD.match(currentFieldName)) {
-                    validationMethod = GeoValidationMethod.fromString(parser.text());
-                } else {
-                    if (fieldName == null) {
-                        point.resetFromString(parser.text());
-                        fieldName = currentFieldName;
-                    } else {
-                        throw new ParsingException(parser.getTokenLocation(), "[" + GeoDistanceQueryBuilder.NAME +
-                                "] field name already set to [" + fieldName + "] but found [" + currentFieldName + "]");
-                    }
-                }
-            }
-        }
-
-        if (vDistance == null) {
-            throw new ParsingException(parser.getTokenLocation(), "geo_distance requires 'distance' to be specified");
-        }
-
-        GeoDistanceQueryBuilder qb = new GeoDistanceQueryBuilder(fieldName);
-        if (vDistance instanceof Number) {
-            qb.distance(((Number) vDistance).doubleValue(), unit);
-        } else {
-            qb.distance((String) vDistance, unit);
-        }
-        qb.point(point);
-        if (validationMethod != null) {
-            qb.setValidationMethod(validationMethod);
-        } else {
-            qb.setValidationMethod(GeoValidationMethod.infer(coerce, ignoreMalformed));
-        }
-        qb.optimizeBbox(optimizeBbox);
-        qb.geoDistance(geoDistance);
-        qb.boost(boost);
-        qb.queryName(queryName);
-        qb.ignoreUnmapped(ignoreUnmapped);
-        return Optional.of(qb);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

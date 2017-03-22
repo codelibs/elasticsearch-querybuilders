@@ -70,9 +70,7 @@ public class ChildrenAggregatorFactory
     protected Aggregator doCreateInternal(ValuesSource.Bytes.WithOrdinals.ParentChild valuesSource, Aggregator parent,
             boolean collectsFromSingleBucket, List<PipelineAggregator> pipelineAggregators, Map<String, Object> metaData)
                     throws IOException {
-        long maxOrd = valuesSource.globalMaxOrd(context.searcher(), parentType);
-        return new ParentToChildrenAggregator(name, factories, context, parent, parentType, childFilter, parentFilter, valuesSource, maxOrd,
-                pipelineAggregators, metaData);
+        throw new UnsupportedOperationException();
     }
 
 }

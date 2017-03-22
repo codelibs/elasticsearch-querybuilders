@@ -158,43 +158,6 @@ public class GeoShapeFieldMapper extends FieldMapper {
     }
 
     public static class TypeParser implements Mapper.TypeParser {
-
-        @Override
-        public Mapper.Builder parse(String name, Map<String, Object> node, ParserContext parserContext) throws MapperParsingException {
-            Builder builder = new Builder(name);
-            for (Iterator<Map.Entry<String, Object>> iterator = node.entrySet().iterator(); iterator.hasNext();) {
-                Map.Entry<String, Object> entry = iterator.next();
-                String fieldName = entry.getKey();
-                Object fieldNode = entry.getValue();
-                if (Names.TREE.equals(fieldName)) {
-                    builder.fieldType().setTree(fieldNode.toString());
-                    iterator.remove();
-                } else if (Names.TREE_LEVELS.equals(fieldName)) {
-                    builder.fieldType().setTreeLevels(Integer.parseInt(fieldNode.toString()));
-                    iterator.remove();
-                } else if (Names.TREE_PRESISION.equals(fieldName)) {
-                    builder.fieldType().setPrecisionInMeters(DistanceUnit.parse(fieldNode.toString(), DistanceUnit.DEFAULT, DistanceUnit.DEFAULT));
-                    iterator.remove();
-                } else if (Names.DISTANCE_ERROR_PCT.equals(fieldName)) {
-                    builder.fieldType().setDistanceErrorPct(Double.parseDouble(fieldNode.toString()));
-                    iterator.remove();
-                } else if (Names.ORIENTATION.equals(fieldName)) {
-                    builder.fieldType().setOrientation(ShapeBuilder.Orientation.fromString(fieldNode.toString()));
-                    iterator.remove();
-                } else if (Names.STRATEGY.equals(fieldName)) {
-                    builder.fieldType().setStrategyName(fieldNode.toString());
-                    iterator.remove();
-                } else if (Names.COERCE.equals(fieldName)) {
-                    builder.coerce(lenientNodeBooleanValue(fieldNode));
-                    iterator.remove();
-                } else if (Names.STRATEGY_POINTS_ONLY.equals(fieldName)
-                    && builder.fieldType().strategyName.equals(SpatialStrategy.TERM.getStrategyName()) == false) {
-                    builder.fieldType().setPointsOnly(XContentMapValues.lenientNodeBooleanValue(fieldNode));
-                    iterator.remove();
-                }
-            }
-            return builder;
-        }
     }
 
     public static final class GeoShapeFieldType extends MappedFieldType {
@@ -444,42 +407,6 @@ public class GeoShapeFieldMapper extends FieldMapper {
     @Override
     public GeoShapeFieldType fieldType() {
         return (GeoShapeFieldType) super.fieldType();
-    }
-
-    @Override
-    public Mapper parse(ParseContext context) throws IOException {
-        try {
-            Shape shape = context.parseExternalValue(Shape.class);
-            if (shape == null) {
-                ShapeBuilder shapeBuilder = ShapeBuilder.parse(context.parser(), this);
-                if (shapeBuilder == null) {
-                    return null;
-                }
-                shape = shapeBuilder.build();
-            }
-            if (fieldType().pointsOnly() && !(shape instanceof Point)) {
-                throw new MapperParsingException("[{" + fieldType().name() + "}] is configured for points only but a " +
-                        ((shape instanceof JtsGeometry) ? ((JtsGeometry)shape).getGeom().getGeometryType() : shape.getClass()) + " was found");
-            }
-            Field[] fields = fieldType().defaultStrategy().createIndexableFields(shape);
-            if (fields == null || fields.length == 0) {
-                return null;
-            }
-            for (Field field : fields) {
-                if (!customBoost() &&
-                    fieldType.boost() != 1f && Version.indexCreated(context.indexSettings()).before(Version.V_5_0_0_alpha1)) {
-                    field.setBoost(fieldType().boost());
-                }
-                context.doc().add(field);
-            }
-        } catch (Exception e) {
-            throw new MapperParsingException("failed to parse [" + fieldType().name() + "]", e);
-        }
-        return null;
-    }
-
-    @Override
-    protected void parseCreateField(ParseContext context, List<IndexableField> fields) throws IOException {
     }
 
     @Override

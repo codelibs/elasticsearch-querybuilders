@@ -257,31 +257,7 @@ public class CardinalityAggregator extends NumericMetricsAggregator.SingleValue 
 
         @Override
         public void postCollect() {
-            final FixedBitSet allVisitedOrds = new FixedBitSet(maxOrd);
-            for (long bucket = visitedOrds.size() - 1; bucket >= 0; --bucket) {
-                final FixedBitSet bits = visitedOrds.get(bucket);
-                if (bits != null) {
-                    allVisitedOrds.or(bits);
-                }
-            }
-
-            final org.codelibs.elasticsearch.common.hash.MurmurHash3.Hash128 hash = new org.codelibs.elasticsearch.common.hash.MurmurHash3.Hash128();
-            try (LongArray hashes = bigArrays.newLongArray(maxOrd, false)) {
-                for (int ord = allVisitedOrds.nextSetBit(0); ord < DocIdSetIterator.NO_MORE_DOCS; ord = ord + 1 < maxOrd ? allVisitedOrds.nextSetBit(ord + 1) : DocIdSetIterator.NO_MORE_DOCS) {
-                    final BytesRef value = values.lookupOrd(ord);
-                    org.codelibs.elasticsearch.common.hash.MurmurHash3.hash128(value.bytes, value.offset, value.length, 0, hash);
-                    hashes.set(ord, hash.h1);
-                }
-
-                for (long bucket = visitedOrds.size() - 1; bucket >= 0; --bucket) {
-                    final FixedBitSet bits = visitedOrds.get(bucket);
-                    if (bits != null) {
-                        for (int ord = bits.nextSetBit(0); ord < DocIdSetIterator.NO_MORE_DOCS; ord = ord + 1 < maxOrd ? bits.nextSetBit(ord + 1) : DocIdSetIterator.NO_MORE_DOCS) {
-                            counts.collect(bucket, hashes.get(ord));
-                        }
-                    }
-                }
-            }
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         }
 
         @Override
@@ -373,8 +349,6 @@ public class CardinalityAggregator extends NumericMetricsAggregator.SingleValue 
 
         private static class Bytes extends MurmurHash3Values {
 
-            private final org.codelibs.elasticsearch.common.hash.MurmurHash3.Hash128 hash = new org.codelibs.elasticsearch.common.hash.MurmurHash3.Hash128();
-
             private final SortedBinaryDocValues values;
 
             public Bytes(SortedBinaryDocValues values) {
@@ -393,9 +367,7 @@ public class CardinalityAggregator extends NumericMetricsAggregator.SingleValue 
 
             @Override
             public long valueAt(int index) {
-                final BytesRef bytes = values.valueAt(index);
-                org.codelibs.elasticsearch.common.hash.MurmurHash3.hash128(bytes.bytes, bytes.offset, bytes.length, 0, hash);
-                return hash.h1;
+                throw new UnsupportedOperationException("querybuilders does not support this operation.");
             }
         }
     }

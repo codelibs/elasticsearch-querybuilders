@@ -30,11 +30,13 @@ import java.io.IOException;
 public class SearchContextException extends SearchException {
 
     public SearchContextException(SearchContext context, String msg) {
-        super(context.shardTarget(), msg);
+        super();
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public SearchContextException(SearchContext context, String msg, Throwable t) {
-        super(context.shardTarget(), msg, t);
+        super();
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public SearchContextException(StreamInput in) throws IOException {

@@ -19,7 +19,6 @@
 
 package org.codelibs.elasticsearch.search.aggregations.metrics.percentiles.hdr;
 
-import org.HdrHistogram.DoubleHistogram;
 import org.apache.lucene.index.LeafReaderContext;
 import org.codelibs.elasticsearch.common.lease.Releasables;
 import org.codelibs.elasticsearch.common.util.ArrayUtils;
@@ -48,7 +47,6 @@ public abstract class AbstractHDRPercentilesAggregator extends NumericMetricsAgg
     protected final double[] keys;
     protected final ValuesSource.Numeric valuesSource;
     protected final DocValueFormat format;
-    protected ObjectArray<DoubleHistogram> states;
     protected final int numberOfSignificantValueDigits;
     protected final boolean keyed;
 
@@ -56,12 +54,7 @@ public abstract class AbstractHDRPercentilesAggregator extends NumericMetricsAgg
             double[] keys, int numberOfSignificantValueDigits, boolean keyed, DocValueFormat formatter,
             List<PipelineAggregator> pipelineAggregators, Map<String, Object> metaData) throws IOException {
         super(name, context, parent, pipelineAggregators, metaData);
-        this.valuesSource = valuesSource;
-        this.keyed = keyed;
-        this.format = formatter;
-        this.states = context.bigArrays().newObjectArray(1);
-        this.keys = keys;
-        this.numberOfSignificantValueDigits = numberOfSignificantValueDigits;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
@@ -80,26 +73,7 @@ public abstract class AbstractHDRPercentilesAggregator extends NumericMetricsAgg
         return new LeafBucketCollectorBase(sub, values) {
             @Override
             public void collect(int doc, long bucket) throws IOException {
-                states = bigArrays.grow(states, bucket + 1);
-
-                DoubleHistogram state = states.get(bucket);
-                if (state == null) {
-                    state = new DoubleHistogram(numberOfSignificantValueDigits);
-                    // Set the histogram to autosize so it can resize itself as
-                    // the data range increases. Resize operations should be
-                    // rare as the histogram buckets are exponential (on the top
-                    // level). In the future we could expose the range as an
-                    // option on the request so the histogram can be fixed at
-                    // initialisation and doesn't need resizing.
-                    state.setAutoResize(true);
-                    states.set(bucket, state);
-                }
-
-                values.setDocument(doc);
-                final int valueCount = values.count();
-                for (int i = 0; i < valueCount; i++) {
-                    state.recordValue(values.valueAt(i));
-                }
+                throw new UnsupportedOperationException("querybuilders does not support this operation.");
             }
         };
     }
@@ -109,17 +83,9 @@ public abstract class AbstractHDRPercentilesAggregator extends NumericMetricsAgg
         return indexOfKey(keys, Double.parseDouble(name)) >= 0;
     }
 
-    protected DoubleHistogram getState(long bucketOrd) {
-        if (bucketOrd >= states.size()) {
-            return null;
-        }
-        final DoubleHistogram state = states.get(bucketOrd);
-        return state;
-    }
-
     @Override
     protected void doClose() {
-        Releasables.close(states);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
 }

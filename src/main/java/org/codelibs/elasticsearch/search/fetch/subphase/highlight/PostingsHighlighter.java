@@ -28,7 +28,6 @@ import org.codelibs.elasticsearch.common.Strings;
 import org.codelibs.elasticsearch.common.text.Text;
 import org.codelibs.elasticsearch.index.mapper.FieldMapper;
 import org.codelibs.elasticsearch.search.fetch.FetchPhaseExecutionException;
-import org.codelibs.elasticsearch.search.fetch.FetchSubPhase;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.highlight.HighlightUtils.Encoders;
 
@@ -56,10 +55,10 @@ public class PostingsHighlighter implements Highlighter {
         }
 
         SearchContext context = highlighterContext.context;
-        FetchSubPhase.HitContext hitContext = highlighterContext.hitContext;
 
         throw new UnsupportedOperationException("QueryBuilders does not support this operation.");
-        /*if (!hitContext.cache().containsKey(CACHE_KEY)) {
+        /*        FetchSubPhase.HitContext hitContext = highlighterContext.hitContext;
+        if (!hitContext.cache().containsKey(CACHE_KEY)) {
             hitContext.cache().put(CACHE_KEY, new HighlighterEntry());
         }
 

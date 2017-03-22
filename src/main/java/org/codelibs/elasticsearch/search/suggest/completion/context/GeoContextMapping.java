@@ -30,9 +30,6 @@ import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
 import org.codelibs.elasticsearch.index.mapper.FieldMapper;
-import org.codelibs.elasticsearch.index.mapper.GeoPointFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.ParseContext;
-import org.codelibs.elasticsearch.index.mapper.ParseContext.Document;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 
 import java.io.IOException;
@@ -123,105 +120,6 @@ public class GeoContextMapping extends ContextMapping<GeoQueryContext> {
             builder.field(FIELD_FIELDNAME, fieldName);
         }
         return builder;
-    }
-
-    /**
-     * Parse a set of {@link CharSequence} contexts at index-time.
-     * Acceptable formats:
-     *
-     *  <ul>
-     *     <li>Array: <pre>[<i>&lt;GEO POINT&gt;</i>, ..]</pre></li>
-     *     <li>String/Object/Array: <pre>&quot;GEO POINT&quot;</pre></li>
-     *  </ul>
-     *
-     * see {@link GeoUtils#parseGeoPoint(String, GeoPoint)} for GEO POINT
-     */
-    @Override
-    public Set<CharSequence> parseContext(ParseContext parseContext, XContentParser parser) throws IOException, ElasticsearchParseException {
-        if (fieldName != null) {
-            FieldMapper mapper = parseContext.docMapper().mappers().getMapper(fieldName);
-            if (!(mapper instanceof GeoPointFieldMapper)) {
-                throw new ElasticsearchParseException("referenced field must be mapped to geo_point");
-            }
-        }
-        final Set<CharSequence> contexts = new HashSet<>();
-        Token token = parser.currentToken();
-        if (token == Token.START_ARRAY) {
-            token = parser.nextToken();
-            // Test if value is a single point in <code>[lon, lat]</code> format
-            if (token == Token.VALUE_NUMBER) {
-                double lon = parser.doubleValue();
-                if (parser.nextToken() == Token.VALUE_NUMBER) {
-                    double lat = parser.doubleValue();
-                    if (parser.nextToken() == Token.END_ARRAY) {
-                        contexts.add(stringEncode(lon, lat, precision));
-                    } else {
-                        throw new ElasticsearchParseException("only two values [lon, lat] expected");
-                    }
-                } else {
-                    throw new ElasticsearchParseException("latitude must be a numeric value");
-                }
-            } else {
-                while (token != Token.END_ARRAY) {
-                    GeoPoint point = GeoUtils.parseGeoPoint(parser);
-                    contexts.add(stringEncode(point.getLon(), point.getLat(), precision));
-                    token = parser.nextToken();
-                }
-            }
-        } else if (token == Token.VALUE_STRING) {
-            final String geoHash = parser.text();
-            final CharSequence truncatedGeoHash = geoHash.subSequence(0, Math.min(geoHash.length(), precision));
-            contexts.add(truncatedGeoHash);
-        } else {
-            // or a single location
-            GeoPoint point = GeoUtils.parseGeoPoint(parser);
-            contexts.add(stringEncode(point.getLon(), point.getLat(), precision));
-        }
-        return contexts;
-    }
-
-    @Override
-    public Set<CharSequence> parseContext(Document document) {
-        final Set<CharSequence> geohashes = new HashSet<>();
-
-        if (fieldName != null) {
-            IndexableField[] fields = document.getFields(fieldName);
-            GeoPoint spare = new GeoPoint();
-            if (fields.length == 0) {
-                IndexableField[] lonFields = document.getFields(fieldName + ".lon");
-                IndexableField[] latFields = document.getFields(fieldName + ".lat");
-                if (lonFields.length > 0 && latFields.length > 0) {
-                    for (int i = 0; i < lonFields.length; i++) {
-                        IndexableField lonField = lonFields[i];
-                        IndexableField latField = latFields[i];
-                        assert lonField.fieldType().docValuesType() == latField.fieldType().docValuesType();
-                        // we write doc values fields differently: one field for all values, so we need to only care about indexed fields
-                        if (lonField.fieldType().docValuesType() == DocValuesType.NONE) {
-                            spare.reset(latField.numericValue().doubleValue(), lonField.numericValue().doubleValue());
-                            geohashes.add(stringEncode(spare.getLon(), spare.getLat(), precision));
-                        }
-                    }
-                }
-            } else {
-                for (IndexableField field : fields) {
-                    if (field instanceof StringField) {
-                        spare.resetFromString(field.stringValue());
-                    } else {
-                        // todo return this to .stringValue() once LatLonPoint implements it
-                        spare.resetFromIndexableField(field);
-                    }
-                    geohashes.add(spare.geohash());
-                }
-            }
-        }
-
-        Set<CharSequence> locations = new HashSet<>();
-        for (CharSequence geohash : geohashes) {
-            int precision = Math.min(this.precision, geohash.length());
-            CharSequence truncatedGeohash = geohash.subSequence(0, precision);
-            locations.add(truncatedGeohash);
-        }
-        return locations;
     }
 
     @Override

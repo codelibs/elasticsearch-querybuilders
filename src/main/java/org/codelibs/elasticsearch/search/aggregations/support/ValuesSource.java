@@ -43,7 +43,6 @@ import org.codelibs.elasticsearch.index.fielddata.SortedNumericDoubleValues;
 import org.codelibs.elasticsearch.index.fielddata.SortingBinaryDocValues;
 import org.codelibs.elasticsearch.index.fielddata.SortingNumericDocValues;
 import org.codelibs.elasticsearch.index.fielddata.SortingNumericDoubleValues;
-import org.codelibs.elasticsearch.index.fielddata.plain.ParentChildIndexFieldData;
 import org.codelibs.elasticsearch.script.LeafSearchScript;
 import org.codelibs.elasticsearch.script.SearchScript;
 import org.codelibs.elasticsearch.search.aggregations.support.ValuesSource.WithScript.BytesValues;
@@ -156,35 +155,17 @@ public abstract class ValuesSource {
 
         public static class ParentChild extends Bytes {
 
-            protected final ParentChildIndexFieldData indexFieldData;
-
-            public ParentChild(ParentChildIndexFieldData indexFieldData) {
-                this.indexFieldData = indexFieldData;
-            }
-
             public long globalMaxOrd(IndexSearcher indexSearcher, String type) {
-                DirectoryReader indexReader = (DirectoryReader) indexSearcher.getIndexReader();
-                if (indexReader.leaves().isEmpty()) {
-                    return 0;
-                } else {
-                    LeafReaderContext atomicReaderContext = indexReader.leaves().get(0);
-                    IndexParentChildFieldData globalFieldData = indexFieldData.loadGlobal(indexReader);
-                    AtomicParentChildFieldData afd = globalFieldData.load(atomicReaderContext);
-                    SortedDocValues values = afd.getOrdinalsValues(type);
-                    return values.getValueCount();
-                }
+                throw new UnsupportedOperationException("querybuilders does not support this operation.");
             }
 
             public SortedDocValues globalOrdinalsValues(String type, LeafReaderContext context) {
-                final IndexParentChildFieldData global = indexFieldData.loadGlobal((DirectoryReader)context.parent.reader());
-                final AtomicParentChildFieldData atomicFieldData = global.load(context);
-                return atomicFieldData.getOrdinalsValues(type);
+                throw new UnsupportedOperationException("querybuilders does not support this operation.");
             }
 
             @Override
             public SortedBinaryDocValues bytesValues(LeafReaderContext context) {
-                final AtomicParentChildFieldData atomicFieldData = indexFieldData.load(context);
-                return atomicFieldData.getBytesValues();
+                throw new UnsupportedOperationException("querybuilders does not support this operation.");
             }
         }
 

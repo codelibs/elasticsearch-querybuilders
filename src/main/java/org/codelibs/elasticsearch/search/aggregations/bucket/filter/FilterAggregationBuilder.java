@@ -72,9 +72,7 @@ public class FilterAggregationBuilder extends AbstractAggregationBuilder<FilterA
     @Override
     protected AggregatorFactory<?> doBuild(SearchContext context, AggregatorFactory<?> parent,
             AggregatorFactories.Builder subFactoriesBuilder) throws IOException {
-        // TODO this sucks we need a rewrite phase for aggregations too
-        final QueryBuilder rewrittenFilter = QueryBuilder.rewriteQuery(filter, context.getQueryShardContext());
-        return new FilterAggregatorFactory(name, type, rewrittenFilter, context, parent, subFactoriesBuilder, metaData);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

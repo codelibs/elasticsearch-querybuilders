@@ -39,9 +39,7 @@ import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.text.Text;
 import org.codelibs.elasticsearch.index.fielddata.AtomicFieldData;
 import org.codelibs.elasticsearch.index.fielddata.ScriptDocValues;
-import org.codelibs.elasticsearch.index.mapper.CompletionFieldMapper;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-import org.codelibs.elasticsearch.index.mapper.MapperService;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 import org.codelibs.elasticsearch.search.suggest.Suggest;
@@ -68,86 +66,7 @@ public class CompletionSuggester extends Suggester<CompletionSuggestionContext> 
     @Override
     protected Suggest.Suggestion<? extends Suggest.Suggestion.Entry<? extends Suggest.Suggestion.Entry.Option>> innerExecute(String name,
             final CompletionSuggestionContext suggestionContext, final IndexSearcher searcher, CharsRefBuilder spare) throws IOException {
-        if (suggestionContext.getFieldType() != null) {
-            final CompletionFieldMapper.CompletionFieldType fieldType = suggestionContext.getFieldType();
-            CompletionSuggestion completionSuggestion = new CompletionSuggestion(name, suggestionContext.getSize());
-            spare.copyUTF8Bytes(suggestionContext.getText());
-            CompletionSuggestion.Entry completionSuggestEntry = new CompletionSuggestion.Entry(
-                new Text(spare.toString()), 0, spare.length());
-            completionSuggestion.addTerm(completionSuggestEntry);
-            TopSuggestDocsCollector collector = new TopDocumentsCollector(suggestionContext.getSize());
-            suggest(searcher, suggestionContext.toQuery(), collector);
-            int numResult = 0;
-            for (TopSuggestDocs.SuggestScoreDoc suggestScoreDoc : collector.get().scoreLookupDocs()) {
-                TopDocumentsCollector.SuggestDoc suggestDoc = (TopDocumentsCollector.SuggestDoc) suggestScoreDoc;
-                // collect contexts
-                Map<String, Set<CharSequence>> contexts = Collections.emptyMap();
-                if (fieldType.hasContextMappings() && suggestDoc.getContexts().isEmpty() == false) {
-                    contexts = fieldType.getContextMappings().getNamedContexts(suggestDoc.getContexts());
-                }
-                if (numResult++ < suggestionContext.getSize()) {
-                    CompletionSuggestion.Entry.Option option = new CompletionSuggestion.Entry.Option(suggestDoc.doc,
-                        new Text(suggestDoc.key.toString()), suggestDoc.score, contexts);
-                    completionSuggestEntry.addOption(option);
-                } else {
-                    break;
-                }
-            }
-            return completionSuggestion;
-        } else if (suggestionContext.getFieldType2x() != null) {
-            final IndexReader indexReader = searcher.getIndexReader();
-            org.codelibs.elasticsearch.search.suggest.completion2x.CompletionSuggestion completionSuggestion =
-                new org.codelibs.elasticsearch.search.suggest.completion2x.CompletionSuggestion(name, suggestionContext.getSize());
-            spare.copyUTF8Bytes(suggestionContext.getText());
-
-            org.codelibs.elasticsearch.search.suggest.completion2x.CompletionSuggestion.Entry completionSuggestEntry =
-                new org.codelibs.elasticsearch.search.suggest.completion2x.CompletionSuggestion.Entry(new Text(spare.toString()), 0, spare.length());
-            completionSuggestion.addTerm(completionSuggestEntry);
-
-            String fieldName = suggestionContext.getField();
-            Map<String, org.codelibs.elasticsearch.search.suggest.completion2x.CompletionSuggestion.Entry.Option> results =
-                new HashMap<>(indexReader.leaves().size() * suggestionContext.getSize());
-            for (LeafReaderContext atomicReaderContext : indexReader.leaves()) {
-                LeafReader atomicReader = atomicReaderContext.reader();
-                Terms terms = atomicReader.fields().terms(fieldName);
-                if (terms instanceof Completion090PostingsFormat.CompletionTerms) {
-                    final Completion090PostingsFormat.CompletionTerms lookupTerms = (Completion090PostingsFormat.CompletionTerms) terms;
-                    final Lookup lookup = lookupTerms.getLookup(suggestionContext.getFieldType2x(), suggestionContext);
-                    if (lookup == null) {
-                        // we don't have a lookup for this segment.. this might be possible if a merge dropped all
-                        // docs from the segment that had a value in this segment.
-                        continue;
-                    }
-                    List<Lookup.LookupResult> lookupResults = lookup.lookup(spare.get(), false, suggestionContext.getSize());
-                    for (Lookup.LookupResult res : lookupResults) {
-
-                        final String key = res.key.toString();
-                        final float score = res.value;
-                        final org.codelibs.elasticsearch.search.suggest.completion2x.CompletionSuggestion.Entry.Option value = results.get(key);
-                        if (value == null) {
-                            final org.codelibs.elasticsearch.search.suggest.completion2x.CompletionSuggestion.Entry.Option option =
-                                new org.codelibs.elasticsearch.search.suggest.completion2x.CompletionSuggestion.Entry.Option(new Text(key), score,
-                                res.payload == null ? null : new BytesArray(res.payload));
-                            results.put(key, option);
-                        } else if (value.getScore() < score) {
-                            value.setScore(score);
-                            value.setPayload(res.payload == null ? null : new BytesArray(res.payload));
-                        }
-                    }
-                }
-            }
-            final List<org.codelibs.elasticsearch.search.suggest.completion2x.CompletionSuggestion.Entry.Option> options =
-                new ArrayList<>(results.values());
-            CollectionUtil.introSort(options, scoreComparator);
-
-            int optionCount = Math.min(suggestionContext.getSize(), options.size());
-            for (int i = 0; i < optionCount; i++) {
-                completionSuggestEntry.addOption(options.get(i));
-            }
-
-            return completionSuggestion;
-        }
-        return null;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     private static final ScoreComparator scoreComparator = new ScoreComparator();

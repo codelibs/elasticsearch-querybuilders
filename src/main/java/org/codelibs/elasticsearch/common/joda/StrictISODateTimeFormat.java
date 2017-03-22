@@ -73,7 +73,6 @@ import java.util.Set;
  *
  * @author Brian S O'Neill
  * @since 1.0
- * @see DateTimeFormat
  * @see DateTimeFormatterBuilder
  */
 public class StrictISODateTimeFormat {

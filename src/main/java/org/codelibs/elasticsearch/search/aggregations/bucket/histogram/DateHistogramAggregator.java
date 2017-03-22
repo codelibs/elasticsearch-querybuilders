@@ -21,7 +21,6 @@ package org.codelibs.elasticsearch.search.aggregations.bucket.histogram;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.util.CollectionUtil;
-import org.codelibs.elasticsearch.common.inject.internal.Nullable;
 import org.codelibs.elasticsearch.common.lease.Releasables;
 import org.codelibs.elasticsearch.common.rounding.Rounding;
 import org.codelibs.elasticsearch.common.util.LongHash;
@@ -64,7 +63,7 @@ class DateHistogramAggregator extends BucketsAggregator {
 
     public DateHistogramAggregator(String name, AggregatorFactories factories, Rounding rounding, long offset, InternalOrder order,
             boolean keyed,
-            long minDocCount, @Nullable ExtendedBounds extendedBounds, @Nullable ValuesSource.Numeric valuesSource,
+            long minDocCount, ExtendedBounds extendedBounds, ValuesSource.Numeric valuesSource,
             DocValueFormat formatter, SearchContext aggregationContext,
             Aggregator parent, List<PipelineAggregator> pipelineAggregators, Map<String, Object> metaData) throws IOException {
 

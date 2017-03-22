@@ -411,25 +411,7 @@ public class BoolQueryBuilder extends AbstractQueryBuilder<BoolQueryBuilder> {
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        BooleanQuery.Builder booleanQueryBuilder = new BooleanQuery.Builder();
-        booleanQueryBuilder.setDisableCoord(disableCoord);
-        addBooleanClauses(context, booleanQueryBuilder, mustClauses, BooleanClause.Occur.MUST);
-        addBooleanClauses(context, booleanQueryBuilder, mustNotClauses, BooleanClause.Occur.MUST_NOT);
-        addBooleanClauses(context, booleanQueryBuilder, shouldClauses, BooleanClause.Occur.SHOULD);
-        addBooleanClauses(context, booleanQueryBuilder, filterClauses, BooleanClause.Occur.FILTER);
-        BooleanQuery booleanQuery = booleanQueryBuilder.build();
-        if (booleanQuery.clauses().isEmpty()) {
-            return new MatchAllDocsQuery();
-        }
-
-        final String minimumShouldMatch;
-        if (context.isFilter() && this.minimumShouldMatch == null && shouldClauses.size() > 0) {
-            minimumShouldMatch = "1";
-        } else {
-            minimumShouldMatch = this.minimumShouldMatch;
-        }
-        Query query = Queries.applyMinimumShouldMatch(booleanQuery, minimumShouldMatch);
-        return adjustPureNegative ? fixNegativeQueryIfNeeded(query) : query;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     private static void addBooleanClauses(QueryShardContext context, BooleanQuery.Builder booleanQueryBuilder,

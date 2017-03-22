@@ -68,11 +68,7 @@ public class SimpleQueryParser extends org.apache.lucene.queryparser.simple.Simp
 
     @Override
     protected Query newTermQuery(Term term) {
-        MappedFieldType currentFieldType = context.fieldMapper(term.field());
-        if (currentFieldType == null || currentFieldType.tokenized()) {
-            return super.newTermQuery(term);
-        }
-        return currentFieldType.termQuery(term.bytes(), context);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
@@ -115,28 +111,7 @@ public class SimpleQueryParser extends org.apache.lucene.queryparser.simple.Simp
 
     @Override
     public Query newPhraseQuery(String text, int slop) {
-        BooleanQuery.Builder bq = new BooleanQuery.Builder();
-        bq.setDisableCoord(true);
-        for (Map.Entry<String,Float> entry : weights.entrySet()) {
-            try {
-                String field = entry.getKey();
-                if (settings.quoteFieldSuffix() != null) {
-                    String quoteField = field + settings.quoteFieldSuffix();
-                    MappedFieldType quotedFieldType = context.fieldMapper(quoteField);
-                    if (quotedFieldType != null) {
-                        field = quoteField;
-                    }
-                }
-                Float boost = entry.getValue();
-                Query q = createPhraseQuery(field, text, slop);
-                if (q != null) {
-                    bq.add(wrapWithBoost(q, boost), BooleanClause.Occur.SHOULD);
-                }
-            } catch (RuntimeException e) {
-                rethrowUnlessLenient(e);
-            }
-        }
-        return super.simplify(bq.build());
+        throw new UnsupportedOperationException();
     }
 
     /**

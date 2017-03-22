@@ -331,24 +331,7 @@ public class FuzzyQueryBuilder extends AbstractQueryBuilder<FuzzyQueryBuilder> i
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        Query query = null;
-        String rewrite = this.rewrite;
-        if (rewrite == null && context.isFilter()) {
-            rewrite = QueryParsers.CONSTANT_SCORE.getPreferredName();
-        }
-        MappedFieldType fieldType = context.fieldMapper(fieldName);
-        if (fieldType != null) {
-            query = fieldType.fuzzyQuery(value, fuzziness, prefixLength, maxExpansions, transpositions);
-        }
-        if (query == null) {
-            int maxEdits = fuzziness.asDistance(BytesRefs.toString(value));
-            query = new FuzzyQuery(new Term(fieldName, BytesRefs.toBytesRef(value)), maxEdits, prefixLength, maxExpansions, transpositions);
-        }
-        if (query instanceof MultiTermQuery) {
-            MultiTermQuery.RewriteMethod rewriteMethod = QueryParsers.parseRewriteMethod(rewrite, null);
-            QueryParsers.setRewriteMethod((MultiTermQuery) query, rewriteMethod);
-        }
-        return query;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

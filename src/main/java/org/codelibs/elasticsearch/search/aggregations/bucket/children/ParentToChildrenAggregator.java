@@ -72,14 +72,7 @@ public class ParentToChildrenAggregator extends SingleBucketAggregator {
                                       ValuesSource.Bytes.WithOrdinals.ParentChild valuesSource,
             long maxOrd, List<PipelineAggregator> pipelineAggregators, Map<String, Object> metaData) throws IOException {
         super(name, factories, context, parent, pipelineAggregators, metaData);
-        this.parentType = parentType;
-        // these two filters are cached in the parser
-        this.childFilter = context.searcher().createNormalizedWeight(childFilter, false);
-        this.parentFilter = context.searcher().createNormalizedWeight(parentFilter, false);
-        this.parentOrdToBuckets = context.bigArrays().newLongArray(maxOrd, false);
-        this.parentOrdToBuckets.fill(0, maxOrd, -1);
-        this.parentOrdToOtherBuckets = new LongObjectPagedHashMap<>(context.bigArrays());
-        this.valuesSource = valuesSource;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -132,42 +125,7 @@ public class ParentToChildrenAggregator extends SingleBucketAggregator {
 
     @Override
     protected void doPostCollection() throws IOException {
-        IndexReader indexReader = context().searcher().getIndexReader();
-        for (LeafReaderContext ctx : indexReader.leaves()) {
-            Scorer childDocsScorer = childFilter.scorer(ctx);
-            if (childDocsScorer == null) {
-                continue;
-            }
-            DocIdSetIterator childDocsIter = childDocsScorer.iterator();
-
-            final LeafBucketCollector sub = collectableSubAggregators.getLeafCollector(ctx);
-            final SortedDocValues globalOrdinals = valuesSource.globalOrdinalsValues(parentType, ctx);
-
-            // Set the scorer, since we now replay only the child docIds
-            sub.setScorer(new ConstantScoreScorer(null, 1f,childDocsIter));
-
-            final Bits liveDocs = ctx.reader().getLiveDocs();
-            for (int docId = childDocsIter.nextDoc(); docId != DocIdSetIterator.NO_MORE_DOCS; docId = childDocsIter.nextDoc()) {
-                if (liveDocs != null && liveDocs.get(docId) == false) {
-                    continue;
-                }
-                long globalOrdinal = globalOrdinals.getOrd(docId);
-                if (globalOrdinal != -1) {
-                    long bucketOrd = parentOrdToBuckets.get(globalOrdinal);
-                    if (bucketOrd != -1) {
-                        collectBucket(sub, docId, bucketOrd);
-                        if (multipleBucketsPerParentOrd) {
-                            long[] otherBucketOrds = parentOrdToOtherBuckets.get(globalOrdinal);
-                            if (otherBucketOrds != null) {
-                                for (long otherBucketOrd : otherBucketOrds) {
-                                    collectBucket(sub, docId, otherBucketOrd);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        throw new UnsupportedOperationException();
     }
 
     @Override

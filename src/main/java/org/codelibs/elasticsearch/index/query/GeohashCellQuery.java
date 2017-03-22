@@ -35,8 +35,6 @@ import org.codelibs.elasticsearch.common.unit.DistanceUnit;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
-import org.codelibs.elasticsearch.index.mapper.BaseGeoPointFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.LatLonPointFieldMapper;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
 
 import java.io.IOException;
@@ -74,30 +72,6 @@ public class GeohashCellQuery {
     private static final ParseField PRECISION_FIELD = new ParseField("precision");
     private static final ParseField IGNORE_UNMAPPED_FIELD = new ParseField("ignore_unmapped");
 
-    /**
-     * Create a new geohash filter for a given set of geohashes. In general this method
-     * returns a boolean filter combining the geohashes OR-wise.
-     *
-     * @param context     Context of the filter
-     * @param fieldType field mapper for geopoints
-     * @param geohash     mandatory geohash
-     * @param geohashes   optional array of additional geohashes
-     * @return a new GeoBoundinboxfilter
-     */
-    public static Query create(QueryShardContext context, BaseGeoPointFieldMapper.LegacyGeoPointFieldType fieldType,
-                               String geohash, @Nullable List<CharSequence> geohashes) {
-        MappedFieldType geoHashMapper = fieldType.geoHashFieldType();
-        if (geoHashMapper == null) {
-            throw new IllegalArgumentException("geohash filter needs geohash_prefix to be enabled");
-        }
-
-        if (geohashes == null || geohashes.size() == 0) {
-            return geoHashMapper.termQuery(geohash, context);
-        } else {
-            geohashes.add(geohash);
-            return geoHashMapper.termsQuery(geohashes, context);
-        }
-    }
 
     /**
      * Builder for a geohashfilter. It needs the fields <code>fieldname</code> and
@@ -232,42 +206,7 @@ public class GeohashCellQuery {
 
         @Override
         protected Query doToQuery(QueryShardContext context) throws IOException {
-            MappedFieldType fieldType = context.fieldMapper(fieldName);
-            if (fieldType == null) {
-                if (ignoreUnmapped) {
-                    return new MatchNoDocsQuery();
-                } else {
-                    throw new QueryShardException(context, "failed to parse [{}] query. missing [{}] field [{}]", NAME,
-                            BaseGeoPointFieldMapper.CONTENT_TYPE, fieldName);
-                }
-            }
-
-            if (fieldType instanceof LatLonPointFieldMapper.LatLonPointFieldType) {
-                throw new QueryShardException(context, "failed to parse [{}] query. "
-                    + "geo_point field no longer supports geohash_cell queries", NAME);
-            } else if (!(fieldType instanceof BaseGeoPointFieldMapper.LegacyGeoPointFieldType)) {
-                throw new QueryShardException(context, "failed to parse [{}] query. field [{}] is not a geo_point field", NAME, fieldName);
-            }
-
-            BaseGeoPointFieldMapper.LegacyGeoPointFieldType geoFieldType = ((BaseGeoPointFieldMapper.LegacyGeoPointFieldType) fieldType);
-            if (!geoFieldType.isGeoHashPrefixEnabled()) {
-                throw new QueryShardException(context, "failed to parse [{}] query. [geohash_prefix] is not enabled for field [{}]", NAME,
-                        fieldName);
-            }
-
-            String geohash = this.geohash;
-            if (levels != null) {
-                int len = Math.min(levels, geohash.length());
-                geohash = geohash.substring(0, len);
-            }
-
-            Query query;
-            if (neighbors) {
-                query = create(context, geoFieldType, geohash, GeoHashUtils.addNeighbors(geohash, new ArrayList<CharSequence>(8)));
-            } else {
-                query = create(context, geoFieldType, geohash, null);
-            }
-            return query;
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         }
 
         @Override

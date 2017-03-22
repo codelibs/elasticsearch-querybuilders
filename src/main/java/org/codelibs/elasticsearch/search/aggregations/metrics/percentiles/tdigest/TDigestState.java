@@ -18,47 +18,25 @@
  */
 package org.codelibs.elasticsearch.search.aggregations.metrics.percentiles.tdigest;
 
-import com.tdunning.math.stats.AVLTreeDigest;
-import com.tdunning.math.stats.Centroid;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 
 import java.io.IOException;
 
-/**
- * Extension of {@link com.tdunning.math.stats.TDigest} with custom serialization.
- */
-public class TDigestState extends AVLTreeDigest {
+public class TDigestState {
 
     private final double compression;
 
     public TDigestState(double compression) {
-        super(compression);
-        this.compression = compression;
-    }
-
-    @Override
-    public double compression() {
-        return compression;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public static void write(TDigestState state, StreamOutput out) throws IOException {
-        out.writeDouble(state.compression);
-        out.writeVInt(state.centroidCount());
-        for (Centroid centroid : state.centroids()) {
-            out.writeDouble(centroid.mean());
-            out.writeVLong(centroid.count());
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public static TDigestState read(StreamInput in) throws IOException {
-        double compression = in.readDouble();
-        TDigestState state = new TDigestState(compression);
-        int n = in.readVInt();
-        for (int i = 0; i < n; i++) {
-            state.add(in.readDouble(), in.readVInt());
-        }
-        return state;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
 }

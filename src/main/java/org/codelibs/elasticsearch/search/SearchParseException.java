@@ -24,7 +24,6 @@ import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentLocation;
-import org.codelibs.elasticsearch.rest.RestStatus;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
 
 import java.io.IOException;
@@ -67,11 +66,6 @@ public class SearchParseException extends SearchContextException {
         super.writeTo(out);
         out.writeInt(lineNumber);
         out.writeInt(columnNumber);
-    }
-
-    @Override
-    public RestStatus status() {
-        return RestStatus.BAD_REQUEST;
     }
 
     @Override

@@ -126,14 +126,7 @@ public class RandomScoreFunctionBuilder extends ScoreFunctionBuilder<RandomScore
 
     @Override
     protected ScoreFunction doToFunction(QueryShardContext context) {
-        final MappedFieldType fieldType = context.getMapperService().fullName("_uid");
-        if (fieldType == null) {
-            // mapper could be null if we are on a shard with no docs yet, so this won't actually be used
-            return new RandomScoreFunction();
-        }
-        final int salt = (context.index().getName().hashCode() << 10) | context.getShardId();
-        final IndexFieldData<?> uidFieldData = context.getForField(fieldType);
-        return new RandomScoreFunction(this.seed == null ? hash(context.nowInMillis()) : seed, salt, uidFieldData);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     private static int hash(long value) {

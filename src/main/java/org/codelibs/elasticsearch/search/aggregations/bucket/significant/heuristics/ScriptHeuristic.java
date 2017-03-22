@@ -92,12 +92,12 @@ public class ScriptHeuristic extends SignificanceHeuristic {
 
     @Override
     public SignificanceHeuristic rewrite(InternalAggregation.ReduceContext context) {
-        return new ExecutableScriptHeuristic(script, context.scriptService().executable(script, ScriptContext.Standard.AGGS));
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
     public SignificanceHeuristic rewrite(SearchContext context) {
-        return new ExecutableScriptHeuristic(script, context.getQueryShardContext().getExecutableScript(script, ScriptContext.Standard.AGGS));
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     /**

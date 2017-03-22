@@ -36,7 +36,6 @@ import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.text.Text;
 import org.codelibs.elasticsearch.index.mapper.FieldMapper;
 import org.codelibs.elasticsearch.search.fetch.FetchPhaseExecutionException;
-import org.codelibs.elasticsearch.search.fetch.FetchSubPhase;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
 
 import java.util.Collections;
@@ -61,24 +60,7 @@ public class FastVectorHighlighter implements Highlighter {
 
     @Override
     public HighlightField highlight(HighlighterContext highlighterContext) {
-        SearchContextHighlight.Field field = highlighterContext.field;
-        SearchContext context = highlighterContext.context;
-        FetchSubPhase.HitContext hitContext = highlighterContext.hitContext;
-        FieldMapper mapper = highlighterContext.mapper;
-
-        if (canHighlight(mapper) == false) {
-            throw new IllegalArgumentException("the field [" + highlighterContext.fieldName
-                    + "] should be indexed with term vector with position offsets to be used with fast vector highlighter");
-        }
-
-        Encoder encoder = field.fieldOptions().encoder().equals("html") ? HighlightUtils.Encoders.HTML : HighlightUtils.Encoders.DEFAULT;
-
-        if (!hitContext.cache().containsKey(CACHE_KEY)) {
-            hitContext.cache().put(CACHE_KEY, new HighlighterEntry());
-        }
-        HighlighterEntry cache = (HighlighterEntry) hitContext.cache().get(CACHE_KEY);
-
-        throw new UnsupportedOperationException("QueryBuilders does not support this operation.");
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

@@ -30,7 +30,6 @@ import org.codelibs.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.ScriptFieldsContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
-import org.codelibs.elasticsearch.search.internal.SubSearchContext;
 import org.codelibs.elasticsearch.search.sort.SortAndFormats;
 
 import java.io.IOException;
@@ -74,33 +73,7 @@ public class TopHitsAggregatorFactory extends AggregatorFactory<TopHitsAggregato
     @Override
     public Aggregator createInternal(Aggregator parent, boolean collectsFromSingleBucket, List<PipelineAggregator> pipelineAggregators,
             Map<String, Object> metaData) throws IOException {
-        SubSearchContext subSearchContext = new SubSearchContext(context);
-        subSearchContext.parsedQuery(context.parsedQuery());
-        subSearchContext.explain(explain);
-        subSearchContext.version(version);
-        subSearchContext.trackScores(trackScores);
-        subSearchContext.from(from);
-        subSearchContext.size(size);
-        if (sort.isPresent()) {
-            subSearchContext.sort(sort.get());
-        }
-        if (storedFieldsContext != null) {
-            subSearchContext.storedFieldsContext(storedFieldsContext);
-        }
-        if (docValueFields != null) {
-            subSearchContext.docValueFieldsContext(new DocValueFieldsContext(docValueFields));
-        }
-        for (ScriptFieldsContext.ScriptField field : scriptFields) {
-            subSearchContext.scriptFields().add(field);
-            }
-        if (fetchSourceContext != null) {
-            subSearchContext.fetchSourceContext(fetchSourceContext);
-        }
-        if (highlightBuilder != null) {
-            subSearchContext.highlight(highlightBuilder.build(context.getQueryShardContext()));
-        }
-        return new TopHitsAggregator(context.fetchPhase(), subSearchContext, name, context, parent,
-                pipelineAggregators, metaData);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
 }

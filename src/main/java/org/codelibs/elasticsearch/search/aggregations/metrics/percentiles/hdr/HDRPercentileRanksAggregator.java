@@ -18,7 +18,6 @@
  */
 package org.codelibs.elasticsearch.search.aggregations.metrics.percentiles.hdr;
 
-import org.HdrHistogram.DoubleHistogram;
 import org.codelibs.elasticsearch.search.DocValueFormat;
 import org.codelibs.elasticsearch.search.aggregations.Aggregator;
 import org.codelibs.elasticsearch.search.aggregations.InternalAggregation;
@@ -44,30 +43,16 @@ public class HDRPercentileRanksAggregator extends AbstractHDRPercentilesAggregat
 
     @Override
     public InternalAggregation buildAggregation(long owningBucketOrdinal) {
-        DoubleHistogram state = getState(owningBucketOrdinal);
-        if (state == null) {
-            return buildEmptyAggregation();
-        } else {
-            return new InternalHDRPercentileRanks(name, keys, state, keyed, format, pipelineAggregators(), metaData());
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
     public InternalAggregation buildEmptyAggregation() {
-        DoubleHistogram state;
-        state = new DoubleHistogram(numberOfSignificantValueDigits);
-        state.setAutoResize(true);
-        return new InternalHDRPercentileRanks(name, keys, state,
-                keyed, format, pipelineAggregators(), metaData());
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
     public double metric(String name, long bucketOrd) {
-        DoubleHistogram state = getState(bucketOrd);
-        if (state == null) {
-            return Double.NaN;
-        } else {
-            return InternalHDRPercentileRanks.percentileRank(state, Double.valueOf(name));
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 }

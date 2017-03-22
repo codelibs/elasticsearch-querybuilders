@@ -27,9 +27,6 @@ import org.codelibs.elasticsearch.ElasticsearchParseException;
 import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.xcontent.ToXContent;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.index.mapper.CompletionFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.DocumentMapperParser;
-import org.codelibs.elasticsearch.index.mapper.ParseContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,7 +45,6 @@ import static org.codelibs.elasticsearch.search.suggest.completion.context.Conte
 /**
  * ContextMappings indexes context-enabled suggestion fields
  * and creates context queries for defined {@link ContextMapping}s
- * for a {@link CompletionFieldMapper}
  */
 public class ContextMappings implements ToXContent {
     private final List<ContextMapping> contextMappings;
@@ -87,65 +83,6 @@ public class ContextMappings implements ToXContent {
     }
 
     /**
-     * Adds a context-enabled field for all the defined mappings to <code>document</code>
-     * see {@link org.codelibs.elasticsearch.search.suggest.completion.context.ContextMappings.TypedContextField}
-     */
-    public void addField(ParseContext.Document document, String name, String input, int weight, Map<String, Set<CharSequence>> contexts) {
-        document.add(new TypedContextField(name, input, weight, contexts, document));
-    }
-
-    /**
-     * Field prepends context values with a suggestion
-     * Context values are associated with a type, denoted by
-     * a type id, which is prepended to the context value.
-     *
-     * Every defined context mapping yields a unique type id (index of the
-     * corresponding context mapping in the context mappings list)
-     * for all its context values
-     *
-     * The type, context and suggestion values are encoded as follows:
-     * <p>
-     *     TYPE_ID | CONTEXT_VALUE | CONTEXT_SEP | SUGGESTION_VALUE
-     * </p>
-     *
-     * Field can also use values of other indexed fields as contexts
-     * at index time
-     */
-    private class TypedContextField extends ContextSuggestField {
-        private final Map<String, Set<CharSequence>> contexts;
-        private final ParseContext.Document document;
-
-        public TypedContextField(String name, String value, int weight, Map<String, Set<CharSequence>> contexts,
-                                 ParseContext.Document document) {
-            super(name, value, weight);
-            this.contexts = contexts;
-            this.document = document;
-        }
-
-        @Override
-        protected Iterable<CharSequence> contexts() {
-            Set<CharSequence> typedContexts = new HashSet<>();
-            final CharsRefBuilder scratch = new CharsRefBuilder();
-            scratch.grow(1);
-            for (int typeId = 0; typeId < contextMappings.size(); typeId++) {
-                scratch.setCharAt(0, (char) typeId);
-                scratch.setLength(1);
-                ContextMapping mapping = contextMappings.get(typeId);
-                Set<CharSequence> contexts = new HashSet<>(mapping.parseContext(document));
-                if (this.contexts.get(mapping.name()) != null) {
-                    contexts.addAll(this.contexts.get(mapping.name()));
-                }
-                for (CharSequence context : contexts) {
-                    scratch.append(context);
-                    typedContexts.add(scratch.toCharsRef());
-                    scratch.setLength(1);
-                }
-            }
-            return typedContexts;
-        }
-    }
-
-    /**
      * Wraps a {@link CompletionQuery} with context queries
      *
      * @param query base completion query to wrap
@@ -177,7 +114,6 @@ public class ContextMappings implements ToXContent {
     /**
      * Maps an output context list to a map of context mapping names and their values
      *
-     * see {@link org.codelibs.elasticsearch.search.suggest.completion.context.ContextMappings.TypedContextField}
      * @return a map of context names and their values
      *
      */
@@ -225,21 +161,7 @@ public class ContextMappings implements ToXContent {
     }
 
     private static ContextMapping load(Map<String, Object> contextConfig, Version indexVersionCreated) {
-        String name = extractRequiredValue(contextConfig, FIELD_NAME);
-        String type = extractRequiredValue(contextConfig, FIELD_TYPE);
-        final ContextMapping contextMapping;
-        switch (Type.fromString(type)) {
-            case CATEGORY:
-                contextMapping = CategoryContextMapping.load(name, contextConfig);
-                break;
-            case GEO:
-                contextMapping = GeoContextMapping.load(name, contextConfig);
-                break;
-            default:
-                throw new ElasticsearchParseException("unknown context type[" + type + "]");
-        }
-        DocumentMapperParser.checkNoRemainingFields(name, contextConfig, indexVersionCreated);
-        return contextMapping;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     private static String extractRequiredValue(Map<String, Object> contextConfig, String paramName) {

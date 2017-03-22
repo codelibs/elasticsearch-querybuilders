@@ -25,7 +25,6 @@ import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.util.BigArrays;
 import org.codelibs.elasticsearch.common.xcontent.ToXContent;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.script.ScriptService;
 import org.codelibs.elasticsearch.search.aggregations.pipeline.PipelineAggregator;
 import org.codelibs.elasticsearch.search.aggregations.support.AggregationPath;
 
@@ -67,19 +66,12 @@ public abstract class InternalAggregation implements Aggregation, ToXContent, Na
     public static class ReduceContext {
 
         private final BigArrays bigArrays;
-        private final ScriptService scriptService;
-
-        public ReduceContext(BigArrays bigArrays, ScriptService scriptService) {
+        public ReduceContext(BigArrays bigArrays) {
             this.bigArrays = bigArrays;
-            this.scriptService = scriptService;
         }
 
         public BigArrays bigArrays() {
             return bigArrays;
-        }
-
-        public ScriptService scriptService() {
-            return scriptService;
         }
     }
 

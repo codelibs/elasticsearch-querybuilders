@@ -137,15 +137,7 @@ public class TermQueryBuilder extends BaseTermQueryBuilder<TermQueryBuilder> {
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        Query query = null;
-        MappedFieldType mapper = context.fieldMapper(this.fieldName);
-        if (mapper != null) {
-            query = mapper.termQuery(this.value, context);
-        }
-        if (query == null) {
-            query = new TermQuery(new Term(this.fieldName, BytesRefs.toBytesRef(this.value)));
-        }
-        return query;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

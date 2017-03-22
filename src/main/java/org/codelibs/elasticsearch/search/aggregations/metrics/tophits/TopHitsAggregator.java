@@ -39,12 +39,7 @@ import org.codelibs.elasticsearch.search.aggregations.LeafBucketCollector;
 import org.codelibs.elasticsearch.search.aggregations.LeafBucketCollectorBase;
 import org.codelibs.elasticsearch.search.aggregations.metrics.MetricsAggregator;
 import org.codelibs.elasticsearch.search.aggregations.pipeline.PipelineAggregator;
-import org.codelibs.elasticsearch.search.fetch.FetchPhase;
-import org.codelibs.elasticsearch.search.fetch.FetchSearchResult;
-import org.codelibs.elasticsearch.search.internal.InternalSearchHit;
-import org.codelibs.elasticsearch.search.internal.InternalSearchHits;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
-import org.codelibs.elasticsearch.search.internal.SubSearchContext;
 import org.codelibs.elasticsearch.search.rescore.RescoreSearchContext;
 import org.codelibs.elasticsearch.search.sort.SortAndFormats;
 
@@ -66,27 +61,17 @@ public class TopHitsAggregator extends MetricsAggregator {
         }
     }
 
-    final FetchPhase fetchPhase;
-    final SubSearchContext subSearchContext;
     final LongObjectPagedHashMap<TopDocsAndLeafCollector> topDocsCollectors;
 
-    public TopHitsAggregator(FetchPhase fetchPhase, SubSearchContext subSearchContext, String name, SearchContext context,
+    public TopHitsAggregator(String name, SearchContext context,
             Aggregator parent, List<PipelineAggregator> pipelineAggregators, Map<String, Object> metaData) throws IOException {
         super(name, context, parent, pipelineAggregators, metaData);
-        this.fetchPhase = fetchPhase;
-        topDocsCollectors = new LongObjectPagedHashMap<>(1, context.bigArrays());
-        this.subSearchContext = subSearchContext;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
     public boolean needsScores() {
-        SortAndFormats sort = subSearchContext.sort();
-        if (sort != null) {
-            return sort.sort.needsScores() || subSearchContext.trackScores();
-        } else {
-            // sort by score
-            return true;
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
@@ -112,81 +97,19 @@ public class TopHitsAggregator extends MetricsAggregator {
 
             @Override
             public void collect(int docId, long bucket) throws IOException {
-                TopDocsAndLeafCollector collectors = topDocsCollectors.get(bucket);
-                if (collectors == null) {
-                    SortAndFormats sort = subSearchContext.sort();
-                    int topN = subSearchContext.from() + subSearchContext.size();
-                    if (sort == null) {
-                        for (RescoreSearchContext rescoreContext : context.rescore()) {
-                            topN = Math.max(rescoreContext.window(), topN);
-                        }
-                    }
-                    // In the QueryPhase we don't need this protection, because it is build into the IndexSearcher,
-                    // but here we create collectors ourselves and we need prevent OOM because of crazy an offset and size.
-                    topN = Math.min(topN, subSearchContext.searcher().getIndexReader().maxDoc());
-                    TopDocsCollector<?> topLevelCollector = sort != null ? TopFieldCollector.create(sort.sort, topN, true, subSearchContext.trackScores(), subSearchContext.trackScores()) : TopScoreDocCollector.create(topN);
-                    collectors = new TopDocsAndLeafCollector(topLevelCollector);
-                    collectors.leafCollector = collectors.topLevelCollector.getLeafCollector(ctx);
-                    collectors.leafCollector.setScorer(scorer);
-                    topDocsCollectors.put(bucket, collectors);
-                }
-                collectors.leafCollector.collect(docId);
+                throw new UnsupportedOperationException("querybuilders does not support this operation.");
             }
         };
     }
 
     @Override
     public InternalAggregation buildAggregation(long owningBucketOrdinal) {
-        TopDocsAndLeafCollector topDocsCollector = topDocsCollectors.get(owningBucketOrdinal);
-        final InternalTopHits topHits;
-        if (topDocsCollector == null) {
-            topHits = buildEmptyAggregation();
-        } else {
-            TopDocs topDocs = topDocsCollector.topLevelCollector.topDocs();
-            if (subSearchContext.sort() == null) {
-                for (RescoreSearchContext ctx : context().rescore()) {
-                    try {
-                        topDocs = ctx.rescorer().rescore(topDocs, context, ctx);
-                    } catch (IOException e) {
-                        throw new ElasticsearchException("Rescore TopHits Failed", e);
-                    }
-                }
-            }
-            subSearchContext.queryResult().topDocs(topDocs,
-                subSearchContext.sort() == null ? null : subSearchContext.sort().formats);
-            int[] docIdsToLoad = new int[topDocs.scoreDocs.length];
-            for (int i = 0; i < topDocs.scoreDocs.length; i++) {
-                docIdsToLoad[i] = topDocs.scoreDocs[i].doc;
-            }
-            subSearchContext.docIdsToLoad(docIdsToLoad, 0, docIdsToLoad.length);
-            fetchPhase.execute(subSearchContext);
-            FetchSearchResult fetchResult = subSearchContext.fetchResult();
-            InternalSearchHit[] internalHits = fetchResult.fetchResult().hits().internalHits();
-            for (int i = 0; i < internalHits.length; i++) {
-                ScoreDoc scoreDoc = topDocs.scoreDocs[i];
-                InternalSearchHit searchHitFields = internalHits[i];
-                searchHitFields.shard(subSearchContext.shardTarget());
-                searchHitFields.score(scoreDoc.score);
-                if (scoreDoc instanceof FieldDoc) {
-                    FieldDoc fieldDoc = (FieldDoc) scoreDoc;
-                    searchHitFields.sortValues(fieldDoc.fields, subSearchContext.sort().formats);
-                }
-            }
-            topHits = new InternalTopHits(name, subSearchContext.from(), subSearchContext.size(), topDocs, fetchResult.hits(), pipelineAggregators(),
-                metaData());
-        }
-        return topHits;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
     public InternalTopHits buildEmptyAggregation() {
-        TopDocs topDocs;
-        if (subSearchContext.sort() != null) {
-            topDocs = new TopFieldDocs(0, new FieldDoc[0], subSearchContext.sort().sort.getSort(), Float.NaN);
-        } else {
-            topDocs = Lucene.EMPTY_TOP_DOCS;
-        }
-        return new InternalTopHits(name, subSearchContext.from(), subSearchContext.size(), topDocs, InternalSearchHits.empty(), pipelineAggregators(), metaData());
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

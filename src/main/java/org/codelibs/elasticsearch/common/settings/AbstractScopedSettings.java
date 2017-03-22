@@ -25,7 +25,6 @@ import org.apache.lucene.search.spell.LevensteinDistance;
 import org.apache.lucene.util.CollectionUtil;
 import org.codelibs.elasticsearch.ExceptionsHelper;
 import org.codelibs.elasticsearch.common.collect.Tuple;
-import org.codelibs.elasticsearch.common.component.AbstractComponent;
 import org.codelibs.elasticsearch.common.regex.Regex;
 
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ import java.util.stream.Collectors;
  * A basic setting service that can be used for per-index and per-cluster settings.
  * This service offers transactional application of updates settings.
  */
-public abstract class AbstractScopedSettings extends AbstractComponent {
+public abstract class AbstractScopedSettings {
     public static final String ARCHIVED_SETTINGS_PREFIX = "archived.";
     private Settings lastSettingsApplied = Settings.EMPTY;
     private final List<SettingUpdater<?>> settingUpdaters = new CopyOnWriteArrayList<>();
@@ -58,7 +57,6 @@ public abstract class AbstractScopedSettings extends AbstractComponent {
     private static final Pattern AFFIX_KEY_PATTERN = Pattern.compile("^(?:[-\\w]+[.])+(?:[*][.])+[-\\w]+$");
 
     protected AbstractScopedSettings(Settings settings, Set<Setting<?>> settingsSet, Setting.Property scope) {
-        super(settings);
         this.lastSettingsApplied = Settings.EMPTY;
         this.scope = scope;
         Map<String, Setting<?>> complexMatchers = new HashMap<>();
@@ -92,7 +90,6 @@ public abstract class AbstractScopedSettings extends AbstractComponent {
     }
 
     protected AbstractScopedSettings(Settings nodeSettings, Settings scopeSettings, AbstractScopedSettings other) {
-        super(nodeSettings);
         this.lastSettingsApplied = scopeSettings;
         this.scope = other.scope;
         complexMatchers = other.complexMatchers;
@@ -124,22 +121,7 @@ public abstract class AbstractScopedSettings extends AbstractComponent {
      * method will not change any settings but will fail if any of the settings can't be applied.
      */
     public synchronized Settings validateUpdate(Settings settings) {
-        final Settings current = Settings.builder().put(this.settings).put(settings).build();
-        final Settings previous = Settings.builder().put(this.settings).put(this.lastSettingsApplied).build();
-        List<RuntimeException> exceptions = new ArrayList<>();
-        for (SettingUpdater<?> settingUpdater : settingUpdaters) {
-            try {
-                // ensure running this through the updater / dynamic validator
-                // don't check if the value has changed we wanna test this anyways
-                settingUpdater.getValue(current, previous);
-            } catch (RuntimeException ex) {
-                exceptions.add(ex);
-                logger.debug((Supplier<?>) () -> new ParameterizedMessage("failed to prepareCommit settings for [{}]", settingUpdater), ex);
-            }
-        }
-        // here we are exhaustive and record all settings that failed.
-        ExceptionsHelper.rethrowAndSuppress(exceptions);
-        return current;
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -150,47 +132,18 @@ public abstract class AbstractScopedSettings extends AbstractComponent {
      * @return the unmerged applied settings
     */
     public synchronized Settings applySettings(Settings newSettings) {
-        if (lastSettingsApplied != null && newSettings.equals(lastSettingsApplied)) {
-            // nothing changed in the settings, ignore
-            return newSettings;
-        }
-        final Settings current = Settings.builder().put(this.settings).put(newSettings).build();
-        final Settings previous = Settings.builder().put(this.settings).put(this.lastSettingsApplied).build();
-        try {
-            List<Runnable> applyRunnables = new ArrayList<>();
-            for (SettingUpdater<?> settingUpdater : settingUpdaters) {
-                try {
-                    applyRunnables.add(settingUpdater.updater(current, previous));
-                } catch (Exception ex) {
-                    logger.warn(
-                        (Supplier<?>) () -> new ParameterizedMessage("failed to prepareCommit settings for [{}]", settingUpdater), ex);
-                    throw ex;
-                }
-            }
-            for (Runnable settingUpdater : applyRunnables) {
-                settingUpdater.run();
-            }
-        } catch (Exception ex) {
-            logger.warn("failed to apply settings", ex);
-            throw ex;
-        } finally {
-        }
-        return lastSettingsApplied = newSettings;
+        throw new UnsupportedOperationException();
     }
 
     /**
      * Adds a settings consumer with a predicate that is only evaluated at update time.
      * <p>
-     * Note: Only settings registered in {@link SettingsModule} can be changed dynamically.
      * </p>
      * @param validator an additional validator that is only applied to updates of this setting.
      *                  This is useful to add additional validation to settings at runtime compared to at startup time.
      */
     public synchronized <T> void addSettingsUpdateConsumer(Setting<T> setting, Consumer<T> consumer, Consumer<T> validator) {
-        if (setting != get(setting.getKey())) {
-            throw new IllegalArgumentException("Setting is not registered for key [" + setting.getKey() + "]");
-        }
-        addSettingsUpdater(setting.newUpdater(consumer, logger, validator));
+        throw new UnsupportedOperationException();
     }
 
     synchronized void addSettingsUpdater(SettingUpdater<?> updater) {
@@ -200,25 +153,17 @@ public abstract class AbstractScopedSettings extends AbstractComponent {
     /**
      * Adds a settings consumer that accepts the values for two settings. The consumer if only notified if one or both settings change.
      * <p>
-     * Note: Only settings registered in {@link SettingsModule} can be changed dynamically.
      * </p>
      * This method registers a compound updater that is useful if two settings are depending on each other. The consumer is always provided
      * with both values even if only one of the two changes.
      */
     public synchronized <A, B> void addSettingsUpdateConsumer(Setting<A> a, Setting<B> b, BiConsumer<A, B> consumer) {
-        if (a != get(a.getKey())) {
-            throw new IllegalArgumentException("Setting is not registered for key [" + a.getKey() + "]");
-        }
-        if (b != get(b.getKey())) {
-            throw new IllegalArgumentException("Setting is not registered for key [" + b.getKey() + "]");
-        }
-        addSettingsUpdater(Setting.compoundUpdater(consumer, a, b, logger));
+        throw new UnsupportedOperationException();
     }
 
     /**
      * Adds a settings consumer.
      * <p>
-     * Note: Only settings registered in {@link org.codelibs.elasticsearch.cluster.ClusterModule} can be changed dynamically.
      * </p>
      */
     public synchronized <T> void addSettingsUpdateConsumer(Setting<T> setting, Consumer<T> consumer) {
@@ -386,14 +331,7 @@ public abstract class AbstractScopedSettings extends AbstractComponent {
      * Returns the value for the given setting.
      */
     public <T> T get(Setting<T> setting) {
-        if (setting.getProperties().contains(scope) == false) {
-            throw new IllegalArgumentException("settings scope doesn't match the setting scope [" + this.scope + "] not in [" +
-                setting.getProperties() + "]");
-        }
-        if (get(setting.getKey()) == null) {
-            throw new IllegalArgumentException("setting " + setting.getKey() + " has not been registered");
-        }
-        return setting.get(this.lastSettingsApplied, settings);
+        throw new UnsupportedOperationException();
     }
 
     /**

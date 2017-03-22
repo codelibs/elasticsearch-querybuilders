@@ -23,9 +23,7 @@ import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.Nullable;
 import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.xcontent.ToXContent;
-import org.codelibs.elasticsearch.index.analysis.IndexAnalyzers;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
-import org.codelibs.elasticsearch.index.similarity.SimilarityProvider;
 
 import java.util.Map;
 import java.util.Objects;
@@ -80,86 +78,6 @@ public abstract class Mapper implements ToXContent, Iterable<Mapper> {
     }
 
     public interface TypeParser {
-
-        class ParserContext {
-
-            private final String type;
-
-            private final IndexAnalyzers indexAnalyzers;
-
-            private final Function<String, SimilarityProvider> similarityLookupService;
-
-            private final MapperService mapperService;
-
-            private final Function<String, TypeParser> typeParsers;
-
-            private final Version indexVersionCreated;
-
-            private final Supplier<QueryShardContext> queryShardContextSupplier;
-
-            public ParserContext(String type, IndexAnalyzers indexAnalyzers, Function<String, SimilarityProvider> similarityLookupService,
-                                 MapperService mapperService, Function<String, TypeParser> typeParsers,
-                                 Version indexVersionCreated, Supplier<QueryShardContext> queryShardContextSupplier) {
-                this.type = type;
-                this.indexAnalyzers = indexAnalyzers;
-                this.similarityLookupService = similarityLookupService;
-                this.mapperService = mapperService;
-                this.typeParsers = typeParsers;
-                this.indexVersionCreated = indexVersionCreated;
-                this.queryShardContextSupplier = queryShardContextSupplier;
-            }
-
-            public String type() {
-                return type;
-            }
-
-            public IndexAnalyzers getIndexAnalyzers() {
-                return indexAnalyzers;
-            }
-
-            public SimilarityProvider getSimilarity(String name) {
-                return similarityLookupService.apply(name);
-            }
-
-            public MapperService mapperService() {
-                return mapperService;
-            }
-
-            public TypeParser typeParser(String type) {
-                return typeParsers.apply(type);
-            }
-
-            public Version indexVersionCreated() {
-                return indexVersionCreated;
-            }
-
-            public Supplier<QueryShardContext> queryShardContextSupplier() {
-                return queryShardContextSupplier;
-            }
-
-            public boolean isWithinMultiField() { return false; }
-
-            protected Function<String, TypeParser> typeParsers() { return typeParsers; }
-
-            protected Function<String, SimilarityProvider> similarityLookupService() { return similarityLookupService; }
-
-            public ParserContext createMultiFieldContext(ParserContext in) {
-                return new MultiFieldParserContext(in) {
-                    @Override
-                    public boolean isWithinMultiField() { return true; }
-                };
-            }
-
-            static class MultiFieldParserContext extends ParserContext {
-                MultiFieldParserContext(ParserContext in) {
-                    super(in.type(), in.indexAnalyzers, in.similarityLookupService(), in.mapperService(), in.typeParsers(),
-                            in.indexVersionCreated(), in.queryShardContextSupplier());
-                }
-            }
-
-        }
-
-        Mapper.Builder<?,?> parse(String name, Map<String, Object> node, ParserContext parserContext) throws MapperParsingException;
     }
 
     private final String simpleName;

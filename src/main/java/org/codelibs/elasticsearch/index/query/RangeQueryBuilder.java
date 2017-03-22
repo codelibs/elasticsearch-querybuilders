@@ -37,10 +37,7 @@ import org.codelibs.elasticsearch.common.lucene.BytesRefs;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.index.mapper.DateFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.LegacyDateFieldMapper;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-import org.codelibs.elasticsearch.index.mapper.MapperService;
-import org.codelibs.elasticsearch.index.mapper.RangeFieldMapper;
 import org.joda.time.DateTimeZone;
 
 import java.io.IOException;
@@ -446,22 +443,7 @@ public class RangeQueryBuilder extends AbstractQueryBuilder<RangeQueryBuilder> i
 
     // Overridable for testing only
     protected MappedFieldType.Relation getRelation(QueryRewriteContext queryRewriteContext) throws IOException {
-        IndexReader reader = queryRewriteContext.getIndexReader();
-        // If the reader is null we are not on the shard and cannot
-        // rewrite so just pretend there is an intersection so that the rewrite is a noop
-        if (reader == null) {
-            return MappedFieldType.Relation.INTERSECTS;
-        }
-        final MapperService mapperService = queryRewriteContext.getMapperService();
-        final MappedFieldType fieldType = mapperService.fullName(fieldName);
-        if (fieldType == null) {
-            // no field means we have no values
-            return MappedFieldType.Relation.DISJOINT;
-        } else {
-            DateMathParser dateMathParser = format == null ? null : new DateMathParser(format);
-            return fieldType.isFieldWithinQuery(queryRewriteContext.getIndexReader(), from, to, includeLower,
-                    includeUpper, timeZone, dateMathParser, queryRewriteContext);
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
@@ -490,43 +472,7 @@ public class RangeQueryBuilder extends AbstractQueryBuilder<RangeQueryBuilder> i
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        Query query = null;
-        MappedFieldType mapper = context.fieldMapper(this.fieldName);
-        if (mapper != null) {
-            if (mapper instanceof LegacyDateFieldMapper.DateFieldType) {
-
-                query = ((LegacyDateFieldMapper.DateFieldType) mapper).rangeQuery(from, to, includeLower, includeUpper,
-                        timeZone, getForceDateParser(), context);
-            } else if (mapper instanceof DateFieldMapper.DateFieldType) {
-
-                query = ((DateFieldMapper.DateFieldType) mapper).rangeQuery(from, to, includeLower, includeUpper,
-                        timeZone, getForceDateParser(), context);
-            } else if (mapper instanceof RangeFieldMapper.RangeFieldType && mapper.typeName() == RangeFieldMapper.RangeType.DATE.name) {
-                DateMathParser forcedDateParser = null;
-                if (this.format != null) {
-                    forcedDateParser = new DateMathParser(this.format);
-                }
-                query = ((RangeFieldMapper.RangeFieldType) mapper).rangeQuery(from, to, includeLower, includeUpper,
-                    relation, timeZone, forcedDateParser, context);
-            } else {
-                if (timeZone != null) {
-                    throw new QueryShardException(context, "[range] time_zone can not be applied to non date field ["
-                            + fieldName + "]");
-                }
-                //LUCENE 4 UPGRADE Mapper#rangeQuery should use bytesref as well?
-                query = mapper.rangeQuery(from, to, includeLower, includeUpper, context);
-            }
-        } else {
-            if (timeZone != null) {
-                throw new QueryShardException(context, "[range] time_zone can not be applied to non unmapped field ["
-                        + fieldName + "]");
-            }
-        }
-
-        if (query == null) {
-            query = new TermRangeQuery(this.fieldName, BytesRefs.toBytesRef(from), BytesRefs.toBytesRef(to), includeLower, includeUpper);
-        }
-        return query;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

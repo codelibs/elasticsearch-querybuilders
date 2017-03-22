@@ -69,7 +69,6 @@ import java.util.Objects;
  * construction using
  * {@link org.codelibs.elasticsearch.search.builder.SearchSourceBuilder#searchSource()}.
  *
- * @see org.codelibs.elasticsearch.action.search.SearchRequest#source(SearchSourceBuilder)
  */
 public final class SearchSourceBuilder extends ToXContentToBytes implements Writeable {
     private static final DeprecationLogger DEPRECATION_LOGGER =
@@ -351,7 +350,6 @@ public final class SearchSourceBuilder extends ToXContentToBytes implements Writ
     }
 
     /**
-     * Should each {@link org.codelibs.elasticsearch.search.SearchHit} be returned with
      * an explanation of the hit (ranking).
      */
     public SearchSourceBuilder explain(Boolean explain) {
@@ -368,7 +366,6 @@ public final class SearchSourceBuilder extends ToXContentToBytes implements Writ
     }
 
     /**
-     * Should each {@link org.codelibs.elasticsearch.search.SearchHit} be returned with a
      * version associated with it.
      */
     public SearchSourceBuilder version(Boolean version) {

@@ -106,67 +106,7 @@ public class StringTermsAggregator extends AbstractStringTermsAggregator {
 
     @Override
     public InternalAggregation buildAggregation(long owningBucketOrdinal) throws IOException {
-        assert owningBucketOrdinal == 0;
-
-        if (bucketCountThresholds.getMinDocCount() == 0 && (order != InternalOrder.COUNT_DESC || bucketOrds.size() < bucketCountThresholds.getRequiredSize())) {
-            // we need to fill-in the blanks
-            for (LeafReaderContext ctx : context.searcher().getTopReaderContext().leaves()) {
-                final SortedBinaryDocValues values = valuesSource.bytesValues(ctx);
-                // brute force
-                for (int docId = 0; docId < ctx.reader().maxDoc(); ++docId) {
-                    values.setDocument(docId);
-                    final int valueCount = values.count();
-                    for (int i = 0; i < valueCount; ++i) {
-                        final BytesRef term = values.valueAt(i);
-                        if (includeExclude == null || includeExclude.accept(term)) {
-                            bucketOrds.add(term);
-                        }
-                    }
-                }
-            }
-        }
-
-        final int size = (int) Math.min(bucketOrds.size(), bucketCountThresholds.getShardSize());
-
-        long otherDocCount = 0;
-        BucketPriorityQueue<StringTerms.Bucket> ordered = new BucketPriorityQueue<>(size, order.comparator(this));
-        StringTerms.Bucket spare = null;
-        for (int i = 0; i < bucketOrds.size(); i++) {
-            if (spare == null) {
-                spare = new StringTerms.Bucket(new BytesRef(), 0, null, showTermDocCountError, 0, format);
-            }
-            bucketOrds.get(i, spare.termBytes);
-            spare.docCount = bucketDocCount(i);
-            otherDocCount += spare.docCount;
-            spare.bucketOrd = i;
-            if (bucketCountThresholds.getShardMinDocCount() <= spare.docCount) {
-                spare = ordered.insertWithOverflow(spare);
-            }
-        }
-
-        // Get the top buckets
-        final StringTerms.Bucket[] list = new StringTerms.Bucket[ordered.size()];
-        long survivingBucketOrds[] = new long[ordered.size()];
-        for (int i = ordered.size() - 1; i >= 0; --i) {
-            final StringTerms.Bucket bucket = (StringTerms.Bucket) ordered.pop();
-            survivingBucketOrds[i] = bucket.bucketOrd;
-            list[i] = bucket;
-            otherDocCount -= bucket.docCount;
-        }
-        // replay any deferred collections
-        runDeferredCollections(survivingBucketOrds);
-
-        // Now build the aggs
-        for (int i = 0; i < list.length; i++) {
-          final StringTerms.Bucket bucket = (StringTerms.Bucket)list[i];
-          bucket.termBytes = BytesRef.deepCopyOf(bucket.termBytes);
-          bucket.aggregations = bucketAggregations(bucket.bucketOrd);
-          bucket.docCountError = 0;
-        }
-
-        return new StringTerms(name, order, bucketCountThresholds.getRequiredSize(), bucketCountThresholds.getMinDocCount(),
-                pipelineAggregators(), metaData(), format, bucketCountThresholds.getShardSize(), showTermDocCountError, otherDocCount,
-                Arrays.asList(list), 0);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

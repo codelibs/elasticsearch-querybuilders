@@ -35,23 +35,18 @@ import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
-import org.codelibs.elasticsearch.index.Index;
-import org.codelibs.elasticsearch.index.IndexSettings;
 import org.codelibs.elasticsearch.index.fielddata.AtomicNumericFieldData;
 import org.codelibs.elasticsearch.index.fielddata.FieldData;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.codelibs.elasticsearch.index.fielddata.IndexFieldDataCache;
 import org.codelibs.elasticsearch.index.fielddata.IndexNumericFieldData;
 import org.codelibs.elasticsearch.index.fielddata.NumericDoubleValues;
 import org.codelibs.elasticsearch.index.fielddata.ScriptDocValues;
 import org.codelibs.elasticsearch.index.fielddata.SortedBinaryDocValues;
 import org.codelibs.elasticsearch.index.fielddata.SortedNumericDoubleValues;
 import org.codelibs.elasticsearch.index.fielddata.fieldcomparator.DoubleValuesComparatorSource;
-import org.codelibs.elasticsearch.index.fielddata.plain.DocValuesIndexFieldData;
 import org.codelibs.elasticsearch.index.mapper.LegacyNumberFieldMapper.Defaults;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
-import org.codelibs.elasticsearch.indices.breaker.CircuitBreakerService;
 import org.codelibs.elasticsearch.search.DocValueFormat;
 import org.codelibs.elasticsearch.search.MultiValueMode;
 import org.joda.time.DateTimeZone;
@@ -130,35 +125,6 @@ public class ScaledFloatFieldMapper extends FieldMapper {
     }
 
     public static class TypeParser implements Mapper.TypeParser {
-
-        @Override
-        public Mapper.Builder<?,?> parse(String name, Map<String, Object> node,
-                                         ParserContext parserContext) throws MapperParsingException {
-            Builder builder = new Builder(name);
-            TypeParsers.parseField(builder, name, node, parserContext);
-            for (Iterator<Map.Entry<String, Object>> iterator = node.entrySet().iterator(); iterator.hasNext();) {
-                Map.Entry<String, Object> entry = iterator.next();
-                String propName = entry.getKey();
-                Object propNode = entry.getValue();
-                if (propName.equals("null_value")) {
-                    if (propNode == null) {
-                        throw new MapperParsingException("Property [null_value] cannot be null.");
-                    }
-                    builder.nullValue(NumberFieldMapper.NumberType.DOUBLE.parse(propNode, false));
-                    iterator.remove();
-                } else if (propName.equals("ignore_malformed")) {
-                    builder.ignoreMalformed(TypeParsers.nodeBooleanValue("ignore_malformed", propNode, parserContext));
-                    iterator.remove();
-                } else if (propName.equals("coerce")) {
-                    builder.coerce(TypeParsers.nodeBooleanValue("coerce", propNode, parserContext));
-                    iterator.remove();
-                } else if (propName.equals("scaling_factor")) {
-                    builder.scalingFactor(NumberFieldMapper.NumberType.DOUBLE.parse(propNode, false).doubleValue());
-                    iterator.remove();
-                }
-            }
-            return builder;
-        }
     }
 
     public static final class ScaledFloatFieldType extends MappedFieldType {
@@ -274,17 +240,7 @@ public class ScaledFloatFieldMapper extends FieldMapper {
 
         @Override
         public IndexFieldData.Builder fielddataBuilder() {
-            failIfNoDocValues();
-            return new IndexFieldData.Builder() {
-                @Override
-                public IndexFieldData<?> build(IndexSettings indexSettings, MappedFieldType fieldType, IndexFieldDataCache cache,
-                        CircuitBreakerService breakerService, MapperService mapperService) {
-                    final IndexNumericFieldData scaledValues = (IndexNumericFieldData) new DocValuesIndexFieldData.Builder()
-                            .numericType(IndexNumericFieldData.NumericType.LONG)
-                            .build(indexSettings, fieldType, cache, breakerService, mapperService);
-                    return new ScaledFloatIndexFieldData(scaledValues, scalingFactor);
-                }
-            };
+            throw new UnsupportedOperationException();
         }
 
         @Override
@@ -364,67 +320,6 @@ public class ScaledFloatFieldMapper extends FieldMapper {
     }
 
     @Override
-    protected void parseCreateField(ParseContext context, List<IndexableField> fields) throws IOException {
-        final boolean includeInAll = context.includeInAll(this.includeInAll, this);
-
-        XContentParser parser = context.parser();
-        Object value;
-        Number numericValue = null;
-        if (context.externalValueSet()) {
-            value = context.externalValue();
-        } else if (parser.currentToken() == Token.VALUE_NULL) {
-            value = null;
-        } else if (coerce.value()
-                && parser.currentToken() == Token.VALUE_STRING
-                && parser.textLength() == 0) {
-            value = null;
-        } else {
-            try {
-                numericValue = NumberFieldMapper.NumberType.DOUBLE.parse(parser, coerce.value());
-            } catch (IllegalArgumentException e) {
-                if (ignoreMalformed.value()) {
-                    return;
-                } else {
-                    throw e;
-                }
-            }
-            if (includeInAll) {
-                value = parser.textOrNull(); // preserve formatting
-            } else {
-                value = numericValue;
-            }
-        }
-
-        if (value == null) {
-            value = fieldType().nullValue();
-        }
-
-        if (value == null) {
-            return;
-        }
-
-        if (numericValue == null) {
-            numericValue = NumberFieldMapper.NumberType.DOUBLE.parse(value, false);
-        }
-
-        if (includeInAll) {
-            context.allEntries().addText(fieldType().name(), value.toString(), fieldType().boost());
-        }
-
-        double doubleValue = numericValue.doubleValue();
-        if (Double.isFinite(doubleValue) == false) {
-            // since we encode to a long, we have no way to carry NaNs and infinities
-            throw new IllegalArgumentException("[scaled_float] only supports finite values, but got [" + doubleValue + "]");
-        }
-        long scaledValue = Math.round(doubleValue * fieldType().getScalingFactor());
-
-        boolean indexed = fieldType().indexOptions() != IndexOptions.NONE;
-        boolean docValued = fieldType().hasDocValues();
-        boolean stored = fieldType().stored();
-        fields.addAll(NumberFieldMapper.NumberType.LONG.createFields(fieldType().name(), scaledValue, indexed, docValued, stored));
-    }
-
-    @Override
     protected void doMerge(Mapper mergeWith, boolean updateAllTypes) {
         super.doMerge(mergeWith, updateAllTypes);
         ScaledFloatFieldMapper other = (ScaledFloatFieldMapper) mergeWith;
@@ -459,57 +354,6 @@ public class ScaledFloatFieldMapper extends FieldMapper {
         } else if (includeDefaults) {
             builder.field("include_in_all", false);
         }
-    }
-
-    private static class ScaledFloatIndexFieldData implements IndexNumericFieldData {
-
-        private final IndexNumericFieldData scaledFieldData;
-        private final double scalingFactor;
-
-        ScaledFloatIndexFieldData(IndexNumericFieldData scaledFieldData, double scalingFactor) {
-            this.scaledFieldData = scaledFieldData;
-            this.scalingFactor = scalingFactor;
-        }
-
-        @Override
-        public String getFieldName() {
-            return scaledFieldData.getFieldName();
-        }
-
-        @Override
-        public AtomicNumericFieldData load(LeafReaderContext context) {
-            return new ScaledFloatLeafFieldData(scaledFieldData.load(context), scalingFactor);
-        }
-
-        @Override
-        public AtomicNumericFieldData loadDirect(LeafReaderContext context) throws Exception {
-            return new ScaledFloatLeafFieldData(scaledFieldData.loadDirect(context), scalingFactor);
-        }
-
-        @Override
-        public org.codelibs.elasticsearch.index.fielddata.IndexFieldData.XFieldComparatorSource comparatorSource(Object missingValue,
-                MultiValueMode sortMode, Nested nested) {
-            return new DoubleValuesComparatorSource(this, missingValue, sortMode, nested);
-        }
-
-        @Override
-        public void clear() {
-            scaledFieldData.clear();
-        }
-
-        @Override
-        public Index index() {
-            return scaledFieldData.index();
-        }
-
-        @Override
-        public NumericType getNumericType() {
-            /**
-             * {@link ScaledFloatLeafFieldData#getDoubleValues()} transforms the raw long values in `scaled` floats.
-             */
-            return NumericType.DOUBLE;
-        }
-
     }
 
     private static class ScaledFloatLeafFieldData implements AtomicNumericFieldData {

@@ -54,6 +54,6 @@ public class OutputStreamStreamOutput extends StreamOutput {
 
     @Override
     public void reset() throws IOException {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 }

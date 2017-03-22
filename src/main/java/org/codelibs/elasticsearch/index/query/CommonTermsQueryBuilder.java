@@ -366,35 +366,7 @@ public class CommonTermsQueryBuilder extends AbstractQueryBuilder<CommonTermsQue
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        String field;
-        MappedFieldType fieldType = context.fieldMapper(fieldName);
-        if (fieldType != null) {
-            field = fieldType.name();
-        } else {
-            field = fieldName;
-        }
-
-        Analyzer analyzerObj;
-        if (analyzer == null) {
-            if (fieldType != null) {
-                analyzerObj = context.getSearchAnalyzer(fieldType);
-            } else {
-                analyzerObj = context.getMapperService().searchAnalyzer();
-            }
-        } else {
-            analyzerObj = context.getMapperService().getIndexAnalyzers().get(analyzer);
-            if (analyzerObj == null) {
-                throw new QueryShardException(context, "[common] analyzer [" + analyzer + "] not found");
-            }
-        }
-
-        Occur highFreqOccur = highFreqOperator.toBooleanClauseOccur();
-        Occur lowFreqOccur = lowFreqOperator.toBooleanClauseOccur();
-
-        throw new UnsupportedOperationException("QueryBuilders does not support this operation.");
-//        ExtendedCommonTermsQuery commonsQuery = new ExtendedCommonTermsQuery(highFreqOccur, lowFreqOccur,
-//                cutoffFrequency, disableCoord, fieldType);
-//        return parseQueryString(commonsQuery, text, field, analyzerObj, lowFreqMinimumShouldMatch, highFreqMinimumShouldMatch);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
 //    private static Query parseQueryString(ExtendedCommonTermsQuery query, Object queryString, String field, Analyzer analyzer,

@@ -23,7 +23,6 @@ import org.apache.lucene.document.NumericDocValuesField;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexableField;
 import org.codelibs.elasticsearch.Version;
-import org.codelibs.elasticsearch.action.TimestampParsingException;
 import org.codelibs.elasticsearch.common.joda.FormatDateTimeFormatter;
 import org.codelibs.elasticsearch.common.joda.Joda;
 import org.codelibs.elasticsearch.common.lucene.Lucene;
@@ -37,7 +36,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.codelibs.elasticsearch.common.xcontent.support.XContentMapValues.lenientNodeBooleanValue;
-import static org.codelibs.elasticsearch.index.mapper.TypeParsers.parseDateTimeFormatter;
 
 public class TimestampFieldMapper extends MetadataFieldMapper {
 
@@ -117,53 +115,6 @@ public class TimestampFieldMapper extends MetadataFieldMapper {
     }
 
     public static class TypeParser implements MetadataFieldMapper.TypeParser {
-        @Override
-        public MetadataFieldMapper.Builder parse(String name, Map<String, Object> node, ParserContext parserContext) throws MapperParsingException {
-            if (parserContext.indexVersionCreated().onOrAfter(Version.V_5_0_0_alpha4)) {
-                throw new IllegalArgumentException("[_timestamp] is removed in 5.0. As a replacement, you can use an ingest pipeline to add a field with the current timestamp to your documents.");
-            }
-            Builder builder = new Builder(parserContext.mapperService().fullName(NAME));
-            boolean defaultSet = false;
-            Boolean ignoreMissing = null;
-            for (Iterator<Map.Entry<String, Object>> iterator = node.entrySet().iterator(); iterator.hasNext();) {
-                Map.Entry<String, Object> entry = iterator.next();
-                String fieldName = entry.getKey();
-                Object fieldNode = entry.getValue();
-                if (fieldName.equals("enabled")) {
-                    EnabledAttributeMapper enabledState = lenientNodeBooleanValue(fieldNode) ? EnabledAttributeMapper.ENABLED : EnabledAttributeMapper.DISABLED;
-                    builder.enabled(enabledState);
-                    iterator.remove();
-                } else if (fieldName.equals("format")) {
-                    builder.dateTimeFormatter(parseDateTimeFormatter(fieldNode.toString()));
-                    iterator.remove();
-                } else if (fieldName.equals("default")) {
-                    if (fieldNode == null) {
-                        throw new TimestampParsingException("default timestamp can not be set to null");
-                    } else {
-                        builder.defaultTimestamp(fieldNode.toString());
-                        defaultSet = true;
-                    }
-                    iterator.remove();
-                } else if (fieldName.equals("ignore_missing")) {
-                    ignoreMissing = lenientNodeBooleanValue(fieldNode);
-                    builder.ignoreMissing(ignoreMissing);
-                    iterator.remove();
-                }
-            }
-
-            // We can not accept a default value and rejecting null values at the same time
-            if (defaultSet && (ignoreMissing != null && ignoreMissing == false)) {
-                throw new TimestampParsingException("default timestamp can not be set with ignore_missing set to false");
-            }
-
-            return builder;
-        }
-
-        @Override
-        public MetadataFieldMapper getDefault(MappedFieldType fieldType, ParserContext context) {
-            final Settings indexSettings = context.mapperService().getIndexSettings().getSettings();
-            return new TimestampFieldMapper(indexSettings, fieldType);
-        }
     }
 
     public static final class TimestampFieldType extends LegacyDateFieldMapper.DateFieldType {
@@ -185,8 +136,8 @@ public class TimestampFieldMapper extends MetadataFieldMapper {
         }
     }
 
-    private EnabledAttributeMapper enabledState;
 
+    private final EnabledAttributeMapper enabledState;
     private final String defaultTimestamp;
     private final Boolean ignoreMissing;
 
@@ -220,34 +171,6 @@ public class TimestampFieldMapper extends MetadataFieldMapper {
 
     public Boolean ignoreMissing() {
         return this.ignoreMissing;
-    }
-
-    @Override
-    public void preParse(ParseContext context) throws IOException {
-        super.parse(context);
-    }
-
-    @Override
-    public void postParse(ParseContext context) throws IOException {
-    }
-
-    @Override
-    public Mapper parse(ParseContext context) throws IOException {
-        // nothing to do here, we call the parent in preParse
-        return null;
-    }
-
-    @Override
-    protected void parseCreateField(ParseContext context, List<IndexableField> fields) throws IOException {
-        if (enabledState.enabled) {
-            long timestamp = context.sourceToParse().timestamp();
-            if (fieldType().indexOptions() != IndexOptions.NONE || fieldType().stored()) {
-                fields.add(new LegacyLongFieldMapper.CustomLongNumericField(timestamp, fieldType()));
-            }
-            if (fieldType().hasDocValues()) {
-                fields.add(new NumericDocValuesField(fieldType().name(), timestamp));
-            }
-        }
     }
 
     @Override
@@ -287,24 +210,6 @@ public class TimestampFieldMapper extends MetadataFieldMapper {
 
     @Override
     protected void doMerge(Mapper mergeWith, boolean updateAllTypes) {
-        TimestampFieldMapper timestampFieldMapperMergeWith = (TimestampFieldMapper) mergeWith;
-        super.doMerge(mergeWith, updateAllTypes);
-        if (timestampFieldMapperMergeWith.enabledState != enabledState && !timestampFieldMapperMergeWith.enabledState.unset()) {
-            this.enabledState = timestampFieldMapperMergeWith.enabledState;
-        }
-        if (timestampFieldMapperMergeWith.defaultTimestamp() == null && defaultTimestamp == null) {
-            return;
-        }
-        List<String> conflicts = new ArrayList<>();
-        if (defaultTimestamp == null) {
-            conflicts.add("Cannot update default in _timestamp value. Value is null now encountering " + timestampFieldMapperMergeWith.defaultTimestamp());
-        } else if (timestampFieldMapperMergeWith.defaultTimestamp() == null) {
-            conflicts.add("Cannot update default in _timestamp value. Value is \" + defaultTimestamp.toString() + \" now encountering null");
-        } else if (!timestampFieldMapperMergeWith.defaultTimestamp().equals(defaultTimestamp)) {
-            conflicts.add("Cannot update default in _timestamp value. Value is " + defaultTimestamp.toString() + " now encountering " + timestampFieldMapperMergeWith.defaultTimestamp());
-        }
-        if (conflicts.isEmpty() == false) {
-            throw new IllegalArgumentException("Conflicts: " + conflicts);
-        }
+        throw new UnsupportedOperationException();
     }
 }

@@ -21,7 +21,6 @@ package org.codelibs.elasticsearch.common.logging;
 
 import org.codelibs.elasticsearch.querybuilders.mock.log4j.LogManager;
 import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
-import org.codelibs.elasticsearch.common.SuppressLoggerChecks;
 import org.codelibs.elasticsearch.common.util.concurrent.ThreadContext;
 
 import java.util.Iterator;
@@ -119,7 +118,6 @@ public class DeprecationLogger {
      * @param message The deprecation message.
      * @param params The parameters used to fill in the message, if any exist.
      */
-    @SuppressLoggerChecks(reason = "safely delegates to logger")
     void deprecated(Set<ThreadContext> threadContexts, String message, Object... params) {
         Iterator<ThreadContext> iterator = threadContexts.iterator();
 

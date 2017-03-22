@@ -24,7 +24,6 @@ import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.mapper.ObjectMapper;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.index.query.support.NestedScope;
 import org.codelibs.elasticsearch.search.SearchParseException;
@@ -84,30 +83,7 @@ public class ReverseNestedAggregationBuilder extends AbstractAggregationBuilder<
     @Override
     protected AggregatorFactory<?> doBuild(SearchContext context, AggregatorFactory<?> parent, Builder subFactoriesBuilder)
             throws IOException {
-        if (findNestedAggregatorFactory(parent) == null) {
-            throw new SearchParseException(context,
-                    "Reverse nested aggregation [" + name + "] can only be used inside a [nested] aggregation", null);
-        }
-
-        ObjectMapper parentObjectMapper = null;
-        if (path != null) {
-            parentObjectMapper = context.getObjectMapper(path);
-            if (parentObjectMapper == null) {
-                return new ReverseNestedAggregatorFactory(name, type, true, null, context, parent, subFactoriesBuilder, metaData);
-            }
-            if (parentObjectMapper.nested().isNested() == false) {
-                throw new AggregationExecutionException("[reverse_nested] nested path [" + path + "] is not nested");
-            }
-        }
-
-        NestedScope nestedScope = context.getQueryShardContext().nestedScope();
-        try {
-            nestedScope.nextLevel(parentObjectMapper);
-            return new ReverseNestedAggregatorFactory(name, type, false, parentObjectMapper, context, parent, subFactoriesBuilder,
-                    metaData);
-        } finally {
-            nestedScope.previousLevel();
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     private static NestedAggregatorFactory findNestedAggregatorFactory(AggregatorFactory<?> parent) {

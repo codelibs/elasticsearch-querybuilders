@@ -38,12 +38,7 @@ import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.index.fielddata.IndexGeoPointFieldData;
-import org.codelibs.elasticsearch.index.mapper.BaseGeoPointFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.BaseGeoPointFieldMapper.LegacyGeoPointFieldType;
-import org.codelibs.elasticsearch.index.mapper.LatLonPointFieldMapper;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-import org.codelibs.elasticsearch.index.search.geo.LegacyInMemoryGeoBoundingBoxQuery;
-import org.codelibs.elasticsearch.index.search.geo.LegacyIndexedGeoBoundingBoxQuery;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -326,69 +321,7 @@ public class GeoBoundingBoxQueryBuilder extends AbstractQueryBuilder<GeoBounding
 
     @Override
     public Query doToQuery(QueryShardContext context) {
-        MappedFieldType fieldType = context.fieldMapper(fieldName);
-        if (fieldType == null) {
-            if (ignoreUnmapped) {
-                return new MatchNoDocsQuery();
-            } else {
-                throw new QueryShardException(context, "failed to find geo_point field [" + fieldName + "]");
-            }
-        }
-        if (!(fieldType instanceof BaseGeoPointFieldMapper.GeoPointFieldType)) {
-            throw new QueryShardException(context, "field [" + fieldName + "] is not a geo_point field");
-        }
-
-        QueryValidationException exception = checkLatLon(context.indexVersionCreated().before(Version.V_2_0_0));
-        if (exception != null) {
-            throw new QueryShardException(context, "couldn't validate latitude/ longitude values", exception);
-        }
-
-        GeoPoint luceneTopLeft = new GeoPoint(topLeft);
-        GeoPoint luceneBottomRight = new GeoPoint(bottomRight);
-        final Version indexVersionCreated = context.indexVersionCreated();
-        if (indexVersionCreated.onOrAfter(Version.V_2_2_0) || GeoValidationMethod.isCoerce(validationMethod)) {
-            // Special case: if the difference between the left and right is 360 and the right is greater than the left, we are asking for
-            // the complete longitude range so need to set longitude to the complete longitude range
-            double right = luceneBottomRight.getLon();
-            double left = luceneTopLeft.getLon();
-
-            boolean completeLonRange = ((right - left) % 360 == 0 && right > left);
-            GeoUtils.normalizePoint(luceneTopLeft, true, !completeLonRange);
-            GeoUtils.normalizePoint(luceneBottomRight, true, !completeLonRange);
-            if (completeLonRange) {
-                luceneTopLeft.resetLon(-180);
-                luceneBottomRight.resetLon(180);
-            }
-        }
-
-        if (indexVersionCreated.onOrAfter(LatLonPointFieldMapper.LAT_LON_FIELD_VERSION)) {
-            return LatLonPoint.newBoxQuery(fieldType.name(), luceneBottomRight.getLat(), luceneTopLeft.getLat(),
-                luceneTopLeft.getLon(), luceneBottomRight.getLon());
-        } else if (indexVersionCreated.onOrAfter(Version.V_2_2_0)) {
-            // if index created V_2_2 use (soon to be legacy) numeric encoding postings format
-            // if index created V_2_3 > use prefix encoded postings format
-            final GeoPointField.TermEncoding encoding = (indexVersionCreated.before(Version.V_2_3_0)) ?
-                GeoPointField.TermEncoding.NUMERIC : GeoPointField.TermEncoding.PREFIX;
-            return new GeoPointInBBoxQuery(fieldType.name(), encoding, luceneBottomRight.lat(), luceneTopLeft.lat(),
-                luceneTopLeft.lon(), luceneBottomRight.lon());
-        }
-
-        Query query;
-        switch(type) {
-            case INDEXED:
-                LegacyGeoPointFieldType geoFieldType = ((LegacyGeoPointFieldType) fieldType);
-                query = LegacyIndexedGeoBoundingBoxQuery.create(luceneTopLeft, luceneBottomRight, geoFieldType, context);
-                break;
-            case MEMORY:
-                IndexGeoPointFieldData indexFieldData = context.getForField(fieldType);
-                query = new LegacyInMemoryGeoBoundingBoxQuery(luceneTopLeft, luceneBottomRight, indexFieldData);
-                break;
-            default:
-                // Someone extended the type enum w/o adjusting this switch statement.
-                throw new IllegalStateException("geo bounding box type [" + type + "] not supported.");
-        }
-
-        return query;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

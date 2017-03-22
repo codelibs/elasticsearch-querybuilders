@@ -27,7 +27,6 @@ import org.apache.lucene.search.join.BitSetProducer;
 import org.apache.lucene.util.BitSet;
 import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.lucene.search.Queries;
-import org.codelibs.elasticsearch.index.mapper.ObjectMapper;
 import org.codelibs.elasticsearch.search.aggregations.Aggregator;
 import org.codelibs.elasticsearch.search.aggregations.AggregatorFactories;
 import org.codelibs.elasticsearch.search.aggregations.InternalAggregation;
@@ -51,16 +50,11 @@ public class ReverseNestedAggregator extends SingleBucketAggregator {
     private final Query parentFilter;
     private final BitSetProducer parentBitsetProducer;
 
-    public ReverseNestedAggregator(String name, AggregatorFactories factories, ObjectMapper objectMapper,
+    public ReverseNestedAggregator(String name, AggregatorFactories factories,
             SearchContext context, Aggregator parent, List<PipelineAggregator> pipelineAggregators, Map<String, Object> metaData)
             throws IOException {
         super(name, factories, context, parent, pipelineAggregators, metaData);
-        if (objectMapper == null) {
-            parentFilter = Queries.newNonNestedFilter();
-        } else {
-            parentFilter = objectMapper.nestedTypeFilter();
-        }
-        parentBitsetProducer = context.bitsetFilterCache().getBitSetProducer(parentFilter);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

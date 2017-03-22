@@ -31,10 +31,7 @@ import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentFactory;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentType;
-import org.codelibs.elasticsearch.index.mapper.CompletionFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.CompletionFieldMapper2x;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-import org.codelibs.elasticsearch.index.mapper.MapperService;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 import org.codelibs.elasticsearch.search.suggest.SuggestionBuilder;
@@ -355,63 +352,7 @@ public class CompletionSuggestionBuilder extends SuggestionBuilder<CompletionSug
 
     @Override
     public SuggestionContext build(QueryShardContext context) throws IOException {
-        CompletionSuggestionContext suggestionContext = new CompletionSuggestionContext(context);
-        // copy over common settings to each suggestion builder
-        final MapperService mapperService = context.getMapperService();
-        populateCommonFields(mapperService, suggestionContext);
-        suggestionContext.setFuzzyOptions(fuzzyOptions);
-        suggestionContext.setRegexOptions(regexOptions);
-        MappedFieldType mappedFieldType = mapperService.fullName(suggestionContext.getField());
-        if (mappedFieldType == null ||
-            (mappedFieldType instanceof CompletionFieldMapper.CompletionFieldType == false
-                && mappedFieldType instanceof CompletionFieldMapper2x.CompletionFieldType == false)) {
-            throw new IllegalArgumentException("Field [" + suggestionContext.getField() + "] is not a completion suggest field");
-        }
-        if (mappedFieldType instanceof CompletionFieldMapper.CompletionFieldType) {
-            CompletionFieldMapper.CompletionFieldType type = (CompletionFieldMapper.CompletionFieldType) mappedFieldType;
-            suggestionContext.setFieldType(type);
-            if (type.hasContextMappings() && contextBytes != null) {
-                try (XContentParser contextParser = XContentFactory.xContent(contextBytes).createParser(context.getXContentRegistry(),
-                        contextBytes)) {
-                    if (type.hasContextMappings() && contextParser != null) {
-                        ContextMappings contextMappings = type.getContextMappings();
-                        contextParser.nextToken();
-                        Map<String, List<ContextMapping.InternalQueryContext>> queryContexts = new HashMap<>(contextMappings.size());
-                        assert contextParser.currentToken() == XContentParser.Token.START_OBJECT;
-                        XContentParser.Token currentToken;
-                        String currentFieldName;
-                        while ((currentToken = contextParser.nextToken()) != XContentParser.Token.END_OBJECT) {
-                            if (currentToken == XContentParser.Token.FIELD_NAME) {
-                                currentFieldName = contextParser.currentName();
-                                final ContextMapping mapping = contextMappings.get(currentFieldName);
-                                queryContexts.put(currentFieldName, mapping.parseQueryContext(context.newParseContext(contextParser)));
-                            }
-                        }
-                        suggestionContext.setQueryContexts(queryContexts);
-                    }
-                }
-            } else if (contextBytes != null) {
-                throw new IllegalArgumentException("suggester [" + type.name() + "] doesn't expect any context");
-            }
-        } else if (mappedFieldType instanceof CompletionFieldMapper2x.CompletionFieldType) {
-            CompletionFieldMapper2x.CompletionFieldType type = ((CompletionFieldMapper2x.CompletionFieldType) mappedFieldType);
-            suggestionContext.setFieldType2x(type);
-            if (type.requiresContext()) {
-                if (contextBytes != null) {
-                    try (XContentParser contextParser = XContentFactory.xContent(contextBytes)
-                            .createParser(suggestionContext.getShardContext().getXContentRegistry(), contextBytes)) {
-                        contextParser.nextToken();
-                        suggestionContext.setContextQueries(ContextQuery.parseQueries(type.getContextMapping(), contextParser));
-                    }
-                } else {
-                    throw new IllegalArgumentException("suggester [completion] requires context to be setup");
-                }
-            } else if (contextBytes != null) {
-                throw new IllegalArgumentException("suggester [completion] doesn't expect any context");
-            }
-        }
-        assert suggestionContext.getFieldType() != null || suggestionContext.getFieldType2x() != null : "no completion field type set";
-        return suggestionContext;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

@@ -66,45 +66,7 @@ public class SignificantTermsAggregationBuilder extends ValuesSourceAggregationB
     static final SignificanceHeuristic DEFAULT_SIGNIFICANCE_HEURISTIC = new JLHScore();
 
     public static Aggregator.Parser getParser(ParseFieldRegistry<SignificanceHeuristicParser> significanceHeuristicParserRegistry) {
-        ObjectParser<SignificantTermsAggregationBuilder, QueryParseContext> parser =
-                new ObjectParser<>(SignificantTermsAggregationBuilder.NAME);
-        ValuesSourceParserHelper.declareAnyFields(parser, true, true);
-
-        parser.declareInt(SignificantTermsAggregationBuilder::shardSize, TermsAggregationBuilder.SHARD_SIZE_FIELD_NAME);
-
-        parser.declareLong(SignificantTermsAggregationBuilder::minDocCount, TermsAggregationBuilder.MIN_DOC_COUNT_FIELD_NAME);
-
-        parser.declareLong(SignificantTermsAggregationBuilder::shardMinDocCount, TermsAggregationBuilder.SHARD_MIN_DOC_COUNT_FIELD_NAME);
-
-        parser.declareInt(SignificantTermsAggregationBuilder::size, TermsAggregationBuilder.REQUIRED_SIZE_FIELD_NAME);
-
-        parser.declareString(SignificantTermsAggregationBuilder::executionHint, TermsAggregationBuilder.EXECUTION_HINT_FIELD_NAME);
-
-        parser.declareObject((b, v) -> { if (v.isPresent()) b.backgroundFilter(v.get()); },
-                (p, context) -> context.parseInnerQueryBuilder(),
-                SignificantTermsAggregationBuilder.BACKGROUND_FILTER);
-
-        parser.declareField((b, v) -> b.includeExclude(IncludeExclude.merge(v, b.includeExclude())),
-                IncludeExclude::parseInclude, IncludeExclude.INCLUDE_FIELD, ObjectParser.ValueType.OBJECT_ARRAY_OR_STRING);
-
-        parser.declareField((b, v) -> b.includeExclude(IncludeExclude.merge(b.includeExclude(), v)),
-                IncludeExclude::parseExclude, IncludeExclude.EXCLUDE_FIELD, ObjectParser.ValueType.STRING_ARRAY);
-
-        for (String name : significanceHeuristicParserRegistry.getNames()) {
-            parser.declareObject(SignificantTermsAggregationBuilder::significanceHeuristic,
-                    (p, context) -> {
-                        SignificanceHeuristicParser significanceHeuristicParser = significanceHeuristicParserRegistry
-                                .lookupReturningNullIfNotFound(name);
-                        return significanceHeuristicParser.parse(context);
-                    },
-                    new ParseField(name));
-        }
-        return new Aggregator.Parser() {
-            @Override
-            public AggregationBuilder parse(String aggregationName, QueryParseContext context) throws IOException {
-                return parser.parse(context.parser(), new SignificantTermsAggregationBuilder(aggregationName, null), context);
-            }
-        };
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     private IncludeExclude includeExclude = null;

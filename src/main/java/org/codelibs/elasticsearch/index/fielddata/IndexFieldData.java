@@ -37,12 +37,8 @@ import org.apache.lucene.util.BitSet;
 import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.common.Nullable;
 import org.codelibs.elasticsearch.index.IndexComponent;
-import org.codelibs.elasticsearch.index.IndexSettings;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-import org.codelibs.elasticsearch.index.mapper.MapperService;
-import org.codelibs.elasticsearch.indices.breaker.CircuitBreakerService;
-import org.codelibs.elasticsearch.search.MultiValueMode;
 
 import java.io.IOException;
 
@@ -83,11 +79,6 @@ public interface IndexFieldData<FD extends AtomicFieldData> extends IndexCompone
      * Loads directly the atomic field data for the reader, ignoring any caching involved.
      */
     FD loadDirect(LeafReaderContext context) throws Exception;
-
-    /**
-     * Comparator used for sorting.
-     */
-    XFieldComparatorSource comparatorSource(@Nullable Object missingValue, MultiValueMode sortMode, Nested nested);
 
     /**
      * Clears any resources associated with this field data.
@@ -222,8 +213,6 @@ public interface IndexFieldData<FD extends AtomicFieldData> extends IndexCompone
 
     interface Builder {
 
-        IndexFieldData<?> build(IndexSettings indexSettings, MappedFieldType fieldType, IndexFieldDataCache cache,
-                             CircuitBreakerService breakerService, MapperService mapperService);
     }
 
     interface Global<FD extends AtomicFieldData> extends IndexFieldData<FD> {

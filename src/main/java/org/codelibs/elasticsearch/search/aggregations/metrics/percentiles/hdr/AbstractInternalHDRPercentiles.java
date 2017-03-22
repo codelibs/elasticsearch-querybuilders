@@ -19,7 +19,6 @@
 
 package org.codelibs.elasticsearch.search.aggregations.metrics.percentiles.hdr;
 
-import org.HdrHistogram.DoubleHistogram;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
@@ -37,17 +36,13 @@ import java.util.zip.DataFormatException;
 abstract class AbstractInternalHDRPercentiles extends InternalNumericMetricsAggregation.MultiValue {
 
     protected final double[] keys;
-    protected final DoubleHistogram state;
     private final boolean keyed;
 
-    public AbstractInternalHDRPercentiles(String name, double[] keys, DoubleHistogram state, boolean keyed, DocValueFormat format,
+    public AbstractInternalHDRPercentiles(String name, double[] keys, boolean keyed, DocValueFormat format,
             List<PipelineAggregator> pipelineAggregators,
             Map<String, Object> metaData) {
         super(name, pipelineAggregators, metaData);
-        this.keys = keys;
-        this.state = state;
-        this.keyed = keyed;
-        this.format = format;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     /**
@@ -55,31 +50,12 @@ abstract class AbstractInternalHDRPercentiles extends InternalNumericMetricsAggr
      */
     protected AbstractInternalHDRPercentiles(StreamInput in) throws IOException {
         super(in);
-        format = in.readNamedWriteable(DocValueFormat.class);
-        keys = in.readDoubleArray();
-        long minBarForHighestToLowestValueRatio = in.readLong();
-        final int serializedLen = in.readVInt();
-        byte[] bytes = new byte[serializedLen];
-        in.readBytes(bytes, 0, serializedLen);
-        ByteBuffer stateBuffer = ByteBuffer.wrap(bytes);
-        try {
-            state = DoubleHistogram.decodeFromCompressedByteBuffer(stateBuffer, minBarForHighestToLowestValueRatio);
-        } catch (DataFormatException e) {
-            throw new IOException("Failed to decode DoubleHistogram for aggregation [" + name + "]", e);
-        }
-        keyed = in.readBoolean();
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
     protected void doWriteTo(StreamOutput out) throws IOException {
-        out.writeNamedWriteable(format);
-        out.writeDoubleArray(keys);
-        out.writeLong(state.getHighestToLowestValueRatio());
-        ByteBuffer stateBuffer = ByteBuffer.allocate(state.getNeededByteBufferCapacity());
-        final int serializedLen = state.encodeIntoCompressedByteBuffer(stateBuffer);
-        out.writeVInt(serializedLen);
-        out.writeBytes(stateBuffer.array(), 0, serializedLen);
-        out.writeBoolean(keyed);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
@@ -90,24 +66,15 @@ abstract class AbstractInternalHDRPercentiles extends InternalNumericMetricsAggr
     public abstract double value(double key);
 
     public long getEstimatedMemoryFootprint() {
-        return state.getEstimatedFootprintInBytes();
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
     public AbstractInternalHDRPercentiles doReduce(List<InternalAggregation> aggregations, ReduceContext reduceContext) {
-        DoubleHistogram merged = null;
-        for (InternalAggregation aggregation : aggregations) {
-            final AbstractInternalHDRPercentiles percentiles = (AbstractInternalHDRPercentiles) aggregation;
-            if (merged == null) {
-                merged = new DoubleHistogram(percentiles.state);
-                merged.setAutoResize(true);
-            }
-            merged.add(percentiles.state);
-        }
-        return createReduced(getName(), keys, merged, keyed, pipelineAggregators(), getMetaData());
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
-    protected abstract AbstractInternalHDRPercentiles createReduced(String name, double[] keys, DoubleHistogram merged, boolean keyed,
+    protected abstract AbstractInternalHDRPercentiles createReduced(String name, double[] keys,boolean keyed,
             List<PipelineAggregator> pipelineAggregators, Map<String, Object> metaData);
 
     @Override

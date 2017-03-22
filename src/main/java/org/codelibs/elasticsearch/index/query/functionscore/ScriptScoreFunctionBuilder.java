@@ -93,12 +93,7 @@ public class ScriptScoreFunctionBuilder extends ScoreFunctionBuilder<ScriptScore
 
     @Override
     protected ScoreFunction doToFunction(QueryShardContext context) {
-        try {
-            SearchScript searchScript = context.getSearchScript(script, ScriptContext.Standard.SEARCH);
-            return new ScriptScoreFunction(script, searchScript);
-        } catch (Exception e) {
-            throw new QueryShardException(context, "script_score: the script could not be loaded", e);
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public static ScriptScoreFunctionBuilder fromXContent(QueryParseContext parseContext)

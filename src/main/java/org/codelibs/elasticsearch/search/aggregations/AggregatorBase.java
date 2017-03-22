@@ -21,7 +21,6 @@ package org.codelibs.elasticsearch.search.aggregations;
 import org.codelibs.elasticsearch.common.breaker.CircuitBreaker;
 import org.apache.lucene.index.LeafReaderContext;
 import org.codelibs.elasticsearch.common.breaker.CircuitBreakingException;
-import org.codelibs.elasticsearch.indices.breaker.CircuitBreakerService;
 import org.codelibs.elasticsearch.search.aggregations.bucket.BestBucketsDeferringCollector;
 import org.codelibs.elasticsearch.search.aggregations.bucket.DeferringBucketCollector;
 import org.codelibs.elasticsearch.search.aggregations.pipeline.PipelineAggregator;
@@ -54,7 +53,6 @@ public abstract class AggregatorBase extends Aggregator {
     private Map<String, Aggregator> subAggregatorbyName;
     private DeferringBucketCollector recordingWrapper;
     private final List<PipelineAggregator> pipelineAggregators;
-    private final CircuitBreakerService breakerService;
     private boolean failed = false;
 
     /**
@@ -68,51 +66,7 @@ public abstract class AggregatorBase extends Aggregator {
      */
     protected AggregatorBase(String name, AggregatorFactories factories, SearchContext context, Aggregator parent,
             List<PipelineAggregator> pipelineAggregators, Map<String, Object> metaData) throws IOException {
-        this.name = name;
-        this.pipelineAggregators = pipelineAggregators;
-        this.metaData = metaData;
-        this.parent = parent;
-        this.context = context;
-        this.breakerService = context.bigArrays().breakerService();
-        assert factories != null : "sub-factories provided to BucketAggregator must not be null, use AggragatorFactories.EMPTY instead";
-        this.subAggregators = factories.createSubAggregators(this);
-        context.addReleasable(this, Lifetime.PHASE);
-        // Register a safeguard to highlight any invalid construction logic (call to this constructor without subsequent preCollection call)
-        collectableSubAggregators = new BucketCollector() {
-            void badState(){
-                throw new QueryPhaseExecutionException(AggregatorBase.this.context,
-                        "preCollection not called on new Aggregator before use", null);
-            }
-            @Override
-            public LeafBucketCollector getLeafCollector(LeafReaderContext reader) {
-                badState();
-                assert false;
-                return null; // unreachable but compiler does not agree
-            }
-
-            @Override
-            public void preCollection() throws IOException {
-                badState();
-            }
-
-            @Override
-            public void postCollection() throws IOException {
-                badState();
-            }
-            @Override
-            public boolean needsScores() {
-                badState();
-                return false; // unreachable
-            }
-        };
-        try {
-            this.breakerService
-                    .getBreaker(CircuitBreaker.REQUEST)
-                    .addEstimateBytesAndMaybeBreak(DEFAULT_WEIGHT, "<agg [" + name + "]>");
-        } catch (CircuitBreakingException cbe) {
-            this.failed = true;
-            throw cbe;
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     /**
@@ -262,13 +216,7 @@ public abstract class AggregatorBase extends Aggregator {
     /** Called upon release of the aggregator. */
     @Override
     public void close() {
-        try {
-            doClose();
-        } finally {
-            if (!this.failed) {
-                this.breakerService.getBreaker(CircuitBreaker.REQUEST).addWithoutBreaking(-DEFAULT_WEIGHT);
-            }
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     /** Release instance-specific data. */

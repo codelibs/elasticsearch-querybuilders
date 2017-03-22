@@ -28,7 +28,6 @@ import org.codelibs.elasticsearch.common.lucene.Lucene;
 import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
-import org.codelibs.elasticsearch.index.fielddata.plain.PagedBytesIndexFieldData;
 
 import java.io.IOException;
 import java.util.List;
@@ -66,16 +65,6 @@ public class UidFieldMapper extends MetadataFieldMapper {
     }
 
     public static class TypeParser implements MetadataFieldMapper.TypeParser {
-        @Override
-        public MetadataFieldMapper.Builder<?, ?> parse(String name, Map<String, Object> node, ParserContext parserContext) throws MapperParsingException {
-            throw new MapperParsingException(NAME + " is not configurable");
-        }
-
-        @Override
-        public MetadataFieldMapper getDefault(MappedFieldType fieldType, ParserContext context) {
-            final Settings indexSettings = context.mapperService().getIndexSettings().getSettings();
-            return new UidFieldMapper(indexSettings, fieldType);
-        }
     }
 
     static final class UidFieldType extends TermBasedFieldType {
@@ -99,11 +88,7 @@ public class UidFieldMapper extends MetadataFieldMapper {
 
         @Override
         public IndexFieldData.Builder fielddataBuilder() {
-            // TODO: add doc values support?
-            return new PagedBytesIndexFieldData.Builder(
-                    TextFieldMapper.Defaults.FIELDDATA_MIN_FREQUENCY,
-                    TextFieldMapper.Defaults.FIELDDATA_MAX_FREQUENCY,
-                    TextFieldMapper.Defaults.FIELDDATA_MIN_SEGMENT_SIZE);
+            throw new UnsupportedOperationException();
         }
     }
 
@@ -113,29 +98,6 @@ public class UidFieldMapper extends MetadataFieldMapper {
 
     private UidFieldMapper(MappedFieldType fieldType, MappedFieldType defaultFieldType, Settings indexSettings) {
         super(NAME, fieldType, defaultFieldType, indexSettings);
-    }
-
-    @Override
-    public void preParse(ParseContext context) throws IOException {
-        super.parse(context);
-    }
-
-    @Override
-    public void postParse(ParseContext context) throws IOException {}
-
-    @Override
-    public Mapper parse(ParseContext context) throws IOException {
-        // nothing to do here, we do everything in preParse
-        return null;
-    }
-
-    @Override
-    protected void parseCreateField(ParseContext context, List<IndexableField> fields) throws IOException {
-        Field uid = new Field(NAME, Uid.createUid(context.sourceToParse().type(), context.sourceToParse().id()), Defaults.FIELD_TYPE);
-        fields.add(uid);
-        if (fieldType().hasDocValues()) {
-            fields.add(new BinaryDocValuesField(NAME, new BytesRef(uid.stringValue())));
-        }
     }
 
     @Override

@@ -189,63 +189,6 @@ public class SliceBuilder extends ToXContentToBytes implements Writeable {
     }
 
     public Query toFilter(QueryShardContext context, int shardId, int numShards) {
-        final MappedFieldType type = context.fieldMapper(field);
-        if (type == null) {
-            throw new IllegalArgumentException("field " + field + " not found");
-        }
-
-        boolean useTermQuery = false;
-        if (UidFieldMapper.NAME.equals(field)) {
-           useTermQuery = true;
-        } else if (type.hasDocValues() == false) {
-            throw new IllegalArgumentException("cannot load numeric doc values on " + field);
-        } else {
-            IndexFieldData ifm = context.getForField(type);
-            if (ifm instanceof IndexNumericFieldData == false) {
-                throw new IllegalArgumentException("cannot load numeric doc values on " + field);
-            }
-        }
-
-        if (numShards == 1) {
-            return useTermQuery ? new TermsSliceQuery(field, id, max) :
-                new DocValuesSliceQuery(field, id, max);
-        }
-        if (max >= numShards) {
-            // the number of slices is greater than the number of shards
-            // in such case we can reduce the number of requested shards by slice
-
-            // first we check if the slice is responsible of this shard
-            int targetShard = id % numShards;
-            if (targetShard != shardId) {
-                // the shard is not part of this slice, we can skip it.
-                return new MatchNoDocsQuery("this shard is not part of the slice");
-            }
-            // compute the number of slices where this shard appears
-            int numSlicesInShard = max / numShards;
-            int rest = max % numShards;
-            if (rest > targetShard) {
-                numSlicesInShard++;
-            }
-
-            if (numSlicesInShard == 1) {
-                // this shard has only one slice so we must check all the documents
-                return new MatchAllDocsQuery();
-            }
-            // get the new slice id for this shard
-            int shardSlice = id / numShards;
-
-            return useTermQuery ?
-                new TermsSliceQuery(field, shardSlice, numSlicesInShard) :
-                new DocValuesSliceQuery(field, shardSlice, numSlicesInShard);
-        }
-        // the number of shards is greater than the number of slices
-
-        // check if the shard is assigned to the slice
-        int targetSlice = shardId % max;
-        if (id != targetSlice) {
-            // the shard is not part of this slice, we can skip it.
-            return new MatchNoDocsQuery("this shard is not part of the slice");
-        }
-        return new MatchAllDocsQuery();
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 }

@@ -29,7 +29,6 @@ import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.lucene.BytesRefs;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.mapper.DocumentMapper;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -127,14 +126,7 @@ public class TypeQueryBuilder extends AbstractQueryBuilder<TypeQueryBuilder> {
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        //LUCENE 4 UPGRADE document mapper should use bytesref as well?
-        DocumentMapper documentMapper = context.getMapperService().documentMapper(type.utf8ToString());
-        if (documentMapper == null) {
-            // no type means no documents
-            return new MatchNoDocsQuery();
-        } else {
-            return documentMapper.typeFilter();
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

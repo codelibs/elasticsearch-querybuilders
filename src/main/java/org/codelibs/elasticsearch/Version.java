@@ -19,13 +19,10 @@
 
 package org.codelibs.elasticsearch;
 
-import org.codelibs.elasticsearch.cluster.metadata.IndexMetaData;
 import org.codelibs.elasticsearch.common.Strings;
-import org.codelibs.elasticsearch.common.SuppressForbidden;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.settings.Settings;
-import org.codelibs.elasticsearch.monitor.jvm.JvmInfo;
 
 import java.io.IOException;
 
@@ -212,16 +209,9 @@ public class Version {
      * Return the {@link Version} of Elasticsearch that has been used to create an index given its settings.
      *
      * @throws IllegalStateException if the given index settings doesn't contain a value for the key
-     *         {@value IndexMetaData#SETTING_VERSION_CREATED}
      */
     public static Version indexCreated(Settings indexSettings) {
-        final Version indexVersion = indexSettings.getAsVersion(IndexMetaData.SETTING_VERSION_CREATED, null);
-        if (indexVersion == null) {
-            throw new IllegalStateException(
-                    "[" + IndexMetaData.SETTING_VERSION_CREATED + "] is not present in the index settings for index with uuid: ["
-                            + indexSettings.get(IndexMetaData.SETTING_INDEX_UUID) + "]");
-        }
-        return indexVersion;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public static void writeVersion(Version version, StreamOutput out) throws IOException {
@@ -390,10 +380,8 @@ public class Version {
         return compatible;
     }
 
-    @SuppressForbidden(reason = "System.out.*")
     public static void main(String[] args) {
-        System.out.println("Version: " + Version.CURRENT + ", Build: " + Build.CURRENT.shortHash() + "/" + Build.CURRENT.date() + ", JVM: "
-                + JvmInfo.jvmInfo().version());
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

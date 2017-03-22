@@ -68,7 +68,6 @@ import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.ExceptionsHelper;
 import org.codelibs.elasticsearch.common.Nullable;
 import org.codelibs.elasticsearch.common.Strings;
-import org.codelibs.elasticsearch.common.SuppressForbidden;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.util.iterable.Iterables;
@@ -639,7 +638,6 @@ public class Lucene {
         return LenientParser.parse(toParse, defaultValue);
     }
 
-    @SuppressForbidden(reason = "Version#parseLeniently() used in a central place")
     private static final class LenientParser {
         public static Version parse(String toParse, Version defaultValue) {
             if (Strings.hasLength(toParse)) {

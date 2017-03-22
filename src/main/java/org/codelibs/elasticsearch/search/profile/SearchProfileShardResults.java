@@ -94,26 +94,4 @@ public final class SearchProfileShardResults implements Writeable, ToXContent{
         builder.endArray().endObject();
         return builder;
     }
-
-    /**
-     * Helper method to convert Profiler into InternalProfileShardResults, which
-     * can be serialized to other nodes, emitted as JSON, etc.
-     *
-     * @param profilers
-     *            The {@link Profilers} to convert into results
-     * @return A {@link ProfileShardResult} representing the results for this
-     *         shard
-     */
-    public static ProfileShardResult buildShardResults(Profilers profilers) {
-        List<QueryProfiler> queryProfilers = profilers.getQueryProfilers();
-        AggregationProfiler aggProfiler = profilers.getAggregationProfiler();
-        List<QueryProfileShardResult> queryResults = new ArrayList<>(queryProfilers.size());
-        for (QueryProfiler queryProfiler : queryProfilers) {
-            QueryProfileShardResult result = new QueryProfileShardResult(queryProfiler.getTree(), queryProfiler.getRewriteTime(),
-                    queryProfiler.getCollector());
-            queryResults.add(result);
-        }
-        AggregationProfileShardResult aggResults = new AggregationProfileShardResult(aggProfiler.getTree());
-        return new ProfileShardResult(queryResults, aggResults);
-    }
 }

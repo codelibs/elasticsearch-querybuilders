@@ -139,16 +139,7 @@ public class MatchPhraseQueryBuilder extends AbstractQueryBuilder<MatchPhraseQue
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        // validate context specific fields
-        if (analyzer != null && context.getIndexAnalyzers().get(analyzer) == null) {
-            throw new QueryShardException(context, "[" + NAME + "] analyzer [" + analyzer + "] not found");
-        }
-
-        MatchQuery matchQuery = new MatchQuery(context);
-        matchQuery.setAnalyzer(analyzer);
-        matchQuery.setPhraseSlop(slop);
-
-        return matchQuery.parse(MatchQuery.Type.PHRASE, fieldName, value);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

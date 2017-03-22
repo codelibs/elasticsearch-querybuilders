@@ -22,7 +22,6 @@ package org.codelibs.elasticsearch.common.util.concurrent;
 import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
-import org.codelibs.elasticsearch.rest.RestStatus;
 
 import java.io.IOException;
 
@@ -48,11 +47,6 @@ public class EsRejectedExecutionException extends ElasticsearchException {
     public EsRejectedExecutionException(Throwable e) {
         super(null, e);
         this.isExecutorShutdown = false;
-    }
-
-    @Override
-    public RestStatus status() {
-        return RestStatus.TOO_MANY_REQUESTS;
     }
 
     public EsRejectedExecutionException(StreamInput in) throws IOException{

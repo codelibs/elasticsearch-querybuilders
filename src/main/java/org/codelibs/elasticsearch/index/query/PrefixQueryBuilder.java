@@ -174,22 +174,7 @@ public class PrefixQueryBuilder extends AbstractQueryBuilder<PrefixQueryBuilder>
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        MultiTermQuery.RewriteMethod method = QueryParsers.parseRewriteMethod(rewrite, null);
-
-        Query query = null;
-        MappedFieldType fieldType = context.fieldMapper(fieldName);
-        if (fieldType != null) {
-            query = fieldType.prefixQuery(value, method, context);
-        }
-        if (query == null) {
-            PrefixQuery prefixQuery = new PrefixQuery(new Term(fieldName, BytesRefs.toBytesRef(value)));
-            if (method != null) {
-                prefixQuery.setRewriteMethod(method);
-            }
-            query = prefixQuery;
-        }
-
-        return query;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

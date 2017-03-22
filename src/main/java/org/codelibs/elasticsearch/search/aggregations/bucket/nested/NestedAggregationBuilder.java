@@ -24,7 +24,6 @@ import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.mapper.ObjectMapper;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.codelibs.elasticsearch.search.aggregations.AggregationExecutionException;
@@ -80,22 +79,7 @@ public class NestedAggregationBuilder extends AbstractAggregationBuilder<NestedA
     @Override
     protected AggregatorFactory<?> doBuild(SearchContext context, AggregatorFactory<?> parent, Builder subFactoriesBuilder)
             throws IOException {
-        ObjectMapper childObjectMapper = context.getObjectMapper(path);
-        if (childObjectMapper == null) {
-            // in case the path has been unmapped:
-            return new NestedAggregatorFactory(name, type, null, null, context, parent, subFactoriesBuilder, metaData);
-        }
-
-        if (childObjectMapper.nested().isNested() == false) {
-            throw new AggregationExecutionException("[nested] nested path [" + path + "] is not nested");
-        }
-        try {
-            ObjectMapper parentObjectMapper = context.getQueryShardContext().nestedScope().nextLevel(childObjectMapper);
-            return new NestedAggregatorFactory(name, type, parentObjectMapper, childObjectMapper, context, parent, subFactoriesBuilder,
-                    metaData);
-        } finally {
-            context.getQueryShardContext().nestedScope().previousLevel();
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

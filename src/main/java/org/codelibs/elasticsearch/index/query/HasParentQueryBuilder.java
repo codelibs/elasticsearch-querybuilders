@@ -30,9 +30,6 @@ import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.lucene.search.Queries;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.fielddata.plain.ParentChildIndexFieldData;
-import org.codelibs.elasticsearch.index.mapper.DocumentMapper;
-import org.codelibs.elasticsearch.index.mapper.ParentFieldMapper;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -151,61 +148,7 @@ public class HasParentQueryBuilder extends AbstractQueryBuilder<HasParentQueryBu
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        Query innerQuery;
-        String[] previousTypes = context.getTypes();
-        context.setTypes(type);
-        try {
-            innerQuery = query.toQuery(context);
-        } finally {
-            context.setTypes(previousTypes);
-        }
-
-        DocumentMapper parentDocMapper = context.documentMapper(type);
-        if (parentDocMapper == null) {
-            if (ignoreUnmapped) {
-                return new MatchNoDocsQuery();
-            } else {
-                throw new QueryShardException(context, "[" + NAME + "] query configured 'parent_type' [" + type + "] is not a valid type");
-            }
-        }
-
-        Set<String> childTypes = new HashSet<>();
-        ParentChildIndexFieldData parentChildIndexFieldData = null;
-        for (DocumentMapper documentMapper : context.getMapperService().docMappers(false)) {
-            ParentFieldMapper parentFieldMapper = documentMapper.parentFieldMapper();
-            if (parentFieldMapper.active() && type.equals(parentFieldMapper.type())) {
-                childTypes.add(documentMapper.type());
-                parentChildIndexFieldData = context.getForField(parentFieldMapper.fieldType());
-            }
-        }
-
-        if (childTypes.isEmpty()) {
-            throw new QueryShardException(context, "[" + NAME + "] no child types found for type [" + type + "]");
-        }
-
-        Query childrenQuery;
-        if (childTypes.size() == 1) {
-            DocumentMapper documentMapper = context.getMapperService().documentMapper(childTypes.iterator().next());
-            childrenQuery = documentMapper.typeFilter();
-        } else {
-            BooleanQuery.Builder childrenFilter = new BooleanQuery.Builder();
-            for (String childrenTypeStr : childTypes) {
-                DocumentMapper documentMapper = context.getMapperService().documentMapper(childrenTypeStr);
-                childrenFilter.add(documentMapper.typeFilter(), BooleanClause.Occur.SHOULD);
-            }
-            childrenQuery = childrenFilter.build();
-        }
-
-        // wrap the query with type query
-        innerQuery = Queries.filtered(innerQuery, parentDocMapper.typeFilter());
-        return new HasChildQueryBuilder.LateParsingQuery(childrenQuery,
-                                                         innerQuery,
-                                                         HasChildQueryBuilder.DEFAULT_MIN_CHILDREN,
-                                                         HasChildQueryBuilder.DEFAULT_MAX_CHILDREN,
-                                                         type,
-                                                         score ? ScoreMode.Max : ScoreMode.None,
-                                                         parentChildIndexFieldData,
-                                                         context.getSearchSimilarity());
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

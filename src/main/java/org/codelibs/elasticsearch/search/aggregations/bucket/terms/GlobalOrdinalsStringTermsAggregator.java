@@ -32,7 +32,6 @@ import org.codelibs.elasticsearch.common.util.IntArray;
 import org.codelibs.elasticsearch.common.util.LongHash;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.index.fielddata.AbstractRandomAccessOrds;
-import org.codelibs.elasticsearch.index.fielddata.ordinals.GlobalOrdinalMapping;
 import org.codelibs.elasticsearch.search.DocValueFormat;
 import org.codelibs.elasticsearch.search.aggregations.Aggregator;
 import org.codelibs.elasticsearch.search.aggregations.AggregatorFactories;
@@ -399,26 +398,7 @@ public class GlobalOrdinalsStringTermsAggregator extends AbstractStringTermsAggr
         }
 
         private void mapSegmentCountsToGlobalCounts() {
-            // There is no public method in Ordinals.Docs that allows for this mapping...
-            // This is the cleanest way I can think of so far
-
-            GlobalOrdinalMapping mapping;
-            if (globalOrds.getValueCount() == segmentOrds.getValueCount()) {
-                mapping = null;
-            } else {
-                mapping = (GlobalOrdinalMapping) globalOrds;
-            }
-            for (long i = 1; i < segmentDocCounts.size(); i++) {
-                // We use set(...) here, because we need to reset the slow to 0.
-                // segmentDocCounts get reused over the segments and otherwise counts would be too high.
-                final int inc = segmentDocCounts.set(i, 0);
-                if (inc == 0) {
-                    continue;
-                }
-                final long ord = i - 1; // remember we do +1 when counting
-                final long globalOrd = mapping == null ? ord : mapping.getGlobalOrd(ord);
-                incrementBucketDocCount(globalOrd, inc);
-            }
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         }
     }
 

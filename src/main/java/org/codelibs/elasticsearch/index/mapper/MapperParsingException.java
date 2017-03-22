@@ -20,7 +20,6 @@
 package org.codelibs.elasticsearch.index.mapper;
 
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
-import org.codelibs.elasticsearch.rest.RestStatus;
 
 import java.io.IOException;
 
@@ -45,8 +44,4 @@ public class MapperParsingException extends MapperException {
         super(message, cause, args);
     }
 
-    @Override
-    public RestStatus status() {
-        return RestStatus.BAD_REQUEST;
-    }
 }

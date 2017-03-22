@@ -154,14 +154,7 @@ public class FieldMaskingSpanQueryBuilder extends AbstractQueryBuilder<FieldMask
 
     @Override
     protected SpanQuery doToQuery(QueryShardContext context) throws IOException {
-        String fieldInQuery = fieldName;
-        MappedFieldType fieldType = context.fieldMapper(fieldName);
-        if (fieldType != null) {
-            fieldInQuery = fieldType.name();
-        }
-        Query innerQuery = queryBuilder.toQuery(context);
-        assert innerQuery instanceof SpanQuery;
-        return new FieldMaskingSpanQuery((SpanQuery)innerQuery, fieldInQuery);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

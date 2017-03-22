@@ -18,7 +18,6 @@
  */
 package org.codelibs.elasticsearch.search.suggest.completion;
 
-import org.codelibs.elasticsearch.common.FieldMemoryStats;
 import org.codelibs.elasticsearch.common.Nullable;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
@@ -40,15 +39,12 @@ public class CompletionStats implements Streamable, ToXContent {
     private static final String FIELDS = "fields";
 
     private long sizeInBytes;
-    @Nullable
-    private FieldMemoryStats fields;
 
     public CompletionStats() {
     }
 
-    public CompletionStats(long size, @Nullable FieldMemoryStats fields) {
+    public CompletionStats(long size) {
         this.sizeInBytes = size;
-        this.fields = fields;
     }
 
     public long getSizeInBytes() {
@@ -59,44 +55,24 @@ public class CompletionStats implements Streamable, ToXContent {
         return new ByteSizeValue(sizeInBytes);
     }
 
-    public FieldMemoryStats getFields() {
-        return fields;
-    }
-
     @Override
     public void readFrom(StreamInput in) throws IOException {
         sizeInBytes = in.readVLong();
-        fields = in.readOptionalWriteable(FieldMemoryStats::new);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
     public void writeTo(StreamOutput out) throws IOException {
         out.writeVLong(sizeInBytes);
-        out.writeOptionalWriteable(fields);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
     public XContentBuilder toXContent(XContentBuilder builder, Params params) throws IOException {
-        builder.startObject(COMPLETION);
-        builder.byteSizeField(SIZE_IN_BYTES, SIZE, sizeInBytes);
-        if (fields != null) {
-            fields.toXContent(builder, FIELDS, SIZE_IN_BYTES, SIZE);
-        }
-        builder.endObject();
-        return builder;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public void add(CompletionStats completion) {
-        if (completion == null) {
-            return;
-        }
-        sizeInBytes += completion.getSizeInBytes();
-        if (completion.fields != null) {
-            if (fields == null) {
-                fields = completion.fields.copy();
-            } else {
-                fields.add(completion.fields);
-            }
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 }

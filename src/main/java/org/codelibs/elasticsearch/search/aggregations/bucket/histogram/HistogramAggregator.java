@@ -21,7 +21,6 @@ package org.codelibs.elasticsearch.search.aggregations.bucket.histogram;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.util.CollectionUtil;
-import org.codelibs.elasticsearch.common.inject.internal.Nullable;
 import org.codelibs.elasticsearch.common.lease.Releasables;
 import org.codelibs.elasticsearch.common.util.LongHash;
 import org.codelibs.elasticsearch.index.fielddata.SortedNumericDoubleValues;
@@ -63,7 +62,7 @@ class HistogramAggregator extends BucketsAggregator {
 
     public HistogramAggregator(String name, AggregatorFactories factories, double interval, double offset,
             InternalOrder order, boolean keyed, long minDocCount, double minBound, double maxBound,
-            @Nullable ValuesSource.Numeric valuesSource, DocValueFormat formatter,
+            ValuesSource.Numeric valuesSource, DocValueFormat formatter,
             SearchContext context, Aggregator parent,
             List<PipelineAggregator> pipelineAggregators, Map<String, Object> metaData) throws IOException {
 

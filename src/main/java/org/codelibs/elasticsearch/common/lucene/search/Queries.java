@@ -29,8 +29,6 @@ import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.common.Nullable;
-import org.codelibs.elasticsearch.index.mapper.TypeFieldMapper;
-
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -49,7 +47,7 @@ public class Queries {
     }
 
     public static Query newNestedFilter() {
-        return new PrefixQuery(new Term(TypeFieldMapper.NAME, new BytesRef("__")));
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public static Query newNonNestedFilter() {

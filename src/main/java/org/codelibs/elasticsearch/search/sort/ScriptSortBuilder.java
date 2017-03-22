@@ -240,69 +240,7 @@ public class ScriptSortBuilder extends SortBuilder<ScriptSortBuilder> {
 
     @Override
     public SortFieldAndFormat build(QueryShardContext context) throws IOException {
-        final SearchScript searchScript = context.getSearchScript(script, ScriptContext.Standard.SEARCH);
-
-        MultiValueMode valueMode = null;
-        if (sortMode != null) {
-            valueMode = MultiValueMode.fromString(sortMode.toString());
-        }
-        boolean reverse = (order == SortOrder.DESC);
-        if (valueMode == null) {
-            valueMode = reverse ? MultiValueMode.MAX : MultiValueMode.MIN;
-        }
-
-        final Nested nested = resolveNested(context, nestedPath, nestedFilter);
-        final IndexFieldData.XFieldComparatorSource fieldComparatorSource;
-        switch (type) {
-            case STRING:
-                fieldComparatorSource = new BytesRefFieldComparatorSource(null, null, valueMode, nested) {
-                    LeafSearchScript leafScript;
-                    @Override
-                    protected SortedBinaryDocValues getValues(LeafReaderContext context) throws IOException {
-                        leafScript = searchScript.getLeafSearchScript(context);
-                        final BinaryDocValues values = new BinaryDocValues() {
-                            final BytesRefBuilder spare = new BytesRefBuilder();
-                            @Override
-                            public BytesRef get(int docID) {
-                                leafScript.setDocument(docID);
-                                spare.copyChars(leafScript.run().toString());
-                                return spare.get();
-                            }
-                        };
-                        return FieldData.singleton(values, null);
-                    }
-                    @Override
-                    protected void setScorer(Scorer scorer) {
-                        leafScript.setScorer(scorer);
-                    }
-                };
-                break;
-            case NUMBER:
-                fieldComparatorSource = new DoubleValuesComparatorSource(null, Double.MAX_VALUE, valueMode, nested) {
-                    LeafSearchScript leafScript;
-                    @Override
-                    protected SortedNumericDoubleValues getValues(LeafReaderContext context) throws IOException {
-                        leafScript = searchScript.getLeafSearchScript(context);
-                        final NumericDoubleValues values = new NumericDoubleValues() {
-                            @Override
-                            public double get(int docID) {
-                                leafScript.setDocument(docID);
-                                return leafScript.runAsDouble();
-                            }
-                        };
-                        return FieldData.singleton(values, null);
-                    }
-                    @Override
-                    protected void setScorer(Scorer scorer) {
-                        leafScript.setScorer(scorer);
-                    }
-                };
-                break;
-            default:
-            throw new QueryShardException(context, "custom script sort type [" + type + "] not supported");
-        }
-
-        return new SortFieldAndFormat(new SortField("_script", fieldComparatorSource, reverse), DocValueFormat.RAW);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

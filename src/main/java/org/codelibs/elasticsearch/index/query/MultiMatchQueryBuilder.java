@@ -32,7 +32,6 @@ import org.codelibs.elasticsearch.common.regex.Regex;
 import org.codelibs.elasticsearch.common.unit.Fuzziness;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.mapper.MapperService;
 import org.codelibs.elasticsearch.index.query.support.QueryParsers;
 import org.codelibs.elasticsearch.index.search.MatchQuery;
 import org.codelibs.elasticsearch.index.search.MultiMatchQuery;
@@ -705,62 +704,7 @@ public class MultiMatchQueryBuilder extends AbstractQueryBuilder<MultiMatchQuery
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        MultiMatchQuery multiMatchQuery = new MultiMatchQuery(context);
-        if (analyzer != null) {
-            if (context.getIndexAnalyzers().get(analyzer) == null) {
-                throw new QueryShardException(context, "[" + NAME + "] analyzer [" + analyzer + "] not found");
-            }
-            multiMatchQuery.setAnalyzer(analyzer);
-        }
-        multiMatchQuery.setPhraseSlop(slop);
-        if (fuzziness != null) {
-            multiMatchQuery.setFuzziness(fuzziness);
-        }
-        multiMatchQuery.setFuzzyPrefixLength(prefixLength);
-        multiMatchQuery.setMaxExpansions(maxExpansions);
-        multiMatchQuery.setOccur(operator.toBooleanClauseOccur());
-        if (fuzzyRewrite != null) {
-            multiMatchQuery.setFuzzyRewriteMethod(QueryParsers.parseRewriteMethod(fuzzyRewrite, null));
-        }
-        if (tieBreaker != null) {
-            multiMatchQuery.setTieBreaker(tieBreaker);
-        }
-        if (cutoffFrequency != null) {
-            multiMatchQuery.setCommonTermsCutoff(cutoffFrequency);
-        }
-        multiMatchQuery.setLenient(lenient);
-        multiMatchQuery.setZeroTermsQuery(zeroTermsQuery);
-
-        if (useDisMax != null) { // backwards foobar
-            boolean typeUsesDismax = type.tieBreaker() != 1.0f;
-            if (typeUsesDismax != useDisMax) {
-                if (useDisMax && tieBreaker == null) {
-                    multiMatchQuery.setTieBreaker(0.0f);
-                } else {
-                    multiMatchQuery.setTieBreaker(1.0f);
-                }
-            }
-        }
-
-        Map<String, Float> newFieldsBoosts = handleFieldsMatchPattern(context.getMapperService(), fieldsBoosts);
-
-        return multiMatchQuery.parse(type, newFieldsBoosts, value, minimumShouldMatch);
-    }
-
-    private static Map<String, Float> handleFieldsMatchPattern(MapperService mapperService, Map<String, Float> fieldsBoosts) {
-        Map<String, Float> newFieldsBoosts = new TreeMap<>();
-        for (Map.Entry<String, Float> fieldBoost : fieldsBoosts.entrySet()) {
-            String fField = fieldBoost.getKey();
-            Float fBoost = fieldBoost.getValue();
-            if (Regex.isSimpleMatchPattern(fField)) {
-                for (String field : mapperService.simpleMatchToIndexNames(fField)) {
-                    newFieldsBoosts.put(field, fBoost);
-                }
-            } else {
-                newFieldsBoosts.put(fField, fBoost);
-            }
-        }
-        return newFieldsBoosts;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

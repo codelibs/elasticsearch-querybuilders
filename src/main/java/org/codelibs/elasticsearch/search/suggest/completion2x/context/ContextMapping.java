@@ -30,8 +30,6 @@ import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
 import org.codelibs.elasticsearch.common.xcontent.json.JsonXContent;
-import org.codelibs.elasticsearch.index.mapper.ParseContext;
-import org.codelibs.elasticsearch.index.mapper.ParseContext.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,7 +60,7 @@ public abstract class ContextMapping implements ToXContent {
     public static final SortedMap<String, ContextConfig> EMPTY_CONFIG = Collections.emptySortedMap();
 
     /** Dummy Context matching the Dummy Mapping by not wrapping a {@link TokenStream} */
-    public static final Context EMPTY_CONTEXT = new Context(EMPTY_CONFIG, null);
+    public static final Context EMPTY_CONTEXT = new Context(EMPTY_CONFIG);
 
     public static final String FIELD_VALUE = "value";
     public static final String FIELD_MISSING = "default";
@@ -105,18 +103,6 @@ public abstract class ContextMapping implements ToXContent {
         builder.endObject();
         return builder;
     }
-
-    /**
-     * A {@link ContextMapping} combined with the information provided by a document
-     * form a {@link ContextConfig} which is used to build the underlying FST.
-     *
-     * @param parseContext context of parsing phase
-     * @param parser {@link XContentParser} used to read and setup the configuration
-     * @return A {@link ContextConfig} related to <b>this</b> mapping
-     *
-     */
-    public abstract ContextConfig parseContext(ParseContext parseContext, XContentParser parser)
-        throws IOException, ElasticsearchParseException;
 
     public abstract ContextConfig defaultConfig();
 
@@ -174,27 +160,21 @@ public abstract class ContextMapping implements ToXContent {
     public static class Context {
 
         final SortedMap<String, ContextConfig> contexts;
-        final Document doc;
 
-        public Context(SortedMap<String, ContextConfig> contexts, Document doc) {
+        public Context(SortedMap<String, ContextConfig> contexts) {
             super();
             this.contexts = contexts;
-            this.doc = doc;
         }
 
         /**
          * Wrap the {@link TokenStream} according to the provided informations of {@link ContextConfig}
-         * and a related {@link Document}.
          *
          * @param tokenStream {@link TokenStream} to wrap
          *
          * @return wrapped token stream
          */
         public TokenStream wrapTokenStream(TokenStream tokenStream) {
-            for (ContextConfig context : contexts.values()) {
-                tokenStream = context.wrapTokenStream(doc, tokenStream);
-            }
-            return tokenStream;
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         }
     }
 
@@ -204,18 +184,6 @@ public abstract class ContextMapping implements ToXContent {
      *  a simple method wrapping a {@link TokenStream} by provided document informations.
      */
     public abstract static class ContextConfig {
-
-        /**
-         * Wrap a {@link TokenStream} for building suggestions to use context informations
-         * provided by a document or a {@link ContextMapping}
-         *
-         * @param doc document related to the stream
-         * @param stream original stream used to build the underlying {@link FST}
-         *
-         * @return A new {@link TokenStream} providing additional context information
-         */
-        protected abstract TokenStream wrapTokenStream(Document doc, TokenStream stream);
-
     }
 
     /**

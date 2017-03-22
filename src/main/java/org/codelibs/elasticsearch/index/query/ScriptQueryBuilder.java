@@ -129,7 +129,7 @@ public class ScriptQueryBuilder extends AbstractQueryBuilder<ScriptQueryBuilder>
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        return new ScriptQuery(script, context.getSearchScript(script, ScriptContext.Standard.SEARCH));
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     static class ScriptQuery extends Query {

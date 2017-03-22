@@ -43,9 +43,7 @@ import org.apache.lucene.util.fst.FST;
 import org.apache.lucene.util.fst.PairOutputs;
 import org.apache.lucene.util.fst.PairOutputs.Pair;
 import org.apache.lucene.util.fst.PositiveIntOutputs;
-import org.codelibs.elasticsearch.common.FieldMemoryStats;
 import org.codelibs.elasticsearch.common.regex.Regex;
-import org.codelibs.elasticsearch.index.mapper.CompletionFieldMapper2x;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
 import org.codelibs.elasticsearch.search.suggest.completion.CompletionStats;
 import org.codelibs.elasticsearch.search.suggest.completion.CompletionSuggestionContext;
@@ -216,131 +214,7 @@ public class AnalyzingCompletionLookupProvider extends CompletionLookupProvider 
 
     @Override
     public LookupFactory load(IndexInput input) throws IOException {
-        long sizeInBytes = 0;
-        int version = CodecUtil.checkHeader(input, CODEC_NAME, CODEC_VERSION_START, CODEC_VERSION_LATEST);
-        if (version >= CODEC_VERSION_CHECKSUMS) {
-            CodecUtil.checksumEntireFile(input);
-        }
-        final long metaPointerPosition = input.length() - (version >= CODEC_VERSION_CHECKSUMS? 8 + CodecUtil.footerLength() : 8);
-        final Map<String, AnalyzingSuggestHolder> lookupMap = new HashMap<>();
-        input.seek(metaPointerPosition);
-        long metaPointer = input.readLong();
-        input.seek(metaPointer);
-        int numFields = input.readVInt();
-
-        Map<Long, String> meta = new TreeMap<>();
-        for (int i = 0; i < numFields; i++) {
-            String name = input.readString();
-            long offset = input.readVLong();
-            meta.put(offset, name);
-        }
-
-        for (Map.Entry<Long, String> entry : meta.entrySet()) {
-            input.seek(entry.getKey());
-            FST<Pair<Long, BytesRef>> fst = new FST<>(input, new PairOutputs<>(
-                    PositiveIntOutputs.getSingleton(), ByteSequenceOutputs.getSingleton()));
-            int maxAnalyzedPathsForOneInput = input.readVInt();
-            int maxSurfaceFormsPerAnalyzedForm = input.readVInt();
-            int maxGraphExpansions = input.readInt();
-            int options = input.readVInt();
-            boolean preserveSep = (options & SERIALIZE_PRESERVE_SEPARATORS) != 0;
-            boolean hasPayloads = (options & SERIALIZE_HAS_PAYLOADS) != 0;
-            boolean preservePositionIncrements = (options & SERIALIZE_PRESERVE_POSITION_INCREMENTS) != 0;
-
-            // first version did not include these three fields, so fall back to old default (before the analyzingsuggester
-            // was updated in Lucene, so we cannot use the suggester defaults)
-            int sepLabel, payloadSep, endByte, holeCharacter;
-            switch (version) {
-                case CODEC_VERSION_START:
-                    sepLabel = 0xFF;
-                    payloadSep = '\u001f';
-                    endByte = 0x0;
-                    holeCharacter = '\u001E';
-                    break;
-                default:
-                    sepLabel = input.readVInt();
-                    endByte = input.readVInt();
-                    payloadSep = input.readVInt();
-                    holeCharacter = input.readVInt();
-            }
-
-            AnalyzingSuggestHolder holder = new AnalyzingSuggestHolder(preserveSep, preservePositionIncrements,
-                maxSurfaceFormsPerAnalyzedForm, maxGraphExpansions, hasPayloads, maxAnalyzedPathsForOneInput,
-                fst, sepLabel, payloadSep, endByte, holeCharacter);
-            sizeInBytes += fst.ramBytesUsed();
-            lookupMap.put(entry.getValue(), holder);
-        }
-        final long ramBytesUsed = sizeInBytes;
-        return new LookupFactory() {
-            @Override
-            public Lookup getLookup(CompletionFieldMapper2x.CompletionFieldType fieldType, CompletionSuggestionContext suggestionContext) {
-                AnalyzingSuggestHolder analyzingSuggestHolder = lookupMap.get(fieldType.name());
-                if (analyzingSuggestHolder == null) {
-                    return null;
-                }
-                throw new UnsupportedOperationException("QueryBuilders does not support this operation.");
-                /*int flags = analyzingSuggestHolder.getPreserveSeparator() ? XAnalyzingSuggester.PRESERVE_SEP : 0;
-
-                final XAnalyzingSuggester suggester;
-                final Automaton queryPrefix = fieldType.requiresContext() ?
-                    ContextQuery.toAutomaton(analyzingSuggestHolder.getPreserveSeparator(), suggestionContext.getContextQueries()) : null;
-
-                final FuzzyOptions fuzzyOptions = suggestionContext.getFuzzyOptions();
-                if (fuzzyOptions != null) {
-                    suggester = new XFuzzySuggester(fieldType.indexAnalyzer(), queryPrefix, fieldType.searchAnalyzer(), flags,
-                        analyzingSuggestHolder.maxSurfaceFormsPerAnalyzedForm, analyzingSuggestHolder.maxGraphExpansions,
-                        fuzzyOptions.getEditDistance(), fuzzyOptions.isTranspositions(),
-                        fuzzyOptions.getFuzzyPrefixLength(), fuzzyOptions.getFuzzyMinLength(), fuzzyOptions.isUnicodeAware(),
-                        analyzingSuggestHolder.fst, analyzingSuggestHolder.hasPayloads,
-                        analyzingSuggestHolder.maxAnalyzedPathsForOneInput, analyzingSuggestHolder.sepLabel,
-                        analyzingSuggestHolder.payloadSep, analyzingSuggestHolder.endByte,
-                        analyzingSuggestHolder.holeCharacter);
-                } else {
-                    suggester = new XAnalyzingSuggester(fieldType.indexAnalyzer(), queryPrefix, fieldType.searchAnalyzer(), flags,
-                        analyzingSuggestHolder.maxSurfaceFormsPerAnalyzedForm, analyzingSuggestHolder.maxGraphExpansions,
-                        analyzingSuggestHolder.preservePositionIncrements, analyzingSuggestHolder.fst, analyzingSuggestHolder.hasPayloads,
-                        analyzingSuggestHolder.maxAnalyzedPathsForOneInput, analyzingSuggestHolder.sepLabel,
-                        analyzingSuggestHolder.payloadSep, analyzingSuggestHolder.endByte, analyzingSuggestHolder.holeCharacter);
-                }
-                return suggester;*/
-            }
-
-            @Override
-            public CompletionStats stats(String... fields) {
-                long sizeInBytes = 0;
-                ObjectLongHashMap<String> completionFields = null;
-                if (fields != null  && fields.length > 0) {
-                    completionFields = new ObjectLongHashMap<>(fields.length);
-                }
-
-                for (Map.Entry<String, AnalyzingSuggestHolder> entry : lookupMap.entrySet()) {
-                    sizeInBytes += entry.getValue().fst.ramBytesUsed();
-                    if (fields == null || fields.length == 0) {
-                        continue;
-                    }
-                    if (Regex.simpleMatch(fields, entry.getKey())) {
-                        long fstSize = entry.getValue().fst.ramBytesUsed();
-                        completionFields.addTo(entry.getKey(), fstSize);
-                    }
-                }
-                return new CompletionStats(sizeInBytes, completionFields == null ? null : new FieldMemoryStats(completionFields));
-            }
-
-            @Override
-            AnalyzingSuggestHolder getAnalyzingSuggestHolder(MappedFieldType fieldType) {
-                return lookupMap.get(fieldType.name());
-            }
-
-            @Override
-            public long ramBytesUsed() {
-                return ramBytesUsed;
-            }
-
-            @Override
-            public Collection<Accountable> getChildResources() {
-                return Accountables.namedAccountables("field", lookupMap);
-            }
-        };
+        throw new UnsupportedOperationException();
     }
 
     static class AnalyzingSuggestHolder implements Accountable {

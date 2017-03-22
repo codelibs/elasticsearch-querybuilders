@@ -29,7 +29,6 @@ import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.support.XContentMapValues;
 import org.codelibs.elasticsearch.index.analysis.NamedAnalyzer;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
-import org.codelibs.elasticsearch.index.fielddata.plain.PagedBytesIndexFieldData;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -41,7 +40,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import static java.util.Collections.unmodifiableList;
-import static org.codelibs.elasticsearch.index.mapper.TypeParsers.parseTextField;
 
 /** A {@link FieldMapper} for full-text fields. */
 public class TextFieldMapper extends FieldMapper {
@@ -141,74 +139,6 @@ public class TextFieldMapper extends FieldMapper {
     }
 
     public static class TypeParser implements Mapper.TypeParser {
-        @Override
-        public Mapper.Builder parse(String fieldName, Map<String, Object> node, ParserContext parserContext) throws MapperParsingException {
-            if (parserContext.indexVersionCreated().before(Version.V_5_0_0_alpha1)) {
-                // Downgrade "text" to "string" in indexes created in 2.x so you can use modern syntax against old indexes
-                Set<String> unsupportedParameters = new HashSet<>(node.keySet());
-                unsupportedParameters.removeAll(SUPPORTED_PARAMETERS_FOR_AUTO_DOWNGRADE_TO_STRING);
-                if (false == SUPPORTED_PARAMETERS_FOR_AUTO_DOWNGRADE_TO_STRING.containsAll(node.keySet())) {
-                    throw new IllegalArgumentException("Automatic downgrade from [text] to [string] failed because parameters "
-                            + unsupportedParameters + " are not supported for automatic downgrades.");
-                }
-                {   // Downgrade "index"
-                    Object index = node.get("index");
-                    if (index == null || Boolean.TRUE.equals(index)) {
-                        index = "analyzed";
-                    } else if (Boolean.FALSE.equals(index)) {
-                        index = "no";
-                    } else {
-                        throw new IllegalArgumentException(
-                                "Can't parse [index] value [" + index + "] for field [" + fieldName + "], expected [true] or [false]");
-                    }
-                    node.put("index", index);
-                }
-                {   // Downgrade "fielddata" (default in string is true, default in text is false)
-                    Object fielddata = node.get("fielddata");
-                    if (fielddata == null || Boolean.FALSE.equals(fielddata)) {
-                        fielddata = false;
-                    } else if (Boolean.TRUE.equals(fielddata)) {
-                        fielddata = true;
-                    } else {
-                        throw new IllegalArgumentException("can't parse [fielddata] value for [" + fielddata + "] for field ["
-                                + fieldName + "], expected [true] or [false]");
-                    }
-                    node.put("fielddata", fielddata);
-                }
-
-                return new StringFieldMapper.TypeParser().parse(fieldName, node, parserContext);
-            }
-            TextFieldMapper.Builder builder = new TextFieldMapper.Builder(fieldName);
-            builder.fieldType().setIndexAnalyzer(parserContext.getIndexAnalyzers().getDefaultIndexAnalyzer());
-            builder.fieldType().setSearchAnalyzer(parserContext.getIndexAnalyzers().getDefaultSearchAnalyzer());
-            builder.fieldType().setSearchQuoteAnalyzer(parserContext.getIndexAnalyzers().getDefaultSearchQuoteAnalyzer());
-            parseTextField(builder, fieldName, node, parserContext);
-            for (Iterator<Map.Entry<String, Object>> iterator = node.entrySet().iterator(); iterator.hasNext();) {
-                Map.Entry<String, Object> entry = iterator.next();
-                String propName = entry.getKey();
-                Object propNode = entry.getValue();
-                if (propName.equals("position_increment_gap")) {
-                    int newPositionIncrementGap = XContentMapValues.nodeIntegerValue(propNode, -1);
-                    builder.positionIncrementGap(newPositionIncrementGap);
-                    iterator.remove();
-                } else if (propName.equals("fielddata")) {
-                    builder.fielddata(XContentMapValues.nodeBooleanValue(propNode));
-                    iterator.remove();
-                } else if (propName.equals("eager_global_ordinals")) {
-                    builder.eagerGlobalOrdinals(XContentMapValues.nodeBooleanValue(propNode));
-                    iterator.remove();
-                } else if (propName.equals("fielddata_frequency_filter")) {
-                    Map<?,?> frequencyFilter = (Map<?, ?>) propNode;
-                    double minFrequency = XContentMapValues.nodeDoubleValue(frequencyFilter.remove("min"), 0);
-                    double maxFrequency = XContentMapValues.nodeDoubleValue(frequencyFilter.remove("max"), Integer.MAX_VALUE);
-                    int minSegmentSize = XContentMapValues.nodeIntegerValue(frequencyFilter.remove("min_segment_size"), 0);
-                    builder.fielddataFrequencyFilter(minFrequency, maxFrequency, minSegmentSize);
-                    DocumentMapperParser.checkNoRemainingFields(propName, frequencyFilter, parserContext.indexVersionCreated());
-                    iterator.remove();
-                }
-            }
-            return builder;
-        }
     }
 
     public static final class TextFieldType extends StringFieldType {
@@ -332,12 +262,7 @@ public class TextFieldMapper extends FieldMapper {
 
         @Override
         public IndexFieldData.Builder fielddataBuilder() {
-            if (fielddata == false) {
-                throw new IllegalArgumentException("Fielddata is disabled on text fields by default. Set fielddata=true on [" + name()
-                        + "] in order to load fielddata in memory by uninverting the inverted index. Note that this can however "
-                        + "use significant memory.");
-            }
-            return new PagedBytesIndexFieldData.Builder(fielddataMinFrequency, fielddataMaxFrequency, fielddataMinSegmentSize);
+            throw new UnsupportedOperationException();
         }
     }
 
@@ -369,29 +294,6 @@ public class TextFieldMapper extends FieldMapper {
 
     public int getPositionIncrementGap() {
         return this.positionIncrementGap;
-    }
-
-    @Override
-    protected void parseCreateField(ParseContext context, List<IndexableField> fields) throws IOException {
-        final String value;
-        if (context.externalValueSet()) {
-            value = context.externalValue().toString();
-        } else {
-            value = context.parser().textOrNull();
-        }
-
-        if (value == null) {
-            return;
-        }
-
-        if (context.includeInAll(includeInAll, this)) {
-            context.allEntries().addText(fieldType().name(), value, fieldType().boost());
-        }
-
-        if (fieldType().indexOptions() != IndexOptions.NONE || fieldType().stored()) {
-            Field field = new Field(fieldType().name(), value, fieldType());
-            fields.add(field);
-        }
     }
 
     @Override

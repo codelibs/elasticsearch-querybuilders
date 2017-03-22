@@ -76,21 +76,7 @@ public class SignificantTermsAggregatorFactory extends ValuesSourceAggregatorFac
             SignificanceHeuristic significanceHeuristic, SearchContext context, AggregatorFactory<?> parent,
             AggregatorFactories.Builder subFactoriesBuilder, Map<String, Object> metaData) throws IOException {
         super(name, type, config, context, parent, subFactoriesBuilder, metaData);
-        this.includeExclude = includeExclude;
-        this.executionHint = executionHint;
-        this.filter = filterBuilder == null
-                ? null
-                : filterBuilder.toQuery(context.getQueryShardContext());
-        IndexSearcher searcher = context.searcher();
-        this.supersetNumDocs = filter == null
-                // Important - need to use the doc count that includes deleted docs
-                // or we have this issue: https://github.com/elastic/elasticsearch/issues/7951
-                ? searcher.getIndexReader().maxDoc()
-                : searcher.count(filter);
-        this.bucketCountThresholds = bucketCountThresholds;
-        this.significanceHeuristic = significanceHeuristic;
-        setFieldInfo(context);
-
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     private void setFieldInfo(SearchContext context) {
@@ -108,39 +94,11 @@ public class SignificantTermsAggregatorFactory extends ValuesSourceAggregatorFac
     }
 
     private FilterableTermsEnum getTermsEnum(String field) throws IOException {
-        if (termsEnum != null) {
-            return termsEnum;
-        }
-        IndexReader reader = context.searcher().getIndexReader();
-        if (numberOfAggregatorsCreated > 1) {
-            termsEnum = new FreqTermsEnum(reader, field, true, false, filter, context.bigArrays());
-        } else {
-            termsEnum = new FilterableTermsEnum(reader, indexedFieldName, PostingsEnum.NONE, filter);
-        }
-        return termsEnum;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     private long getBackgroundFrequency(String value) throws IOException {
-        Query query = fieldType.termQuery(value, context.getQueryShardContext());
-        if (query instanceof TermQuery) {
-            // for types that use the inverted index, we prefer using a caching terms
-            // enum that will do a better job at reusing index inputs
-            Term term = ((TermQuery) query).getTerm();
-            FilterableTermsEnum termsEnum = getTermsEnum(term.field());
-            if (termsEnum.seekExact(term.bytes())) {
-                return termsEnum.docFreq();
-            } else {
-                return 0;
-            }
-        }
-        // otherwise do it the naive way
-        if (filter != null) {
-            query = new BooleanQuery.Builder()
-                    .add(query, Occur.FILTER)
-                    .add(filter, Occur.FILTER)
-                    .build();
-        }
-        return context.searcher().count(query);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public long getBackgroundFrequency(BytesRef termBytes) throws IOException {

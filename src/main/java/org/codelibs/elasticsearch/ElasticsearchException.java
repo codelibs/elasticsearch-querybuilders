@@ -19,8 +19,6 @@
 
 package org.codelibs.elasticsearch;
 
-import org.codelibs.elasticsearch.action.support.replication.ReplicationOperation;
-import org.codelibs.elasticsearch.cluster.action.shard.ShardStateAction;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.io.stream.Writeable;
@@ -28,10 +26,6 @@ import org.codelibs.elasticsearch.common.logging.LoggerMessageFormat;
 import org.codelibs.elasticsearch.common.xcontent.ToXContent;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.Index;
-import org.codelibs.elasticsearch.index.shard.ShardId;
-import org.codelibs.elasticsearch.rest.RestStatus;
-import org.codelibs.elasticsearch.transport.TcpTransport;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -43,7 +37,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.unmodifiableMap;
-import static org.codelibs.elasticsearch.cluster.metadata.IndexMetaData.INDEX_UUID_NA_VALUE;
 import static org.codelibs.elasticsearch.common.xcontent.XContentParserUtils.ensureExpectedToken;
 import static org.codelibs.elasticsearch.common.xcontent.XContentParserUtils.throwUnknownField;
 
@@ -157,18 +150,6 @@ public class ElasticsearchException extends RuntimeException implements ToXConte
      */
     public List<String> getHeader(String key) {
         return headers.get(key);
-    }
-
-    /**
-     * Returns the rest status code associated with this exception.
-     */
-    public RestStatus status() {
-        Throwable cause = unwrapCause();
-        if (cause == this) {
-            return RestStatus.INTERNAL_SERVER_ERROR;
-        } else {
-            return ExceptionsHelper.status(cause);
-        }
     }
 
     /**
@@ -449,19 +430,6 @@ public class ElasticsearchException extends RuntimeException implements ToXConte
         return toUnderscoreCase(simpleName);
     }
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        if (headers.containsKey(INDEX_HEADER_KEY)) {
-            builder.append(getIndex());
-            if (headers.containsKey(SHARD_HEADER_KEY)) {
-                builder.append('[').append(getShardId()).append(']');
-            }
-            builder.append(' ');
-        }
-        return builder.append(ExceptionsHelper.detailedMessage(this).trim()).toString();
-    }
-
     /**
      * Deserializes stacktrace elements as well as suppressed exceptions from the given output stream and
      * adds it to the given exception.
@@ -513,122 +481,20 @@ public class ElasticsearchException extends RuntimeException implements ToXConte
      * ExceptionSerializationTests.testIds.ids.
      */
     enum ElasticsearchExceptionHandle {
-        INDEX_SHARD_SNAPSHOT_FAILED_EXCEPTION(org.codelibs.elasticsearch.index.snapshots.IndexShardSnapshotFailedException.class,
-                org.codelibs.elasticsearch.index.snapshots.IndexShardSnapshotFailedException::new, 0, UNKNOWN_VERSION_ADDED),
-        DFS_PHASE_EXECUTION_EXCEPTION(org.codelibs.elasticsearch.search.dfs.DfsPhaseExecutionException.class,
-                org.codelibs.elasticsearch.search.dfs.DfsPhaseExecutionException::new, 1, UNKNOWN_VERSION_ADDED),
         EXECUTION_CANCELLED_EXCEPTION(org.codelibs.elasticsearch.common.util.CancellableThreads.ExecutionCancelledException.class,
                 org.codelibs.elasticsearch.common.util.CancellableThreads.ExecutionCancelledException::new, 2, UNKNOWN_VERSION_ADDED),
-        MASTER_NOT_DISCOVERED_EXCEPTION(org.codelibs.elasticsearch.discovery.MasterNotDiscoveredException.class,
-                org.codelibs.elasticsearch.discovery.MasterNotDiscoveredException::new, 3, UNKNOWN_VERSION_ADDED),
-        ELASTICSEARCH_SECURITY_EXCEPTION(org.codelibs.elasticsearch.ElasticsearchSecurityException.class,
-                org.codelibs.elasticsearch.ElasticsearchSecurityException::new, 4, UNKNOWN_VERSION_ADDED),
-        INDEX_SHARD_RESTORE_EXCEPTION(org.codelibs.elasticsearch.index.snapshots.IndexShardRestoreException.class,
-                org.codelibs.elasticsearch.index.snapshots.IndexShardRestoreException::new, 5, UNKNOWN_VERSION_ADDED),
-        INDEX_CLOSED_EXCEPTION(org.codelibs.elasticsearch.indices.IndexClosedException.class,
-                org.codelibs.elasticsearch.indices.IndexClosedException::new, 6, UNKNOWN_VERSION_ADDED),
-        BIND_HTTP_EXCEPTION(org.codelibs.elasticsearch.http.BindHttpException.class,
-                org.codelibs.elasticsearch.http.BindHttpException::new, 7, UNKNOWN_VERSION_ADDED),
-        REDUCE_SEARCH_PHASE_EXCEPTION(org.codelibs.elasticsearch.action.search.ReduceSearchPhaseException.class,
-                org.codelibs.elasticsearch.action.search.ReduceSearchPhaseException::new, 8, UNKNOWN_VERSION_ADDED),
-        NODE_CLOSED_EXCEPTION(org.codelibs.elasticsearch.node.NodeClosedException.class,
-                org.codelibs.elasticsearch.node.NodeClosedException::new, 9, UNKNOWN_VERSION_ADDED),
-        SNAPSHOT_FAILED_ENGINE_EXCEPTION(org.codelibs.elasticsearch.index.engine.SnapshotFailedEngineException.class,
-                org.codelibs.elasticsearch.index.engine.SnapshotFailedEngineException::new, 10, UNKNOWN_VERSION_ADDED),
-        SHARD_NOT_FOUND_EXCEPTION(org.codelibs.elasticsearch.index.shard.ShardNotFoundException.class,
-                org.codelibs.elasticsearch.index.shard.ShardNotFoundException::new, 11, UNKNOWN_VERSION_ADDED),
-        CONNECT_TRANSPORT_EXCEPTION(org.codelibs.elasticsearch.transport.ConnectTransportException.class,
-                org.codelibs.elasticsearch.transport.ConnectTransportException::new, 12, UNKNOWN_VERSION_ADDED),
-        NOT_SERIALIZABLE_TRANSPORT_EXCEPTION(org.codelibs.elasticsearch.transport.NotSerializableTransportException.class,
-                org.codelibs.elasticsearch.transport.NotSerializableTransportException::new, 13, UNKNOWN_VERSION_ADDED),
-        RESPONSE_HANDLER_FAILURE_TRANSPORT_EXCEPTION(org.codelibs.elasticsearch.transport.ResponseHandlerFailureTransportException.class,
-                org.codelibs.elasticsearch.transport.ResponseHandlerFailureTransportException::new, 14, UNKNOWN_VERSION_ADDED),
-        INDEX_CREATION_EXCEPTION(org.codelibs.elasticsearch.indices.IndexCreationException.class,
-                org.codelibs.elasticsearch.indices.IndexCreationException::new, 15, UNKNOWN_VERSION_ADDED),
-        INDEX_NOT_FOUND_EXCEPTION(org.codelibs.elasticsearch.index.IndexNotFoundException.class,
-                org.codelibs.elasticsearch.index.IndexNotFoundException::new, 16, UNKNOWN_VERSION_ADDED),
-        ILLEGAL_SHARD_ROUTING_STATE_EXCEPTION(org.codelibs.elasticsearch.cluster.routing.IllegalShardRoutingStateException.class,
-                org.codelibs.elasticsearch.cluster.routing.IllegalShardRoutingStateException::new, 17, UNKNOWN_VERSION_ADDED),
-        BROADCAST_SHARD_OPERATION_FAILED_EXCEPTION(org.codelibs.elasticsearch.action.support.broadcast.BroadcastShardOperationFailedException.class,
-                org.codelibs.elasticsearch.action.support.broadcast.BroadcastShardOperationFailedException::new, 18, UNKNOWN_VERSION_ADDED),
-        RESOURCE_NOT_FOUND_EXCEPTION(org.codelibs.elasticsearch.ResourceNotFoundException.class,
-                org.codelibs.elasticsearch.ResourceNotFoundException::new, 19, UNKNOWN_VERSION_ADDED),
-        ACTION_TRANSPORT_EXCEPTION(org.codelibs.elasticsearch.transport.ActionTransportException.class,
-                org.codelibs.elasticsearch.transport.ActionTransportException::new, 20, UNKNOWN_VERSION_ADDED),
-        ELASTICSEARCH_GENERATION_EXCEPTION(org.codelibs.elasticsearch.ElasticsearchGenerationException.class,
-                org.codelibs.elasticsearch.ElasticsearchGenerationException::new, 21, UNKNOWN_VERSION_ADDED),
-        //      22 was CreateFailedEngineException
-        INDEX_SHARD_STARTED_EXCEPTION(org.codelibs.elasticsearch.index.shard.IndexShardStartedException.class,
-                org.codelibs.elasticsearch.index.shard.IndexShardStartedException::new, 23, UNKNOWN_VERSION_ADDED),
-        SEARCH_CONTEXT_MISSING_EXCEPTION(org.codelibs.elasticsearch.search.SearchContextMissingException.class,
-                org.codelibs.elasticsearch.search.SearchContextMissingException::new, 24, UNKNOWN_VERSION_ADDED),
-        GENERAL_SCRIPT_EXCEPTION(org.codelibs.elasticsearch.script.GeneralScriptException.class,
-                org.codelibs.elasticsearch.script.GeneralScriptException::new, 25, UNKNOWN_VERSION_ADDED),
-        BATCH_OPERATION_EXCEPTION(org.codelibs.elasticsearch.index.shard.TranslogRecoveryPerformer.BatchOperationException.class,
-                org.codelibs.elasticsearch.index.shard.TranslogRecoveryPerformer.BatchOperationException::new, 26, UNKNOWN_VERSION_ADDED),
-        SNAPSHOT_CREATION_EXCEPTION(org.codelibs.elasticsearch.snapshots.SnapshotCreationException.class,
-                org.codelibs.elasticsearch.snapshots.SnapshotCreationException::new, 27, UNKNOWN_VERSION_ADDED),
-        DELETE_FAILED_ENGINE_EXCEPTION(org.codelibs.elasticsearch.index.engine.DeleteFailedEngineException.class,
-                org.codelibs.elasticsearch.index.engine.DeleteFailedEngineException::new, 28, UNKNOWN_VERSION_ADDED),
-        DOCUMENT_MISSING_EXCEPTION(org.codelibs.elasticsearch.index.engine.DocumentMissingException.class,
-                org.codelibs.elasticsearch.index.engine.DocumentMissingException::new, 29, UNKNOWN_VERSION_ADDED),
-        SNAPSHOT_EXCEPTION(org.codelibs.elasticsearch.snapshots.SnapshotException.class,
-                org.codelibs.elasticsearch.snapshots.SnapshotException::new, 30, UNKNOWN_VERSION_ADDED),
-        INVALID_ALIAS_NAME_EXCEPTION(org.codelibs.elasticsearch.indices.InvalidAliasNameException.class,
-                org.codelibs.elasticsearch.indices.InvalidAliasNameException::new, 31, UNKNOWN_VERSION_ADDED),
-        INVALID_INDEX_NAME_EXCEPTION(org.codelibs.elasticsearch.indices.InvalidIndexNameException.class,
-                org.codelibs.elasticsearch.indices.InvalidIndexNameException::new, 32, UNKNOWN_VERSION_ADDED),
-        INDEX_PRIMARY_SHARD_NOT_ALLOCATED_EXCEPTION(org.codelibs.elasticsearch.indices.IndexPrimaryShardNotAllocatedException.class,
-                org.codelibs.elasticsearch.indices.IndexPrimaryShardNotAllocatedException::new, 33, UNKNOWN_VERSION_ADDED),
-        TRANSPORT_EXCEPTION(org.codelibs.elasticsearch.transport.TransportException.class,
-                org.codelibs.elasticsearch.transport.TransportException::new, 34, UNKNOWN_VERSION_ADDED),
         ELASTICSEARCH_PARSE_EXCEPTION(org.codelibs.elasticsearch.ElasticsearchParseException.class,
                 org.codelibs.elasticsearch.ElasticsearchParseException::new, 35, UNKNOWN_VERSION_ADDED),
         SEARCH_EXCEPTION(org.codelibs.elasticsearch.search.SearchException.class,
                 org.codelibs.elasticsearch.search.SearchException::new, 36, UNKNOWN_VERSION_ADDED),
         MAPPER_EXCEPTION(org.codelibs.elasticsearch.index.mapper.MapperException.class,
                 org.codelibs.elasticsearch.index.mapper.MapperException::new, 37, UNKNOWN_VERSION_ADDED),
-        INVALID_TYPE_NAME_EXCEPTION(org.codelibs.elasticsearch.indices.InvalidTypeNameException.class,
-                org.codelibs.elasticsearch.indices.InvalidTypeNameException::new, 38, UNKNOWN_VERSION_ADDED),
-        SNAPSHOT_RESTORE_EXCEPTION(org.codelibs.elasticsearch.snapshots.SnapshotRestoreException.class,
-                org.codelibs.elasticsearch.snapshots.SnapshotRestoreException::new, 39, UNKNOWN_VERSION_ADDED),
         PARSING_EXCEPTION(org.codelibs.elasticsearch.common.ParsingException.class, org.codelibs.elasticsearch.common.ParsingException::new, 40,
             UNKNOWN_VERSION_ADDED),
-        INDEX_SHARD_CLOSED_EXCEPTION(org.codelibs.elasticsearch.index.shard.IndexShardClosedException.class,
-                org.codelibs.elasticsearch.index.shard.IndexShardClosedException::new, 41, UNKNOWN_VERSION_ADDED),
-        RECOVER_FILES_RECOVERY_EXCEPTION(org.codelibs.elasticsearch.indices.recovery.RecoverFilesRecoveryException.class,
-                org.codelibs.elasticsearch.indices.recovery.RecoverFilesRecoveryException::new, 42, UNKNOWN_VERSION_ADDED),
-        TRUNCATED_TRANSLOG_EXCEPTION(org.codelibs.elasticsearch.index.translog.TruncatedTranslogException.class,
-                org.codelibs.elasticsearch.index.translog.TruncatedTranslogException::new, 43, UNKNOWN_VERSION_ADDED),
-        RECOVERY_FAILED_EXCEPTION(org.codelibs.elasticsearch.indices.recovery.RecoveryFailedException.class,
-                org.codelibs.elasticsearch.indices.recovery.RecoveryFailedException::new, 44, UNKNOWN_VERSION_ADDED),
-        INDEX_SHARD_RELOCATED_EXCEPTION(org.codelibs.elasticsearch.index.shard.IndexShardRelocatedException.class,
-                org.codelibs.elasticsearch.index.shard.IndexShardRelocatedException::new, 45, UNKNOWN_VERSION_ADDED),
-        NODE_SHOULD_NOT_CONNECT_EXCEPTION(org.codelibs.elasticsearch.transport.NodeShouldNotConnectException.class,
-        org.codelibs.elasticsearch.transport.NodeShouldNotConnectException::new, 46, UNKNOWN_VERSION_ADDED),
-        INDEX_TEMPLATE_ALREADY_EXISTS_EXCEPTION(org.codelibs.elasticsearch.indices.IndexTemplateAlreadyExistsException.class,
-                org.codelibs.elasticsearch.indices.IndexTemplateAlreadyExistsException::new, 47, UNKNOWN_VERSION_ADDED),
-        TRANSLOG_CORRUPTED_EXCEPTION(org.codelibs.elasticsearch.index.translog.TranslogCorruptedException.class,
-                org.codelibs.elasticsearch.index.translog.TranslogCorruptedException::new, 48, UNKNOWN_VERSION_ADDED),
-        CLUSTER_BLOCK_EXCEPTION(org.codelibs.elasticsearch.cluster.block.ClusterBlockException.class,
-                org.codelibs.elasticsearch.cluster.block.ClusterBlockException::new, 49, UNKNOWN_VERSION_ADDED),
         FETCH_PHASE_EXECUTION_EXCEPTION(org.codelibs.elasticsearch.search.fetch.FetchPhaseExecutionException.class,
         org.codelibs.elasticsearch.search.fetch.FetchPhaseExecutionException::new, 50, UNKNOWN_VERSION_ADDED),
-        INDEX_SHARD_ALREADY_EXISTS_EXCEPTION(org.codelibs.elasticsearch.index.IndexShardAlreadyExistsException.class,
-                org.codelibs.elasticsearch.index.IndexShardAlreadyExistsException::new, 51, UNKNOWN_VERSION_ADDED),
-        VERSION_CONFLICT_ENGINE_EXCEPTION(org.codelibs.elasticsearch.index.engine.VersionConflictEngineException.class,
-                org.codelibs.elasticsearch.index.engine.VersionConflictEngineException::new, 52, UNKNOWN_VERSION_ADDED),
-        ENGINE_EXCEPTION(org.codelibs.elasticsearch.index.engine.EngineException.class, org.codelibs.elasticsearch.index.engine.EngineException::new, 53,
-            UNKNOWN_VERSION_ADDED),
-        // 54 was DocumentAlreadyExistsException, which is superseded by VersionConflictEngineException
-        NO_SUCH_NODE_EXCEPTION(org.codelibs.elasticsearch.action.NoSuchNodeException.class, org.codelibs.elasticsearch.action.NoSuchNodeException::new, 55,
-            UNKNOWN_VERSION_ADDED),
         SETTINGS_EXCEPTION(org.codelibs.elasticsearch.common.settings.SettingsException.class,
                 org.codelibs.elasticsearch.common.settings.SettingsException::new, 56, UNKNOWN_VERSION_ADDED),
-        INDEX_TEMPLATE_MISSING_EXCEPTION(org.codelibs.elasticsearch.indices.IndexTemplateMissingException.class,
-                org.codelibs.elasticsearch.indices.IndexTemplateMissingException::new, 57, UNKNOWN_VERSION_ADDED),
-        SEND_REQUEST_TRANSPORT_EXCEPTION(org.codelibs.elasticsearch.transport.SendRequestTransportException.class,
-                org.codelibs.elasticsearch.transport.SendRequestTransportException::new, 58, UNKNOWN_VERSION_ADDED),
         ES_REJECTED_EXECUTION_EXCEPTION(org.codelibs.elasticsearch.common.util.concurrent.EsRejectedExecutionException.class,
                 org.codelibs.elasticsearch.common.util.concurrent.EsRejectedExecutionException::new, 59, UNKNOWN_VERSION_ADDED),
         EARLY_TERMINATION_EXCEPTION(org.codelibs.elasticsearch.common.lucene.Lucene.EarlyTerminationException.class,
@@ -636,160 +502,29 @@ public class ElasticsearchException extends RuntimeException implements ToXConte
         // 61 used to be for RoutingValidationException
         NOT_SERIALIZABLE_EXCEPTION_WRAPPER(org.codelibs.elasticsearch.common.io.stream.NotSerializableExceptionWrapper.class,
                 org.codelibs.elasticsearch.common.io.stream.NotSerializableExceptionWrapper::new, 62, UNKNOWN_VERSION_ADDED),
-        ALIAS_FILTER_PARSING_EXCEPTION(org.codelibs.elasticsearch.indices.AliasFilterParsingException.class,
-                org.codelibs.elasticsearch.indices.AliasFilterParsingException::new, 63, UNKNOWN_VERSION_ADDED),
         // 64 was DeleteByQueryFailedEngineException, which was removed in 5.0
-        GATEWAY_EXCEPTION(org.codelibs.elasticsearch.gateway.GatewayException.class, org.codelibs.elasticsearch.gateway.GatewayException::new, 65,
-            UNKNOWN_VERSION_ADDED),
-        INDEX_SHARD_NOT_RECOVERING_EXCEPTION(org.codelibs.elasticsearch.index.shard.IndexShardNotRecoveringException.class,
-                org.codelibs.elasticsearch.index.shard.IndexShardNotRecoveringException::new, 66, UNKNOWN_VERSION_ADDED),
-        HTTP_EXCEPTION(org.codelibs.elasticsearch.http.HttpException.class, org.codelibs.elasticsearch.http.HttpException::new, 67, UNKNOWN_VERSION_ADDED),
-        ELASTICSEARCH_EXCEPTION(org.codelibs.elasticsearch.ElasticsearchException.class,
-                org.codelibs.elasticsearch.ElasticsearchException::new, 68, UNKNOWN_VERSION_ADDED),
-        SNAPSHOT_MISSING_EXCEPTION(org.codelibs.elasticsearch.snapshots.SnapshotMissingException.class,
-                org.codelibs.elasticsearch.snapshots.SnapshotMissingException::new, 69, UNKNOWN_VERSION_ADDED),
-        PRIMARY_MISSING_ACTION_EXCEPTION(org.codelibs.elasticsearch.action.PrimaryMissingActionException.class,
-                org.codelibs.elasticsearch.action.PrimaryMissingActionException::new, 70, UNKNOWN_VERSION_ADDED),
-        FAILED_NODE_EXCEPTION(org.codelibs.elasticsearch.action.FailedNodeException.class, org.codelibs.elasticsearch.action.FailedNodeException::new, 71,
-            UNKNOWN_VERSION_ADDED),
         SEARCH_PARSE_EXCEPTION(org.codelibs.elasticsearch.search.SearchParseException.class, org.codelibs.elasticsearch.search.SearchParseException::new, 72,
             UNKNOWN_VERSION_ADDED),
-        CONCURRENT_SNAPSHOT_EXECUTION_EXCEPTION(org.codelibs.elasticsearch.snapshots.ConcurrentSnapshotExecutionException.class,
-                org.codelibs.elasticsearch.snapshots.ConcurrentSnapshotExecutionException::new, 73, UNKNOWN_VERSION_ADDED),
-        BLOB_STORE_EXCEPTION(org.codelibs.elasticsearch.common.blobstore.BlobStoreException.class,
-                org.codelibs.elasticsearch.common.blobstore.BlobStoreException::new, 74, UNKNOWN_VERSION_ADDED),
-        INCOMPATIBLE_CLUSTER_STATE_VERSION_EXCEPTION(org.codelibs.elasticsearch.cluster.IncompatibleClusterStateVersionException.class,
-                org.codelibs.elasticsearch.cluster.IncompatibleClusterStateVersionException::new, 75, UNKNOWN_VERSION_ADDED),
-        RECOVERY_ENGINE_EXCEPTION(org.codelibs.elasticsearch.index.engine.RecoveryEngineException.class,
-                org.codelibs.elasticsearch.index.engine.RecoveryEngineException::new, 76, UNKNOWN_VERSION_ADDED),
         UNCATEGORIZED_EXECUTION_EXCEPTION(org.codelibs.elasticsearch.common.util.concurrent.UncategorizedExecutionException.class,
                 org.codelibs.elasticsearch.common.util.concurrent.UncategorizedExecutionException::new, 77, UNKNOWN_VERSION_ADDED),
-        TIMESTAMP_PARSING_EXCEPTION(org.codelibs.elasticsearch.action.TimestampParsingException.class,
-                org.codelibs.elasticsearch.action.TimestampParsingException::new, 78, UNKNOWN_VERSION_ADDED),
-        ROUTING_MISSING_EXCEPTION(org.codelibs.elasticsearch.action.RoutingMissingException.class,
-                org.codelibs.elasticsearch.action.RoutingMissingException::new, 79, UNKNOWN_VERSION_ADDED),
-        INDEX_FAILED_ENGINE_EXCEPTION(org.codelibs.elasticsearch.index.engine.IndexFailedEngineException.class,
-                org.codelibs.elasticsearch.index.engine.IndexFailedEngineException::new, 80, UNKNOWN_VERSION_ADDED),
-        INDEX_SHARD_RESTORE_FAILED_EXCEPTION(org.codelibs.elasticsearch.index.snapshots.IndexShardRestoreFailedException.class,
-                org.codelibs.elasticsearch.index.snapshots.IndexShardRestoreFailedException::new, 81, UNKNOWN_VERSION_ADDED),
-        REPOSITORY_EXCEPTION(org.codelibs.elasticsearch.repositories.RepositoryException.class,
-                org.codelibs.elasticsearch.repositories.RepositoryException::new, 82, UNKNOWN_VERSION_ADDED),
-        RECEIVE_TIMEOUT_TRANSPORT_EXCEPTION(org.codelibs.elasticsearch.transport.ReceiveTimeoutTransportException.class,
-                org.codelibs.elasticsearch.transport.ReceiveTimeoutTransportException::new, 83, UNKNOWN_VERSION_ADDED),
-        NODE_DISCONNECTED_EXCEPTION(org.codelibs.elasticsearch.transport.NodeDisconnectedException.class,
-                org.codelibs.elasticsearch.transport.NodeDisconnectedException::new, 84, UNKNOWN_VERSION_ADDED),
-        ALREADY_EXPIRED_EXCEPTION(org.codelibs.elasticsearch.index.AlreadyExpiredException.class,
-                org.codelibs.elasticsearch.index.AlreadyExpiredException::new, 85, UNKNOWN_VERSION_ADDED),
         AGGREGATION_EXECUTION_EXCEPTION(org.codelibs.elasticsearch.search.aggregations.AggregationExecutionException.class,
                 org.codelibs.elasticsearch.search.aggregations.AggregationExecutionException::new, 86, UNKNOWN_VERSION_ADDED),
-        // 87 used to be for MergeMappingException
-        INVALID_INDEX_TEMPLATE_EXCEPTION(org.codelibs.elasticsearch.indices.InvalidIndexTemplateException.class,
-                org.codelibs.elasticsearch.indices.InvalidIndexTemplateException::new, 88, UNKNOWN_VERSION_ADDED),
-        REFRESH_FAILED_ENGINE_EXCEPTION(org.codelibs.elasticsearch.index.engine.RefreshFailedEngineException.class,
-                org.codelibs.elasticsearch.index.engine.RefreshFailedEngineException::new, 90, UNKNOWN_VERSION_ADDED),
-        AGGREGATION_INITIALIZATION_EXCEPTION(org.codelibs.elasticsearch.search.aggregations.AggregationInitializationException.class,
-                org.codelibs.elasticsearch.search.aggregations.AggregationInitializationException::new, 91, UNKNOWN_VERSION_ADDED),
-        DELAY_RECOVERY_EXCEPTION(org.codelibs.elasticsearch.indices.recovery.DelayRecoveryException.class,
-                org.codelibs.elasticsearch.indices.recovery.DelayRecoveryException::new, 92, UNKNOWN_VERSION_ADDED),
-        // 93 used to be for IndexWarmerMissingException
-        NO_NODE_AVAILABLE_EXCEPTION(org.codelibs.elasticsearch.client.transport.NoNodeAvailableException.class,
-                org.codelibs.elasticsearch.client.transport.NoNodeAvailableException::new, 94, UNKNOWN_VERSION_ADDED),
-        INVALID_SNAPSHOT_NAME_EXCEPTION(org.codelibs.elasticsearch.snapshots.InvalidSnapshotNameException.class,
-                org.codelibs.elasticsearch.snapshots.InvalidSnapshotNameException::new, 96, UNKNOWN_VERSION_ADDED),
-        ILLEGAL_INDEX_SHARD_STATE_EXCEPTION(org.codelibs.elasticsearch.index.shard.IllegalIndexShardStateException.class,
-                org.codelibs.elasticsearch.index.shard.IllegalIndexShardStateException::new, 97, UNKNOWN_VERSION_ADDED),
-        INDEX_SHARD_SNAPSHOT_EXCEPTION(org.codelibs.elasticsearch.index.snapshots.IndexShardSnapshotException.class,
-                org.codelibs.elasticsearch.index.snapshots.IndexShardSnapshotException::new, 98, UNKNOWN_VERSION_ADDED),
-        INDEX_SHARD_NOT_STARTED_EXCEPTION(org.codelibs.elasticsearch.index.shard.IndexShardNotStartedException.class,
-                org.codelibs.elasticsearch.index.shard.IndexShardNotStartedException::new, 99, UNKNOWN_VERSION_ADDED),
-        SEARCH_PHASE_EXECUTION_EXCEPTION(org.codelibs.elasticsearch.action.search.SearchPhaseExecutionException.class,
-                org.codelibs.elasticsearch.action.search.SearchPhaseExecutionException::new, 100, UNKNOWN_VERSION_ADDED),
-        ACTION_NOT_FOUND_TRANSPORT_EXCEPTION(org.codelibs.elasticsearch.transport.ActionNotFoundTransportException.class,
-                org.codelibs.elasticsearch.transport.ActionNotFoundTransportException::new, 101, UNKNOWN_VERSION_ADDED),
-        TRANSPORT_SERIALIZATION_EXCEPTION(org.codelibs.elasticsearch.transport.TransportSerializationException.class,
-                org.codelibs.elasticsearch.transport.TransportSerializationException::new, 102, UNKNOWN_VERSION_ADDED),
-        REMOTE_TRANSPORT_EXCEPTION(org.codelibs.elasticsearch.transport.RemoteTransportException.class,
-                org.codelibs.elasticsearch.transport.RemoteTransportException::new, 103, UNKNOWN_VERSION_ADDED),
-        ENGINE_CREATION_FAILURE_EXCEPTION(org.codelibs.elasticsearch.index.engine.EngineCreationFailureException.class,
-                org.codelibs.elasticsearch.index.engine.EngineCreationFailureException::new, 104, UNKNOWN_VERSION_ADDED),
-        ROUTING_EXCEPTION(org.codelibs.elasticsearch.cluster.routing.RoutingException.class,
-                org.codelibs.elasticsearch.cluster.routing.RoutingException::new, 105, UNKNOWN_VERSION_ADDED),
-        INDEX_SHARD_RECOVERY_EXCEPTION(org.codelibs.elasticsearch.index.shard.IndexShardRecoveryException.class,
-                org.codelibs.elasticsearch.index.shard.IndexShardRecoveryException::new, 106, UNKNOWN_VERSION_ADDED),
-        REPOSITORY_MISSING_EXCEPTION(org.codelibs.elasticsearch.repositories.RepositoryMissingException.class,
-                org.codelibs.elasticsearch.repositories.RepositoryMissingException::new, 107, UNKNOWN_VERSION_ADDED),
-        DOCUMENT_SOURCE_MISSING_EXCEPTION(org.codelibs.elasticsearch.index.engine.DocumentSourceMissingException.class,
-                org.codelibs.elasticsearch.index.engine.DocumentSourceMissingException::new, 109, UNKNOWN_VERSION_ADDED),
-        // 110 used to be FlushNotAllowedEngineException
         NO_CLASS_SETTINGS_EXCEPTION(org.codelibs.elasticsearch.common.settings.NoClassSettingsException.class,
                 org.codelibs.elasticsearch.common.settings.NoClassSettingsException::new, 111, UNKNOWN_VERSION_ADDED),
-        BIND_TRANSPORT_EXCEPTION(org.codelibs.elasticsearch.transport.BindTransportException.class,
-                org.codelibs.elasticsearch.transport.BindTransportException::new, 112, UNKNOWN_VERSION_ADDED),
-        ALIASES_NOT_FOUND_EXCEPTION(org.codelibs.elasticsearch.rest.action.admin.indices.AliasesNotFoundException.class,
-                org.codelibs.elasticsearch.rest.action.admin.indices.AliasesNotFoundException::new, 113, UNKNOWN_VERSION_ADDED),
-        INDEX_SHARD_RECOVERING_EXCEPTION(org.codelibs.elasticsearch.index.shard.IndexShardRecoveringException.class,
-                org.codelibs.elasticsearch.index.shard.IndexShardRecoveringException::new, 114, UNKNOWN_VERSION_ADDED),
-        TRANSLOG_EXCEPTION(org.codelibs.elasticsearch.index.translog.TranslogException.class,
-                org.codelibs.elasticsearch.index.translog.TranslogException::new, 115, UNKNOWN_VERSION_ADDED),
-        PROCESS_CLUSTER_EVENT_TIMEOUT_EXCEPTION(org.codelibs.elasticsearch.cluster.metadata.ProcessClusterEventTimeoutException.class,
-                org.codelibs.elasticsearch.cluster.metadata.ProcessClusterEventTimeoutException::new, 116, UNKNOWN_VERSION_ADDED),
-        RETRY_ON_PRIMARY_EXCEPTION(ReplicationOperation.RetryOnPrimaryException.class,
-                ReplicationOperation.RetryOnPrimaryException::new, 117, UNKNOWN_VERSION_ADDED),
-        ELASTICSEARCH_TIMEOUT_EXCEPTION(org.codelibs.elasticsearch.ElasticsearchTimeoutException.class,
-                org.codelibs.elasticsearch.ElasticsearchTimeoutException::new, 118, UNKNOWN_VERSION_ADDED),
-        QUERY_PHASE_EXECUTION_EXCEPTION(org.codelibs.elasticsearch.search.query.QueryPhaseExecutionException.class,
-                org.codelibs.elasticsearch.search.query.QueryPhaseExecutionException::new, 119, UNKNOWN_VERSION_ADDED),
-        REPOSITORY_VERIFICATION_EXCEPTION(org.codelibs.elasticsearch.repositories.RepositoryVerificationException.class,
-                org.codelibs.elasticsearch.repositories.RepositoryVerificationException::new, 120, UNKNOWN_VERSION_ADDED),
         INVALID_AGGREGATION_PATH_EXCEPTION(org.codelibs.elasticsearch.search.aggregations.InvalidAggregationPathException.class,
                 org.codelibs.elasticsearch.search.aggregations.InvalidAggregationPathException::new, 121, UNKNOWN_VERSION_ADDED),
-        // 123 used to be IndexAlreadyExistsException and was renamed
-        RESOURCE_ALREADY_EXISTS_EXCEPTION(ResourceAlreadyExistsException.class,
-            ResourceAlreadyExistsException::new, 123, UNKNOWN_VERSION_ADDED),
-        // 124 used to be Script.ScriptParseException
-        HTTP_ON_TRANSPORT_EXCEPTION(TcpTransport.HttpOnTransportException.class,
-                TcpTransport.HttpOnTransportException::new, 125, UNKNOWN_VERSION_ADDED),
         MAPPER_PARSING_EXCEPTION(org.codelibs.elasticsearch.index.mapper.MapperParsingException.class,
                 org.codelibs.elasticsearch.index.mapper.MapperParsingException::new, 126, UNKNOWN_VERSION_ADDED),
         SEARCH_CONTEXT_EXCEPTION(org.codelibs.elasticsearch.search.SearchContextException.class,
                 org.codelibs.elasticsearch.search.SearchContextException::new, 127, UNKNOWN_VERSION_ADDED),
         SEARCH_SOURCE_BUILDER_EXCEPTION(org.codelibs.elasticsearch.search.builder.SearchSourceBuilderException.class,
                 org.codelibs.elasticsearch.search.builder.SearchSourceBuilderException::new, 128, UNKNOWN_VERSION_ADDED),
-        ENGINE_CLOSED_EXCEPTION(org.codelibs.elasticsearch.index.engine.EngineClosedException.class,
-                org.codelibs.elasticsearch.index.engine.EngineClosedException::new, 129, UNKNOWN_VERSION_ADDED),
-        NO_SHARD_AVAILABLE_ACTION_EXCEPTION(org.codelibs.elasticsearch.action.NoShardAvailableActionException.class,
-                org.codelibs.elasticsearch.action.NoShardAvailableActionException::new, 130, UNKNOWN_VERSION_ADDED),
-        UNAVAILABLE_SHARDS_EXCEPTION(org.codelibs.elasticsearch.action.UnavailableShardsException.class,
-                org.codelibs.elasticsearch.action.UnavailableShardsException::new, 131, UNKNOWN_VERSION_ADDED),
-        FLUSH_FAILED_ENGINE_EXCEPTION(org.codelibs.elasticsearch.index.engine.FlushFailedEngineException.class,
-                org.codelibs.elasticsearch.index.engine.FlushFailedEngineException::new, 132, UNKNOWN_VERSION_ADDED),
         CIRCUIT_BREAKING_EXCEPTION(org.codelibs.elasticsearch.common.breaker.CircuitBreakingException.class,
                 org.codelibs.elasticsearch.common.breaker.CircuitBreakingException::new, 133, UNKNOWN_VERSION_ADDED),
-        NODE_NOT_CONNECTED_EXCEPTION(org.codelibs.elasticsearch.transport.NodeNotConnectedException.class,
-                org.codelibs.elasticsearch.transport.NodeNotConnectedException::new, 134, UNKNOWN_VERSION_ADDED),
-        STRICT_DYNAMIC_MAPPING_EXCEPTION(org.codelibs.elasticsearch.index.mapper.StrictDynamicMappingException.class,
-                org.codelibs.elasticsearch.index.mapper.StrictDynamicMappingException::new, 135, UNKNOWN_VERSION_ADDED),
-        RETRY_ON_REPLICA_EXCEPTION(org.codelibs.elasticsearch.action.support.replication.TransportReplicationAction.RetryOnReplicaException.class,
-                org.codelibs.elasticsearch.action.support.replication.TransportReplicationAction.RetryOnReplicaException::new, 136,
-            UNKNOWN_VERSION_ADDED),
-        TYPE_MISSING_EXCEPTION(org.codelibs.elasticsearch.indices.TypeMissingException.class,
-                org.codelibs.elasticsearch.indices.TypeMissingException::new, 137, UNKNOWN_VERSION_ADDED),
-        FAILED_TO_COMMIT_CLUSTER_STATE_EXCEPTION(org.codelibs.elasticsearch.discovery.Discovery.FailedToCommitClusterStateException.class,
-                org.codelibs.elasticsearch.discovery.Discovery.FailedToCommitClusterStateException::new, 140, UNKNOWN_VERSION_ADDED),
         QUERY_SHARD_EXCEPTION(org.codelibs.elasticsearch.index.query.QueryShardException.class,
                 org.codelibs.elasticsearch.index.query.QueryShardException::new, 141, UNKNOWN_VERSION_ADDED),
-        NO_LONGER_PRIMARY_SHARD_EXCEPTION(ShardStateAction.NoLongerPrimaryShardException.class,
-                ShardStateAction.NoLongerPrimaryShardException::new, 142, UNKNOWN_VERSION_ADDED),
         SCRIPT_EXCEPTION(org.codelibs.elasticsearch.script.ScriptException.class, org.codelibs.elasticsearch.script.ScriptException::new, 143,
             UNKNOWN_VERSION_ADDED),
-        NOT_MASTER_EXCEPTION(org.codelibs.elasticsearch.cluster.NotMasterException.class, org.codelibs.elasticsearch.cluster.NotMasterException::new, 144,
-            UNKNOWN_VERSION_ADDED),
-        STATUS_EXCEPTION(org.codelibs.elasticsearch.ElasticsearchStatusException.class, org.codelibs.elasticsearch.ElasticsearchStatusException::new, 145,
-            UNKNOWN_VERSION_ADDED),
-        TASK_CANCELLED_EXCEPTION(org.codelibs.elasticsearch.tasks.TaskCancelledException.class,
-            org.codelibs.elasticsearch.tasks.TaskCancelledException::new, 146, Version.V_5_1_1_UNRELEASED),
-        SHARD_LOCK_OBTAIN_FAILED_EXCEPTION(org.codelibs.elasticsearch.env.ShardLockObtainFailedException.class,
-                                           org.codelibs.elasticsearch.env.ShardLockObtainFailedException::new, 147, Version.V_5_0_2),
         UNKNOWN_NAMED_OBJECT_EXCEPTION(org.codelibs.elasticsearch.common.xcontent.NamedXContentRegistry.UnknownNamedObjectException.class,
                 org.codelibs.elasticsearch.common.xcontent.NamedXContentRegistry.UnknownNamedObjectException::new, 148, Version.V_5_2_0_UNRELEASED);
 
@@ -814,49 +549,6 @@ public class ElasticsearchException extends RuntimeException implements ToXConte
                 .stream(ElasticsearchExceptionHandle.values()).collect(Collectors.toMap(e -> e.id, e -> e.constructor)));
         CLASS_TO_ELASTICSEARCH_EXCEPTION_HANDLE = unmodifiableMap(Arrays
                 .stream(ElasticsearchExceptionHandle.values()).collect(Collectors.toMap(e -> e.exceptionClass, e -> e)));
-    }
-
-    public Index getIndex() {
-        List<String> index = getHeader(INDEX_HEADER_KEY);
-        if (index != null && index.isEmpty() == false) {
-            List<String> index_uuid = getHeader(INDEX_HEADER_KEY_UUID);
-            return new Index(index.get(0), index_uuid.get(0));
-        }
-
-        return null;
-    }
-
-    public ShardId getShardId() {
-        List<String> shard = getHeader(SHARD_HEADER_KEY);
-        if (shard != null && shard.isEmpty() == false) {
-            return new ShardId(getIndex(), Integer.parseInt(shard.get(0)));
-        }
-        return null;
-    }
-
-    public void setIndex(Index index) {
-        if (index != null) {
-            addHeader(INDEX_HEADER_KEY, index.getName());
-            addHeader(INDEX_HEADER_KEY_UUID, index.getUUID());
-        }
-    }
-
-    public void setIndex(String index) {
-        if (index != null) {
-            setIndex(new Index(index, INDEX_UUID_NA_VALUE));
-        }
-    }
-
-    public void setShard(ShardId shardId) {
-        if (shardId != null) {
-            setIndex(shardId.getIndex());
-            addHeader(SHARD_HEADER_KEY, Integer.toString(shardId.id()));
-        }
-    }
-
-    public void setShard(String index, int shardId) {
-            setIndex(index);
-            addHeader(SHARD_HEADER_KEY, Integer.toString(shardId));
     }
 
     public void setResources(String type, String... id) {

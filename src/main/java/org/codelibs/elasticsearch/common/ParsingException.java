@@ -25,7 +25,6 @@ import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentLocation;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
-import org.codelibs.elasticsearch.rest.RestStatus;
 
 import java.io.IOException;
 
@@ -87,11 +86,6 @@ public class ParsingException extends ElasticsearchException {
      */
     public int getColumnNumber() {
         return columnNumber;
-    }
-
-    @Override
-    public RestStatus status() {
-        return RestStatus.BAD_REQUEST;
     }
 
     @Override

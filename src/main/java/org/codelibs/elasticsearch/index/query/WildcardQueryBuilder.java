@@ -185,19 +185,7 @@ public class WildcardQueryBuilder extends AbstractQueryBuilder<WildcardQueryBuil
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        MappedFieldType fieldType = context.fieldMapper(fieldName);
-        Term term;
-        if (fieldType == null) {
-            term = new Term(fieldName, BytesRefs.toBytesRef(value));
-        } else {
-            Query termQuery = fieldType.termQuery(value, context);
-            term = MappedFieldType.extractTerm(termQuery);
-        }
-
-        WildcardQuery query = new WildcardQuery(term);
-        MultiTermQuery.RewriteMethod rewriteMethod = QueryParsers.parseRewriteMethod(rewrite, null);
-        QueryParsers.setRewriteMethod(query, rewriteMethod);
-        return query;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

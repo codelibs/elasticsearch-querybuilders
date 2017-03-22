@@ -26,9 +26,7 @@ import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentFactory;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
-import org.codelibs.elasticsearch.plugins.SearchPlugin;
 import org.codelibs.elasticsearch.search.MultiValueMode;
-import org.codelibs.elasticsearch.search.SearchModule;
 
 import java.io.IOException;
 import java.util.function.BiFunction;
@@ -65,7 +63,6 @@ import java.util.function.BiFunction;
  * <p>
  * To write a new decay scoring function, create a new class that extends
  * {@link DecayFunctionBuilder}, setup a PARSER field with this class, and
- * register them in {@link SearchModule#registerScoreFunctions} or {@link SearchPlugin#getScoreFunctions}
  * See {@link GaussDecayFunctionBuilder#PARSER} for an example.
  */
 public final class DecayFunctionParser<DFB extends DecayFunctionBuilder<DFB>> implements ScoreFunctionParser<DFB> {

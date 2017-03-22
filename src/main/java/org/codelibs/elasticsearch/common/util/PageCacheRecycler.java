@@ -19,27 +19,18 @@
 
 package org.codelibs.elasticsearch.common.util;
 
-import org.codelibs.elasticsearch.common.component.AbstractComponent;
 import org.codelibs.elasticsearch.common.lease.Releasable;
 import org.codelibs.elasticsearch.common.lease.Releasables;
-import org.codelibs.elasticsearch.common.recycler.AbstractRecyclerC;
-import org.codelibs.elasticsearch.common.recycler.Recycler;
 import org.codelibs.elasticsearch.common.settings.Setting;
 import org.codelibs.elasticsearch.common.settings.Setting.Property;
 import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.unit.ByteSizeValue;
-import org.codelibs.elasticsearch.common.util.concurrent.EsExecutors;
 
 import java.util.Arrays;
 import java.util.Locale;
 
-import static org.codelibs.elasticsearch.common.recycler.Recyclers.concurrent;
-import static org.codelibs.elasticsearch.common.recycler.Recyclers.concurrentDeque;
-import static org.codelibs.elasticsearch.common.recycler.Recyclers.dequeFactory;
-import static org.codelibs.elasticsearch.common.recycler.Recyclers.none;
-
 /** A recycler of fixed-size pages. */
-public class PageCacheRecycler extends AbstractComponent implements Releasable {
+public class PageCacheRecycler implements Releasable {
 
     public static final Setting<Type> TYPE_SETTING =
         new Setting<>("cache.recycler.page.type", Type.CONCURRENT.name(), Type::parse, Property.NodeScope);
@@ -55,21 +46,13 @@ public class PageCacheRecycler extends AbstractComponent implements Releasable {
     public static final Setting<Double> WEIGHT_OBJECTS_SETTING  =
         Setting.doubleSetting("cache.recycler.page.weight.objects", 0.1d, 0d, Property.NodeScope);
 
-    private final Recycler<byte[]> bytePage;
-    private final Recycler<int[]> intPage;
-    private final Recycler<long[]> longPage;
-    private final Recycler<Object[]> objectPage;
-
     @Override
     public void close() {
-        Releasables.close(true, bytePage, intPage, longPage, objectPage);
     }
 
     protected PageCacheRecycler(Settings settings) {
-        super(settings);
         final Type type = TYPE_SETTING .get(settings);
         final long limit = LIMIT_HEAP_SETTING .get(settings).getBytes();
-        final int availableProcessors = EsExecutors.boundedNumberOfProcessors(settings);
 
         // We have a global amount of memory that we need to divide across data types.
         // Since some types are more useful than other ones we give them different weights.
@@ -93,113 +76,22 @@ public class PageCacheRecycler extends AbstractComponent implements Releasable {
         final int maxPageCount = (int) Math.min(Integer.MAX_VALUE, limit / BigArrays.PAGE_SIZE_IN_BYTES);
 
         final int maxBytePageCount = (int) (bytesWeight * maxPageCount / totalWeight);
-        bytePage = build(type, maxBytePageCount, availableProcessors, new AbstractRecyclerC<byte[]>() {
-            @Override
-            public byte[] newInstance(int sizing) {
-                return new byte[BigArrays.BYTE_PAGE_SIZE];
-            }
-            @Override
-            public void recycle(byte[] value) {
-                // nothing to do
-            }
-        });
 
         final int maxIntPageCount = (int) (intsWeight * maxPageCount / totalWeight);
-        intPage = build(type, maxIntPageCount, availableProcessors, new AbstractRecyclerC<int[]>() {
-            @Override
-            public int[] newInstance(int sizing) {
-                return new int[BigArrays.INT_PAGE_SIZE];
-            }
-            @Override
-            public void recycle(int[] value) {
-                // nothing to do
-            }
-        });
 
         final int maxLongPageCount = (int) (longsWeight * maxPageCount / totalWeight);
-        longPage = build(type, maxLongPageCount, availableProcessors, new AbstractRecyclerC<long[]>() {
-            @Override
-            public long[] newInstance(int sizing) {
-                return new long[BigArrays.LONG_PAGE_SIZE];
-            }
-            @Override
-            public void recycle(long[] value) {
-                // nothing to do
-            }
-        });
 
         final int maxObjectPageCount = (int) (objectsWeight * maxPageCount / totalWeight);
-        objectPage = build(type, maxObjectPageCount, availableProcessors, new AbstractRecyclerC<Object[]>() {
-            @Override
-            public Object[] newInstance(int sizing) {
-                return new Object[BigArrays.OBJECT_PAGE_SIZE];
-            }
-            @Override
-            public void recycle(Object[] value) {
-                Arrays.fill(value, null); // we need to remove the strong refs on the objects stored in the array
-            }
-        });
 
         assert BigArrays.PAGE_SIZE_IN_BYTES * (maxBytePageCount + maxIntPageCount + maxLongPageCount + maxObjectPageCount) <= limit;
     }
 
-    public Recycler.V<byte[]> bytePage(boolean clear) {
-        final Recycler.V<byte[]> v = bytePage.obtain();
-        if (v.isRecycled() && clear) {
-            Arrays.fill(v.v(), (byte) 0);
-        }
-        return v;
-    }
-
-    public Recycler.V<int[]> intPage(boolean clear) {
-        final Recycler.V<int[]> v = intPage.obtain();
-        if (v.isRecycled() && clear) {
-            Arrays.fill(v.v(), 0);
-        }
-        return v;
-    }
-
-    public Recycler.V<long[]> longPage(boolean clear) {
-        final Recycler.V<long[]> v = longPage.obtain();
-        if (v.isRecycled() && clear) {
-            Arrays.fill(v.v(), 0L);
-        }
-        return v;
-    }
-
-    public Recycler.V<Object[]> objectPage() {
-        // object pages are cleared on release anyway
-        return objectPage.obtain();
-    }
-
-    private static <T> Recycler<T> build(Type type, int limit, int availableProcessors, Recycler.C<T> c) {
-        final Recycler<T> recycler;
-        if (limit == 0) {
-            recycler = none(c);
-        } else {
-            recycler = type.build(c, limit, availableProcessors);
-        }
-        return recycler;
-    }
-
     public enum Type {
         QUEUE {
-            @Override
-            <T> Recycler<T> build(Recycler.C<T> c, int limit, int availableProcessors) {
-                return concurrentDeque(c, limit);
-            }
         },
         CONCURRENT {
-            @Override
-            <T> Recycler<T> build(Recycler.C<T> c, int limit, int availableProcessors) {
-                return concurrent(dequeFactory(c, limit / availableProcessors), availableProcessors);
-            }
         },
         NONE {
-            @Override
-            <T> Recycler<T> build(Recycler.C<T> c, int limit, int availableProcessors) {
-                return none(c);
-            }
         };
 
         public static Type parse(String type) {
@@ -209,7 +101,5 @@ public class PageCacheRecycler extends AbstractComponent implements Releasable {
                 throw new IllegalArgumentException("no type support [" + type + "]");
             }
         }
-
-        abstract <T> Recycler<T> build(Recycler.C<T> c, int limit, int availableProcessors);
     }
 }

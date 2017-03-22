@@ -20,18 +20,13 @@
 package org.codelibs.elasticsearch.index.mapper;
 
 import org.apache.lucene.document.InetAddressPoint;
-import org.apache.lucene.document.SortedSetDocValuesField;
-import org.apache.lucene.document.StoredField;
 import org.apache.lucene.index.FieldInfo;
-import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.PointValues;
 import org.apache.lucene.index.RandomAccessOrds;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
-import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.action.fieldstats.FieldStats;
 import org.codelibs.elasticsearch.common.Explicit;
 import org.codelibs.elasticsearch.common.Nullable;
@@ -40,7 +35,6 @@ import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
 import org.codelibs.elasticsearch.index.fielddata.ScriptDocValues;
-import org.codelibs.elasticsearch.index.fielddata.plain.DocValuesIndexFieldData;
 import org.codelibs.elasticsearch.index.mapper.LegacyNumberFieldMapper.Defaults;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 import org.codelibs.elasticsearch.search.DocValueFormat;
@@ -97,32 +91,6 @@ public class IpFieldMapper extends FieldMapper {
         public TypeParser() {
         }
 
-        @Override
-        public Mapper.Builder<?,?> parse(String name, Map<String, Object> node, ParserContext parserContext) throws MapperParsingException {
-            if (parserContext.indexVersionCreated().before(Version.V_5_0_0_alpha2)) {
-                return new LegacyIpFieldMapper.TypeParser().parse(name, node, parserContext);
-            }
-            Builder builder = new Builder(name);
-            TypeParsers.parseField(builder, name, node, parserContext);
-            for (Iterator<Map.Entry<String, Object>> iterator = node.entrySet().iterator(); iterator.hasNext();) {
-                Map.Entry<String, Object> entry = iterator.next();
-                String propName = entry.getKey();
-                Object propNode = entry.getValue();
-                if (propName.equals("null_value")) {
-                    if (propNode == null) {
-                        throw new MapperParsingException("Property [null_value] cannot be null.");
-                    }
-                    builder.nullValue(InetAddresses.forString(propNode.toString()));
-                    iterator.remove();
-                } else if (propName.equals("ignore_malformed")) {
-                    builder.ignoreMalformed(TypeParsers.nodeBooleanValue("ignore_malformed", propNode, parserContext));
-                    iterator.remove();
-                } else if (TypeParsers.parseMultiField(builder, name, parserContext, propName, propNode)) {
-                    iterator.remove();
-                }
-            }
-            return builder;
-        }
     }
 
     public static final class IpFieldType extends MappedFieldType {
@@ -276,8 +244,7 @@ public class IpFieldMapper extends FieldMapper {
 
         @Override
         public IndexFieldData.Builder fielddataBuilder() {
-            failIfNoDocValues();
-            return new DocValuesIndexFieldData.Builder().scriptFunction(IpScriptDocValues::new);
+            throw new UnsupportedOperationException();
         }
 
         @Override
@@ -332,54 +299,6 @@ public class IpFieldMapper extends FieldMapper {
     @Override
     protected IpFieldMapper clone() {
         return (IpFieldMapper) super.clone();
-    }
-
-    @Override
-    protected void parseCreateField(ParseContext context, List<IndexableField> fields) throws IOException {
-        Object addressAsObject;
-        if (context.externalValueSet()) {
-            addressAsObject = context.externalValue();
-        } else {
-            addressAsObject = context.parser().textOrNull();
-        }
-
-        if (addressAsObject == null) {
-            addressAsObject = fieldType().nullValue();
-        }
-
-        if (addressAsObject == null) {
-            return;
-        }
-
-        String addressAsString = addressAsObject.toString();
-        InetAddress address;
-        if (addressAsObject instanceof InetAddress) {
-            address = (InetAddress) addressAsObject;
-        } else {
-            try {
-                address = InetAddresses.forString(addressAsString);
-            } catch (IllegalArgumentException e) {
-                if (ignoreMalformed.value()) {
-                    return;
-                } else {
-                    throw e;
-                }
-            }
-        }
-
-        if (context.includeInAll(includeInAll, this)) {
-            context.allEntries().addText(fieldType().name(), addressAsString, fieldType().boost());
-        }
-
-        if (fieldType().indexOptions() != IndexOptions.NONE) {
-            fields.add(new InetAddressPoint(fieldType().name(), address));
-        }
-        if (fieldType().hasDocValues()) {
-            fields.add(new SortedSetDocValuesField(fieldType().name(), new BytesRef(InetAddressPoint.encode(address))));
-        }
-        if (fieldType().stored()) {
-            fields.add(new StoredField(fieldType().name(), new BytesRef(InetAddressPoint.encode(address))));
-        }
     }
 
     @Override

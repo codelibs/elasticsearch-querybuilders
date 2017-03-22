@@ -35,8 +35,6 @@ import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.support.XContentMapValues;
 import org.codelibs.elasticsearch.index.analysis.NamedAnalyzer;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
-import org.codelibs.elasticsearch.index.fielddata.plain.DocValuesIndexFieldData;
-import org.codelibs.elasticsearch.index.fielddata.plain.PagedBytesIndexFieldData;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -48,7 +46,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import static org.apache.lucene.index.IndexOptions.NONE;
-import static org.codelibs.elasticsearch.index.mapper.TypeParsers.parseTextField;
 
 public class StringFieldMapper extends FieldMapper {
 
@@ -202,163 +199,6 @@ public class StringFieldMapper extends FieldMapper {
             this.deprecationLogger = new DeprecationLogger(logger);
         }
 
-        @Override
-        public Mapper.Builder parse(String fieldName, Map<String, Object> node, ParserContext parserContext) throws MapperParsingException {
-            if (parserContext.indexVersionCreated().onOrAfter(Version.V_5_0_0_alpha1)) {
-                final Object index = node.get("index");
-                if (Arrays.asList(null, "no", "not_analyzed", "analyzed").contains(index) == false) {
-                    throw new IllegalArgumentException("Can't parse [index] value [" + index + "] for field [" + fieldName + "], expected [no], [not_analyzed] or [analyzed]");
-                }
-                final boolean keyword = index != null && "analyzed".equals(index) == false;
-
-                // Automatically upgrade simple mappings for ease of upgrade, otherwise fail
-                Set<String> autoUpgradeParameters = keyword
-                        ? SUPPORTED_PARAMETERS_FOR_AUTO_UPGRADE_TO_KEYWORD
-                        : SUPPORTED_PARAMETERS_FOR_AUTO_UPGRADE_TO_TEXT;
-                if (autoUpgradeParameters.containsAll(node.keySet())) {
-                    deprecationLogger.deprecated("The [string] field is deprecated, please use [text] or [keyword] instead on [{}]",
-                            fieldName);
-                    {
-                        // upgrade the index setting
-                        node.put("index", "no".equals(index) == false);
-                    }
-                    {
-                        // upgrade norms settings
-                        Object norms = node.remove("norms");
-                        if (norms instanceof Map) {
-                            norms = ((Map<?,?>) norms).get("enabled");
-                        }
-                        if (norms != null) {
-                            node.put("norms", TypeParsers.nodeBooleanValue("norms", norms, parserContext));
-                        }
-                        Object omitNorms = node.remove("omit_norms");
-                        if (omitNorms != null) {
-                            node.put("norms", TypeParsers.nodeBooleanValue("omit_norms", omitNorms, parserContext) == false);
-                        }
-                    }
-                    {
-                        // upgrade fielddata settings
-                        Object fielddataO = node.get("fielddata");
-                        if (fielddataO instanceof Map) {
-                            Map<?,?> fielddata = (Map<?, ?>) fielddataO;
-                            if (keyword == false) {
-                                node.put("fielddata", "disabled".equals(fielddata.get("format")) == false);
-                                Map<?,?> fielddataFilter = (Map<?, ?>) fielddata.get("filter");
-                                if (fielddataFilter != null) {
-                                    Map<?,?> frequencyFilter = (Map<?, ?>) fielddataFilter.get("frequency");
-                                    frequencyFilter.keySet().retainAll(Arrays.asList("min", "max", "min_segment_size"));
-                                    node.put("fielddata_frequency_filter", frequencyFilter);
-                                }
-                            } else {
-                                node.remove("fielddata");
-                            }
-                            final Object loading = fielddata.get("loading");
-                            if (loading != null) {
-                                node.put("eager_global_ordinals", "eager_global_ordinals".equals(loading));
-                            }
-                        }
-                    }
-                    if (keyword) {
-                        return new KeywordFieldMapper.TypeParser().parse(fieldName, node, parserContext);
-                    } else {
-                        return new TextFieldMapper.TypeParser().parse(fieldName, node, parserContext);
-                    }
-
-                }
-                Set<String> unsupportedParameters = new HashSet<>(node.keySet());
-                unsupportedParameters.removeAll(autoUpgradeParameters);
-                throw new IllegalArgumentException("The [string] type is removed in 5.0 and automatic upgrade failed because parameters "
-                        + unsupportedParameters + " are not supported for automatic upgrades. You should now use either a [text] "
-                        + "or [keyword] field instead for field [" + fieldName + "]");
-            }
-
-            StringFieldMapper.Builder builder = new StringFieldMapper.Builder(fieldName);
-            // hack for the fact that string can't just accept true/false for
-            // the index property and still accepts no/not_analyzed/analyzed
-            final Object index = node.remove("index");
-            if (index != null) {
-                final String normalizedIndex = index.toString();
-                switch (normalizedIndex) {
-                case "analyzed":
-                    builder.tokenized(true);
-                    node.put("index", true);
-                    break;
-                case "not_analyzed":
-                    builder.tokenized(false);
-                    node.put("index", true);
-                    break;
-                case "no":
-                    node.put("index", false);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Can't parse [index] value [" + index + "] for field [" + fieldName + "], expected [no], [not_analyzed] or [analyzed]");
-                }
-            }
-            final Object fielddataObject = node.get("fielddata");
-            if (fielddataObject instanceof Map) {
-                Map<?,?> fielddata = (Map<?, ?>) fielddataObject;
-                final Object loading = fielddata.get("loading");
-                if (loading != null) {
-                    node.put("eager_global_ordinals", "eager_global_ordinals".equals(loading));
-                }
-                Map<?,?> fielddataFilter = (Map<?, ?>) fielddata.get("filter");
-                if (fielddataFilter != null) {
-                    Map<?,?> frequencyFilter = (Map<?, ?>) fielddataFilter.get("frequency");
-                    frequencyFilter.keySet().retainAll(Arrays.asList("min", "max", "min_segment_size"));
-                    node.put("fielddata_frequency_filter", frequencyFilter);
-                }
-                node.put("fielddata", "disabled".equals(fielddata.get("format")) == false);
-            }
-            parseTextField(builder, fieldName, node, parserContext);
-            for (Iterator<Map.Entry<String, Object>> iterator = node.entrySet().iterator(); iterator.hasNext();) {
-                Map.Entry<String, Object> entry = iterator.next();
-                String propName = entry.getKey();
-                Object propNode = entry.getValue();
-                if (propName.equals("null_value")) {
-                    if (propNode == null) {
-                        throw new MapperParsingException("Property [null_value] cannot be null.");
-                    }
-                    builder.nullValue(propNode.toString());
-                    iterator.remove();
-                } else if (propName.equals("position_increment_gap")) {
-                    int newPositionIncrementGap = XContentMapValues.nodeIntegerValue(propNode, -1);
-                    if (newPositionIncrementGap < 0) {
-                        throw new MapperParsingException("positions_increment_gap less than 0 aren't allowed.");
-                    }
-                    builder.positionIncrementGap(newPositionIncrementGap);
-                    // we need to update to actual analyzers if they are not set in this case...
-                    // so we can inject the position increment gap...
-                    if (builder.fieldType().indexAnalyzer() == null) {
-                        builder.fieldType().setIndexAnalyzer(parserContext.getIndexAnalyzers().getDefaultIndexAnalyzer());
-                    }
-                    if (builder.fieldType().searchAnalyzer() == null) {
-                        builder.fieldType().setSearchAnalyzer(parserContext.getIndexAnalyzers().getDefaultSearchAnalyzer());
-                    }
-                    if (builder.fieldType().searchQuoteAnalyzer() == null) {
-                        builder.fieldType().setSearchQuoteAnalyzer(parserContext.getIndexAnalyzers().getDefaultSearchQuoteAnalyzer());
-                    }
-                    iterator.remove();
-                } else if (propName.equals("ignore_above")) {
-                    builder.ignoreAbove(XContentMapValues.nodeIntegerValue(propNode, -1));
-                    iterator.remove();
-                } else if (propName.equals("fielddata")) {
-                    builder.fielddata(XContentMapValues.nodeBooleanValue(propNode));
-                    iterator.remove();
-                } else if (propName.equals("eager_global_ordinals")) {
-                    builder.eagerGlobalOrdinals(XContentMapValues.nodeBooleanValue(propNode));
-                    iterator.remove();
-                } else if (propName.equals("fielddata_frequency_filter")) {
-                    Map<?,?> frequencyFilter = (Map<?, ?>) propNode;
-                    double minFrequency = XContentMapValues.nodeDoubleValue(frequencyFilter.remove("min"), 0);
-                    double maxFrequency = XContentMapValues.nodeDoubleValue(frequencyFilter.remove("max"), Integer.MAX_VALUE);
-                    int minSegmentSize = XContentMapValues.nodeIntegerValue(frequencyFilter.remove("min_segment_size"), 0);
-                    builder.fielddataFrequencyFilter(minFrequency, maxFrequency, minSegmentSize);
-                    DocumentMapperParser.checkNoRemainingFields(propName, frequencyFilter, parserContext.indexVersionCreated());
-                    iterator.remove();
-                }
-            }
-            return builder;
-        }
     }
 
     public static final class StringFieldType extends org.codelibs.elasticsearch.index.mapper.StringFieldType {
@@ -481,15 +321,7 @@ public class StringFieldMapper extends FieldMapper {
 
         @Override
         public IndexFieldData.Builder fielddataBuilder() {
-            if (hasDocValues()) {
-                return new DocValuesIndexFieldData.Builder();
-            } else if (fielddata) {
-                return new PagedBytesIndexFieldData.Builder(fielddataMinFrequency, fielddataMaxFrequency, fielddataMinSegmentSize);
-            } else {
-                throw new IllegalArgumentException("Fielddata is disabled on analyzed string fields by default. Set fielddata=true on ["
-                        + name() + "] in order to load fielddata in memory by uninverting the inverted index. Note that this can however "
-                        + "use significant memory.");
-            }
+            throw new UnsupportedOperationException();
         }
     }
 
@@ -535,71 +367,6 @@ public class StringFieldMapper extends FieldMapper {
 
     public int getIgnoreAbove() {
         return ignoreAbove;
-    }
-
-    @Override
-    protected void parseCreateField(ParseContext context, List<IndexableField> fields) throws IOException {
-        ValueAndBoost valueAndBoost = parseCreateFieldForString(context, fieldType().nullValueAsString(), fieldType().boost());
-        if (valueAndBoost.value() == null) {
-            return;
-        }
-        if (ignoreAbove > 0 && valueAndBoost.value().length() > ignoreAbove) {
-            return;
-        }
-        if (context.includeInAll(includeInAll, this)) {
-            context.allEntries().addText(fieldType().name(), valueAndBoost.value(), valueAndBoost.boost());
-        }
-
-        if (fieldType().indexOptions() != IndexOptions.NONE || fieldType().stored()) {
-            Field field = new Field(fieldType().name(), valueAndBoost.value(), fieldType());
-            if (valueAndBoost.boost() != 1f && Version.indexCreated(context.indexSettings()).before(Version.V_5_0_0_alpha1)) {
-                field.setBoost(valueAndBoost.boost());
-            }
-            fields.add(field);
-        }
-        if (fieldType().hasDocValues()) {
-            fields.add(new SortedSetDocValuesField(fieldType().name(), new BytesRef(valueAndBoost.value())));
-        }
-    }
-
-    /**
-     * Parse a field as though it were a string.
-     * @param context parse context used during parsing
-     * @param nullValue value to use for null
-     * @param defaultBoost default boost value returned unless overwritten in the field
-     * @return the parsed field and the boost either parsed or defaulted
-     * @throws IOException if thrown while parsing
-     */
-    public static ValueAndBoost parseCreateFieldForString(ParseContext context, String nullValue, float defaultBoost) throws IOException {
-        if (context.externalValueSet()) {
-            return new ValueAndBoost(context.externalValue().toString(), defaultBoost);
-        }
-        XContentParser parser = context.parser();
-        if (parser.currentToken() == XContentParser.Token.VALUE_NULL) {
-            return new ValueAndBoost(nullValue, defaultBoost);
-        }
-        if (parser.currentToken() == XContentParser.Token.START_OBJECT
-                && Version.indexCreated(context.indexSettings()).before(Version.V_5_0_0_alpha1)) {
-            XContentParser.Token token;
-            String currentFieldName = null;
-            String value = nullValue;
-            float boost = defaultBoost;
-            while ((token = parser.nextToken()) != XContentParser.Token.END_OBJECT) {
-                if (token == XContentParser.Token.FIELD_NAME) {
-                    currentFieldName = parser.currentName();
-                } else {
-                    if ("value".equals(currentFieldName) || "_value".equals(currentFieldName)) {
-                        value = parser.textOrNull();
-                    } else if ("boost".equals(currentFieldName) || "_boost".equals(currentFieldName)) {
-                        boost = parser.floatValue();
-                    } else {
-                        throw new IllegalArgumentException("unknown property [" + currentFieldName + "]");
-                    }
-                }
-            }
-            return new ValueAndBoost(value, boost);
-        }
-        return new ValueAndBoost(parser.textOrNull(), defaultBoost);
     }
 
     @Override
@@ -671,35 +438,6 @@ public class StringFieldMapper extends FieldMapper {
                 }
                 builder.endObject();
             }
-        }
-    }
-
-    /**
-     * Parsed value and boost to be returned from {@link #parseCreateFieldForString}.
-     */
-    public static class ValueAndBoost {
-        private final String value;
-        private final float boost;
-
-        public ValueAndBoost(String value, float boost) {
-            this.value = value;
-            this.boost = boost;
-        }
-
-        /**
-         * Value of string field.
-         * @return value of string field
-         */
-        public String value() {
-            return value;
-        }
-
-        /**
-         * Boost either parsed from the document or defaulted.
-         * @return boost either parsed from the document or defaulted
-         */
-        public float boost() {
-            return boost;
         }
     }
 }
