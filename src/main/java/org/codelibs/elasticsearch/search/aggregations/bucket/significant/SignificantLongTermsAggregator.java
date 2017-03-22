@@ -31,7 +31,6 @@ import org.codelibs.elasticsearch.search.aggregations.bucket.terms.LongTermsAggr
 import org.codelibs.elasticsearch.search.aggregations.bucket.terms.support.IncludeExclude;
 import org.codelibs.elasticsearch.search.aggregations.pipeline.PipelineAggregator;
 import org.codelibs.elasticsearch.search.aggregations.support.ValuesSource;
-import org.codelibs.elasticsearch.search.internal.ContextIndexSearcher;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
 
 import java.io.IOException;
@@ -118,12 +117,7 @@ public class SignificantLongTermsAggregator extends LongTermsAggregator {
 
     @Override
     public SignificantLongTerms buildEmptyAggregation() {
-        // We need to account for the significance of a miss in our global stats - provide corpus size as context
-        ContextIndexSearcher searcher = context.searcher();
-        IndexReader topReader = searcher.getIndexReader();
-        int supersetSize = topReader.numDocs();
-        return new SignificantLongTerms(name, bucketCountThresholds.getRequiredSize(), bucketCountThresholds.getMinDocCount(),
-                pipelineAggregators(), metaData(), format, 0, supersetSize, significanceHeuristic, emptyList());
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

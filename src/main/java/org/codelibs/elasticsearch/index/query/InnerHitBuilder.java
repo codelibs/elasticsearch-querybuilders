@@ -28,8 +28,6 @@ import org.codelibs.elasticsearch.common.io.stream.Writeable;
 import org.codelibs.elasticsearch.common.xcontent.ObjectParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.mapper.DocumentMapper;
-import org.codelibs.elasticsearch.index.mapper.ObjectMapper;
 import org.codelibs.elasticsearch.script.Script;
 import org.codelibs.elasticsearch.script.ScriptContext;
 import org.codelibs.elasticsearch.script.SearchScript;
@@ -40,7 +38,6 @@ import org.codelibs.elasticsearch.search.fetch.subphase.DocValueFieldsContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.InnerHitsContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.codelibs.elasticsearch.search.internal.SearchContext;
 import org.codelibs.elasticsearch.search.sort.SortAndFormats;
 import org.codelibs.elasticsearch.search.sort.SortBuilder;
 
@@ -535,103 +532,6 @@ public final class InnerHitBuilder extends ToXContentToBytes implements Writeabl
             childInnerHits = new HashMap<>();
         }
         this.childInnerHits.put(innerHitBuilder.getName(), innerHitBuilder);
-    }
-
-    public InnerHitsContext.BaseInnerHits build(SearchContext parentSearchContext,
-                                                InnerHitsContext innerHitsContext) throws IOException {
-        QueryShardContext queryShardContext = parentSearchContext.getQueryShardContext();
-        if (nestedPath != null) {
-            ObjectMapper nestedObjectMapper = queryShardContext.getObjectMapper(nestedPath);
-            if (nestedObjectMapper == null) {
-                if (ignoreUnmapped == false) {
-                    throw new IllegalStateException("[" + query.getName() + "] no mapping found for type [" + nestedPath + "]");
-                } else {
-                    return null;
-                }
-            }
-
-            ObjectMapper parentObjectMapper = queryShardContext.nestedScope().nextLevel(nestedObjectMapper);
-            InnerHitsContext.NestedInnerHits nestedInnerHits = new InnerHitsContext.NestedInnerHits(
-                    name, parentSearchContext, parentObjectMapper, nestedObjectMapper
-            );
-            setupInnerHitsContext(queryShardContext, nestedInnerHits);
-            if (childInnerHits != null) {
-                buildChildInnerHits(parentSearchContext, nestedInnerHits);
-            }
-            queryShardContext.nestedScope().previousLevel();
-            innerHitsContext.addInnerHitDefinition(nestedInnerHits);
-            return nestedInnerHits;
-        } else if (parentChildType != null) {
-            DocumentMapper documentMapper = queryShardContext.documentMapper(parentChildType);
-            if (documentMapper == null) {
-                if (ignoreUnmapped == false) {
-                    throw new IllegalStateException("[" + query.getName() + "] no mapping found for type [" + parentChildType + "]");
-                } else {
-                    return null;
-                }
-            }
-
-            InnerHitsContext.ParentChildInnerHits parentChildInnerHits = new InnerHitsContext.ParentChildInnerHits(
-                    name, parentSearchContext, queryShardContext.getMapperService(), documentMapper
-            );
-            setupInnerHitsContext(queryShardContext, parentChildInnerHits);
-            if (childInnerHits != null) {
-                buildChildInnerHits(parentSearchContext, parentChildInnerHits);
-            }
-            innerHitsContext.addInnerHitDefinition( parentChildInnerHits);
-            return parentChildInnerHits;
-        } else {
-            throw new IllegalStateException("Neither a nested or parent/child inner hit");
-        }
-    }
-
-    private void buildChildInnerHits(SearchContext parentSearchContext, InnerHitsContext.BaseInnerHits innerHits) throws IOException {
-        Map<String, InnerHitsContext.BaseInnerHits> childInnerHits = new HashMap<>();
-        for (Map.Entry<String, InnerHitBuilder> entry : this.childInnerHits.entrySet()) {
-            InnerHitsContext.BaseInnerHits childInnerHit = entry.getValue().build(
-                    parentSearchContext, new InnerHitsContext()
-            );
-            if (childInnerHit != null) {
-                childInnerHits.put(entry.getKey(), childInnerHit);
-            }
-        }
-        innerHits.setChildInnerHits(childInnerHits);
-    }
-
-    private void setupInnerHitsContext(QueryShardContext context, InnerHitsContext.BaseInnerHits innerHitsContext) throws IOException {
-        innerHitsContext.from(from);
-        innerHitsContext.size(size);
-        innerHitsContext.explain(explain);
-        innerHitsContext.version(version);
-        innerHitsContext.trackScores(trackScores);
-        if (storedFieldsContext != null) {
-            innerHitsContext.storedFieldsContext(storedFieldsContext);
-        }
-        if (docValueFields != null) {
-            innerHitsContext.docValueFieldsContext(new DocValueFieldsContext(docValueFields));
-        }
-        if (scriptFields != null) {
-            for (ScriptField field : scriptFields) {
-                SearchScript searchScript = innerHitsContext.getQueryShardContext().getSearchScript(field.script(),
-                    ScriptContext.Standard.SEARCH);
-                innerHitsContext.scriptFields().add(new org.codelibs.elasticsearch.search.fetch.subphase.ScriptFieldsContext.ScriptField(
-                        field.fieldName(), searchScript, field.ignoreFailure()));
-            }
-        }
-        if (fetchSourceContext != null) {
-            innerHitsContext.fetchSourceContext(fetchSourceContext);
-        }
-        if (sorts != null) {
-            Optional<SortAndFormats> optionalSort = SortBuilder.buildSort(sorts, context);
-            if (optionalSort.isPresent()) {
-                innerHitsContext.sort(optionalSort.get());
-            }
-        }
-        if (highlightBuilder != null) {
-            innerHitsContext.highlight(highlightBuilder.build(context));
-        }
-        ParsedQuery parsedQuery = new ParsedQuery(query.toQuery(context), context.copyNamedQueries());
-        innerHitsContext.parsedQuery(parsedQuery);
     }
 
     public void inlineInnerHits(Map<String, InnerHitBuilder> innerHits) {

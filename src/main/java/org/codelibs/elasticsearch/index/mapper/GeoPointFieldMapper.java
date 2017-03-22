@@ -96,10 +96,6 @@ public class GeoPointFieldMapper extends BaseGeoPointFieldMapper  {
     }
 
     public static class TypeParser extends BaseGeoPointFieldMapper.TypeParser {
-        @Override
-        public Mapper.Builder<?, ?> parse(String name, Map<String, Object> node, ParserContext parserContext) throws MapperParsingException {
-            return super.parse(name, node, parserContext);
-        }
     }
 
     public GeoPointFieldMapper(String simpleName, MappedFieldType fieldType, MappedFieldType defaultFieldType, Settings indexSettings,
@@ -107,25 +103,6 @@ public class GeoPointFieldMapper extends BaseGeoPointFieldMapper  {
                                FieldMapper geoHashMapper, MultiFields multiFields, Explicit<Boolean> ignoreMalformed, CopyTo copyTo) {
         super(simpleName, fieldType, defaultFieldType, indexSettings, latMapper, lonMapper, geoHashMapper, multiFields,
                 ignoreMalformed, copyTo);
-    }
-
-    @Override
-    protected void parse(ParseContext context, GeoPoint point, String geoHash) throws IOException {
-        if (ignoreMalformed.value() == false) {
-            if (point.lat() > 90.0 || point.lat() < -90.0) {
-                throw new IllegalArgumentException("illegal latitude value [" + point.lat() + "] for " + name());
-            }
-            if (point.lon() > 180.0 || point.lon() < -180) {
-                throw new IllegalArgumentException("illegal longitude value [" + point.lon() + "] for " + name());
-            }
-        } else {
-            // LUCENE WATCH: This will be folded back into Lucene's GeoPointField
-            GeoUtils.normalizePoint(point);
-        }
-        if (fieldType().indexOptions() != IndexOptions.NONE || fieldType().stored()) {
-            context.doc().add(new GeoPointField(fieldType().name(), point.lat(), point.lon(), fieldType()));
-        }
-        super.parse(context, point, geoHash);
     }
 
     @Override

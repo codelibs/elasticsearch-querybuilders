@@ -28,8 +28,6 @@ import org.codelibs.elasticsearch.ElasticsearchParseException;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
-import org.codelibs.elasticsearch.index.mapper.ParseContext;
-import org.codelibs.elasticsearch.index.mapper.ParseContext.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -156,31 +154,6 @@ public class CategoryContextMapping extends ContextMapping {
     }
 
     @Override
-    public ContextConfig parseContext(ParseContext parseContext, XContentParser parser) throws IOException, ElasticsearchParseException {
-        Token token = parser.currentToken();
-        if (token == Token.VALUE_NULL) {
-            return new FieldConfig(fieldName, defaultValues, null);
-        } else if (token == Token.VALUE_STRING) {
-            return new FieldConfig(fieldName, null, Collections.singleton(parser.text()));
-        } else if (token == Token.VALUE_NUMBER) {
-            return new FieldConfig(fieldName, null, Collections.singleton(parser.text()));
-        } else if (token == Token.VALUE_BOOLEAN) {
-            return new FieldConfig(fieldName, null, Collections.singleton(parser.text()));
-        } else if (token == Token.START_ARRAY) {
-            ArrayList<String> values = new ArrayList<>();
-            while((token = parser.nextToken()) != Token.END_ARRAY) {
-                values.add(parser.text());
-            }
-            if(values.isEmpty()) {
-                throw new ElasticsearchParseException("FieldConfig must contain a least one category");
-            }
-            return new FieldConfig(fieldName, null, values);
-        } else {
-            throw new ElasticsearchParseException("FieldConfig must be either [null], a string or a list of strings");
-        }
-    }
-
-    @Override
     public FieldQuery parseQuery(String name, XContentParser parser) throws IOException, ElasticsearchParseException {
         Iterable<? extends CharSequence> values;
         Token token = parser.currentToken();
@@ -237,26 +210,6 @@ public class CategoryContextMapping extends ContextMapping {
             this.fieldname = fieldname;
             this.defaultValues = defaultValues;
             this.values = values;
-        }
-
-        @Override
-        protected TokenStream wrapTokenStream(Document doc, TokenStream stream) {
-            throw new UnsupportedOperationException("QueryBuilders does not support this operation.");
-            /*if (values != null) {
-                return new PrefixAnalyzer.PrefixTokenFilter(stream, ContextMapping.SEPARATOR, values);
-            // if fieldname is default, BUT our default values are set, we take that one
-            } else if ((doc.getFields(fieldname).length == 0
-                || fieldname.equals(DEFAULT_FIELDNAME)) && defaultValues.iterator().hasNext()) {
-                return new PrefixAnalyzer.PrefixTokenFilter(stream, ContextMapping.SEPARATOR, defaultValues);
-            } else {
-                IndexableField[] fields = doc.getFields(fieldname);
-                ArrayList<CharSequence> values = new ArrayList<>(fields.length);
-                for (int i = 0; i < fields.length; i++) {
-                    values.add(fields[i].stringValue());
-                }
-
-                return new PrefixAnalyzer.PrefixTokenFilter(stream, ContextMapping.SEPARATOR, values);
-            }*/
         }
 
         @Override

@@ -33,8 +33,6 @@ import org.codelibs.elasticsearch.common.settings.Setting.Property;
 import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.index.analysis.NamedAnalyzer;
-import org.codelibs.elasticsearch.index.similarity.SimilarityProvider;
-import org.codelibs.elasticsearch.index.similarity.SimilarityService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -187,11 +185,6 @@ public abstract class FieldMapper extends Mapper implements Cloneable {
             return builder;
         }
 
-        public T similarity(SimilarityProvider similarity) {
-            this.fieldType.setSimilarity(similarity);
-            return builder;
-        }
-
         public Builder nullValue(Object nullValue) {
             this.fieldType.setNullValue(nullValue);
             return this;
@@ -208,7 +201,7 @@ public abstract class FieldMapper extends Mapper implements Cloneable {
         }
 
         protected String buildFullName(BuilderContext context) {
-            return context.path().pathAsText(name);
+            throw new UnsupportedOperationException();
         }
 
         protected boolean defaultDocValues(Version indexCreated) {
@@ -275,36 +268,6 @@ public abstract class FieldMapper extends Mapper implements Cloneable {
     public CopyTo copyTo() {
         return copyTo;
     }
-
-    /**
-     * Parse using the provided {@link ParseContext} and return a mapping
-     * update if dynamic mappings modified the mappings, or {@code null} if
-     * mappings were not modified.
-     */
-    public Mapper parse(ParseContext context) throws IOException {
-        final List<IndexableField> fields = new ArrayList<>(2);
-        try {
-            parseCreateField(context, fields);
-            for (IndexableField field : fields) {
-                if (!customBoost()
-                        // don't set boosts eg. on dv fields
-                        && field.fieldType().indexOptions() != IndexOptions.NONE
-                        && indexCreatedVersion.before(Version.V_5_0_0_alpha1)) {
-                    ((Field)(field)).setBoost(fieldType().boost());
-                }
-                context.doc().add(field);
-            }
-        } catch (Exception e) {
-            throw new MapperParsingException("failed to parse [" + fieldType().name() + "]", e);
-        }
-        multiFields.parse(this, context);
-        return null;
-    }
-
-    /**
-     * Parse the field value and populate <code>fields</code>.
-     */
-    protected abstract void parseCreateField(ParseContext context, List<IndexableField> fields) throws IOException;
 
     /**
      * Derived classes can override it to specify that boost value is set by derived classes.
@@ -384,7 +347,8 @@ public abstract class FieldMapper extends Mapper implements Cloneable {
     }
 
     protected void doXContentBody(XContentBuilder builder, boolean includeDefaults, Params params) throws IOException {
-
+        throw new UnsupportedOperationException();
+        /*
         builder.field("type", contentType());
 
         if (includeDefaults || fieldType().boost() != 1.0f) {
@@ -425,6 +389,7 @@ public abstract class FieldMapper extends Mapper implements Cloneable {
         if (copyTo != null) {
             copyTo.toXContent(builder, params);
         }
+        */
     }
 
     protected final void doXContentAnalyzers(XContentBuilder builder, boolean includeDefaults) throws IOException {
@@ -458,18 +423,7 @@ public abstract class FieldMapper extends Mapper implements Cloneable {
     }
 
     protected static String indexOptionToString(IndexOptions indexOption) {
-        switch (indexOption) {
-            case DOCS_AND_FREQS_AND_POSITIONS_AND_OFFSETS:
-                return TypeParsers.INDEX_OPTIONS_OFFSETS;
-            case DOCS_AND_FREQS:
-                return TypeParsers.INDEX_OPTIONS_FREQS;
-            case DOCS_AND_FREQS_AND_POSITIONS:
-                return TypeParsers.INDEX_OPTIONS_POSITIONS;
-            case DOCS:
-                return TypeParsers.INDEX_OPTIONS_DOCS;
-            default:
-                throw new IllegalArgumentException("Unknown IndexOptions [" + indexOption + "]");
-        }
+        throw new UnsupportedOperationException();
     }
 
     public static String termVectorOptionsToString(FieldType fieldType) {
@@ -518,22 +472,7 @@ public abstract class FieldMapper extends Mapper implements Cloneable {
 
             @SuppressWarnings("unchecked")
             public MultiFields build(FieldMapper.Builder mainFieldBuilder, BuilderContext context) {
-                if (mapperBuilders.isEmpty()) {
-                    return empty();
-                } else {
-                    context.path().add(mainFieldBuilder.name());
-                    ImmutableOpenMap.Builder mapperBuilders = this.mapperBuilders;
-                    for (ObjectObjectCursor<String, Mapper.Builder> cursor : this.mapperBuilders) {
-                        String key = cursor.key;
-                        Mapper.Builder value = cursor.value;
-                        Mapper mapper = value.build(context);
-                        assert mapper instanceof FieldMapper;
-                        mapperBuilders.put(key, mapper);
-                    }
-                    context.path().remove();
-                    ImmutableOpenMap.Builder<String, FieldMapper> mappers = mapperBuilders.cast();
-                    return new MultiFields(mappers.build());
-                }
+                throw new UnsupportedOperationException();
             }
         }
 
@@ -546,21 +485,6 @@ public abstract class FieldMapper extends Mapper implements Cloneable {
                 builder.put(cursor.key, cursor.value);
             }
             this.mappers = builder.build();
-        }
-
-        public void parse(FieldMapper mainField, ParseContext context) throws IOException {
-            // TODO: multi fields are really just copy fields, we just need to expose "sub fields" or something that can be part of the mappings
-            if (mappers.isEmpty()) {
-                return;
-            }
-
-            context = context.createMultiFieldContext();
-
-            context.path().add(mainField.simpleName());
-            for (ObjectCursor<FieldMapper> cursor : mappers.values()) {
-                cursor.value.parse(context);
-            }
-            context.path().remove();
         }
 
         public MultiFields merge(MultiFields mergeWith) {

@@ -248,21 +248,7 @@ public class RegexpQueryBuilder extends AbstractQueryBuilder<RegexpQueryBuilder>
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws QueryShardException, IOException {
-        MultiTermQuery.RewriteMethod method = QueryParsers.parseRewriteMethod(rewrite, null);
-
-        Query query = null;
-        MappedFieldType fieldType = context.fieldMapper(fieldName);
-        if (fieldType != null) {
-            query = fieldType.regexpQuery(value, flagsValue, maxDeterminizedStates, method, context);
-        }
-        if (query == null) {
-            RegexpQuery regexpQuery = new RegexpQuery(new Term(fieldName, BytesRefs.toBytesRef(value)), flagsValue, maxDeterminizedStates);
-            if (method != null) {
-                regexpQuery.setRewriteMethod(method);
-            }
-            query = regexpQuery;
-        }
-        return query;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

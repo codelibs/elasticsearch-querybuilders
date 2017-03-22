@@ -131,56 +131,7 @@ public class BestBucketsDeferringCollector extends DeferringBucketCollector {
      */
     @Override
     public void prepareSelectedBuckets(long... selectedBuckets) throws IOException {
-        if (!finished) {
-            throw new IllegalStateException("Cannot replay yet, collection is not finished: postCollect() has not been called");
-        }
-        if (this.selectedBuckets != null) {
-            throw new IllegalStateException("Already been replayed");
-        }
-
-        final LongHash hash = new LongHash(selectedBuckets.length, BigArrays.NON_RECYCLING_INSTANCE);
-        for (long bucket : selectedBuckets) {
-            hash.add(bucket);
-        }
-        this.selectedBuckets = hash;
-
-        boolean needsScores = collector.needsScores();
-        Weight weight = null;
-        if (needsScores) {
-            weight = searchContext.searcher()
-                        .createNormalizedWeight(searchContext.query(), true);
-        }
-        for (Entry entry : entries) {
-            final LeafBucketCollector leafCollector = collector.getLeafCollector(entry.context);
-            DocIdSetIterator docIt = null;
-            if (needsScores && entry.docDeltas.size() > 0) {
-                Scorer scorer = weight.scorer(entry.context);
-                // We don't need to check if the scorer is null
-                // since we are sure that there are documents to replay (entry.docDeltas it not empty).
-                docIt = scorer.iterator();
-                leafCollector.setScorer(scorer);
-            }
-            final PackedLongValues.Iterator docDeltaIterator = entry.docDeltas.iterator();
-            final PackedLongValues.Iterator buckets = entry.buckets.iterator();
-            int doc = 0;
-            for (long i = 0, end = entry.docDeltas.size(); i < end; ++i) {
-                doc += docDeltaIterator.next();
-                final long bucket = buckets.next();
-                final long rebasedBucket = hash.find(bucket);
-                if (rebasedBucket != -1) {
-                    if (needsScores) {
-                        if (docIt.docID() < doc) {
-                            docIt.advance(doc);
-                        }
-                        // aggregations should only be replayed on matching documents
-                        assert docIt.docID() == doc;
-                    }
-                    leafCollector.collect(doc, rebasedBucket);
-                }
-            }
-        }
-
-        collector.postCollection();
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     /**

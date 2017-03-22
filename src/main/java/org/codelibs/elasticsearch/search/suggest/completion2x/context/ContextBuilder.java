@@ -21,7 +21,6 @@ package org.codelibs.elasticsearch.search.suggest.completion2x.context;
 
 import org.codelibs.elasticsearch.ElasticsearchParseException;
 import org.codelibs.elasticsearch.Version;
-import org.codelibs.elasticsearch.index.mapper.DocumentMapperParser;
 import org.codelibs.elasticsearch.index.mapper.MapperParsingException;
 
 import java.util.Map;
@@ -113,24 +112,6 @@ public abstract class ContextBuilder<E extends ContextMapping> {
 
     protected static ContextMapping loadMapping(String name, Map<String, Object> config, Version indexVersionCreated)
             throws ElasticsearchParseException {
-        final Object argType = config.get(ContextMapping.FIELD_TYPE);
-
-        if (argType == null) {
-            throw new ElasticsearchParseException("missing [{}] in context mapping", ContextMapping.FIELD_TYPE);
-        }
-
-        final String type = argType.toString();
-        ContextMapping contextMapping;
-        if (GeolocationContextMapping.TYPE.equals(type)) {
-            contextMapping = GeolocationContextMapping.load(name, config);
-        } else if (CategoryContextMapping.TYPE.equals(type)) {
-            contextMapping = CategoryContextMapping.load(name, config);
-        } else {
-            throw new ElasticsearchParseException("unknown context type [{}]", type);
-        }
-        config.remove(ContextMapping.FIELD_TYPE);
-        DocumentMapperParser.checkNoRemainingFields(name, config, indexVersionCreated);
-
-        return contextMapping;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 }

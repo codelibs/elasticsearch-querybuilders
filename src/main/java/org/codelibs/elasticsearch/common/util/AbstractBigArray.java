@@ -21,17 +21,13 @@ package org.codelibs.elasticsearch.common.util;
 
 import org.apache.lucene.util.ArrayUtil;
 import org.apache.lucene.util.RamUsageEstimator;
-import org.codelibs.elasticsearch.common.lease.Releasables;
-import org.codelibs.elasticsearch.common.recycler.Recycler;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /** Common implementation for array lists that slice data into fixed-size blocks. */
 abstract class AbstractBigArray extends AbstractArray {
 
-    private final PageCacheRecycler recycler;
-    private Recycler.V<?>[] cache;
+    private final Object recycler;
 
     private final int pageShift;
     private final int pageMask;
@@ -49,11 +45,6 @@ abstract class AbstractBigArray extends AbstractArray {
         this.pageShift = Integer.numberOfTrailingZeros(pageSize);
         this.pageMask = pageSize - 1;
         size = 0;
-        if (this.recycler != null) {
-            cache = new Recycler.V<?>[16];
-        } else {
-            cache = null;
-        }
     }
 
     final int numPages(long capacity) {
@@ -99,18 +90,9 @@ abstract class AbstractBigArray extends AbstractArray {
         return array;
     }
 
-    private <T> T registerNewPage(Recycler.V<T> v, int page, int expectedSize) {
-        cache = grow(cache, page + 1);
-        assert cache[page] == null;
-        cache[page] = v;
-        assert Array.getLength(v.v()) == expectedSize;
-        return v.v();
-      }
-
     protected final byte[] newBytePage(int page) {
         if (recycler != null) {
-            final Recycler.V<byte[]> v = recycler.bytePage(clearOnResize);
-            return registerNewPage(v, page, BigArrays.BYTE_PAGE_SIZE);
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         } else {
             return new byte[BigArrays.BYTE_PAGE_SIZE];
         }
@@ -118,8 +100,7 @@ abstract class AbstractBigArray extends AbstractArray {
 
     protected final int[] newIntPage(int page) {
         if (recycler != null) {
-            final Recycler.V<int[]> v = recycler.intPage(clearOnResize);
-            return registerNewPage(v, page, BigArrays.INT_PAGE_SIZE);
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         } else {
             return new int[BigArrays.INT_PAGE_SIZE];
         }
@@ -127,8 +108,7 @@ abstract class AbstractBigArray extends AbstractArray {
 
     protected final long[] newLongPage(int page) {
         if (recycler != null) {
-            final Recycler.V<long[]> v = recycler.longPage(clearOnResize);
-            return registerNewPage(v, page, BigArrays.LONG_PAGE_SIZE);
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         } else {
             return new long[BigArrays.LONG_PAGE_SIZE];
         }
@@ -136,8 +116,7 @@ abstract class AbstractBigArray extends AbstractArray {
 
     protected final Object[] newObjectPage(int page) {
         if (recycler != null) {
-            final Recycler.V<Object[]> v = recycler.objectPage();
-            return registerNewPage(v, page, BigArrays.OBJECT_PAGE_SIZE);
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         } else {
             return new Object[BigArrays.OBJECT_PAGE_SIZE];
         }
@@ -145,16 +124,14 @@ abstract class AbstractBigArray extends AbstractArray {
 
     protected final void releasePage(int page) {
         if (recycler != null) {
-            cache[page].close();
-            cache[page] = null;
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         }
     }
 
     @Override
     protected final void doClose() {
         if (recycler != null) {
-            Releasables.close(cache);
-            cache = null;
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         }
     }
 

@@ -25,9 +25,6 @@ import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.fielddata.plain.ParentChildIndexFieldData;
-import org.codelibs.elasticsearch.index.mapper.DocumentMapper;
-import org.codelibs.elasticsearch.index.mapper.ParentFieldMapper;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.search.aggregations.AggregatorFactories.Builder;
 import org.codelibs.elasticsearch.search.aggregations.AggregatorFactory;
@@ -89,30 +86,7 @@ public class ChildrenAggregationBuilder extends ValuesSourceAggregationBuilder<P
 
     @Override
     protected ValuesSourceConfig<ParentChild> resolveConfig(SearchContext context) {
-        ValuesSourceConfig<ParentChild> config = new ValuesSourceConfig<>(ValuesSourceType.BYTES);
-        DocumentMapper childDocMapper = context.mapperService().documentMapper(childType);
-
-        if (childDocMapper != null) {
-            ParentFieldMapper parentFieldMapper = childDocMapper.parentFieldMapper();
-            if (!parentFieldMapper.active()) {
-                throw new IllegalArgumentException("[children] no [_parent] field not configured that points to a parent type");
-            }
-            parentType = parentFieldMapper.type();
-            DocumentMapper parentDocMapper = context.mapperService().documentMapper(parentType);
-            if (parentDocMapper != null) {
-                parentFilter = parentDocMapper.typeFilter();
-                childFilter = childDocMapper.typeFilter();
-                ParentChildIndexFieldData parentChildIndexFieldData = context.fieldData()
-                        .getForField(parentFieldMapper.fieldType());
-                config.fieldContext(new FieldContext(parentFieldMapper.fieldType().name(), parentChildIndexFieldData,
-                        parentFieldMapper.fieldType()));
-            } else {
-                config.unmapped(true);
-            }
-        } else {
-            config.unmapped(true);
-        }
-        return config;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

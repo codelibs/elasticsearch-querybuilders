@@ -175,55 +175,7 @@ public class MultiMatchQuery extends MatchQuery {
 
         @Override
         public List<Query> buildGroupedQueries(MultiMatchQueryBuilder.Type type, Map<String, Float> fieldNames, Object value, String minimumShouldMatch) throws IOException {
-            Map<Analyzer, List<FieldAndFieldType>> groups = new HashMap<>();
-            List<Tuple<String, Float>> missing = new ArrayList<>();
-            for (Map.Entry<String, Float> entry : fieldNames.entrySet()) {
-                String name = entry.getKey();
-                MappedFieldType fieldType = context.fieldMapper(name);
-                if (fieldType != null) {
-                    Analyzer actualAnalyzer = getAnalyzer(fieldType);
-                    name = fieldType.name();
-                    if (!groups.containsKey(actualAnalyzer)) {
-                       groups.put(actualAnalyzer, new ArrayList<>());
-                    }
-                    Float boost = entry.getValue();
-                    boost = boost == null ? Float.valueOf(1.0f) : boost;
-                    groups.get(actualAnalyzer).add(new FieldAndFieldType(fieldType, boost));
-                } else {
-                    missing.add(new Tuple<>(name, entry.getValue()));
-                }
-
-            }
-            List<Query> queries = new ArrayList<>();
-            for (Tuple<String, Float> tuple : missing) {
-                Query q = parseGroup(type.matchQueryType(), tuple.v1(), tuple.v2(), value, minimumShouldMatch);
-                if (q != null) {
-                    queries.add(q);
-                }
-            }
-            for (List<FieldAndFieldType> group : groups.values()) {
-                if (group.size() > 1) {
-                    blendedFields = new FieldAndFieldType[group.size()];
-                    int i = 0;
-                    for (FieldAndFieldType fieldAndFieldType : group) {
-                        blendedFields[i++] = fieldAndFieldType;
-                    }
-                } else {
-                    blendedFields = null;
-                }
-                /*
-                 * We have to pick some field to pass through the superclass so
-                 * we just pick the first field. It shouldn't matter because
-                 * fields are already grouped by their analyzers/types.
-                 */
-                String representativeField = group.get(0).fieldType.name();
-                Query q = parseGroup(type.matchQueryType(), representativeField, 1f, value, minimumShouldMatch);
-                if (q != null) {
-                    queries.add(q);
-                }
-            }
-
-            return queries.isEmpty() ? null : queries;
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         }
 
         @Override

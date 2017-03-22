@@ -32,9 +32,6 @@ import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.mapper.DocumentMapper;
-import org.codelibs.elasticsearch.index.mapper.ParentFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.TypeFieldMapper;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -156,25 +153,7 @@ public final class ParentIdQueryBuilder extends AbstractQueryBuilder<ParentIdQue
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        DocumentMapper childDocMapper = context.getMapperService().documentMapper(type);
-        if (childDocMapper == null) {
-            if (ignoreUnmapped) {
-                return new MatchNoDocsQuery();
-            } else {
-                throw new QueryShardException(context, "[" + NAME + "] no mapping found for type [" + type + "]");
-            }
-        }
-        ParentFieldMapper parentFieldMapper = childDocMapper.parentFieldMapper();
-        if (parentFieldMapper.active() == false) {
-            throw new QueryShardException(context, "[" + NAME + "] _parent field has no parent type configured");
-        }
-        String fieldName = ParentFieldMapper.joinField(parentFieldMapper.type());
-
-        BooleanQuery.Builder query = new BooleanQuery.Builder();
-        query.add(new DocValuesTermsQuery(fieldName, id), BooleanClause.Occur.MUST);
-        // Need to take child type into account, otherwise a child doc of different type with the same id could match
-        query.add(new TermQuery(new Term(TypeFieldMapper.NAME, type)), BooleanClause.Occur.FILTER);
-        return query.build();
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

@@ -19,7 +19,6 @@
 
 package org.codelibs.elasticsearch.common.util;
 
-import org.codelibs.elasticsearch.common.regex.Regex;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -81,13 +80,7 @@ public class URIPattern {
     }
 
     private boolean match(String pattern, String value) {
-        if (value == null) {
-            // If the pattern is empty or matches anything - it's a match
-            if (pattern == null || Regex.isMatchAllPattern(pattern)) {
-                return true;
-            }
-        }
-        return Regex.simpleMatch(pattern, value);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

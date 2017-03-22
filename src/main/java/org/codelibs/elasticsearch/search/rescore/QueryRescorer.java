@@ -24,7 +24,6 @@ import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
-import org.codelibs.elasticsearch.search.internal.ContextIndexSearcher;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
 
 import java.io.IOException;
@@ -44,76 +43,13 @@ public final class QueryRescorer implements Rescorer {
 
     @Override
     public TopDocs rescore(TopDocs topDocs, SearchContext context, RescoreSearchContext rescoreContext) throws IOException {
-
-        assert rescoreContext != null;
-        if (topDocs == null || topDocs.totalHits == 0 || topDocs.scoreDocs.length == 0) {
-            return topDocs;
-        }
-
-        final QueryRescoreContext rescore = (QueryRescoreContext) rescoreContext;
-
-        org.apache.lucene.search.Rescorer rescorer = new org.apache.lucene.search.QueryRescorer(rescore.query()) {
-
-            @Override
-            protected float combine(float firstPassScore, boolean secondPassMatches, float secondPassScore) {
-                if (secondPassMatches) {
-                    return rescore.scoreMode.combine(firstPassScore * rescore.queryWeight(), secondPassScore * rescore.rescoreQueryWeight());
-                }
-                // TODO: shouldn't this be up to the ScoreMode?  I.e., we should just invoke ScoreMode.combine, passing 0.0f for the
-                // secondary score?
-                return firstPassScore * rescore.queryWeight();
-            }
-        };
-
-        // First take top slice of incoming docs, to be rescored:
-        TopDocs topNFirstPass = topN(topDocs, rescoreContext.window());
-
-        // Rescore them:
-        TopDocs rescored = rescorer.rescore(context.searcher(), topNFirstPass, rescoreContext.window());
-
-        // Splice back to non-topN hits and resort all of them:
-        return combine(topDocs, rescored, (QueryRescoreContext) rescoreContext);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
     public Explanation explain(int topLevelDocId, SearchContext context, RescoreSearchContext rescoreContext,
                                Explanation sourceExplanation) throws IOException {
-        QueryRescoreContext rescore = (QueryRescoreContext) rescoreContext;
-        ContextIndexSearcher searcher = context.searcher();
-        if (sourceExplanation == null) {
-            // this should not happen but just in case
-            return Explanation.noMatch("nothing matched");
-        }
-        // TODO: this isn't right?  I.e., we are incorrectly pretending all first pass hits were rescored?  If the requested docID was
-        // beyond the top rescoreContext.window() in the first pass hits, we don't rescore it now?
-        Explanation rescoreExplain = searcher.explain(rescore.query(), topLevelDocId);
-        float primaryWeight = rescore.queryWeight();
-
-        Explanation prim;
-        if (sourceExplanation.isMatch()) {
-            prim = Explanation.match(
-                    sourceExplanation.getValue() * primaryWeight,
-                    "product of:", sourceExplanation, Explanation.match(primaryWeight, "primaryWeight"));
-        } else {
-            prim = Explanation.noMatch("First pass did not match", sourceExplanation);
-        }
-
-        // NOTE: we don't use Lucene's Rescorer.explain because we want to insert our own description with which ScoreMode was used.  Maybe
-        // we should add QueryRescorer.explainCombine to Lucene?
-        if (rescoreExplain != null && rescoreExplain.isMatch()) {
-            float secondaryWeight = rescore.rescoreQueryWeight();
-            Explanation sec = Explanation.match(
-                    rescoreExplain.getValue() * secondaryWeight,
-                    "product of:",
-                    rescoreExplain, Explanation.match(secondaryWeight, "secondaryWeight"));
-            QueryRescoreMode scoreMode = rescore.scoreMode();
-            return Explanation.match(
-                    scoreMode.combine(prim.getValue(), sec.getValue()),
-                    scoreMode + " of:",
-                    prim, sec);
-        } else {
-            return prim;
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     private static final Comparator<ScoreDoc> SCORE_DOC_COMPARATOR = new Comparator<ScoreDoc>() {
@@ -213,11 +149,7 @@ public final class QueryRescorer implements Rescorer {
 
     @Override
     public void extractTerms(SearchContext context, RescoreSearchContext rescoreContext, Set<Term> termsSet) {
-        try {
-            context.searcher().createNormalizedWeight(((QueryRescoreContext) rescoreContext).query(), false).extractTerms(termsSet);
-        } catch (IOException e) {
-            throw new IllegalStateException("Failed to extract terms", e);
-        }
+        throw new UnsupportedOperationException();
     }
 
 }

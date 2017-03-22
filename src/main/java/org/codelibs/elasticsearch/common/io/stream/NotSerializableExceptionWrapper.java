@@ -21,7 +21,6 @@ package org.codelibs.elasticsearch.common.io.stream;
 
 import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.ExceptionsHelper;
-import org.codelibs.elasticsearch.rest.RestStatus;
 
 import java.io.IOException;
 
@@ -35,13 +34,11 @@ import java.io.IOException;
 public final class NotSerializableExceptionWrapper extends ElasticsearchException {
 
     private final String name;
-    private final RestStatus status;
 
     public NotSerializableExceptionWrapper(Throwable other) {
         super(ElasticsearchException.getExceptionName(other) +
                         ": " + other.getMessage(), other.getCause());
         this.name = ElasticsearchException.getExceptionName(other);
-        this.status = ExceptionsHelper.status(other);
         setStackTrace(other.getStackTrace());
         for (Throwable otherSuppressed : other.getSuppressed()) {
             addSuppressed(otherSuppressed);
@@ -57,23 +54,16 @@ public final class NotSerializableExceptionWrapper extends ElasticsearchExceptio
     public NotSerializableExceptionWrapper(StreamInput in) throws IOException {
         super(in);
         name = in.readString();
-        status = RestStatus.readFrom(in);
     }
 
     @Override
     public void writeTo(StreamOutput out) throws IOException {
         super.writeTo(out);
         out.writeString(name);
-        RestStatus.writeTo(out, status);
     }
 
     @Override
     protected String getExceptionName() {
         return name;
-    }
-
-    @Override
-    public RestStatus status() {
-        return status;
     }
 }

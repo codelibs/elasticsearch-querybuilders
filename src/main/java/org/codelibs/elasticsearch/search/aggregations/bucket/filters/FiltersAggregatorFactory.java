@@ -46,18 +46,7 @@ public class FiltersAggregatorFactory extends AggregatorFactory<FiltersAggregato
             String otherBucketKey, SearchContext context, AggregatorFactory<?> parent, AggregatorFactories.Builder subFactories,
             Map<String, Object> metaData) throws IOException {
         super(name, type, context, parent, subFactories, metaData);
-        this.keyed = keyed;
-        this.otherBucket = otherBucket;
-        this.otherBucketKey = otherBucketKey;
-        IndexSearcher contextSearcher = context.searcher();
-        weights = new Weight[filters.size()];
-        keys = new String[filters.size()];
-        for (int i = 0; i < filters.size(); ++i) {
-            KeyedFilter keyedFilter = filters.get(i);
-            this.keys[i] = keyedFilter.key();
-            Query filter = keyedFilter.filter().toFilter(context.getQueryShardContext());
-            this.weights[i] = contextSearcher.createNormalizedWeight(filter, false);
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

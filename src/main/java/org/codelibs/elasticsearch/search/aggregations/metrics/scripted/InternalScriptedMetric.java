@@ -75,29 +75,7 @@ public class InternalScriptedMetric extends InternalMetricsAggregation implement
 
     @Override
     public InternalAggregation doReduce(List<InternalAggregation> aggregations, ReduceContext reduceContext) {
-        List<Object> aggregationObjects = new ArrayList<>();
-        for (InternalAggregation aggregation : aggregations) {
-            InternalScriptedMetric mapReduceAggregation = (InternalScriptedMetric) aggregation;
-            aggregationObjects.add(mapReduceAggregation.aggregation());
-        }
-        InternalScriptedMetric firstAggregation = ((InternalScriptedMetric) aggregations.get(0));
-        Object aggregation;
-        if (firstAggregation.reduceScript != null) {
-            Map<String, Object> vars = new HashMap<>();
-            vars.put("_aggs", aggregationObjects);
-            if (firstAggregation.reduceScript.getParams() != null) {
-                vars.putAll(firstAggregation.reduceScript.getParams());
-            }
-            CompiledScript compiledScript = reduceContext.scriptService().compile(firstAggregation.reduceScript,
-                    ScriptContext.Standard.AGGS, Collections.emptyMap());
-            ExecutableScript script = reduceContext.scriptService().executable(compiledScript, vars);
-            aggregation = script.run();
-        } else {
-            aggregation = aggregationObjects;
-        }
-        return new InternalScriptedMetric(firstAggregation.getName(), aggregation, firstAggregation.reduceScript, pipelineAggregators(),
-                getMetaData());
-
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

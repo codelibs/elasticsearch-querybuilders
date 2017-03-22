@@ -21,7 +21,6 @@ package org.codelibs.elasticsearch.index.query;
 
 import org.apache.lucene.queries.TermsQuery;
 import org.apache.lucene.search.Query;
-import org.codelibs.elasticsearch.cluster.metadata.MetaData;
 import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.Strings;
@@ -30,8 +29,6 @@ import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.lucene.search.Queries;
 import org.codelibs.elasticsearch.common.xcontent.ObjectParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.index.mapper.Uid;
-import org.codelibs.elasticsearch.index.mapper.UidFieldMapper;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -162,23 +159,7 @@ public class IdsQueryBuilder extends AbstractQueryBuilder<IdsQueryBuilder> {
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        Query query;
-        if (this.ids.isEmpty()) {
-             query = Queries.newMatchNoDocsQuery("Missing ids in \"" + this.getName() + "\" query.");
-        } else {
-            Collection<String> typesForQuery;
-            if (types.length == 0) {
-                typesForQuery = context.queryTypes();
-            } else if (types.length == 1 && MetaData.ALL.equals(types[0])) {
-                typesForQuery = context.getMapperService().types();
-            } else {
-                typesForQuery = new HashSet<>();
-                Collections.addAll(typesForQuery, types);
-            }
-
-            query = new TermsQuery(UidFieldMapper.NAME, Uid.createUidsForTypesAndIds(typesForQuery, ids));
-        }
-        return query;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

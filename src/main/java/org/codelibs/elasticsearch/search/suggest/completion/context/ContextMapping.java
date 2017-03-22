@@ -25,8 +25,6 @@ import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
 import org.codelibs.elasticsearch.common.xcontent.json.JsonXContent;
-import org.codelibs.elasticsearch.index.mapper.CompletionFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.ParseContext;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 
 import java.io.IOException;
@@ -37,7 +35,6 @@ import java.util.Set;
 
 /**
  * A {@link ContextMapping} defines criteria that can be used to
- * filter and/or boost suggestions at query time for {@link CompletionFieldMapper}.
  *
  * Implementations have to define how contexts are parsed at query/index time
  */
@@ -86,16 +83,6 @@ public abstract class ContextMapping<T extends ToXContent> implements ToXContent
     public String name() {
         return name;
     }
-
-    /**
-     * Parses a set of index-time contexts.
-     */
-    public abstract Set<CharSequence> parseContext(ParseContext parseContext, XContentParser parser) throws IOException, ElasticsearchParseException;
-
-    /**
-     * Retrieves a set of context from a <code>document</code> at index-time.
-     */
-    protected abstract Set<CharSequence> parseContext(ParseContext.Document document);
 
     /**
      * Prototype for the query context

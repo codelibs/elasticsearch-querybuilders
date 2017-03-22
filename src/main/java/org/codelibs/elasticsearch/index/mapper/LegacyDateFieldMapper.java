@@ -42,8 +42,6 @@ import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
 import org.codelibs.elasticsearch.index.fielddata.IndexNumericFieldData.NumericType;
-import org.codelibs.elasticsearch.index.fielddata.plain.DocValuesIndexFieldData;
-import org.codelibs.elasticsearch.index.mapper.LegacyLongFieldMapper.CustomLongNumericField;
 import org.codelibs.elasticsearch.index.query.QueryRewriteContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 import org.codelibs.elasticsearch.search.DocValueFormat;
@@ -56,9 +54,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-
-import static org.codelibs.elasticsearch.index.mapper.TypeParsers.parseDateTimeFormatter;
-import static org.codelibs.elasticsearch.index.mapper.TypeParsers.parseNumberField;
 
 public class LegacyDateFieldMapper extends LegacyNumberFieldMapper {
 
@@ -141,38 +136,7 @@ public class LegacyDateFieldMapper extends LegacyNumberFieldMapper {
     }
 
     public static class TypeParser implements Mapper.TypeParser {
-        @Override
-        public Mapper.Builder<?, ?> parse(String name, Map<String, Object> node, ParserContext parserContext) throws MapperParsingException {
-            LegacyDateFieldMapper.Builder builder = new LegacyDateFieldMapper.Builder(name);
-            parseNumberField(builder, name, node, parserContext);
-            boolean configuredFormat = false;
-            for (Iterator<Map.Entry<String, Object>> iterator = node.entrySet().iterator(); iterator.hasNext();) {
-                Map.Entry<String, Object> entry = iterator.next();
-                String propName = entry.getKey();
-                Object propNode = entry.getValue();
-                if (propName.equals("null_value")) {
-                    if (propNode == null) {
-                        throw new MapperParsingException("Property [null_value] cannot be null.");
-                    }
-                    builder.nullValue(propNode.toString());
-                    iterator.remove();
-                } else if (propName.equals("format")) {
-                    builder.dateTimeFormatter(parseDateTimeFormatter(propNode));
-                    configuredFormat = true;
-                    iterator.remove();
-                } else if (propName.equals("numeric_resolution")) {
-                    builder.timeUnit(TimeUnit.valueOf(propNode.toString().toUpperCase(Locale.ROOT)));
-                    iterator.remove();
-                } else if (propName.equals("locale")) {
-                    builder.locale(LocaleUtils.parse(propNode.toString()));
-                    iterator.remove();
-                }
-            }
-            if (!configuredFormat) {
-                builder.dateTimeFormatter(Defaults.DATE_TIME_FORMATTER);
-            }
-            return builder;
-        }
+
     }
 
     public static class DateFieldType extends NumberFieldType {
@@ -312,19 +276,12 @@ public class LegacyDateFieldMapper extends LegacyNumberFieldMapper {
 
         public Query rangeQuery(Object lowerTerm, Object upperTerm, boolean includeLower, boolean includeUpper,
                 @Nullable DateTimeZone timeZone, @Nullable DateMathParser forcedDateParser, QueryShardContext context) {
-            return  innerRangeQuery(lowerTerm, upperTerm, includeLower, includeUpper, timeZone, forcedDateParser, context);
+            throw new UnsupportedOperationException();
         }
 
         private Query innerRangeQuery(Object lowerTerm, Object upperTerm, boolean includeLower, boolean includeUpper,
                 @Nullable DateTimeZone timeZone, @Nullable DateMathParser forcedDateParser, QueryRewriteContext context) {
-            return LegacyNumericRangeQuery.newLongRange(name(), numericPrecisionStep(),
-                    lowerTerm == null ? null
-                            : parseToMilliseconds(lowerTerm, !includeLower, timeZone,
-                                    forcedDateParser == null ? dateMathParser : forcedDateParser, context),
-                    upperTerm == null ? null
-                            : parseToMilliseconds(upperTerm, includeUpper, timeZone,
-                                    forcedDateParser == null ? dateMathParser : forcedDateParser, context),
-                includeLower, includeUpper);
+            throw new UnsupportedOperationException();
         }
 
         @Override
@@ -398,8 +355,7 @@ public class LegacyDateFieldMapper extends LegacyNumberFieldMapper {
 
         @Override
         public IndexFieldData.Builder fielddataBuilder() {
-            failIfNoDocValues();
-            return new DocValuesIndexFieldData.Builder().numericType(NumericType.LONG);
+            throw new UnsupportedOperationException();
         }
 
         @Override
@@ -428,70 +384,6 @@ public class LegacyDateFieldMapper extends LegacyNumberFieldMapper {
     @Override
     protected boolean customBoost() {
         return true;
-    }
-
-    @Override
-    protected void innerParseCreateField(ParseContext context, List<IndexableField> fields) throws IOException {
-        String dateAsString = null;
-        float boost = fieldType().boost();
-        if (context.externalValueSet()) {
-            Object externalValue = context.externalValue();
-            dateAsString = (String) externalValue;
-            if (dateAsString == null) {
-                dateAsString = fieldType().nullValueAsString();
-            }
-        } else {
-            XContentParser parser = context.parser();
-            XContentParser.Token token = parser.currentToken();
-            if (token == XContentParser.Token.VALUE_NULL) {
-                dateAsString = fieldType().nullValueAsString();
-            } else if (token == XContentParser.Token.VALUE_NUMBER) {
-                dateAsString = parser.text();
-            } else if (token == XContentParser.Token.START_OBJECT
-                    && Version.indexCreated(context.indexSettings()).before(Version.V_5_0_0_alpha1)) {
-                String currentFieldName = null;
-                while ((token = parser.nextToken()) != XContentParser.Token.END_OBJECT) {
-                    if (token == XContentParser.Token.FIELD_NAME) {
-                        currentFieldName = parser.currentName();
-                    } else {
-                        if ("value".equals(currentFieldName) || "_value".equals(currentFieldName)) {
-                            if (token == XContentParser.Token.VALUE_NULL) {
-                                dateAsString = fieldType().nullValueAsString();
-                            } else {
-                                dateAsString = parser.text();
-                            }
-                        } else if ("boost".equals(currentFieldName) || "_boost".equals(currentFieldName)) {
-                            boost = parser.floatValue();
-                        } else {
-                            throw new IllegalArgumentException("unknown property [" + currentFieldName + "]");
-                        }
-                    }
-                }
-            } else {
-                dateAsString = parser.text();
-            }
-        }
-
-        Long value = null;
-        if (dateAsString != null) {
-            if (context.includeInAll(includeInAll, this)) {
-                context.allEntries().addText(fieldType().name(), dateAsString, boost);
-            }
-            value = fieldType().parseStringValue(dateAsString);
-        }
-
-        if (value != null) {
-            if (fieldType().indexOptions() != IndexOptions.NONE || fieldType().stored()) {
-                CustomLongNumericField field = new CustomLongNumericField(value, fieldType());
-                if (boost != 1f && Version.indexCreated(context.indexSettings()).before(Version.V_5_0_0_alpha1)) {
-                    field.setBoost(boost);
-                }
-                fields.add(field);
-            }
-            if (fieldType().hasDocValues()) {
-                addDocValue(context, fields, value);
-            }
-        }
     }
 
     @Override
@@ -530,4 +422,6 @@ public class LegacyDateFieldMapper extends LegacyNumberFieldMapper {
             }
         }
     }
+
+
 }

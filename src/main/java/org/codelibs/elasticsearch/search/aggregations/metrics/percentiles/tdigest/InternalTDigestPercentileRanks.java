@@ -77,14 +77,7 @@ public class InternalTDigestPercentileRanks extends AbstractInternalTDigestPerce
     }
 
     static double percentileRank(TDigestState state, double value) {
-        double percentileRank = state.cdf(value);
-        if (percentileRank < 0) {
-            percentileRank = 0;
-        }
-        else if (percentileRank > 1) {
-            percentileRank = 1;
-        }
-        return percentileRank * 100;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public static class Iter implements Iterator<Percentile> {

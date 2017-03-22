@@ -206,71 +206,11 @@ public class MatchQuery {
     }
 
     protected Analyzer getAnalyzer(MappedFieldType fieldType) {
-        if (this.analyzer == null) {
-            if (fieldType != null) {
-                return context.getSearchAnalyzer(fieldType);
-            }
-            return context.getMapperService().searchAnalyzer();
-        } else {
-            Analyzer analyzer = context.getMapperService().getIndexAnalyzers().get(this.analyzer);
-            if (analyzer == null) {
-                throw new IllegalArgumentException("No analyzer found for [" + this.analyzer + "]");
-            }
-            return analyzer;
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public Query parse(Type type, String fieldName, Object value) throws IOException {
-        final String field;
-        MappedFieldType fieldType = context.fieldMapper(fieldName);
-        if (fieldType != null) {
-            field = fieldType.name();
-        } else {
-            field = fieldName;
-        }
-
-        /*
-         * If the user forced an analyzer we really don't care if they are
-         * searching a type that wants term queries to be used with query string
-         * because the QueryBuilder will take care of it. If they haven't forced
-         * an analyzer then types like NumberFieldType that want terms with
-         * query string will blow up because their analyzer isn't capable of
-         * passing through QueryBuilder.
-         */
-        boolean noForcedAnalyzer = this.analyzer == null;
-        if (fieldType != null && fieldType.tokenized() == false && noForcedAnalyzer) {
-            return blendTermQuery(new Term(fieldName, value.toString()), fieldType);
-        }
-
-        Analyzer analyzer = getAnalyzer(fieldType);
-        assert analyzer != null;
-        MatchQueryBuilder builder = new MatchQueryBuilder(analyzer, fieldType);
-        builder.setEnablePositionIncrements(this.enablePositionIncrements);
-
-        Query query = null;
-        switch (type) {
-            case BOOLEAN:
-                if (commonTermsCutoff == null) {
-                    query = builder.createBooleanQuery(field, value.toString(), occur);
-                } else {
-                    query = builder.createCommonTermsQuery(field, value.toString(), occur, occur, commonTermsCutoff, fieldType);
-                }
-                break;
-            case PHRASE:
-                query = builder.createPhraseQuery(field, value.toString(), phraseSlop);
-                break;
-            case PHRASE_PREFIX:
-                query = builder.createPhrasePrefixQuery(field, value.toString(), phraseSlop, maxExpansions);
-                break;
-            default:
-                throw new IllegalStateException("No type found for [" + type + "]");
-        }
-
-        if (query == null) {
-            return zeroTermsQuery();
-        } else {
-            return query;
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     protected final Query termQuery(MappedFieldType fieldType, Object value, boolean lenient) {

@@ -188,24 +188,7 @@ public class ScriptedMetricAggregationBuilder extends AbstractAggregationBuilder
     @Override
     protected ScriptedMetricAggregatorFactory doBuild(SearchContext context, AggregatorFactory<?> parent,
             Builder subfactoriesBuilder) throws IOException {
-
-        QueryShardContext queryShardContext = context.getQueryShardContext();
-        Function<Map<String, Object>, ExecutableScript> executableInitScript;
-        if (initScript != null) {
-            executableInitScript = queryShardContext.getLazyExecutableScript(initScript, ScriptContext.Standard.AGGS);
-        } else {
-            executableInitScript = (p) -> null;;
-        }
-        Function<Map<String, Object>, SearchScript> searchMapScript = queryShardContext.getLazySearchScript(mapScript,
-            ScriptContext.Standard.AGGS);
-        Function<Map<String, Object>, ExecutableScript> executableCombineScript;
-        if (combineScript != null) {
-            executableCombineScript = queryShardContext.getLazyExecutableScript(combineScript, ScriptContext.Standard.AGGS);
-        } else {
-            executableCombineScript = (p) -> null;
-        }
-        return new ScriptedMetricAggregatorFactory(name, type, searchMapScript, executableInitScript, executableCombineScript, reduceScript,
-                params, context, parent, subfactoriesBuilder, metaData);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
 

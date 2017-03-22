@@ -25,7 +25,6 @@ import org.codelibs.elasticsearch.common.io.stream.Writeable;
 import org.codelibs.elasticsearch.common.settings.Setting;
 import org.codelibs.elasticsearch.common.settings.Setting.Property;
 import org.codelibs.elasticsearch.common.settings.Settings;
-import org.codelibs.elasticsearch.index.store.Store;
 
 import java.io.Closeable;
 import java.io.IOException;

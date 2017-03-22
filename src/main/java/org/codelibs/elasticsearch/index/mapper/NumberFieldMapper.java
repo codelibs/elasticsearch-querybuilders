@@ -49,7 +49,6 @@ import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
 import org.codelibs.elasticsearch.index.fielddata.IndexNumericFieldData.NumericType;
-import org.codelibs.elasticsearch.index.fielddata.plain.DocValuesIndexFieldData;
 import org.codelibs.elasticsearch.index.mapper.LegacyNumberFieldMapper.Defaults;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 import org.codelibs.elasticsearch.search.DocValueFormat;
@@ -129,50 +128,6 @@ public class NumberFieldMapper extends FieldMapper {
 
         public TypeParser(NumberType type) {
             this.type = type;
-        }
-
-        @Override
-        public Mapper.Builder<?,?> parse(String name, Map<String, Object> node,
-                                         ParserContext parserContext) throws MapperParsingException {
-            if (parserContext.indexVersionCreated().before(Version.V_5_0_0_alpha2)) {
-                switch (type) {
-                case BYTE:
-                    return new LegacyByteFieldMapper.TypeParser().parse(name, node, parserContext);
-                case SHORT:
-                    return new LegacyShortFieldMapper.TypeParser().parse(name, node, parserContext);
-                case INTEGER:
-                    return new LegacyIntegerFieldMapper.TypeParser().parse(name, node, parserContext);
-                case LONG:
-                    return new LegacyLongFieldMapper.TypeParser().parse(name, node, parserContext);
-                case FLOAT:
-                    return new LegacyFloatFieldMapper.TypeParser().parse(name, node, parserContext);
-                case DOUBLE:
-                    return new LegacyDoubleFieldMapper.TypeParser().parse(name, node, parserContext);
-                default:
-                    throw new AssertionError();
-                }
-            }
-            Builder builder = new Builder(name, type);
-            TypeParsers.parseField(builder, name, node, parserContext);
-            for (Iterator<Map.Entry<String, Object>> iterator = node.entrySet().iterator(); iterator.hasNext();) {
-                Map.Entry<String, Object> entry = iterator.next();
-                String propName = entry.getKey();
-                Object propNode = entry.getValue();
-                if (propName.equals("null_value")) {
-                    if (propNode == null) {
-                        throw new MapperParsingException("Property [null_value] cannot be null.");
-                    }
-                    builder.nullValue(type.parse(propNode, false));
-                    iterator.remove();
-                } else if (propName.equals("ignore_malformed")) {
-                    builder.ignoreMalformed(TypeParsers.nodeBooleanValue("ignore_malformed", propNode, parserContext));
-                    iterator.remove();
-                } else if (propName.equals("coerce")) {
-                    builder.coerce(TypeParsers.nodeBooleanValue("coerce", propNode, parserContext));
-                    iterator.remove();
-                }
-            }
-            return builder;
         }
     }
 
@@ -935,8 +890,7 @@ public class NumberFieldMapper extends FieldMapper {
 
         @Override
         public IndexFieldData.Builder fielddataBuilder() {
-            failIfNoDocValues();
-            return new DocValuesIndexFieldData.Builder().numericType(type.numericType());
+            throw new UnsupportedOperationException();
         }
 
         @Override
@@ -996,60 +950,6 @@ public class NumberFieldMapper extends FieldMapper {
     @Override
     protected NumberFieldMapper clone() {
         return (NumberFieldMapper) super.clone();
-    }
-
-    @Override
-    protected void parseCreateField(ParseContext context, List<IndexableField> fields) throws IOException {
-        final boolean includeInAll = context.includeInAll(this.includeInAll, this);
-
-        XContentParser parser = context.parser();
-        Object value;
-        Number numericValue = null;
-        if (context.externalValueSet()) {
-            value = context.externalValue();
-        } else if (parser.currentToken() == Token.VALUE_NULL) {
-            value = null;
-        } else if (coerce.value()
-                && parser.currentToken() == Token.VALUE_STRING
-                && parser.textLength() == 0) {
-            value = null;
-        } else {
-            try {
-                numericValue = fieldType().type.parse(parser, coerce.value());
-            } catch (IllegalArgumentException e) {
-                if (ignoreMalformed.value()) {
-                    return;
-                } else {
-                    throw e;
-                }
-            }
-            if (includeInAll) {
-                value = parser.textOrNull(); // preserve formatting
-            } else {
-                value = numericValue;
-            }
-        }
-
-        if (value == null) {
-            value = fieldType().nullValue();
-        }
-
-        if (value == null) {
-            return;
-        }
-
-        if (numericValue == null) {
-            numericValue = fieldType().type.parse(value, coerce.value());
-        }
-
-        if (includeInAll) {
-            context.allEntries().addText(fieldType().name(), value.toString(), fieldType().boost());
-        }
-
-        boolean indexed = fieldType().indexOptions() != IndexOptions.NONE;
-        boolean docValued = fieldType().hasDocValues();
-        boolean stored = fieldType().stored();
-        fields.addAll(fieldType().type.createFields(fieldType().name(), numericValue, indexed, docValued, stored));
     }
 
     @Override

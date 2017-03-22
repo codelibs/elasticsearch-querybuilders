@@ -47,7 +47,6 @@ import org.codelibs.elasticsearch.index.fielddata.IndexGeoPointFieldData;
 import org.codelibs.elasticsearch.index.fielddata.MultiGeoPointValues;
 import org.codelibs.elasticsearch.index.fielddata.NumericDoubleValues;
 import org.codelibs.elasticsearch.index.fielddata.SortedNumericDoubleValues;
-import org.codelibs.elasticsearch.index.fielddata.plain.AbstractLatLonPointDVIndexFieldData.LatLonPointDVIndexFieldData;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
 import org.codelibs.elasticsearch.index.query.GeoValidationMethod;
 import org.codelibs.elasticsearch.index.query.QueryBuilder;
@@ -505,98 +504,7 @@ public class GeoDistanceSortBuilder extends SortBuilder<GeoDistanceSortBuilder> 
 
     @Override
     public SortFieldAndFormat build(QueryShardContext context) throws IOException {
-        final boolean indexCreatedBeforeV2_0 = context.indexVersionCreated().before(Version.V_2_0_0);
-        // validation was not available prior to 2.x, so to support bwc percolation queries we only ignore_malformed on 2.x created indexes
-        List<GeoPoint> localPoints = new ArrayList<>();
-        for (GeoPoint geoPoint : this.points) {
-            localPoints.add(new GeoPoint(geoPoint));
-        }
-
-        if (!indexCreatedBeforeV2_0 && !GeoValidationMethod.isIgnoreMalformed(validation)) {
-            for (GeoPoint point : localPoints) {
-                if (GeoUtils.isValidLatitude(point.lat()) == false) {
-                    throw new ElasticsearchParseException(
-                            "illegal latitude value [{}] for [GeoDistanceSort] for field [{}].",
-                            point.lat(),
-                            fieldName);
-                }
-                if (GeoUtils.isValidLongitude(point.lon()) == false) {
-                    throw new ElasticsearchParseException(
-                            "illegal longitude value [{}] for [GeoDistanceSort] for field [{}].",
-                            point.lon(),
-                            fieldName);
-                }
-            }
-        }
-
-        if (GeoValidationMethod.isCoerce(validation)) {
-            for (GeoPoint point : localPoints) {
-                GeoUtils.normalizePoint(point, true, true);
-            }
-        }
-
-        boolean reverse = (order == SortOrder.DESC);
-        final MultiValueMode finalSortMode;
-        if (sortMode == null) {
-            finalSortMode = reverse ? MultiValueMode.MAX : MultiValueMode.MIN;
-        } else {
-            finalSortMode = MultiValueMode.fromString(sortMode.toString());
-        }
-
-        MappedFieldType fieldType = context.fieldMapper(fieldName);
-        if (fieldType == null) {
-            throw new IllegalArgumentException("failed to find mapper for [" + fieldName + "] for geo distance based sort");
-        }
-        final IndexGeoPointFieldData geoIndexFieldData = context.getForField(fieldType);
-        final Nested nested = resolveNested(context, nestedPath, nestedFilter);
-
-        if (geoIndexFieldData.getClass() == LatLonPointDVIndexFieldData.class // only works with 5.x geo_point
-                && nested == null
-                && finalSortMode == MultiValueMode.MIN // LatLonDocValuesField internally picks the closest point
-                && unit == DistanceUnit.METERS
-                && reverse == false
-                && localPoints.size() == 1) {
-            return new SortFieldAndFormat(
-                    LatLonDocValuesField.newDistanceSort(fieldName, localPoints.get(0).lat(), localPoints.get(0).lon()),
-                    DocValueFormat.RAW);
-        }
-
-        final FixedSourceDistance[] distances = new FixedSourceDistance[localPoints.size()];
-        for (int i = 0; i < localPoints.size(); i++) {
-            distances[i] = geoDistance.fixedSourceDistance(localPoints.get(i).lat(), localPoints.get(i).lon(), unit);
-        }
-
-        IndexFieldData.XFieldComparatorSource geoDistanceComparatorSource = new IndexFieldData.XFieldComparatorSource() {
-
-            @Override
-            public SortField.Type reducedType() {
-                return SortField.Type.DOUBLE;
-            }
-
-            @Override
-            public FieldComparator<?> newComparator(String fieldname, int numHits, int sortPos, boolean reversed) throws IOException {
-                return new FieldComparator.DoubleComparator(numHits, null, null) {
-                    @Override
-                    protected NumericDocValues getNumericDocValues(LeafReaderContext context, String field) throws IOException {
-                        final MultiGeoPointValues geoPointValues = geoIndexFieldData.load(context).getGeoPointValues();
-                        final SortedNumericDoubleValues distanceValues = GeoDistance.distanceValues(geoPointValues, distances);
-                        final NumericDoubleValues selectedValues;
-                        if (nested == null) {
-                            selectedValues = finalSortMode.select(distanceValues, Double.POSITIVE_INFINITY);
-                        } else {
-                            final BitSet rootDocs = nested.rootDocs(context);
-                            final DocIdSetIterator innerDocs = nested.innerDocs(context);
-                            selectedValues = finalSortMode.select(distanceValues, Double.POSITIVE_INFINITY, rootDocs, innerDocs,
-                                    context.reader().maxDoc());
-                        }
-                        return selectedValues.getRawDoubleValues();
-                    }
-                };
-            }
-
-        };
-
-        return new SortFieldAndFormat(new SortField(fieldName, geoDistanceComparatorSource, reverse), DocValueFormat.RAW);
+        throw new UnsupportedOperationException();
     }
 
     static void parseGeoPoints(XContentParser parser, List<GeoPoint> geoPoints) throws IOException {

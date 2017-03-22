@@ -44,7 +44,6 @@ import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.IOUtils;
 import org.apache.lucene.util.Version;
 import org.codelibs.elasticsearch.common.logging.Loggers;
-import org.codelibs.elasticsearch.index.mapper.CompletionFieldMapper2x;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
 import org.codelibs.elasticsearch.search.suggest.completion.CompletionStats;
 import org.codelibs.elasticsearch.search.suggest.completion.CompletionSuggestionContext;
@@ -265,10 +264,6 @@ public class Completion090PostingsFormat extends PostingsFormat {
             this.lookup = lookup;
         }
 
-        public Lookup getLookup(CompletionFieldMapper2x.CompletionFieldType mapper, CompletionSuggestionContext suggestionContext) {
-            return lookup.getLookup(mapper, suggestionContext);
-        }
-
         public CompletionStats stats(String ... fields) {
             return lookup.stats(fields);
         }
@@ -352,8 +347,6 @@ public class Completion090PostingsFormat extends PostingsFormat {
     }
 
     public abstract static class LookupFactory implements Accountable {
-        public abstract Lookup getLookup(CompletionFieldMapper2x.CompletionFieldType fieldType,
-                                         CompletionSuggestionContext suggestionContext);
         public abstract CompletionStats stats(String ... fields);
         abstract AnalyzingCompletionLookupProvider.AnalyzingSuggestHolder getAnalyzingSuggestHolder(MappedFieldType fieldType);
     }

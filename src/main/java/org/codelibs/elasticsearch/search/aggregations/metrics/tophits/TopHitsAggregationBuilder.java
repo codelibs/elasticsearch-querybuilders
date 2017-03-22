@@ -475,7 +475,6 @@ public class TopHitsAggregationBuilder extends AbstractAggregationBuilder<TopHit
     }
 
     /**
-     * Should each {@link org.codelibs.elasticsearch.search.SearchHit} be returned
      * with an explanation of the hit (ranking).
      */
     public TopHitsAggregationBuilder explain(boolean explain) {
@@ -492,7 +491,6 @@ public class TopHitsAggregationBuilder extends AbstractAggregationBuilder<TopHit
     }
 
     /**
-     * Should each {@link org.codelibs.elasticsearch.search.SearchHit} be returned
      * with a version associated with it.
      */
     public TopHitsAggregationBuilder version(boolean version) {
@@ -532,24 +530,7 @@ public class TopHitsAggregationBuilder extends AbstractAggregationBuilder<TopHit
     @Override
     protected TopHitsAggregatorFactory doBuild(SearchContext context, AggregatorFactory<?> parent, Builder subfactoriesBuilder)
             throws IOException {
-        List<ScriptFieldsContext.ScriptField> fields = new ArrayList<>();
-        if (scriptFields != null) {
-            for (ScriptField field : scriptFields) {
-                SearchScript searchScript = context.getQueryShardContext().getSearchScript(field.script(),
-                    ScriptContext.Standard.SEARCH);
-                fields.add(new org.codelibs.elasticsearch.search.fetch.subphase.ScriptFieldsContext.ScriptField(
-                    field.fieldName(), searchScript, field.ignoreFailure()));
-            }
-        }
-
-        final Optional<SortAndFormats> optionalSort;
-        if (sorts == null) {
-            optionalSort = Optional.empty();
-        } else {
-            optionalSort = SortBuilder.buildSort(sorts, context.getQueryShardContext());
-        }
-        return new TopHitsAggregatorFactory(name, type, from, size, explain, version, trackScores, optionalSort, highlightBuilder,
-                storedFieldsContext, fieldDataFields, fields, fetchSourceContext, context, parent, subfactoriesBuilder, metaData);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

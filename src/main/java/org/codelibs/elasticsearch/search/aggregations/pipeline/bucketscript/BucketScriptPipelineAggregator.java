@@ -89,51 +89,6 @@ public class BucketScriptPipelineAggregator extends PipelineAggregator {
 
     @Override
     public InternalAggregation reduce(InternalAggregation aggregation, ReduceContext reduceContext) {
-        InternalMultiBucketAggregation<InternalMultiBucketAggregation, InternalMultiBucketAggregation.InternalBucket> originalAgg = (InternalMultiBucketAggregation<InternalMultiBucketAggregation, InternalMultiBucketAggregation.InternalBucket>) aggregation;
-        List<? extends Bucket> buckets = originalAgg.getBuckets();
-
-        CompiledScript compiledScript = reduceContext.scriptService().compile(script, ScriptContext.Standard.AGGS,
-                Collections.emptyMap());
-        List newBuckets = new ArrayList<>();
-        for (Bucket bucket : buckets) {
-            Map<String, Object> vars = new HashMap<>();
-            if (script.getParams() != null) {
-                vars.putAll(script.getParams());
-            }
-            boolean skipBucket = false;
-            for (Map.Entry<String, String> entry : bucketsPathsMap.entrySet()) {
-                String varName = entry.getKey();
-                String bucketsPath = entry.getValue();
-                Double value = resolveBucketValue(originalAgg, bucket, bucketsPath, gapPolicy);
-                if (GapPolicy.SKIP == gapPolicy && (value == null || Double.isNaN(value))) {
-                    skipBucket = true;
-                    break;
-                }
-                vars.put(varName, value);
-            }
-            if (skipBucket) {
-                newBuckets.add(bucket);
-            } else {
-                ExecutableScript executableScript = reduceContext.scriptService().executable(compiledScript, vars);
-                Object returned = executableScript.run();
-                if (returned == null) {
-                    newBuckets.add(bucket);
-                } else {
-                    if (!(returned instanceof Number)) {
-                        throw new AggregationExecutionException("series_arithmetic script for reducer [" + name()
-                                + "] must return a Number");
-                    }
-                    final List<InternalAggregation> aggs = StreamSupport.stream(bucket.getAggregations().spliterator(), false).map((p) -> {
-                        return (InternalAggregation) p;
-                    }).collect(Collectors.toList());
-                    aggs.add(new InternalSimpleValue(name(), ((Number) returned).doubleValue(), formatter,
-                            new ArrayList<>(), metaData()));
-                    InternalMultiBucketAggregation.InternalBucket newBucket = originalAgg.createBucket(new InternalAggregations(aggs),
-                            (InternalMultiBucketAggregation.InternalBucket) bucket);
-                    newBuckets.add(newBucket);
-                }
-            }
-        }
-        return originalAgg.create(newBuckets);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 }

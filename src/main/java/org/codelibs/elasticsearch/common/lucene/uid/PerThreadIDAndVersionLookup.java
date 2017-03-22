@@ -31,7 +31,6 @@ import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.common.lucene.uid.Versions.DocIdAndVersion;
 import org.codelibs.elasticsearch.index.mapper.UidFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.VersionFieldMapper;
 
 import java.io.IOException;
 
@@ -58,22 +57,7 @@ final class PerThreadIDAndVersionLookup {
      * Initialize lookup for the provided segment
      */
     public PerThreadIDAndVersionLookup(LeafReader reader) throws IOException {
-        TermsEnum termsEnum = null;
-        NumericDocValues versions = null;
-
-        Fields fields = reader.fields();
-        if (fields != null) {
-            Terms terms = fields.terms(UidFieldMapper.NAME);
-            if (terms != null) {
-                termsEnum = terms.iterator();
-                assert termsEnum != null;
-                versions = reader.getNumericDocValues(VersionFieldMapper.NAME);
-                assert versions != null;
-            }
-        }
-
-        this.versions = versions;
-        this.termsEnum = termsEnum;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     /** Return null if id is not found. */

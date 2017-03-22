@@ -27,7 +27,6 @@ import org.codelibs.elasticsearch.search.aggregations.pipeline.PipelineAggregato
 import org.codelibs.elasticsearch.search.aggregations.support.AggregationPath;
 import org.codelibs.elasticsearch.search.aggregations.support.AggregationPath.PathElement;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
-import org.codelibs.elasticsearch.search.profile.Profilers;
 import org.codelibs.elasticsearch.search.profile.aggregation.ProfilingAggregator;
 
 import java.io.IOException;
@@ -77,37 +76,11 @@ public class AggregatorFactories {
      * buckets.
      */
     public Aggregator[] createSubAggregators(Aggregator parent) throws IOException {
-        Aggregator[] aggregators = new Aggregator[countAggregators()];
-        for (int i = 0; i < factories.length; ++i) {
-            // TODO: sometimes even sub aggregations always get called with bucket 0, eg. if
-            // you have a terms agg under a top-level filter agg. We should have a way to
-            // propagate the fact that only bucket 0 will be collected with single-bucket
-            // aggs
-            final boolean collectsFromSingleBucket = false;
-            Aggregator factory = factories[i].create(parent, collectsFromSingleBucket);
-            Profilers profilers = factory.context().getProfilers();
-            if (profilers != null) {
-                factory = new ProfilingAggregator(factory, profilers.getAggregationProfiler());
-            }
-            aggregators[i] = factory;
-        }
-        return aggregators;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public Aggregator[] createTopLevelAggregators() throws IOException {
-        // These aggregators are going to be used with a single bucket ordinal, no need to wrap the PER_BUCKET ones
-        Aggregator[] aggregators = new Aggregator[factories.length];
-        for (int i = 0; i < factories.length; i++) {
-            // top-level aggs only get called with bucket 0
-            final boolean collectsFromSingleBucket = true;
-            Aggregator factory = factories[i].create(null, collectsFromSingleBucket);
-            Profilers profilers = factory.context().getProfilers();
-            if (profilers != null) {
-                factory = new ProfilingAggregator(factory, profilers.getAggregationProfiler());
-            }
-            aggregators[i] = factory;
-        }
-        return aggregators;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     /**

@@ -28,9 +28,6 @@ import org.codelibs.elasticsearch.querybuilders.mock.log4j.core.config.Configura
 import org.codelibs.elasticsearch.querybuilders.mock.log4j.core.config.Configurator;
 import org.codelibs.elasticsearch.querybuilders.mock.log4j.core.config.LoggerConfig;
 import org.codelibs.elasticsearch.common.settings.Settings;
-import org.codelibs.elasticsearch.index.Index;
-import org.codelibs.elasticsearch.index.shard.ShardId;
-import org.codelibs.elasticsearch.node.Node;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,42 +43,12 @@ public class Loggers {
 
     public static final String SPACE = " ";
 
-    public static Logger getLogger(Class<?> clazz, Settings settings, ShardId shardId, String... prefixes) {
-        return getLogger(clazz, settings, shardId.getIndex(), asArrayList(Integer.toString(shardId.id()), prefixes).toArray(new String[0]));
-    }
-
-    /**
-     * Just like {@link #getLogger(Class, org.codelibs.elasticsearch.common.settings.Settings, ShardId, String...)} but String loggerName instead of
-     * Class.
-     */
-    public static Logger getLogger(String loggerName, Settings settings, ShardId shardId, String... prefixes) {
-        return getLogger(loggerName, settings,
-            asArrayList(shardId.getIndexName(), Integer.toString(shardId.id()), prefixes).toArray(new String[0]));
-    }
-
-    public static Logger getLogger(Class<?> clazz, Settings settings, Index index, String... prefixes) {
-        return getLogger(clazz, settings, asArrayList(SPACE, index.getName(), prefixes).toArray(new String[0]));
-    }
-
     public static Logger getLogger(Class<?> clazz, Settings settings, String... prefixes) {
-        final List<String> prefixesList = prefixesList(settings, prefixes);
-        return getLogger(clazz, prefixesList.toArray(new String[prefixesList.size()]));
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public static Logger getLogger(String loggerName, Settings settings, String... prefixes) {
-        final List<String> prefixesList = prefixesList(settings, prefixes);
-        return getLogger(loggerName, prefixesList.toArray(new String[prefixesList.size()]));
-    }
-
-    private static List<String> prefixesList(Settings settings, String... prefixes) {
-        List<String> prefixesList = new ArrayList<>();
-        if (Node.NODE_NAME_SETTING.exists(settings)) {
-            prefixesList.add(Node.NODE_NAME_SETTING.get(settings));
-        }
-        if (prefixes != null && prefixes.length > 0) {
-            prefixesList.addAll(asList(prefixes));
-        }
-        return prefixesList;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public static Logger getLogger(Logger parentLogger, String s) {

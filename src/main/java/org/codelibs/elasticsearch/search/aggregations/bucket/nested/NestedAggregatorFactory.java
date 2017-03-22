@@ -19,7 +19,6 @@
 
 package org.codelibs.elasticsearch.search.aggregations.bucket.nested;
 
-import org.codelibs.elasticsearch.index.mapper.ObjectMapper;
 import org.codelibs.elasticsearch.search.aggregations.Aggregator;
 import org.codelibs.elasticsearch.search.aggregations.AggregatorFactories;
 import org.codelibs.elasticsearch.search.aggregations.AggregatorFactory;
@@ -35,27 +34,16 @@ import java.util.Map;
 
 public class NestedAggregatorFactory extends AggregatorFactory<NestedAggregatorFactory> {
 
-    private final ObjectMapper parentObjectMapper;
-    private final ObjectMapper childObjectMapper;
-
-    public NestedAggregatorFactory(String name, Type type, ObjectMapper parentObjectMapper, ObjectMapper childObjectMapper,
+    public NestedAggregatorFactory(String name, Type type,
             SearchContext context, AggregatorFactory<?> parent, AggregatorFactories.Builder subFactories,
                                    Map<String, Object> metaData) throws IOException {
         super(name, type, context, parent, subFactories, metaData);
-        this.parentObjectMapper = parentObjectMapper;
-        this.childObjectMapper = childObjectMapper;
     }
 
     @Override
     public Aggregator createInternal(Aggregator parent, boolean collectsFromSingleBucket, List<PipelineAggregator> pipelineAggregators,
             Map<String, Object> metaData) throws IOException {
-        if (collectsFromSingleBucket == false) {
-            return asMultiBucketAggregator(this, context, parent);
-        }
-        if (childObjectMapper == null) {
-            return new Unmapped(name, context, parent, pipelineAggregators, metaData);
-        }
-        return new NestedAggregator(name, factories, parentObjectMapper, childObjectMapper, context, parent, pipelineAggregators, metaData);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     private static final class Unmapped extends NonCollectingAggregator {

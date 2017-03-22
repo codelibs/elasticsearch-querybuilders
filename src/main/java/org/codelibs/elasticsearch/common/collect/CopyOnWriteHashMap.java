@@ -458,7 +458,7 @@ public final class CopyOnWriteHashMap<K, V> extends AbstractMap<K, V> {
 
         @Override
         public final void remove() {
-            throw new UnsupportedOperationException();
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         }
 
     }

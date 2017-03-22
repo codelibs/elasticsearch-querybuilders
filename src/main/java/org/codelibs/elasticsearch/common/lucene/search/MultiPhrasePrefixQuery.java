@@ -19,7 +19,6 @@
 
 package org.codelibs.elasticsearch.common.lucene.search;
 
-import com.carrotsearch.hppc.ObjectHashSet;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.Term;
@@ -127,62 +126,7 @@ public class MultiPhrasePrefixQuery extends Query {
 
     @Override
     public Query rewrite(IndexReader reader) throws IOException {
-        Query rewritten = super.rewrite(reader);
-        if (rewritten != this) {
-            return rewritten;
-        }
-        if (termArrays.isEmpty()) {
-            return new MatchNoDocsQuery();
-        }
-        MultiPhraseQuery.Builder query = new MultiPhraseQuery.Builder();
-        query.setSlop(slop);
-        int sizeMinus1 = termArrays.size() - 1;
-        for (int i = 0; i < sizeMinus1; i++) {
-            query.add(termArrays.get(i), positions.get(i));
-        }
-        Term[] suffixTerms = termArrays.get(sizeMinus1);
-        int position = positions.get(sizeMinus1);
-        ObjectHashSet<Term> terms = new ObjectHashSet<>();
-        for (Term term : suffixTerms) {
-            getPrefixTerms(terms, term, reader);
-            if (terms.size() > maxExpansions) {
-                break;
-            }
-        }
-        if (terms.isEmpty()) {
-            return Queries.newMatchNoDocsQuery("No terms supplied for " + MultiPhrasePrefixQuery.class.getName());
-        }
-        query.add(terms.toArray(Term.class), position);
-        return query.build();
-    }
-
-    private void getPrefixTerms(ObjectHashSet<Term> terms, final Term prefix, final IndexReader reader) throws IOException {
-        // SlowCompositeReaderWrapper could be used... but this would merge all terms from each segment into one terms
-        // instance, which is very expensive. Therefore I think it is better to iterate over each leaf individually.
-        List<LeafReaderContext> leaves = reader.leaves();
-        for (LeafReaderContext leaf : leaves) {
-            Terms _terms = leaf.reader().terms(field);
-            if (_terms == null) {
-                continue;
-            }
-
-            TermsEnum termsEnum = _terms.iterator();
-            TermsEnum.SeekStatus seekStatus = termsEnum.seekCeil(prefix.bytes());
-            if (TermsEnum.SeekStatus.END == seekStatus) {
-                continue;
-            }
-
-            for (BytesRef term = termsEnum.term(); term != null; term = termsEnum.next()) {
-                if (!StringHelper.startsWith(term, prefix.bytes())) {
-                    break;
-                }
-
-                terms.add(new Term(field, BytesRef.deepCopyOf(term)));
-                if (terms.size() >= maxExpansions) {
-                    return;
-                }
-            }
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

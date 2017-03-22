@@ -29,7 +29,6 @@ import org.codelibs.elasticsearch.common.settings.loader.SettingsLoader;
 import org.codelibs.elasticsearch.common.settings.loader.SettingsLoaderFactory;
 import org.codelibs.elasticsearch.common.unit.ByteSizeUnit;
 import org.codelibs.elasticsearch.common.unit.ByteSizeValue;
-import org.codelibs.elasticsearch.common.unit.MemorySizeValue;
 import org.codelibs.elasticsearch.common.unit.RatioValue;
 import org.codelibs.elasticsearch.common.unit.SizeValue;
 import org.codelibs.elasticsearch.common.unit.TimeValue;
@@ -317,7 +316,7 @@ public final class Settings implements ToXContent {
      * (eg. 12%). If it does not exists, parses the default value provided.
      */
     public ByteSizeValue getAsMemory(String setting, String defaultValue) throws SettingsException {
-        return MemorySizeValue.parseBytesSizeValueOrHeapRatio(get(setting, defaultValue), setting);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     /**
@@ -555,17 +554,7 @@ public final class Settings implements ToXContent {
 
     @Override
     public XContentBuilder toXContent(XContentBuilder builder, Params params) throws IOException {
-        Settings settings = SettingsFilter.filterSettings(params, this);
-        if (!params.paramAsBoolean("flat_settings", false)) {
-            for (Map.Entry<String, Object> entry : settings.getAsStructuredMap().entrySet()) {
-                builder.field(entry.getKey(), entry.getValue());
-            }
-        } else {
-            for (Map.Entry<String, String> entry : settings.getAsMap().entrySet()) {
-                builder.field(entry.getKey(), entry.getValue());
-            }
-        }
-        return builder;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public static final Set<String> FORMAT_PARAMS =

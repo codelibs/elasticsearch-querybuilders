@@ -19,8 +19,6 @@
 
 package org.codelibs.elasticsearch.common.io;
 
-import org.codelibs.elasticsearch.common.SuppressForbidden;
-
 import java.net.URI;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
@@ -34,7 +32,6 @@ import java.nio.file.Paths;
  * This class allows the default filesystem to
  * be changed during tests.
  */
-@SuppressForbidden(reason = "accesses the default filesystem by design")
 // TODO: can we move this to the .env package and make it package-private?
 public final class PathUtils {
     /** no instantiation */

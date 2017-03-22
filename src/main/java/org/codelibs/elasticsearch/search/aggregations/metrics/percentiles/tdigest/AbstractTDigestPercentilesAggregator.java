@@ -79,19 +79,7 @@ public abstract class AbstractTDigestPercentilesAggregator extends NumericMetric
         return new LeafBucketCollectorBase(sub, values) {
             @Override
             public void collect(int doc, long bucket) throws IOException {
-                states = bigArrays.grow(states, bucket + 1);
-
-                TDigestState state = states.get(bucket);
-                if (state == null) {
-                    state = new TDigestState(compression);
-                    states.set(bucket, state);
-                }
-
-                values.setDocument(doc);
-                final int valueCount = values.count();
-                for (int i = 0; i < valueCount; i++) {
-                    state.add(values.valueAt(i));
-                }
+                throw new UnsupportedOperationException("querybuilders does not support this operation.");
             }
         };
     }

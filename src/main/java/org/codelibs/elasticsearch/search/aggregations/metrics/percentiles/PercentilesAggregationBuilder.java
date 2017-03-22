@@ -91,16 +91,10 @@ public class PercentilesAggregationBuilder extends LeafOnly<ValuesSource.Numeric
 
         PARSER.declareField((b, v) -> {
             b.method(PercentilesMethod.TDIGEST);
-            if (v.compression != null) {
-                b.compression(v.compression);
-            }
         }, TDIGEST_OPTIONS_PARSER::parse, PercentilesMethod.TDIGEST.getParseField(), ObjectParser.ValueType.OBJECT);
 
         PARSER.declareField((b, v) -> {
             b.method(PercentilesMethod.HDR);
-            if (v.numberOfSigDigits != null) {
-                b.numberOfSignificantValueDigits(v.numberOfSigDigits);
-            }
         }, HDR_OPTIONS_PARSER::parse, PercentilesMethod.HDR.getParseField(), ObjectParser.ValueType.OBJECT);
     }
 

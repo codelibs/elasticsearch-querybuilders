@@ -20,7 +20,6 @@ package org.codelibs.elasticsearch.search.fetch.subphase.highlight;
 
 import org.apache.lucene.search.Query;
 import org.codelibs.elasticsearch.index.mapper.FieldMapper;
-import org.codelibs.elasticsearch.search.fetch.FetchSubPhase;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
 
 /**
@@ -32,16 +31,14 @@ public class HighlighterContext {
     public final SearchContextHighlight.Field field;
     public final FieldMapper mapper;
     public final SearchContext context;
-    public final FetchSubPhase.HitContext hitContext;
     public final Query query;
 
     public HighlighterContext(String fieldName, SearchContextHighlight.Field field, FieldMapper mapper, SearchContext context,
-            FetchSubPhase.HitContext hitContext, Query query) {
+                              Query query) {
         this.fieldName = fieldName;
         this.field = field;
         this.mapper = mapper;
         this.context = context;
-        this.hitContext = hitContext;
         this.query = query;
     }
 }

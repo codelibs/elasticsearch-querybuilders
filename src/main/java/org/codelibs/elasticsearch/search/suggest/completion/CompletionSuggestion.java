@@ -25,8 +25,6 @@ import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.lucene.Lucene;
 import org.codelibs.elasticsearch.common.text.Text;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.search.internal.InternalSearchHit;
-import org.codelibs.elasticsearch.search.internal.InternalSearchHits;
 import org.codelibs.elasticsearch.search.suggest.Suggest;
 
 import java.io.IOException;
@@ -194,7 +192,6 @@ public final class CompletionSuggestion extends Suggest.Suggestion<CompletionSug
         public static class Option extends Suggest.Suggestion.Entry.Option {
             private Map<String, Set<CharSequence>> contexts;
             private ScoreDoc doc;
-            private InternalSearchHit hit;
 
             public Option(int docID, Text text, float score, Map<String, Set<CharSequence>> contexts) {
                 super(text, score);
@@ -221,78 +218,26 @@ public final class CompletionSuggestion extends Suggest.Suggestion<CompletionSug
                 return doc;
             }
 
-            public InternalSearchHit getHit() {
-                return hit;
-            }
 
             public void setShardIndex(int shardIndex) {
                 this.doc.shardIndex = shardIndex;
             }
 
-            public void setHit(InternalSearchHit hit) {
-                this.hit = hit;
-            }
-
             @Override
             protected XContentBuilder innerToXContent(XContentBuilder builder, Params params) throws IOException {
-                builder.field("text", getText());
-                if (hit != null) {
-                    hit.toInnerXContent(builder, params);
-                } else {
-                    builder.field("score", getScore());
-                }
-                if (contexts.size() > 0) {
-                    builder.startObject("contexts");
-                    for (Map.Entry<String, Set<CharSequence>> entry : contexts.entrySet()) {
-                        builder.startArray(entry.getKey());
-                        for (CharSequence context : entry.getValue()) {
-                            builder.value(context.toString());
-                        }
-                        builder.endArray();
-                    }
-                    builder.endObject();
-                }
-                return builder;
+                throw new UnsupportedOperationException("querybuilders does not support this operation.");
             }
 
             @Override
             public void readFrom(StreamInput in) throws IOException {
                 super.readFrom(in);
-                this.doc = Lucene.readScoreDoc(in);
-                if (in.readBoolean()) {
-                    this.hit = InternalSearchHit.readSearchHit(in);
-                }
-                int contextSize = in.readInt();
-                this.contexts = new LinkedHashMap<>(contextSize);
-                for (int i = 0; i < contextSize; i++) {
-                    String contextName = in.readString();
-                    int nContexts = in.readVInt();
-                    Set<CharSequence> contexts = new HashSet<>(nContexts);
-                    for (int j = 0; j < nContexts; j++) {
-                        contexts.add(in.readString());
-                    }
-                    this.contexts.put(contextName, contexts);
-                }
+                throw new UnsupportedOperationException("querybuilders does not support this operation.");
             }
 
             @Override
             public void writeTo(StreamOutput out) throws IOException {
                 super.writeTo(out);
-                Lucene.writeScoreDoc(out, doc);
-                if (hit != null) {
-                    out.writeBoolean(true);
-                    hit.writeTo(out);
-                } else {
-                    out.writeBoolean(false);
-                }
-                out.writeInt(contexts.size());
-                for (Map.Entry<String, Set<CharSequence>> entry : contexts.entrySet()) {
-                    out.writeString(entry.getKey());
-                    out.writeVInt(entry.getValue().size());
-                    for (CharSequence ctx : entry.getValue()) {
-                        out.writeString(ctx.toString());
-                    }
-                }
+                throw new UnsupportedOperationException("querybuilders does not support this operation.");
             }
 
             @Override

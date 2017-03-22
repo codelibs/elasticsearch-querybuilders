@@ -27,12 +27,10 @@ import java.io.IOException;
  * Defines a parser that is able to parse {@link org.codelibs.elasticsearch.search.SearchExtBuilder}s
  * from {@link org.codelibs.elasticsearch.common.xcontent.XContent}.
  *
- * Registration happens through {@link org.codelibs.elasticsearch.plugins.SearchPlugin#getSearchExts()}, which also needs a {@link SearchExtBuilder}
  * implementation which is the object that this parser returns when reading an incoming request form the REST layer.
  *
  * @see SearchExtBuilder
- * @see org.codelibs.elasticsearch.plugins.SearchPlugin.SearchExtSpec
- */
+ **/
 @FunctionalInterface
 public interface SearchExtParser<T extends SearchExtBuilder> {
 

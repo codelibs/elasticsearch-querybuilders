@@ -26,7 +26,6 @@ import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
 import org.codelibs.elasticsearch.index.fielddata.IndexGeoPointFieldData;
 import org.codelibs.elasticsearch.index.fielddata.IndexNumericFieldData;
 import org.codelibs.elasticsearch.index.fielddata.IndexOrdinalsFieldData;
-import org.codelibs.elasticsearch.index.fielddata.plain.ParentChildIndexFieldData;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 import org.codelibs.elasticsearch.script.Script;
@@ -55,74 +54,11 @@ public class ValuesSourceConfig<VS extends ValuesSource> {
             DateTimeZone timeZone,
             String format) {
 
-        if (field == null) {
-            if (script == null) {
-                @SuppressWarnings("unchecked")
-                ValuesSourceConfig<VS> config = new ValuesSourceConfig<>(ValuesSourceType.ANY);
-                config.format(resolveFormat(null, valueType));
-                return config;
-            }
-            ValuesSourceType valuesSourceType = valueType != null ? valueType.getValuesSourceType() : ValuesSourceType.ANY;
-            if (valuesSourceType == ValuesSourceType.ANY) {
-                // the specific value source type is undefined, but for scripts,
-                // we need to have a specific value source
-                // type to know how to handle the script values, so we fallback
-                // on Bytes
-                valuesSourceType = ValuesSourceType.BYTES;
-            }
-            ValuesSourceConfig<VS> config = new ValuesSourceConfig<VS>(valuesSourceType);
-            config.missing(missing);
-            config.timezone(timeZone);
-            config.format(resolveFormat(format, valueType));
-            config.script(createScript(script, context));
-            config.scriptValueType(valueType);
-            return config;
-        }
-
-        MappedFieldType fieldType = context.fieldMapper(field);
-        if (fieldType == null) {
-            ValuesSourceType valuesSourceType = valueType != null ? valueType.getValuesSourceType() : ValuesSourceType.ANY;
-            ValuesSourceConfig<VS> config = new ValuesSourceConfig<>(valuesSourceType);
-            config.missing(missing);
-            config.timezone(timeZone);
-            config.format(resolveFormat(format, valueType));
-            config.unmapped(true);
-            if (valueType != null) {
-                // todo do we really need this for unmapped?
-                config.scriptValueType(valueType);
-            }
-            return config;
-        }
-
-        IndexFieldData<?> indexFieldData = context.getForField(fieldType);
-
-        ValuesSourceConfig<VS> config;
-        if (valueType == null) {
-            if (indexFieldData instanceof IndexNumericFieldData) {
-                config = new ValuesSourceConfig<>(ValuesSourceType.NUMERIC);
-            } else if (indexFieldData instanceof IndexGeoPointFieldData) {
-                config = new ValuesSourceConfig<>(ValuesSourceType.GEOPOINT);
-            } else {
-                config = new ValuesSourceConfig<>(ValuesSourceType.BYTES);
-            }
-        } else {
-            config = new ValuesSourceConfig<>(valueType.getValuesSourceType());
-        }
-
-        config.fieldContext(new FieldContext(field, indexFieldData, fieldType));
-        config.missing(missing);
-        config.timezone(timeZone);
-        config.script(createScript(script, context));
-        config.format(fieldType.docValueFormat(format, timeZone));
-        return config;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     private static SearchScript createScript(Script script, QueryShardContext context) {
-        if (script == null) {
-            return null;
-        } else {
-            return context.getSearchScript(script, ScriptContext.Standard.AGGS);
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     private static DocValueFormat resolveFormat(@Nullable String format, @Nullable ValueType valueType) {
@@ -315,19 +251,7 @@ public class ValuesSourceConfig<VS extends ValuesSource> {
     }
 
     private ValuesSource bytesField() throws IOException {
-        final IndexFieldData<?> indexFieldData = fieldContext().indexFieldData();
-        ValuesSource dataSource;
-        if (indexFieldData instanceof ParentChildIndexFieldData) {
-            dataSource = new ValuesSource.Bytes.WithOrdinals.ParentChild((ParentChildIndexFieldData) indexFieldData);
-        } else if (indexFieldData instanceof IndexOrdinalsFieldData) {
-            dataSource = new ValuesSource.Bytes.WithOrdinals.FieldData((IndexOrdinalsFieldData) indexFieldData);
-        } else {
-            dataSource = new ValuesSource.Bytes.FieldData(indexFieldData);
-        }
-        if (script() != null) {
-            dataSource = new ValuesSource.WithScript(dataSource, script());
-        }
-        return dataSource;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     private ValuesSource.Bytes bytesScript() throws IOException {

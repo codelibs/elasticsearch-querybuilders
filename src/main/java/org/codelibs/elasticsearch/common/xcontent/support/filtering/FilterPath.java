@@ -20,8 +20,6 @@
 
 package org.codelibs.elasticsearch.common.xcontent.support.filtering;
 
-import org.codelibs.elasticsearch.common.regex.Regex;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -49,10 +47,7 @@ public class FilterPath {
     }
 
     public FilterPath matchProperty(String name) {
-        if ((next != null) && (simpleWildcard || doubleWildcard || Regex.simpleMatch(segment, name))) {
-            return next;
-        }
-        return null;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public boolean matches() {

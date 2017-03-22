@@ -30,7 +30,6 @@ import org.codelibs.elasticsearch.common.logging.DeprecationLogger;
 import org.codelibs.elasticsearch.common.logging.Loggers;
 import org.codelibs.elasticsearch.common.regex.Regex;
 import org.codelibs.elasticsearch.common.unit.ByteSizeValue;
-import org.codelibs.elasticsearch.common.unit.MemorySizeValue;
 import org.codelibs.elasticsearch.common.unit.TimeValue;
 import org.codelibs.elasticsearch.common.xcontent.NamedXContentRegistry;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
@@ -633,7 +632,7 @@ public class Setting<T> extends ToXContentToBytes {
      * @return the setting object
      */
     public static Setting<ByteSizeValue> memorySizeSetting(String key, Function<Settings, String> defaultValue, Property... properties) {
-        return new Setting<>(key, defaultValue, (s) -> MemorySizeValue.parseBytesSizeValueOrHeapRatio(s, key), properties);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -647,7 +646,7 @@ public class Setting<T> extends ToXContentToBytes {
      * @return the setting object
      */
     public static Setting<ByteSizeValue> memorySizeSetting(String key, String defaultPercentage, Property... properties) {
-        return new Setting<>(key, (s) -> defaultPercentage, (s) -> MemorySizeValue.parseBytesSizeValueOrHeapRatio(s, key), properties);
+        throw new UnsupportedOperationException();
     }
 
     public static <T> Setting<List<T>> listSetting(String key, List<String> defaultStringValue, Function<String, T> singleValueParser,

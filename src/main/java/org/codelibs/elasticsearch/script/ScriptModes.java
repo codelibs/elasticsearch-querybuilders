@@ -56,15 +56,7 @@ public class ScriptModes {
      * @return whether scripts are enabled (true) or disabled (false)
      */
     public boolean getScriptEnabled(String lang, ScriptType scriptType, ScriptContext scriptContext) {
-        //native scripts are always enabled as they are static by definition
-        if (NativeScriptEngineService.NAME.equals(lang)) {
-            return true;
-        }
-        Boolean scriptMode = scriptEnabled.get(getKey(lang, scriptType, scriptContext));
-        if (scriptMode == null) {
-            throw new IllegalArgumentException("script mode not found for lang [" + lang + "], script_type [" + scriptType + "], operation [" + scriptContext.getKey() + "]");
-        }
-        return scriptMode;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     static String operationKey(ScriptContext scriptContext) {

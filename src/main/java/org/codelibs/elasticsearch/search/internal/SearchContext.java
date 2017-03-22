@@ -23,8 +23,6 @@ import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.FieldDoc;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.Counter;
-import org.codelibs.elasticsearch.action.search.SearchTask;
-import org.codelibs.elasticsearch.action.search.SearchType;
 import org.codelibs.elasticsearch.common.Nullable;
 import org.codelibs.elasticsearch.common.lease.Releasable;
 import org.codelibs.elasticsearch.common.lease.Releasables;
@@ -33,30 +31,17 @@ import org.codelibs.elasticsearch.common.util.BigArrays;
 import org.codelibs.elasticsearch.common.util.concurrent.AbstractRefCounted;
 import org.codelibs.elasticsearch.common.util.concurrent.RefCounted;
 import org.codelibs.elasticsearch.common.util.iterable.Iterables;
-import org.codelibs.elasticsearch.index.cache.bitset.BitsetFilterCache;
-import org.codelibs.elasticsearch.index.fielddata.IndexFieldDataService;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-import org.codelibs.elasticsearch.index.mapper.MapperService;
-import org.codelibs.elasticsearch.index.mapper.ObjectMapper;
 import org.codelibs.elasticsearch.index.query.ParsedQuery;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
-import org.codelibs.elasticsearch.index.shard.IndexShard;
-import org.codelibs.elasticsearch.index.similarity.SimilarityService;
 import org.codelibs.elasticsearch.search.SearchExtBuilder;
-import org.codelibs.elasticsearch.search.SearchShardTarget;
 import org.codelibs.elasticsearch.search.aggregations.SearchContextAggregations;
-import org.codelibs.elasticsearch.search.dfs.DfsSearchResult;
-import org.codelibs.elasticsearch.search.fetch.FetchPhase;
-import org.codelibs.elasticsearch.search.fetch.FetchSearchResult;
 import org.codelibs.elasticsearch.search.fetch.StoredFieldsContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.DocValueFieldsContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.InnerHitsContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.ScriptFieldsContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.highlight.SearchContextHighlight;
-import org.codelibs.elasticsearch.search.lookup.SearchLookup;
-import org.codelibs.elasticsearch.search.profile.Profilers;
-import org.codelibs.elasticsearch.search.query.QuerySearchResult;
 import org.codelibs.elasticsearch.search.rescore.RescoreSearchContext;
 import org.codelibs.elasticsearch.search.sort.SortAndFormats;
 import org.codelibs.elasticsearch.search.suggest.SuggestionSearchContext;
@@ -72,7 +57,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * shards point in time snapshot (IndexReader / ContextIndexSearcher) and allows passing on
  * state from one query / fetch phase to another.
  *
- * This class also implements {@link RefCounted} since in some situations like in {@link org.codelibs.elasticsearch.search.SearchService}
+ * This class also implements {@link RefCounted} since in some situations like in org.codelibs.elasticsearch.search.SearchService
  * a SearchContext can be closed concurrently due to independent events ie. when an index gets removed. To prevent accessing closed
  * IndexReader / IndexSearcher instances the SearchContext can be guarded by a reference count and fail if it's been closed by
  * an external event.
@@ -88,10 +73,6 @@ public abstract class SearchContext extends AbstractRefCounted implements Releas
     protected SearchContext() {
         super("search_context");
     }
-
-    public abstract void setTask(SearchTask task);
-
-    public abstract SearchTask getTask();
 
     public abstract boolean isCancelled();
 
@@ -120,7 +101,7 @@ public abstract class SearchContext extends AbstractRefCounted implements Releas
 
     /**
      * Should be called before executing the main query and after all other parameters have been set.
-     * @param rewrite if the set query should be rewritten against the searcher returned from {@link #searcher()}
+     * @param rewrite if the set query should be rewritten against the searcher returned from searcher()
      */
     public abstract void preProcess(boolean rewrite);
 
@@ -130,21 +111,11 @@ public abstract class SearchContext extends AbstractRefCounted implements Releas
 
     public abstract String source();
 
-    public abstract ShardSearchRequest request();
-
-    public abstract SearchType searchType();
-
-    public abstract SearchShardTarget shardTarget();
-
     public abstract int numberOfShards();
 
     public abstract float queryBoost();
 
     public abstract long getOriginNanoTime();
-
-    public abstract ScrollContext scrollContext();
-
-    public abstract SearchContext scrollContext(ScrollContext scroll);
 
     public abstract SearchContextAggregations aggregations();
 
@@ -195,19 +166,7 @@ public abstract class SearchContext extends AbstractRefCounted implements Releas
 
     public abstract SearchContext docValueFieldsContext(DocValueFieldsContext docValueFieldsContext);
 
-    public abstract ContextIndexSearcher searcher();
-
-    public abstract IndexShard indexShard();
-
-    public abstract MapperService mapperService();
-
-    public abstract SimilarityService similarityService();
-
     public abstract BigArrays bigArrays();
-
-    public abstract BitsetFilterCache bitsetFilterCache();
-
-    public abstract IndexFieldDataService fieldData();
 
     public abstract TimeValue timeout();
 
@@ -306,23 +265,6 @@ public abstract class SearchContext extends AbstractRefCounted implements Releas
 
     public abstract void keepAlive(long keepAlive);
 
-    public SearchLookup lookup() {
-        return getQueryShardContext().lookup();
-    }
-
-    public abstract DfsSearchResult dfsResult();
-
-    public abstract QuerySearchResult queryResult();
-
-    public abstract FetchPhase fetchPhase();
-
-    public abstract FetchSearchResult fetchResult();
-
-    /**
-     * Return a handle over the profilers for the current search request, or {@code null} if profiling is not enabled.
-     */
-    public abstract Profilers getProfilers();
-
     /**
      * Schedule the release of a resource. The time when {@link Releasable#close()} will be called on this object
      * is function of the provided {@link Lifetime}.
@@ -359,16 +301,13 @@ public abstract class SearchContext extends AbstractRefCounted implements Releas
      * @return true if the request contains only suggest
      */
     public final boolean hasOnlySuggest() {
-        return request().source() != null
-            && request().source().isSuggestOnly();
+        throw new UnsupportedOperationException();
     }
 
     /**
      * Looks up the given field, but does not restrict to fields in the types set on this context.
      */
     public abstract MappedFieldType smartNameFieldType(String name);
-
-    public abstract ObjectMapper getObjectMapper(String name);
 
     public abstract Counter timeEstimateCounter();
 
@@ -397,18 +336,6 @@ public abstract class SearchContext extends AbstractRefCounted implements Releas
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder().append(shardTarget());
-        if (searchType() != SearchType.DEFAULT) {
-            result.append("searchType=[").append(searchType()).append("]");
-        }
-        if (scrollContext() != null) {
-            if (scrollContext().scroll != null) {
-                result.append("scroll=[").append(scrollContext().scroll.keepAlive()).append("]");
-            } else {
-                result.append("scroll=[null]");
-            }
-        }
-        result.append(" query=[").append(query()).append("]");
-        return result.toString();
+        throw new UnsupportedOperationException();
     }
 }

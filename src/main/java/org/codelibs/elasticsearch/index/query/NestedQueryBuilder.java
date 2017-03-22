@@ -31,7 +31,6 @@ import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.lucene.search.Queries;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.mapper.ObjectMapper;
 
 import java.io.IOException;
 import java.util.Map;
@@ -226,34 +225,7 @@ public class NestedQueryBuilder extends AbstractQueryBuilder<NestedQueryBuilder>
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        ObjectMapper nestedObjectMapper = context.getObjectMapper(path);
-        if (nestedObjectMapper == null) {
-            if (ignoreUnmapped) {
-                return new MatchNoDocsQuery();
-            } else {
-                throw new IllegalStateException("[" + NAME + "] failed to find nested object under path [" + path + "]");
-            }
-        }
-        if (!nestedObjectMapper.nested().isNested()) {
-            throw new IllegalStateException("[" + NAME + "] nested object under path [" + path + "] is not of nested type");
-        }
-        final BitSetProducer parentFilter;
-        final Query childFilter;
-        final Query innerQuery;
-        ObjectMapper objectMapper = context.nestedScope().getObjectMapper();
-        if (objectMapper == null) {
-            parentFilter = context.bitsetFilter(Queries.newNonNestedFilter());
-        } else {
-            parentFilter = context.bitsetFilter(objectMapper.nestedTypeFilter());
-        }
-        childFilter = nestedObjectMapper.nestedTypeFilter();
-        try {
-            context.nestedScope().nextLevel(nestedObjectMapper);
-            innerQuery = this.query.toQuery(context);
-        } finally {
-            context.nestedScope().previousLevel();
-        }
-        return new ToParentBlockJoinQuery(Queries.filtered(innerQuery, childFilter), parentFilter, scoreMode);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

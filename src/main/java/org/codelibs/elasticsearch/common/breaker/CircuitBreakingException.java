@@ -22,7 +22,6 @@ import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.rest.RestStatus;
 
 import java.io.IOException;
 
@@ -57,19 +56,6 @@ public class CircuitBreakingException extends ElasticsearchException {
         super.writeTo(out);
         out.writeLong(byteLimit);
         out.writeLong(bytesWanted);
-    }
-
-    public long getBytesWanted() {
-        return this.bytesWanted;
-    }
-
-    public long getByteLimit() {
-        return this.byteLimit;
-    }
-
-    @Override
-    public RestStatus status() {
-        return RestStatus.SERVICE_UNAVAILABLE;
     }
 
     @Override

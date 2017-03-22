@@ -74,20 +74,12 @@ abstract class AbstractInternalTDigestPercentiles extends InternalNumericMetrics
     public abstract double value(double key);
 
     public long getEstimatedMemoryFootprint() {
-        return state.byteSize();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public AbstractInternalTDigestPercentiles doReduce(List<InternalAggregation> aggregations, ReduceContext reduceContext) {
-        TDigestState merged = null;
-        for (InternalAggregation aggregation : aggregations) {
-            final AbstractInternalTDigestPercentiles percentiles = (AbstractInternalTDigestPercentiles) aggregation;
-            if (merged == null) {
-                merged = new TDigestState(percentiles.state.compression());
-            }
-            merged.add(percentiles.state);
-        }
-        return createReduced(getName(), keys, merged, keyed, pipelineAggregators(), getMetaData());
+        throw new UnsupportedOperationException();
     }
 
     protected abstract AbstractInternalTDigestPercentiles createReduced(String name, double[] keys, TDigestState merged, boolean keyed,

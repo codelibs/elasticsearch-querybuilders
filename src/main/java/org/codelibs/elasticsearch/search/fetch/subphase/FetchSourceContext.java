@@ -31,7 +31,6 @@ import org.codelibs.elasticsearch.common.xcontent.ToXContent;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.support.XContentMapValues;
-import org.codelibs.elasticsearch.rest.RestRequest;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -92,39 +91,6 @@ public class FetchSourceContext implements Writeable, ToXContent {
 
     public String[] excludes() {
         return this.excludes;
-    }
-
-    public static FetchSourceContext parseFromRestRequest(RestRequest request) {
-        Boolean fetchSource = null;
-        String[] source_excludes = null;
-        String[] source_includes = null;
-
-        String source = request.param("_source");
-        if (source != null) {
-            if (Booleans.isExplicitTrue(source)) {
-                fetchSource = true;
-            } else if (Booleans.isExplicitFalse(source)) {
-                fetchSource = false;
-            } else {
-                source_includes = Strings.splitStringByCommaToArray(source);
-            }
-        }
-        String sIncludes = request.param("_source_includes");
-        sIncludes = request.param("_source_include", sIncludes);
-        if (sIncludes != null) {
-            source_includes = Strings.splitStringByCommaToArray(sIncludes);
-        }
-
-        String sExcludes = request.param("_source_excludes");
-        sExcludes = request.param("_source_exclude", sExcludes);
-        if (sExcludes != null) {
-            source_excludes = Strings.splitStringByCommaToArray(sExcludes);
-        }
-
-        if (fetchSource != null || source_includes != null || source_excludes != null) {
-            return new FetchSourceContext(fetchSource == null ? true : fetchSource, source_includes, source_excludes);
-        }
-        return null;
     }
 
     public static FetchSourceContext fromXContent(XContentParser parser, ParseFieldMatcher parseFieldMatcher) throws IOException {

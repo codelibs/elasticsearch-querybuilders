@@ -173,27 +173,6 @@ public abstract class LegacyNumberFieldMapper extends FieldMapper {
         return (LegacyNumberFieldMapper) super.clone();
     }
 
-    @Override
-    protected void parseCreateField(ParseContext context, List<IndexableField> fields) throws IOException {
-        RuntimeException e = null;
-        try {
-            innerParseCreateField(context, fields);
-        } catch (IllegalArgumentException e1) {
-            e = e1;
-        } catch (MapperParsingException e2) {
-            e = e2;
-        }
-
-        if (e != null && !ignoreMalformed.value()) {
-            throw e;
-        }
-    }
-
-    protected abstract void innerParseCreateField(ParseContext context, List<IndexableField> fields) throws IOException;
-
-    protected final void addDocValue(ParseContext context, List<IndexableField> fields, long value) {
-        fields.add(new SortedNumericDocValuesField(fieldType().name(), value));
-    }
 
     /**
      * Converts an object value into a double

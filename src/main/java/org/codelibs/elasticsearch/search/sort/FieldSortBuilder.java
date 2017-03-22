@@ -26,16 +26,10 @@ import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.xcontent.ObjectParser;
 import org.codelibs.elasticsearch.common.xcontent.ObjectParser.ValueType;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
-import org.codelibs.elasticsearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.codelibs.elasticsearch.index.fielddata.IndexNumericFieldData;
-import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
 import org.codelibs.elasticsearch.index.query.QueryBuilder;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
-import org.codelibs.elasticsearch.index.query.QueryShardException;
 import org.codelibs.elasticsearch.search.DocValueFormat;
-import org.codelibs.elasticsearch.search.MultiValueMode;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -247,43 +241,7 @@ public class FieldSortBuilder extends SortBuilder<FieldSortBuilder> {
 
     @Override
     public SortFieldAndFormat build(QueryShardContext context) throws IOException {
-        if (DOC_FIELD_NAME.equals(fieldName)) {
-            if (order == SortOrder.DESC) {
-                return SORT_DOC_REVERSE;
-            } else {
-                return SORT_DOC;
-            }
-        } else {
-            MappedFieldType fieldType = context.fieldMapper(fieldName);
-            if (fieldType == null) {
-                if (unmappedType != null) {
-                    fieldType = context.getMapperService().unmappedFieldType(unmappedType);
-                } else {
-                    throw new QueryShardException(context, "No mapping found for [" + fieldName + "] in order to sort on");
-                }
-            }
-
-            MultiValueMode localSortMode = null;
-            if (sortMode != null) {
-                localSortMode = MultiValueMode.fromString(sortMode.toString());
-            }
-
-            boolean reverse = (order == SortOrder.DESC);
-            if (localSortMode == null) {
-                localSortMode = reverse ? MultiValueMode.MAX : MultiValueMode.MIN;
-            }
-
-            final Nested nested = resolveNested(context, nestedPath, nestedFilter);
-            IndexFieldData<?> fieldData = context.getForField(fieldType);
-            if (fieldData instanceof IndexNumericFieldData == false
-                    && (sortMode == SortMode.SUM || sortMode == SortMode.AVG || sortMode == SortMode.MEDIAN)) {
-                throw new QueryShardException(context, "we only support AVG, MEDIAN and SUM on number based fields");
-            }
-            IndexFieldData.XFieldComparatorSource fieldComparatorSource = fieldData
-                    .comparatorSource(missing, localSortMode, nested);
-            SortField field = new SortField(fieldType.name(), fieldComparatorSource, reverse);
-            return new SortFieldAndFormat(field, fieldType.docValueFormat(null, null));
-        }
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

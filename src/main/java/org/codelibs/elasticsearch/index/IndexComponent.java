@@ -24,5 +24,5 @@ package org.codelibs.elasticsearch.index;
  */
 public interface IndexComponent {
 
-    Index index();
+    Object index();
 }

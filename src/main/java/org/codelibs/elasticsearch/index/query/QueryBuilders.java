@@ -27,7 +27,6 @@ import org.codelibs.elasticsearch.common.geo.builders.ShapeBuilder;
 import org.codelibs.elasticsearch.index.query.MoreLikeThisQueryBuilder.Item;
 import org.codelibs.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
 import org.codelibs.elasticsearch.index.query.functionscore.ScoreFunctionBuilder;
-import org.codelibs.elasticsearch.indices.TermsLookup;
 import org.codelibs.elasticsearch.script.Script;
 
 import java.io.IOException;
@@ -620,9 +619,11 @@ public abstract class QueryBuilders {
     /**
      * A terms query that can extract the terms from another doc in an index.
      */
+    /*
     public static TermsQueryBuilder termsLookupQuery(String name, TermsLookup termsLookup) {
         return new TermsQueryBuilder(name, termsLookup);
     }
+    */
 
     /**
      * A builder for filter based on a script.

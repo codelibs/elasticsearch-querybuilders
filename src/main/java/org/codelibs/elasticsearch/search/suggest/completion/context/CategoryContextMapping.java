@@ -25,8 +25,6 @@ import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
-import org.codelibs.elasticsearch.index.mapper.ParseContext;
-import org.codelibs.elasticsearch.index.mapper.ParseContext.Document;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 
 import java.io.IOException;
@@ -95,48 +93,6 @@ public class CategoryContextMapping extends ContextMapping<CategoryQueryContext>
             builder.field(FIELD_FIELDNAME, fieldName);
         }
         return builder;
-    }
-
-    /**
-     * Parse a set of {@link CharSequence} contexts at index-time.
-     * Acceptable formats:
-     *
-     *  <ul>
-     *     <li>Array: <pre>[<i>&lt;string&gt;</i>, ..]</pre></li>
-     *     <li>String: <pre>&quot;string&quot;</pre></li>
-     *  </ul>
-     */
-    @Override
-    public Set<CharSequence> parseContext(ParseContext parseContext, XContentParser parser) throws IOException, ElasticsearchParseException {
-        final Set<CharSequence> contexts = new HashSet<>();
-        Token token = parser.currentToken();
-        if (token == Token.VALUE_STRING) {
-            contexts.add(parser.text());
-        } else if (token == Token.START_ARRAY) {
-            while ((token = parser.nextToken()) != Token.END_ARRAY) {
-                if (token == Token.VALUE_STRING) {
-                    contexts.add(parser.text());
-                } else {
-                    throw new ElasticsearchParseException("context array must have string values");
-                }
-            }
-        } else {
-            throw new ElasticsearchParseException("contexts must be a string or a list of strings");
-        }
-        return contexts;
-    }
-
-    @Override
-    public Set<CharSequence> parseContext(Document document) {
-        Set<CharSequence> values = null;
-        if (fieldName != null) {
-            IndexableField[] fields = document.getFields(fieldName);
-            values = new HashSet<>(fields.length);
-            for (IndexableField field : fields) {
-                values.add(field.stringValue());
-            }
-        }
-        return (values == null) ? Collections.<CharSequence>emptySet() : values;
     }
 
     @Override

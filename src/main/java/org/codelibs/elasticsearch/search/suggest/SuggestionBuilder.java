@@ -32,7 +32,6 @@ import org.codelibs.elasticsearch.common.xcontent.ToXContent;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-import org.codelibs.elasticsearch.index.mapper.MapperService;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 import org.codelibs.elasticsearch.search.suggest.SuggestionSearchContext.SuggestionContext;
@@ -298,64 +297,6 @@ public abstract class SuggestionBuilder<T extends SuggestionBuilder<T>> implemen
     }
 
     protected abstract SuggestionContext build(QueryShardContext context) throws IOException;
-
-    /**
-     * Transfers the text, prefix, regex, analyzer, field, size and shard size settings from the
-     * original {@link SuggestionBuilder} to the target {@link SuggestionContext}
-     */
-    protected void populateCommonFields(MapperService mapperService,
-            SuggestionSearchContext.SuggestionContext suggestionContext) throws IOException {
-
-        Objects.requireNonNull(field, "field must not be null");
-
-        MappedFieldType fieldType = mapperService.fullName(field);
-        if (fieldType == null) {
-            throw new IllegalArgumentException("no mapping found for field [" + field + "]");
-        } else if (analyzer == null) {
-            // no analyzer name passed in, so try the field's analyzer, or the default analyzer
-            if (fieldType.searchAnalyzer() == null) {
-                suggestionContext.setAnalyzer(mapperService.searchAnalyzer());
-            } else {
-                suggestionContext.setAnalyzer(fieldType.searchAnalyzer());
-            }
-        } else {
-            Analyzer luceneAnalyzer = mapperService.getIndexAnalyzers().get(analyzer);
-            if (luceneAnalyzer == null) {
-                throw new IllegalArgumentException("analyzer [" + analyzer + "] doesn't exists");
-            }
-            suggestionContext.setAnalyzer(luceneAnalyzer);
-        }
-
-        suggestionContext.setField(field);
-
-        if (size != null) {
-            suggestionContext.setSize(size);
-        }
-
-        if (shardSize != null) {
-            suggestionContext.setShardSize(shardSize);
-        } else {
-            // if no shard size is set in builder, use size (or at least 5)
-            suggestionContext.setShardSize(Math.max(suggestionContext.getSize(), 5));
-        }
-
-        if (text != null) {
-            suggestionContext.setText(BytesRefs.toBytesRef(text));
-        }
-        if (prefix != null) {
-            suggestionContext.setPrefix(BytesRefs.toBytesRef(prefix));
-        }
-        if (regex != null) {
-            suggestionContext.setRegex(BytesRefs.toBytesRef(regex));
-        }
-        if (text != null && prefix == null) {
-            suggestionContext.setPrefix(BytesRefs.toBytesRef(text));
-        } else if (text == null && prefix != null) {
-            suggestionContext.setText(BytesRefs.toBytesRef(prefix));
-        } else if (text == null && regex != null) {
-            suggestionContext.setText(BytesRefs.toBytesRef(regex));
-        }
-    }
 
     private String getSuggesterName() {
         //default impl returns the same as writeable name, but we keep the distinction between the two just to make sure

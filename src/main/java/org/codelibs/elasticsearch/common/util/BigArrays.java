@@ -22,22 +22,16 @@ package org.codelibs.elasticsearch.common.util;
 import org.apache.lucene.util.ArrayUtil;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.RamUsageEstimator;
-import org.codelibs.elasticsearch.common.Nullable;
-import org.codelibs.elasticsearch.common.breaker.CircuitBreaker;
-import org.codelibs.elasticsearch.common.breaker.CircuitBreakingException;
-import org.codelibs.elasticsearch.common.inject.Inject;
 import org.codelibs.elasticsearch.common.lease.Releasable;
 import org.codelibs.elasticsearch.common.lease.Releasables;
-import org.codelibs.elasticsearch.common.recycler.Recycler;
 import org.codelibs.elasticsearch.common.settings.Settings;
-import org.codelibs.elasticsearch.indices.breaker.CircuitBreakerService;
 
 import java.util.Arrays;
 
 /** Utility class to work with arrays. */
 public class BigArrays implements Releasable {
 
-    public static final BigArrays NON_RECYCLING_INSTANCE = new BigArrays(null, null, false);
+    public static final BigArrays NON_RECYCLING_INSTANCE = new BigArrays(null, false);
 
     /** Page size in bytes: 16KB */
     public static final int PAGE_SIZE_IN_BYTES = 1 << 14;
@@ -86,19 +80,17 @@ public class BigArrays implements Releasable {
 
     @Override
     public void close() {
-        recycler.close();
     }
 
     private abstract static class AbstractArrayWrapper extends AbstractArray implements BigArray {
 
         protected static final long SHALLOW_SIZE = RamUsageEstimator.shallowSizeOfInstance(ByteArrayWrapper.class);
 
-        private final Releasable releasable;
+        private Releasable releasable;
         private final long size;
 
-        AbstractArrayWrapper(BigArrays bigArrays, long size, Releasable releasable, boolean clearOnResize) {
+        AbstractArrayWrapper(BigArrays bigArrays, long size, boolean clearOnResize) {
             super(bigArrays, clearOnResize);
-            this.releasable = releasable;
             this.size = size;
         }
 
@@ -118,8 +110,8 @@ public class BigArrays implements Releasable {
 
         private final byte[] array;
 
-        ByteArrayWrapper(BigArrays bigArrays, byte[] array, long size, Recycler.V<byte[]> releasable, boolean clearOnResize) {
-            super(bigArrays, size, releasable, clearOnResize);
+        ByteArrayWrapper(BigArrays bigArrays, byte[] array, long size, boolean clearOnResize) {
+            super(bigArrays, size, clearOnResize);
             this.array = array;
         }
 
@@ -169,8 +161,8 @@ public class BigArrays implements Releasable {
 
         private final int[] array;
 
-        IntArrayWrapper(BigArrays bigArrays, int[] array, long size, Recycler.V<int[]> releasable, boolean clearOnResize) {
-            super(bigArrays, size, releasable, clearOnResize);
+        IntArrayWrapper(BigArrays bigArrays, int[] array, long size, boolean clearOnResize) {
+            super(bigArrays, size, clearOnResize);
             this.array = array;
         }
 
@@ -212,8 +204,8 @@ public class BigArrays implements Releasable {
 
         private final long[] array;
 
-        LongArrayWrapper(BigArrays bigArrays, long[] array, long size, Recycler.V<long[]> releasable, boolean clearOnResize) {
-            super(bigArrays, size, releasable, clearOnResize);
+        LongArrayWrapper(BigArrays bigArrays, long[] array, long size, boolean clearOnResize) {
+            super(bigArrays, size, clearOnResize);
             this.array = array;
         }
 
@@ -254,8 +246,8 @@ public class BigArrays implements Releasable {
 
         private final long[] array;
 
-        DoubleArrayWrapper(BigArrays bigArrays, long[] array, long size, Recycler.V<long[]> releasable, boolean clearOnResize) {
-            super(bigArrays, size, releasable, clearOnResize);
+        DoubleArrayWrapper(BigArrays bigArrays, long[] array, long size, boolean clearOnResize) {
+            super(bigArrays, size, clearOnResize);
             this.array = array;
         }
 
@@ -297,8 +289,8 @@ public class BigArrays implements Releasable {
 
         private final int[] array;
 
-        FloatArrayWrapper(BigArrays bigArrays, int[] array, long size, Recycler.V<int[]> releasable, boolean clearOnResize) {
-            super(bigArrays, size, releasable, clearOnResize);
+        FloatArrayWrapper(BigArrays bigArrays, int[] array, long size, boolean clearOnResize) {
+            super(bigArrays, size, clearOnResize);
             this.array = array;
         }
 
@@ -340,8 +332,8 @@ public class BigArrays implements Releasable {
 
         private final Object[] array;
 
-        ObjectArrayWrapper(BigArrays bigArrays, Object[] array, long size, Recycler.V<Object[]> releasable) {
-            super(bigArrays, size, releasable, true);
+        ObjectArrayWrapper(BigArrays bigArrays, Object[] array, long size) {
+            super(bigArrays, size, true);
             this.array = array;
         }
 
@@ -368,24 +360,22 @@ public class BigArrays implements Releasable {
 
     }
 
-    final PageCacheRecycler recycler;
-    final CircuitBreakerService breakerService;
+    final Object recycler;
     final boolean checkBreaker;
     private final BigArrays circuitBreakingInstance;
 
-    public BigArrays(Settings settings, @Nullable final CircuitBreakerService breakerService) {
+    public BigArrays(Settings settings) {
         // Checking the breaker is disabled if not specified
-        this(new PageCacheRecycler(settings), breakerService, false);
+        this(new PageCacheRecycler(settings), false);
     }
     // public for tests
-    public BigArrays(PageCacheRecycler recycler, @Nullable final CircuitBreakerService breakerService, boolean checkBreaker) {
+    public BigArrays(PageCacheRecycler recycler, boolean checkBreaker) {
         this.checkBreaker = checkBreaker;
         this.recycler = recycler;
-        this.breakerService = breakerService;
         if (checkBreaker) {
             this.circuitBreakingInstance = this;
         } else {
-            this.circuitBreakingInstance = new BigArrays(recycler, breakerService, true);
+            this.circuitBreakingInstance = new BigArrays(recycler, true);
         }
     }
 
@@ -395,30 +385,6 @@ public class BigArrays implements Releasable {
      * without tripping
      */
     void adjustBreaker(long delta) {
-        if (this.breakerService != null) {
-            CircuitBreaker breaker = this.breakerService.getBreaker(CircuitBreaker.REQUEST);
-            if (this.checkBreaker) {
-                // checking breaker means potentially tripping, but it doesn't
-                // have to if the delta is negative
-                if (delta > 0) {
-                    try {
-                        breaker.addEstimateBytesAndMaybeBreak(delta, "<reused_arrays>");
-                    } catch (CircuitBreakingException e) {
-                        // since we've already created the data, we need to
-                        // add it so closing the stream re-adjusts properly
-                        breaker.addWithoutBreaking(delta);
-                        // re-throw the original exception
-                        throw e;
-                    }
-                } else {
-                    breaker.addWithoutBreaking(delta);
-                }
-            } else {
-                // even if we are not checking the breaker, we need to adjust
-                // its' totals, so add without breaking
-                breaker.addWithoutBreaking(delta);
-            }
-        }
     }
 
     /**
@@ -427,10 +393,6 @@ public class BigArrays implements Releasable {
      */
     public BigArrays withCircuitBreaking() {
         return this.circuitBreakingInstance;
-    }
-
-    public CircuitBreakerService breakerService() {
-        return this.circuitBreakingInstance.breakerService;
     }
 
     private <T extends AbstractBigArray> T resizeInPlace(T array, long newSize) {
@@ -463,10 +425,9 @@ public class BigArrays implements Releasable {
         if (size > BYTE_PAGE_SIZE) {
             array = new BigByteArray(size, this, clearOnResize);
         } else if (size >= BYTE_PAGE_SIZE / 2 && recycler != null) {
-            final Recycler.V<byte[]> page = recycler.bytePage(clearOnResize);
-            array = new ByteArrayWrapper(this, page.v(), size, page, clearOnResize);
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         } else {
-            array = new ByteArrayWrapper(this, new byte[(int) size], size, null, clearOnResize);
+            array = new ByteArrayWrapper(this, new byte[(int) size], size, clearOnResize);
         }
         return validate(array);
     }
@@ -545,10 +506,9 @@ public class BigArrays implements Releasable {
         if (size > INT_PAGE_SIZE) {
             array = new BigIntArray(size, this, clearOnResize);
         } else if (size >= INT_PAGE_SIZE / 2 && recycler != null) {
-            final Recycler.V<int[]> page = recycler.intPage(clearOnResize);
-            array = new IntArrayWrapper(this, page.v(), size, page, clearOnResize);
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         } else {
-            array = new IntArrayWrapper(this, new int[(int) size], size, null, clearOnResize);
+            array = new IntArrayWrapper(this, new int[(int) size], size, clearOnResize);
         }
         return validate(array);
     }
@@ -595,10 +555,9 @@ public class BigArrays implements Releasable {
         if (size > LONG_PAGE_SIZE) {
             array = new BigLongArray(size, this, clearOnResize);
         } else if (size >= LONG_PAGE_SIZE / 2 && recycler != null) {
-            final Recycler.V<long[]> page = recycler.longPage(clearOnResize);
-            array = new LongArrayWrapper(this, page.v(), size, page, clearOnResize);
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         } else {
-            array = new LongArrayWrapper(this, new long[(int) size], size, null, clearOnResize);
+            array = new LongArrayWrapper(this, new long[(int) size], size, clearOnResize);
         }
         return validate(array);
     }
@@ -645,10 +604,9 @@ public class BigArrays implements Releasable {
         if (size > LONG_PAGE_SIZE) {
             arr = new BigDoubleArray(size, this, clearOnResize);
         } else if (size >= LONG_PAGE_SIZE / 2 && recycler != null) {
-            final Recycler.V<long[]> page = recycler.longPage(clearOnResize);
-            arr = new DoubleArrayWrapper(this, page.v(), size, page, clearOnResize);
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         } else {
-            arr = new DoubleArrayWrapper(this, new long[(int) size], size, null, clearOnResize);
+            arr = new DoubleArrayWrapper(this, new long[(int) size], size, clearOnResize);
         }
         return validate(arr);
     }
@@ -692,10 +650,9 @@ public class BigArrays implements Releasable {
         if (size > INT_PAGE_SIZE) {
             array = new BigFloatArray(size, this, clearOnResize);
         } else if (size >= INT_PAGE_SIZE / 2 && recycler != null) {
-            final Recycler.V<int[]> page = recycler.intPage(clearOnResize);
-            array = new FloatArrayWrapper(this, page.v(), size, page, clearOnResize);
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         } else {
-            array = new FloatArrayWrapper(this, new int[(int) size], size, null, clearOnResize);
+            array = new FloatArrayWrapper(this, new int[(int) size], size, clearOnResize);
         }
         return validate(array);
     }
@@ -738,10 +695,9 @@ public class BigArrays implements Releasable {
         if (size > OBJECT_PAGE_SIZE) {
             array = new BigObjectArray<>(size, this);
         } else if (size >= OBJECT_PAGE_SIZE / 2 && recycler != null) {
-            final Recycler.V<Object[]> page = recycler.objectPage();
-            array = new ObjectArrayWrapper<>(this, page.v(), size, page);
+            throw new UnsupportedOperationException("querybuilders does not support this operation.");
         } else {
-            array = new ObjectArrayWrapper<>(this, new Object[(int) size], size, null);
+            array = new ObjectArrayWrapper<>(this, new Object[(int) size], size);
         }
         return validate(array);
     }

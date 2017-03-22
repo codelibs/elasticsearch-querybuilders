@@ -50,13 +50,7 @@ abstract class TermBasedFieldType extends MappedFieldType {
 
     @Override
     public Query termQuery(Object value, QueryShardContext context) {
-        failIfNotIndexed();
-        TermQuery query = new TermQuery(new Term(name(), indexedValueForSearch(value)));
-        if (boost() == 1f ||
-            (context != null && context.indexVersionCreated().before(Version.V_5_0_0_alpha1))) {
-            return query;
-        }
-        return new BoostQuery(query, boost());
+        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -31,21 +31,6 @@ import java.util.Map;
 public abstract class MetadataFieldMapper extends FieldMapper {
 
     public interface TypeParser extends Mapper.TypeParser {
-
-        @Override
-        MetadataFieldMapper.Builder<?,?> parse(String name, Map<String, Object> node, ParserContext parserContext) throws MapperParsingException;
-
-        /**
-         * Get the default {@link MetadataFieldMapper} to use, if nothing had to be parsed.
-         * @param fieldType null if this is the first root mapper on this index, the existing
-         *                  fieldType for this index otherwise
-         * @param fieldType      the existing field type for this meta mapper on the current index
-         *                       or null if this is the first type being introduced
-         * @param parserContext context that may be useful to build the field like analyzers
-         */
-        // TODO: remove the fieldType parameter which is only used for bw compat with pre-2.0
-        // since settings could be modified
-        MetadataFieldMapper getDefault(MappedFieldType fieldType, ParserContext parserContext);
     }
 
     public abstract static class Builder<T extends Builder, Y extends MetadataFieldMapper> extends FieldMapper.Builder<T, Y> {
@@ -57,16 +42,6 @@ public abstract class MetadataFieldMapper extends FieldMapper {
     protected MetadataFieldMapper(String simpleName, MappedFieldType fieldType, MappedFieldType defaultFieldType, Settings indexSettings) {
         super(simpleName, fieldType, defaultFieldType, indexSettings, MultiFields.empty(), null);
     }
-
-    /**
-     * Called before {@link FieldMapper#parse(ParseContext)} on the {@link RootObjectMapper}.
-     */
-    public abstract void preParse(ParseContext context) throws IOException;
-
-    /**
-     * Called after {@link FieldMapper#parse(ParseContext)} on the {@link RootObjectMapper}.
-     */
-    public abstract void postParse(ParseContext context) throws IOException;
 
     @Override
     public MetadataFieldMapper merge(Mapper mergeWith, boolean updateAllTypes) {

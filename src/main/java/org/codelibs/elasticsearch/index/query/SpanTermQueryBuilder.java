@@ -81,15 +81,7 @@ public class SpanTermQueryBuilder extends BaseTermQueryBuilder<SpanTermQueryBuil
 
     @Override
     protected SpanQuery doToQuery(QueryShardContext context) throws IOException {
-        MappedFieldType mapper = context.fieldMapper(fieldName);
-        Term term;
-        if (mapper == null) {
-            term = new Term(fieldName, BytesRefs.toBytesRef(value));
-        } else {
-            Query termQuery = mapper.termQuery(value, context);
-            term = MappedFieldType.extractTerm(termQuery);
-        }
-        return new SpanTermQuery(term);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     public static Optional<SpanTermQueryBuilder> fromXContent(QueryParseContext parseContext) throws IOException, ParsingException {

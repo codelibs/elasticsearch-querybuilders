@@ -446,22 +446,7 @@ public class TermSuggestionBuilder extends SuggestionBuilder<TermSuggestionBuild
 
     @Override
     public SuggestionContext build(QueryShardContext context) throws IOException {
-        TermSuggestionContext suggestionContext = new TermSuggestionContext(context);
-        // copy over common settings to each suggestion builder
-        populateCommonFields(context.getMapperService(), suggestionContext);
-        // Transfers the builder settings to the target TermSuggestionContext
-        DirectSpellcheckerSettings settings = suggestionContext.getDirectSpellCheckerSettings();
-        settings.accuracy(accuracy);
-        settings.maxEdits(maxEdits);
-        settings.maxInspections(maxInspections);
-        settings.maxTermFreq(maxTermFreq);
-        settings.minDocFreq(minDocFreq);
-        settings.minWordLength(minWordLength);
-        settings.prefixLength(prefixLength);
-        settings.sort(sort);
-        settings.stringDistance(stringDistance.toLucene());
-        settings.suggestMode(suggestMode.toLucene());
-        return suggestionContext;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

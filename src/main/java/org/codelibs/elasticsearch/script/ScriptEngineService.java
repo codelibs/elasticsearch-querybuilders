@@ -20,7 +20,6 @@
 package org.codelibs.elasticsearch.script;
 
 import org.codelibs.elasticsearch.common.Nullable;
-import org.codelibs.elasticsearch.search.lookup.SearchLookup;
 
 import java.io.Closeable;
 import java.util.Map;
@@ -45,8 +44,6 @@ public interface ScriptEngineService extends Closeable {
     Object compile(String scriptName, String scriptSource, Map<String, String> params);
 
     ExecutableScript executable(CompiledScript compiledScript, @Nullable Map<String, Object> vars);
-
-    SearchScript search(CompiledScript compiledScript, SearchLookup lookup, @Nullable Map<String, Object> vars);
 
     /**
      * Returns <code>true</code> if this scripting engine can safely accept inline scripts by default. The default is <code>false</code>

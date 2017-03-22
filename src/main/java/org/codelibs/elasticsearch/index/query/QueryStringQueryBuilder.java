@@ -35,16 +35,7 @@ import org.codelibs.elasticsearch.common.unit.Fuzziness;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.index.analysis.NamedAnalyzer;
-import org.codelibs.elasticsearch.index.mapper.DateFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.IpFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.KeywordFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-import org.codelibs.elasticsearch.index.mapper.MapperService;
-import org.codelibs.elasticsearch.index.mapper.NumberFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.ScaledFloatFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.StringFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.TextFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.TimestampFieldMapper;
+import org.codelibs.elasticsearch.index.mapper.*;
 import org.codelibs.elasticsearch.index.query.support.QueryParsers;
 import org.joda.time.DateTimeZone;
 
@@ -910,25 +901,7 @@ public class QueryStringQueryBuilder extends AbstractQueryBuilder<QueryStringQue
      * can be queried. The map will be field name to a float of 1.0f.
      */
     public static Map<String, Float> allQueryableDefaultFields(QueryShardContext context) {
-        Collection<String> allFields = context.simpleMatchToIndexNames("*");
-        Map<String, Float> fields = new HashMap<>();
-        for (String fieldName : allFields) {
-            if (MapperService.isMetadataField(fieldName)) {
-                // Ignore our metadata fields
-                continue;
-            }
-            MappedFieldType mft = context.fieldMapper(fieldName);
-            assert mft != null : "should never have a null mapper for an existing field";
-
-            // Ignore fields that are not in the allowed mapper types. Some
-            // types do not support term queries, and thus we cannot generate
-            // a special query for them.
-            String mappingType = mft.typeName();
-            if (ALLOWED_QUERY_MAPPER_TYPES.contains(mappingType)) {
-                fields.put(fieldName, 1.0f);
-            }
-        }
-        return fields;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

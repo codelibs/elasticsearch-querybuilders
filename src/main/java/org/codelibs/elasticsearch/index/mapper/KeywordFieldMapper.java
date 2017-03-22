@@ -35,7 +35,6 @@ import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.support.XContentMapValues;
 import org.codelibs.elasticsearch.index.analysis.NamedAnalyzer;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
-import org.codelibs.elasticsearch.index.fielddata.plain.DocValuesIndexFieldData;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -47,7 +46,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import static java.util.Collections.unmodifiableList;
-import static org.codelibs.elasticsearch.index.mapper.TypeParsers.parseField;
 
 /**
  * A field mapper for keywords. This mapper accepts strings and indexes them as-is.
@@ -129,65 +127,6 @@ public final class KeywordFieldMapper extends FieldMapper {
     }
 
     public static class TypeParser implements Mapper.TypeParser {
-        @Override
-        public Mapper.Builder<?,?> parse(String name, Map<String, Object> node, ParserContext parserContext) throws MapperParsingException {
-            if (parserContext.indexVersionCreated().before(Version.V_5_0_0_alpha1)) {
-                // Downgrade "keyword" to "string" in indexes created in 2.x so you can use modern syntax against old indexes
-                Set<String> unsupportedParameters = new HashSet<>(node.keySet());
-                unsupportedParameters.removeAll(SUPPORTED_PARAMETERS_FOR_AUTO_DOWNGRADE_TO_STRING);
-                if (false == SUPPORTED_PARAMETERS_FOR_AUTO_DOWNGRADE_TO_STRING.containsAll(node.keySet())) {
-                    throw new IllegalArgumentException("Automatic downgrade from [keyword] to [string] failed because parameters "
-                            + unsupportedParameters + " are not supported for automatic downgrades.");
-                }
-                {   // Downgrade "index"
-                    Object index = node.get("index");
-                    if (index == null || Boolean.TRUE.equals(index)) {
-                        index = "not_analyzed";
-                    } else if (Boolean.FALSE.equals(index)) {
-                        index = "no";
-                    } else {
-                        throw new IllegalArgumentException(
-                                "Can't parse [index] value [" + index + "] for field [" + name + "], expected [true] or [false]");
-                    }
-                    node.put("index", index);
-                }
-
-                return new StringFieldMapper.TypeParser().parse(name, node, parserContext);
-            }
-            KeywordFieldMapper.Builder builder = new KeywordFieldMapper.Builder(name);
-            parseField(builder, name, node, parserContext);
-            for (Iterator<Map.Entry<String, Object>> iterator = node.entrySet().iterator(); iterator.hasNext();) {
-                Map.Entry<String, Object> entry = iterator.next();
-                String propName = entry.getKey();
-                Object propNode = entry.getValue();
-                if (propName.equals("null_value")) {
-                    if (propNode == null) {
-                        throw new MapperParsingException("Property [null_value] cannot be null.");
-                    }
-                    builder.nullValue(propNode.toString());
-                    iterator.remove();
-                } else if (propName.equals("ignore_above")) {
-                    builder.ignoreAbove(XContentMapValues.nodeIntegerValue(propNode, -1));
-                    iterator.remove();
-                } else if (propName.equals("norms")) {
-                    builder.omitNorms(XContentMapValues.nodeBooleanValue(propNode) == false);
-                    iterator.remove();
-                } else if (propName.equals("eager_global_ordinals")) {
-                    builder.eagerGlobalOrdinals(XContentMapValues.nodeBooleanValue(propNode));
-                    iterator.remove();
-                } else if (propName.equals("normalizer")) {
-                    if (propNode != null) {
-                        NamedAnalyzer normalizer = parserContext.getIndexAnalyzers().getNormalizer(propNode.toString());
-                        if (normalizer == null) {
-                            throw new MapperParsingException("normalizer [" + propNode.toString() + "] not found for field [" + name + "]");
-                        }
-                        builder.normalizer(normalizer);
-                    }
-                    iterator.remove();
-                }
-            }
-            return builder;
-        }
     }
 
     public static final class KeywordFieldType extends StringFieldType {
@@ -254,8 +193,7 @@ public final class KeywordFieldMapper extends FieldMapper {
 
         @Override
         public IndexFieldData.Builder fielddataBuilder() {
-            failIfNoDocValues();
-            return new DocValuesIndexFieldData.Builder();
+            throw new UnsupportedOperationException();
         }
 
         @Override
@@ -312,60 +250,6 @@ public final class KeywordFieldMapper extends FieldMapper {
     // pkg-private for testing
     Boolean includeInAll() {
         return includeInAll;
-    }
-
-    @Override
-    protected void parseCreateField(ParseContext context, List<IndexableField> fields) throws IOException {
-        String value;
-        if (context.externalValueSet()) {
-            value = context.externalValue().toString();
-        } else {
-            XContentParser parser = context.parser();
-            if (parser.currentToken() == XContentParser.Token.VALUE_NULL) {
-                value = fieldType().nullValueAsString();
-            } else {
-                value =  parser.textOrNull();
-            }
-        }
-
-        if (value == null || value.length() > ignoreAbove) {
-            return;
-        }
-
-        final NamedAnalyzer normalizer = fieldType().normalizer();
-        if (normalizer != null) {
-            try (final TokenStream ts = normalizer.tokenStream(name(), value)) {
-                final CharTermAttribute termAtt = ts.addAttribute(CharTermAttribute.class);
-                ts.reset();
-                if (ts.incrementToken() == false) {
-                  throw new IllegalStateException("The normalization token stream is "
-                      + "expected to produce exactly 1 token, but got 0 for analyzer "
-                      + normalizer + " and input \"" + value + "\"");
-                }
-                final String newValue = termAtt.toString();
-                if (ts.incrementToken()) {
-                  throw new IllegalStateException("The normalization token stream is "
-                      + "expected to produce exactly 1 token, but got 2+ for analyzer "
-                      + normalizer + " and input \"" + value + "\"");
-                }
-                ts.end();
-                value = newValue;
-            }
-        }
-
-        if (context.includeInAll(includeInAll, this)) {
-            context.allEntries().addText(fieldType().name(), value, fieldType().boost());
-        }
-
-        // convert to utf8 only once before feeding postings/dv/stored fields
-        final BytesRef binaryValue = new BytesRef(value);
-        if (fieldType().indexOptions() != IndexOptions.NONE || fieldType().stored()) {
-            Field field = new Field(fieldType().name(), binaryValue, fieldType());
-            fields.add(field);
-        }
-        if (fieldType().hasDocValues()) {
-            fields.add(new SortedSetDocValuesField(fieldType().name(), binaryValue));
-        }
     }
 
     @Override

@@ -28,9 +28,6 @@ import org.apache.lucene.spatial.prefix.PrefixTreeStrategy;
 import org.apache.lucene.spatial.prefix.RecursivePrefixTreeStrategy;
 import org.apache.lucene.spatial.query.SpatialArgs;
 import org.apache.lucene.spatial.query.SpatialOperation;
-import org.codelibs.elasticsearch.action.get.GetRequest;
-import org.codelibs.elasticsearch.action.get.GetResponse;
-import org.codelibs.elasticsearch.client.Client;
 import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.geo.ShapeRelation;
@@ -43,7 +40,6 @@ import org.codelibs.elasticsearch.common.xcontent.NamedXContentRegistry;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentHelper;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.mapper.GeoShapeFieldMapper;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
 
 import java.io.IOException;
@@ -313,97 +309,9 @@ public class GeoShapeQueryBuilder extends AbstractQueryBuilder<GeoShapeQueryBuil
 
     @Override
     protected Query doToQuery(QueryShardContext context) {
-        if (shape == null) {
-            throw new UnsupportedOperationException("query must be rewritten first");
-        }
-        final ShapeBuilder shapeToQuery = shape;
-        final MappedFieldType fieldType = context.fieldMapper(fieldName);
-        if (fieldType == null) {
-            if (ignoreUnmapped) {
-                return new MatchNoDocsQuery();
-            } else {
-                throw new QueryShardException(context, "failed to find geo_shape field [" + fieldName + "]");
-            }
-        }
-
-        // TODO: This isn't the nicest way to check this
-        if (!(fieldType instanceof GeoShapeFieldMapper.GeoShapeFieldType)) {
-            throw new QueryShardException(context, "Field [" + fieldName + "] is not a geo_shape");
-        }
-
-        final GeoShapeFieldMapper.GeoShapeFieldType shapeFieldType = (GeoShapeFieldMapper.GeoShapeFieldType) fieldType;
-
-        PrefixTreeStrategy strategy = shapeFieldType.defaultStrategy();
-        if (this.strategy != null) {
-            strategy = shapeFieldType.resolveStrategy(this.strategy);
-        }
-        Query query;
-        if (strategy instanceof RecursivePrefixTreeStrategy && relation == ShapeRelation.DISJOINT) {
-            // this strategy doesn't support disjoint anymore: but it did
-            // before, including creating lucene fieldcache (!)
-            // in this case, execute disjoint as exists && !intersects
-            BooleanQuery.Builder bool = new BooleanQuery.Builder();
-            Query exists = ExistsQueryBuilder.newFilter(context, fieldName);
-            Query intersects = strategy.makeQuery(getArgs(shapeToQuery, ShapeRelation.INTERSECTS));
-            bool.add(exists, BooleanClause.Occur.MUST);
-            bool.add(intersects, BooleanClause.Occur.MUST_NOT);
-            query = new ConstantScoreQuery(bool.build());
-        } else {
-            query = new ConstantScoreQuery(strategy.makeQuery(getArgs(shapeToQuery, relation)));
-        }
-        return query;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
-    /**
-     * Fetches the Shape with the given ID in the given type and index.
-     *
-     * @param getRequest
-     *            GetRequest containing index, type and id
-     * @param path
-     *            Name or path of the field in the Shape Document where the
-     *            Shape itself is located
-     * @return Shape with the given ID
-     * @throws IOException
-     *             Can be thrown while parsing the Shape Document and extracting
-     *             the Shape
-     */
-    private ShapeBuilder fetch(Client client, GetRequest getRequest, String path) throws IOException {
-        if (ShapesAvailability.JTS_AVAILABLE == false) {
-            throw new IllegalStateException("JTS not available");
-        }
-        getRequest.preference("_local");
-        getRequest.operationThreaded(false);
-        GetResponse response = client.get(getRequest).actionGet();
-        if (!response.isExists()) {
-            throw new IllegalArgumentException("Shape with ID [" + getRequest.id() + "] in type [" + getRequest.type() + "] not found");
-        }
-        if (response.isSourceEmpty()) {
-            throw new IllegalArgumentException("Shape with ID [" + getRequest.id() + "] in type [" + getRequest.type() +
-                    "] source disabled");
-        }
-
-        String[] pathElements = path.split("\\.");
-        int currentPathSlot = 0;
-
-        // It is safe to use EMPTY here because this never uses namedObject
-        try (XContentParser parser = XContentHelper.createParser(NamedXContentRegistry.EMPTY, response.getSourceAsBytesRef())) {
-            XContentParser.Token currentToken;
-            while ((currentToken = parser.nextToken()) != XContentParser.Token.END_OBJECT) {
-                if (currentToken == XContentParser.Token.FIELD_NAME) {
-                    if (pathElements[currentPathSlot].equals(parser.currentName())) {
-                        parser.nextToken();
-                        if (++currentPathSlot == pathElements.length) {
-                            return ShapeBuilder.parse(parser);
-                        }
-                    } else {
-                        parser.nextToken();
-                        parser.skipChildren();
-                    }
-                }
-            }
-            throw new IllegalStateException("Shape with name [" + getRequest.id() + "] found but missing " + path + " field");
-        }
-    }
 
     public static SpatialArgs getArgs(ShapeBuilder shape, ShapeRelation relation) {
         switch (relation) {
@@ -593,11 +501,6 @@ public class GeoShapeQueryBuilder extends AbstractQueryBuilder<GeoShapeQueryBuil
 
     @Override
     protected QueryBuilder doRewrite(QueryRewriteContext queryShardContext) throws IOException {
-        if (this.shape == null) {
-            GetRequest getRequest = new GetRequest(indexedShapeIndex, indexedShapeType, indexedShapeId);
-            ShapeBuilder shape = fetch(queryShardContext.getClient(), getRequest, indexedShapePath);
-            return new GeoShapeQueryBuilder(this.fieldName, shape).relation(relation).strategy(strategy);
-        }
-        return this;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 }

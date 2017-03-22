@@ -94,33 +94,12 @@ public abstract class AbstractQueryBuilder<QB extends AbstractQueryBuilder<QB>> 
 
     @Override
     public final Query toQuery(QueryShardContext context) throws IOException {
-        Query query = doToQuery(context);
-        if (query != null) {
-            if (boost != DEFAULT_BOOST) {
-                if (query instanceof SpanQuery) {
-                    query = new SpanBoostQuery((SpanQuery) query, boost);
-                } else {
-                    query = new BoostQuery(query, boost);
-                }
-            }
-            if (queryName != null) {
-                context.addNamedQuery(queryName, query);
-            }
-        }
-        return query;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
     public final Query toFilter(QueryShardContext context) throws IOException {
-        Query result = null;
-            final boolean originalIsFilter = context.isFilter();
-            try {
-                context.setIsFilter(true);
-                result = toQuery(context);
-            } finally {
-                context.setIsFilter(originalIsFilter);
-            }
-        return result;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     protected abstract Query doToQuery(QueryShardContext context) throws IOException;

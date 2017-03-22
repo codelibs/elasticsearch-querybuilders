@@ -22,7 +22,6 @@ package org.codelibs.elasticsearch.search.rescore;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.TopDocs;
-import org.codelibs.elasticsearch.action.search.SearchType;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
 
 import java.io.IOException;
@@ -66,8 +65,6 @@ public interface Rescorer {
     /**
      * Extracts all terms needed to execute this {@link Rescorer}. This method
      * is executed in a distributed frequency collection roundtrip for
-     * {@link SearchType#DFS_QUERY_AND_FETCH} and
-     * {@link SearchType#DFS_QUERY_THEN_FETCH}
      */
     void extractTerms(SearchContext context, RescoreSearchContext rescoreContext, Set<Term> termsSet);
 

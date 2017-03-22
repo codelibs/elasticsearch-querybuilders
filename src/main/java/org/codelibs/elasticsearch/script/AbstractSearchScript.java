@@ -21,11 +21,6 @@ package org.codelibs.elasticsearch.script;
 
 import org.apache.lucene.search.Scorer;
 import org.codelibs.elasticsearch.index.fielddata.ScriptDocValues;
-import org.codelibs.elasticsearch.search.lookup.LeafDocLookup;
-import org.codelibs.elasticsearch.search.lookup.LeafFieldsLookup;
-import org.codelibs.elasticsearch.search.lookup.LeafIndexLookup;
-import org.codelibs.elasticsearch.search.lookup.LeafSearchLookup;
-import org.codelibs.elasticsearch.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.util.Map;
@@ -41,68 +36,13 @@ import java.util.Map;
  */
 public abstract class AbstractSearchScript extends AbstractExecutableScript implements LeafSearchScript {
 
-    private LeafSearchLookup lookup;
     private Scorer scorer;
-
-    /**
-     * Returns the doc lookup allowing to access field data (cached) values as well as the current document score
-     * (where applicable).
-     */
-    protected final LeafDocLookup doc() {
-        return lookup.doc();
-    }
 
     /**
      * Returns the current score and only applicable when used as a scoring script in a custom score query!.
      */
     protected final float score() throws IOException {
         return scorer.score();
-    }
-
-    /**
-     * Returns field data strings access for the provided field.
-     */
-    protected ScriptDocValues.Strings docFieldStrings(String field) {
-        return (ScriptDocValues.Strings) doc().get(field);
-    }
-
-    /**
-     * Returns field data double (floating point) access for the provided field.
-     */
-    protected ScriptDocValues.Doubles docFieldDoubles(String field) {
-        return (ScriptDocValues.Doubles) doc().get(field);
-    }
-
-    /**
-     * Returns field data long (integers) access for the provided field.
-     */
-    protected ScriptDocValues.Longs docFieldLongs(String field) {
-        return (ScriptDocValues.Longs) doc().get(field);
-    }
-
-    /**
-     * Allows to access the actual source (loaded and parsed).
-     */
-    protected final SourceLookup source() {
-        return lookup.source();
-    }
-
-    /**
-     * Allows to access statistics on terms and fields.
-     */
-    protected final LeafIndexLookup indexLookup() {
-        return lookup.indexLookup();
-    }
-
-    /**
-     * Allows to access the *stored* fields.
-     */
-    protected final LeafFieldsLookup fields() {
-        return lookup.fields();
-    }
-
-    void setLookup(LeafSearchLookup lookup) {
-        this.lookup = lookup;
     }
 
     @Override
@@ -112,12 +52,12 @@ public abstract class AbstractSearchScript extends AbstractExecutableScript impl
 
     @Override
     public void setDocument(int doc) {
-        lookup.setDocument(doc);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
     public void setSource(Map<String, Object> source) {
-        lookup.source().setSource(source);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

@@ -226,10 +226,7 @@ public class IndicesQueryBuilder extends AbstractQueryBuilder<IndicesQueryBuilde
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        if (context.matchesIndices(indices)) {
-            return innerQuery.toQuery(context);
-        }
-        return noMatchQuery.toQuery(context);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

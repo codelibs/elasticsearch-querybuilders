@@ -31,7 +31,6 @@ import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.lucene.search.Queries;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.mapper.FieldNamesFieldMapper;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -129,28 +128,7 @@ public class ExistsQueryBuilder extends AbstractQueryBuilder<ExistsQueryBuilder>
     }
 
     public static Query newFilter(QueryShardContext context, String fieldPattern) {
-        final FieldNamesFieldMapper.FieldNamesFieldType fieldNamesFieldType =
-                (FieldNamesFieldMapper.FieldNamesFieldType)context.getMapperService().fullName(FieldNamesFieldMapper.NAME);
-        if (fieldNamesFieldType == null) {
-            // can only happen when no types exist, so no docs exist either
-            return Queries.newMatchNoDocsQuery("Missing types in \"" + NAME + "\" query.");
-        }
-
-        final Collection<String> fields;
-        if (context.getObjectMapper(fieldPattern) != null) {
-            // the _field_names field also indexes objects, so we don't have to
-            // do any more work to support exists queries on whole objects
-            fields = Collections.singleton(fieldPattern);
-        } else {
-            fields = context.simpleMatchToIndexNames(fieldPattern);
-        }
-
-        BooleanQuery.Builder boolFilterBuilder = new BooleanQuery.Builder();
-        for (String field : fields) {
-            Query filter = fieldNamesFieldType.termQuery(field, context);
-            boolFilterBuilder.add(filter, BooleanClause.Occur.SHOULD);
-        }
-        return new ConstantScoreQuery(boolFilterBuilder.build());
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

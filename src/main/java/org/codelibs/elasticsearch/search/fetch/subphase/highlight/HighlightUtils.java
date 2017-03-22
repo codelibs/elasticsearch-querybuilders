@@ -21,11 +21,8 @@ package org.codelibs.elasticsearch.search.fetch.subphase.highlight;
 import org.apache.lucene.search.highlight.DefaultEncoder;
 import org.apache.lucene.search.highlight.Encoder;
 import org.apache.lucene.search.highlight.SimpleHTMLEncoder;
-import org.codelibs.elasticsearch.index.fieldvisitor.CustomFieldsVisitor;
 import org.codelibs.elasticsearch.index.mapper.FieldMapper;
-import org.codelibs.elasticsearch.search.fetch.FetchSubPhase;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
-import org.codelibs.elasticsearch.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -41,31 +38,6 @@ public final class HighlightUtils {
 
     private HighlightUtils() {
 
-    }
-
-    /**
-     * Load field values for highlighting.
-     */
-    public static List<Object> loadFieldValues(SearchContextHighlight.Field field, FieldMapper mapper, SearchContext searchContext,
-            FetchSubPhase.HitContext hitContext) throws IOException {
-        //percolator needs to always load from source, thus it sets the global force source to true
-        boolean forceSource = searchContext.highlight().forceSource(field);
-        List<Object> textsToHighlight;
-        if (!forceSource && mapper.fieldType().stored()) {
-            CustomFieldsVisitor fieldVisitor = new CustomFieldsVisitor(singleton(mapper.fieldType().name()), false);
-            hitContext.reader().document(hitContext.docId(), fieldVisitor);
-            textsToHighlight = fieldVisitor.fields().get(mapper.fieldType().name());
-            if (textsToHighlight == null) {
-                // Can happen if the document doesn't have the field to highlight
-                textsToHighlight = Collections.emptyList();
-            }
-        } else {
-            SourceLookup sourceLookup = searchContext.lookup().source();
-            sourceLookup.setSegmentAndDocument(hitContext.readerContext(), hitContext.docId());
-            textsToHighlight = sourceLookup.extractRawValues(mapper.fieldType().name());
-        }
-        assert textsToHighlight != null;
-        return textsToHighlight;
     }
 
     static class Encoders {

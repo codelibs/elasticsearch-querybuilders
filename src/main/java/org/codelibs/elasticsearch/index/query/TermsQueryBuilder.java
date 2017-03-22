@@ -27,9 +27,6 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
-import org.codelibs.elasticsearch.action.get.GetRequest;
-import org.codelibs.elasticsearch.action.get.GetResponse;
-import org.codelibs.elasticsearch.client.Client;
 import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.Strings;
@@ -43,7 +40,6 @@ import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.support.XContentMapValues;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-import org.codelibs.elasticsearch.indices.TermsLookup;
 
 import java.io.IOException;
 import java.util.AbstractList;
@@ -67,29 +63,6 @@ public class TermsQueryBuilder extends AbstractQueryBuilder<TermsQueryBuilder> {
 
     private final String fieldName;
     private final List<?> values;
-    private final TermsLookup termsLookup;
-
-    public TermsQueryBuilder(String fieldName, TermsLookup termsLookup) {
-        this(fieldName, null, termsLookup);
-    }
-
-    /**
-     * constructor used internally for serialization of both value / termslookup variants
-     */
-    TermsQueryBuilder(String fieldName, List<Object> values, TermsLookup termsLookup) {
-        if (Strings.isEmpty(fieldName)) {
-            throw new IllegalArgumentException("field name cannot be null.");
-        }
-        if (values == null && termsLookup == null) {
-            throw new IllegalArgumentException("No value or termsLookup specified for terms query");
-        }
-        if (values != null && termsLookup != null) {
-            throw new IllegalArgumentException("Both values and termsLookup specified for terms query");
-        }
-        this.fieldName = fieldName;
-        this.values = values == null ? null : convert(values);
-        this.termsLookup = termsLookup;
-    }
 
     /**
      * A filter for a field based on several terms matching on any of them.
@@ -167,7 +140,6 @@ public class TermsQueryBuilder extends AbstractQueryBuilder<TermsQueryBuilder> {
         }
         this.fieldName = fieldName;
         this.values = convert(values);
-        this.termsLookup = null;
     }
 
     /**
@@ -176,14 +148,12 @@ public class TermsQueryBuilder extends AbstractQueryBuilder<TermsQueryBuilder> {
     public TermsQueryBuilder(StreamInput in) throws IOException {
         super(in);
         fieldName = in.readString();
-        termsLookup = in.readOptionalWriteable(TermsLookup::new);
         values = (List<?>) in.readGenericValue();
     }
 
     @Override
     protected void doWriteTo(StreamOutput out) throws IOException {
         out.writeString(fieldName);
-        out.writeOptionalWriteable(termsLookup);
         out.writeGenericValue(values);
     }
 
@@ -193,10 +163,6 @@ public class TermsQueryBuilder extends AbstractQueryBuilder<TermsQueryBuilder> {
 
     public List<Object> values() {
         return convertBack(this.values);
-    }
-
-    public TermsLookup termsLookup() {
-        return this.termsLookup;
     }
 
     private static final Set<Class<? extends Number>> INTEGER_TYPES = new HashSet<>(
@@ -316,71 +282,13 @@ public class TermsQueryBuilder extends AbstractQueryBuilder<TermsQueryBuilder> {
     @Override
     protected void doXContent(XContentBuilder builder, Params params) throws IOException {
         builder.startObject(NAME);
-        if (this.termsLookup != null) {
-            builder.startObject(fieldName);
-            termsLookup.toXContent(builder, params);
-            builder.endObject();
-        } else {
-            builder.field(fieldName, convertBack(values));
-        }
+        builder.field(fieldName, convertBack(values));
         printBoostAndQueryName(builder);
         builder.endObject();
     }
 
     public static Optional<TermsQueryBuilder> fromXContent(QueryParseContext parseContext) throws IOException {
-        XContentParser parser = parseContext.parser();
-
-        String fieldName = null;
-        List<Object> values = null;
-        TermsLookup termsLookup = null;
-
-        String queryName = null;
-        float boost = AbstractQueryBuilder.DEFAULT_BOOST;
-
-        XContentParser.Token token;
-        String currentFieldName = null;
-        while ((token = parser.nextToken()) != XContentParser.Token.END_OBJECT) {
-            if (token == XContentParser.Token.FIELD_NAME) {
-                currentFieldName = parser.currentName();
-            } else if (parseContext.isDeprecatedSetting(currentFieldName)) {
-                // skip
-            } else if (token == XContentParser.Token.START_ARRAY) {
-                if  (fieldName != null) {
-                    throw new ParsingException(parser.getTokenLocation(),
-                            "[" + TermsQueryBuilder.NAME + "] query does not support multiple fields");
-                }
-                fieldName = currentFieldName;
-                values = parseValues(parser);
-            } else if (token == XContentParser.Token.START_OBJECT) {
-                if  (fieldName != null) {
-                    throw new ParsingException(parser.getTokenLocation(),
-                            "[" + TermsQueryBuilder.NAME + "] query does not support more than one field. "
-                            + "Already got: [" + fieldName + "] but also found [" + currentFieldName +"]");
-                }
-                fieldName = currentFieldName;
-                termsLookup = TermsLookup.parseTermsLookup(parser);
-            } else if (token.isValue()) {
-                if (AbstractQueryBuilder.BOOST_FIELD.match(currentFieldName)) {
-                    boost = parser.floatValue();
-                } else if (AbstractQueryBuilder.NAME_FIELD.match(currentFieldName)) {
-                    queryName = parser.text();
-                } else {
-                    throw new ParsingException(parser.getTokenLocation(),
-                            "[" + TermsQueryBuilder.NAME + "] query does not support [" + currentFieldName + "]");
-                }
-            } else {
-                throw new ParsingException(parser.getTokenLocation(),
-                        "[" + TermsQueryBuilder.NAME + "] unknown token [" + token + "] after [" + currentFieldName + "]");
-            }
-        }
-
-        if (fieldName == null) {
-            throw new ParsingException(parser.getTokenLocation(), "[" + TermsQueryBuilder.NAME + "] query requires a field name, " +
-                    "followed by array of terms or a document lookup specification");
-        }
-        return Optional.of(new TermsQueryBuilder(fieldName, values, termsLookup)
-                .boost(boost)
-                .queryName(queryName));
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     private static List<Object> parseValues(XContentParser parser) throws IOException {
@@ -402,88 +310,23 @@ public class TermsQueryBuilder extends AbstractQueryBuilder<TermsQueryBuilder> {
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        if (termsLookup != null) {
-            throw new UnsupportedOperationException("query must be rewritten first");
-        }
-        if (values == null || values.isEmpty()) {
-            return Queries.newMatchNoDocsQuery("No terms supplied for \"" + getName() + "\" query.");
-        }
-        return handleTermsQuery(values, fieldName, context);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
-    private List<Object> fetch(TermsLookup termsLookup, Client client) {
-        List<Object> terms = new ArrayList<>();
-        GetRequest getRequest = new GetRequest(termsLookup.index(), termsLookup.type(), termsLookup.id())
-                .preference("_local").routing(termsLookup.routing());
-        final GetResponse getResponse = client.get(getRequest).actionGet();
-        if (getResponse.isSourceEmpty() == false) { // extract terms only if the doc source exists
-            List<Object> extractedValues = XContentMapValues.extractRawValues(termsLookup.path(), getResponse.getSourceAsMap());
-            terms.addAll(extractedValues);
-        }
-        return terms;
-    }
-
-    private static Query handleTermsQuery(List<?> terms, String fieldName, QueryShardContext context) {
-        MappedFieldType fieldType = context.fieldMapper(fieldName);
-        String indexFieldName;
-        if (fieldType != null) {
-            indexFieldName = fieldType.name();
-        } else {
-            indexFieldName = fieldName;
-        }
-
-        Query query;
-        if (context.isFilter()) {
-            if (fieldType != null) {
-                query = fieldType.termsQuery(terms, context);
-            } else {
-                BytesRef[] filterValues = new BytesRef[terms.size()];
-                for (int i = 0; i < filterValues.length; i++) {
-                    filterValues[i] = BytesRefs.toBytesRef(terms.get(i));
-                }
-                query = new TermsQuery(indexFieldName, filterValues);
-            }
-        } else {
-            BooleanQuery.Builder bq = new BooleanQuery.Builder();
-            for (Object term : terms) {
-                if (fieldType != null) {
-                    bq.add(fieldType.termQuery(term, context), BooleanClause.Occur.SHOULD);
-                } else {
-                    bq.add(new TermQuery(new Term(indexFieldName, BytesRefs.toBytesRef(term))), BooleanClause.Occur.SHOULD);
-                }
-            }
-            query = bq.build();
-        }
-        return query;
-    }
 
     @Override
     protected int doHashCode() {
-        return Objects.hash(fieldName, values, termsLookup);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
     protected boolean doEquals(TermsQueryBuilder other) {
-        return Objects.equals(fieldName, other.fieldName) &&
-                Objects.equals(values, other.values) &&
-                Objects.equals(termsLookup, other.termsLookup);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
     protected QueryBuilder doRewrite(QueryRewriteContext queryRewriteContext) throws IOException {
-        if (this.termsLookup != null) {
-            TermsLookup termsLookup = new TermsLookup(this.termsLookup);
-            if (termsLookup.index() == null) { // TODO this should go away?
-                if (queryRewriteContext.getIndexSettings() != null) {
-                    termsLookup.index(queryRewriteContext.getIndexSettings().getIndex().getName());
-                } else {
-                    return this; // can't rewrite until we have index scope on the shard
-                }
-            }
-            List<Object> values = fetch(termsLookup, queryRewriteContext.getClient());
-            return new TermsQueryBuilder(this.fieldName, values);
-        }
-        return this;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
 }

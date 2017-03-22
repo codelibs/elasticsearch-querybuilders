@@ -30,7 +30,6 @@ import org.codelibs.elasticsearch.common.io.stream.NamedWriteable;
 import org.codelibs.elasticsearch.common.lucene.search.Queries;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.codelibs.elasticsearch.index.mapper.ObjectMapper;
 import org.codelibs.elasticsearch.index.query.QueryBuilder;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
@@ -181,27 +180,7 @@ public abstract class SortBuilder<T extends SortBuilder<T>> extends ToXContentTo
     }
 
     protected static Nested resolveNested(QueryShardContext context, String nestedPath, QueryBuilder nestedFilter) throws IOException {
-        Nested nested = null;
-        if (nestedPath != null) {
-            BitSetProducer rootDocumentsFilter = context.bitsetFilter(Queries.newNonNestedFilter());
-            ObjectMapper nestedObjectMapper = context.getObjectMapper(nestedPath);
-            if (nestedObjectMapper == null) {
-                throw new QueryShardException(context, "[nested] failed to find nested object under path [" + nestedPath + "]");
-            }
-            if (!nestedObjectMapper.nested().isNested()) {
-                throw new QueryShardException(context, "[nested] nested object under path [" + nestedPath + "] is not of nested type");
-            }
-            Query innerDocumentsQuery;
-            if (nestedFilter != null) {
-                context.nestedScope().nextLevel(nestedObjectMapper);
-                innerDocumentsQuery = QueryBuilder.rewriteQuery(nestedFilter, context).toFilter(context);
-                context.nestedScope().previousLevel();
-            } else {
-                innerDocumentsQuery = nestedObjectMapper.nestedTypeFilter();
-            }
-            nested = new Nested(rootDocumentsFilter,  innerDocumentsQuery);
-        }
-        return nested;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     protected static QueryBuilder parseNestedFilter(XContentParser parser, QueryParseContext context) {

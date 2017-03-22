@@ -27,14 +27,7 @@ import org.apache.lucene.search.vectorhighlight.FieldFragList.WeightedFragInfo.S
 import org.apache.lucene.search.vectorhighlight.FragmentsBuilder;
 import org.apache.lucene.util.CollectionUtil;
 import org.apache.lucene.util.Version;
-import org.codelibs.elasticsearch.index.analysis.CustomAnalyzer;
-import org.codelibs.elasticsearch.index.analysis.EdgeNGramTokenFilterFactory;
-import org.codelibs.elasticsearch.index.analysis.EdgeNGramTokenizerFactory;
-import org.codelibs.elasticsearch.index.analysis.NGramTokenFilterFactory;
-import org.codelibs.elasticsearch.index.analysis.NGramTokenizerFactory;
 import org.codelibs.elasticsearch.index.analysis.NamedAnalyzer;
-import org.codelibs.elasticsearch.index.analysis.TokenFilterFactory;
-import org.codelibs.elasticsearch.index.analysis.WordDelimiterTokenFilterFactory;
 import org.codelibs.elasticsearch.index.mapper.FieldMapper;
 
 import java.util.Comparator;
@@ -83,20 +76,6 @@ public final class FragmentBuilderHelper {
     }
 
     private static boolean containsBrokenAnalysis(Analyzer analyzer) {
-        // TODO maybe we need a getter on Namedanalyzer that tells if this uses broken Analysis
-        if (analyzer instanceof NamedAnalyzer) {
-            analyzer = ((NamedAnalyzer) analyzer).analyzer();
-        }
-        if (analyzer instanceof CustomAnalyzer) {
-            final CustomAnalyzer a = (CustomAnalyzer) analyzer;
-            TokenFilterFactory[] tokenFilters = a.tokenFilters();
-            for (TokenFilterFactory tokenFilterFactory : tokenFilters) {
-                if (tokenFilterFactory instanceof WordDelimiterTokenFilterFactory
-                        || tokenFilterFactory instanceof EdgeNGramTokenFilterFactory) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 }

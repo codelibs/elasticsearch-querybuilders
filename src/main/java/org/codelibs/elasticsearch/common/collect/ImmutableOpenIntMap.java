@@ -133,7 +133,7 @@ public final class ImmutableOpenIntMap<VType> implements Iterable<IntObjectCurso
 
             @Override
             public void remove() {
-                throw new UnsupportedOperationException();
+                throw new UnsupportedOperationException("querybuilders does not support this operation.");
             }
         };
     }
@@ -163,7 +163,7 @@ public final class ImmutableOpenIntMap<VType> implements Iterable<IntObjectCurso
 
             @Override
             public void remove() {
-                throw new UnsupportedOperationException();
+                throw new UnsupportedOperationException("querybuilders does not support this operation.");
             }
         };
     }

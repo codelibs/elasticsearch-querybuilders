@@ -27,7 +27,6 @@ import org.codelibs.elasticsearch.common.io.stream.Writeable;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
-import org.codelibs.elasticsearch.rest.RestRequest;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -182,14 +181,5 @@ public class StoredFieldsContext implements Writeable {
                     + XContentParser.Token.START_ARRAY + "] in [" + fieldName + "] but found [" + token + "]",
                 parser.getTokenLocation());
         }
-    }
-
-    public static StoredFieldsContext fromRestRequest(String name, RestRequest request) {
-        String sField = request.param(name);
-        if (sField != null) {
-            String[] sFields = Strings.splitStringByCommaToArray(sField);
-            return fromList(Arrays.asList(sFields));
-        }
-        return null;
     }
 }

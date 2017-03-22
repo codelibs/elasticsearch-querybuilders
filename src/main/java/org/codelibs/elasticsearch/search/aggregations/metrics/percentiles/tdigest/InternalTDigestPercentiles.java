@@ -57,7 +57,7 @@ public class InternalTDigestPercentiles extends AbstractInternalTDigestPercentil
 
     @Override
     public double percentile(double percent) {
-        return state.quantile(percent / 100);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override
@@ -95,9 +95,7 @@ public class InternalTDigestPercentiles extends AbstractInternalTDigestPercentil
 
         @Override
         public Percentile next() {
-            final Percentile next = new InternalPercentile(percents[i], state.quantile(percents[i] / 100));
-            ++i;
-            return next;
+            throw new UnsupportedOperationException();
         }
 
         @Override

@@ -37,8 +37,6 @@ import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
 import org.codelibs.elasticsearch.index.fielddata.IndexGeoPointFieldData;
-import org.codelibs.elasticsearch.index.mapper.BaseGeoPointFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.LatLonPointFieldMapper;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
 import org.codelibs.elasticsearch.index.search.geo.GeoPolygonQuery;
 
@@ -161,69 +159,7 @@ public class GeoPolygonQueryBuilder extends AbstractQueryBuilder<GeoPolygonQuery
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        MappedFieldType fieldType = context.fieldMapper(fieldName);
-        if (fieldType == null) {
-            if (ignoreUnmapped) {
-                return new MatchNoDocsQuery();
-            } else {
-                throw new QueryShardException(context, "failed to find geo_point field [" + fieldName + "]");
-            }
-        }
-        if (!(fieldType instanceof BaseGeoPointFieldMapper.GeoPointFieldType)) {
-            throw new QueryShardException(context, "field [" + fieldName + "] is not a geo_point field");
-        }
-
-        List<GeoPoint> shell = new ArrayList<GeoPoint>();
-        for (GeoPoint geoPoint : this.shell) {
-            shell.add(new GeoPoint(geoPoint));
-        }
-        final int shellSize = shell.size();
-
-        final boolean indexCreatedBeforeV2_0 = context.indexVersionCreated().before(Version.V_2_0_0);
-        // validation was not available prior to 2.x, so to support bwc
-        // percolation queries we only ignore_malformed on 2.x created indexes
-        if (!indexCreatedBeforeV2_0 && !GeoValidationMethod.isIgnoreMalformed(validationMethod)) {
-            for (GeoPoint point : shell) {
-                if (!GeoUtils.isValidLatitude(point.lat())) {
-                    throw new QueryShardException(context, "illegal latitude value [{}] for [{}]", point.lat(),
-                            GeoPolygonQueryBuilder.NAME);
-                }
-                if (!GeoUtils.isValidLongitude(point.lat())) {
-                    throw new QueryShardException(context, "illegal longitude value [{}] for [{}]", point.lon(),
-                            GeoPolygonQueryBuilder.NAME);
-                }
-            }
-        }
-
-        final Version indexVersionCreated = context.indexVersionCreated();
-        if (indexVersionCreated.onOrAfter(Version.V_2_2_0) || GeoValidationMethod.isCoerce(validationMethod)) {
-            for (GeoPoint point : shell) {
-                GeoUtils.normalizePoint(point, true, true);
-            }
-        }
-
-        if (indexVersionCreated.before(Version.V_2_2_0)) {
-            IndexGeoPointFieldData indexFieldData = context.getForField(fieldType);
-            return new GeoPolygonQuery(indexFieldData, shell.toArray(new GeoPoint[shellSize]));
-        }
-
-        double[] lats = new double[shellSize];
-        double[] lons = new double[shellSize];
-        GeoPoint p;
-        for (int i=0; i<shellSize; ++i) {
-            p = shell.get(i);
-            lats[i] = p.lat();
-            lons[i] = p.lon();
-        }
-
-        if (indexVersionCreated.onOrAfter(LatLonPointFieldMapper.LAT_LON_FIELD_VERSION)) {
-            return LatLonPoint.newPolygonQuery(fieldType.name(), new Polygon(lats, lons));
-        }
-        // if index created V_2_2 use (soon to be legacy) numeric encoding postings format
-        // if index created V_2_3 > use prefix encoded postings format
-        final GeoPointField.TermEncoding encoding = (indexVersionCreated.before(Version.V_2_3_0)) ?
-            GeoPointField.TermEncoding.NUMERIC : GeoPointField.TermEncoding.PREFIX;
-        return new GeoPointInPolygonQuery(fieldType.name(), encoding, lats, lons);
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

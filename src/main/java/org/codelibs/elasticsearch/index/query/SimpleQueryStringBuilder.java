@@ -352,75 +352,7 @@ public class SimpleQueryStringBuilder extends AbstractQueryBuilder<SimpleQuerySt
 
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
-        // field names in builder can have wildcards etc, need to resolve them here
-        Map<String, Float> resolvedFieldsAndWeights = new TreeMap<>();
-
-        if ((useAllFields != null && useAllFields) && (fieldsAndWeights.size() != 0)) {
-            throw addValidationError("cannot use [all_fields] parameter in conjunction with [fields]", null);
-        }
-
-        // If explicitly required to use all fields, use all fields, OR:
-        // Automatically determine the fields (to replace the _all field) if all of the following are true:
-        // - The _all field is disabled,
-        // - and the default_field has not been changed in the settings
-        // - and no fields are specified in the request
-        Settings newSettings = new Settings(settings);
-        if ((this.useAllFields != null && this.useAllFields) ||
-                (context.getMapperService().allEnabled() == false &&
-                        "_all".equals(context.defaultField()) &&
-                        this.fieldsAndWeights.isEmpty())) {
-            resolvedFieldsAndWeights = QueryStringQueryBuilder.allQueryableDefaultFields(context);
-            // Need to use lenient mode when using "all-mode" so exceptions aren't thrown due to mismatched types
-            newSettings.lenient(true);
-        } else {
-            // Use the default field if no fields specified
-            if (fieldsAndWeights.isEmpty()) {
-                resolvedFieldsAndWeights.put(resolveIndexName(context.defaultField(), context), AbstractQueryBuilder.DEFAULT_BOOST);
-            } else {
-                for (Map.Entry<String, Float> fieldEntry : fieldsAndWeights.entrySet()) {
-                    if (Regex.isSimpleMatchPattern(fieldEntry.getKey())) {
-                        for (String fieldName : context.getMapperService().simpleMatchToIndexNames(fieldEntry.getKey())) {
-                            resolvedFieldsAndWeights.put(fieldName, fieldEntry.getValue());
-                        }
-                    } else {
-                        resolvedFieldsAndWeights.put(resolveIndexName(fieldEntry.getKey(), context), fieldEntry.getValue());
-                    }
-                }
-            }
-        }
-
-        // Use standard analyzer by default if none specified
-        Analyzer luceneAnalyzer;
-        if (analyzer == null) {
-            luceneAnalyzer = context.getMapperService().searchAnalyzer();
-        } else {
-            luceneAnalyzer = context.getIndexAnalyzers().get(analyzer);
-            if (luceneAnalyzer == null) {
-                throw new QueryShardException(context, "[" + SimpleQueryStringBuilder.NAME + "] analyzer [" + analyzer
-                        + "] not found");
-            }
-
-        }
-
-        SimpleQueryParser sqp = new SimpleQueryParser(luceneAnalyzer, resolvedFieldsAndWeights, flags, newSettings, context);
-        sqp.setDefaultOperator(defaultOperator.toBooleanClauseOccur());
-
-        Query query = sqp.parse(queryText);
-        // If the coordination factor is disabled on a boolean query we don't apply the minimum should match.
-        // This is done to make sure that the minimum_should_match doesn't get applied when there is only one word
-        // and multiple variations of the same word in the query (synonyms for instance).
-        if (minimumShouldMatch != null && query instanceof BooleanQuery && !((BooleanQuery) query).isCoordDisabled()) {
-            query = Queries.applyMinimumShouldMatch((BooleanQuery) query, minimumShouldMatch);
-        }
-        return query;
-    }
-
-    private static String resolveIndexName(String fieldName, QueryShardContext context) {
-        MappedFieldType fieldType = context.fieldMapper(fieldName);
-        if (fieldType != null) {
-            return fieldType.name();
-        }
-        return fieldName;
+        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     @Override

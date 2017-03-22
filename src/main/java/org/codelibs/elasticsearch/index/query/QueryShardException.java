@@ -23,8 +23,6 @@ import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.index.Index;
-import org.codelibs.elasticsearch.rest.RestStatus;
 
 import java.io.IOException;
 
@@ -39,25 +37,11 @@ public class QueryShardException extends ElasticsearchException {
 
     public QueryShardException(QueryShardContext context, String msg, Throwable cause, Object... args) {
         super(msg, cause, args);
-        setIndex(context.index());
     }
 
-    /**
-     * This constructor is provided for use in unit tests where a
-     * {@link QueryShardContext} may not be available
-     */
-    public QueryShardException(Index index, String msg, Throwable cause) {
-        super(msg, cause);
-        setIndex(index);
-    }
 
     public QueryShardException(StreamInput in) throws IOException{
         super(in);
-    }
-
-    @Override
-    public RestStatus status() {
-        return RestStatus.BAD_REQUEST;
     }
 
     @Override

@@ -38,9 +38,6 @@ import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
 import org.codelibs.elasticsearch.index.mapper.FieldMapper;
-import org.codelibs.elasticsearch.index.mapper.GeoPointFieldMapper;
-import org.codelibs.elasticsearch.index.mapper.ParseContext;
-import org.codelibs.elasticsearch.index.mapper.ParseContext.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,7 +63,6 @@ import java.util.Map;
  * <code>[geohash][suggestion]</code>. If the neighbor option is set the cells
  * next to the cell on the deepest geohash level ( <code>precision</code>) will
  * be indexed as well. The {@link TokenStream} used to build the {@link FST} for
- * suggestion will be wrapped into a {@link PrefixTokenFilter} managing these
  * geohases as prefixes.
  */
 public class GeolocationContextMapping extends ContextMapping {
@@ -257,26 +253,6 @@ public class GeolocationContextMapping extends ContextMapping {
     @Override
     public ContextConfig defaultConfig() {
         return defaultConfig;
-    }
-
-    @Override
-    public ContextConfig parseContext(ParseContext parseContext, XContentParser parser)
-        throws IOException, ElasticsearchParseException {
-
-        if(fieldName != null) {
-            FieldMapper mapper = parseContext.docMapper().mappers().getMapper(fieldName);
-            if(!(mapper instanceof GeoPointFieldMapper)) {
-                throw new ElasticsearchParseException("referenced field must be mapped to geo_point");
-            }
-        }
-
-        Collection<String> locations;
-        if(parser.currentToken() == Token.VALUE_NULL) {
-            locations = null;
-        } else {
-            locations = parseSinglePointOrList(parser);
-        }
-        return new GeoConfig(this, locations);
     }
 
     /**
@@ -627,71 +603,6 @@ public class GeolocationContextMapping extends ContextMapping {
         public GeoConfig(GeolocationContextMapping mapping, Collection<String> locations) {
             this.locations = locations;
             this.mapping = mapping;
-        }
-
-        @Override
-        protected TokenStream wrapTokenStream(Document doc, TokenStream stream) {
-            Collection<String> geohashes;
-
-            if (locations == null || locations.size() == 0) {
-                if(mapping.fieldName != null) {
-                    IndexableField[] fields = doc.getFields(mapping.fieldName);
-                    if(fields.length == 0) {
-                        IndexableField[] lonFields = doc.getFields(mapping.fieldName + ".lon");
-                        IndexableField[] latFields = doc.getFields(mapping.fieldName + ".lat");
-                        if (lonFields.length > 0 && latFields.length > 0) {
-                            geohashes = new ArrayList<>(fields.length);
-                            GeoPoint spare = new GeoPoint();
-                            for (int i = 0 ; i < lonFields.length ; i++) {
-                                IndexableField lonField = lonFields[i];
-                                IndexableField latField = latFields[i];
-                                assert lonField.fieldType().docValuesType() == latField.fieldType().docValuesType();
-                                // we write doc values fields differently: one field for all values,
-                                // so we need to only care about indexed fields
-                                if (lonField.fieldType().docValuesType() == DocValuesType.NONE) {
-                                    spare.reset(latField.numericValue().doubleValue(), lonField.numericValue().doubleValue());
-                                    geohashes.add(spare.geohash());
-                                }
-                            }
-                        } else {
-                            geohashes = mapping.defaultLocations;
-                        }
-                    } else {
-                        geohashes = new ArrayList<>(fields.length);
-                        GeoPoint spare = new GeoPoint();
-                        for (IndexableField field : fields) {
-                            if (field instanceof StringField) {
-                                spare.resetFromString(field.stringValue());
-                            } else if (field instanceof GeoPointField) {
-                                GeoPointField geoPointField = (GeoPointField) field;
-                                spare.reset(geoPointField.getLat(), geoPointField.getLon());
-                            } else {
-                                spare.resetFromString(field.stringValue());
-                            }
-                            geohashes.add(spare.geohash());
-                        }
-                    }
-                } else {
-                    geohashes = mapping.defaultLocations;
-                }
-            } else {
-                geohashes = locations;
-            }
-
-            Collection<String> locations = new HashSet<>();
-            for (String geohash : geohashes) {
-                for (int p : mapping.precision) {
-                    int precision = Math.min(p, geohash.length());
-                    String truncatedGeohash = geohash.substring(0, precision);
-                    if(mapping.neighbors) {
-                        GeoHashUtils.addNeighbors(truncatedGeohash, precision, locations);
-                    }
-                    locations.add(truncatedGeohash);
-                }
-            }
-
-            throw new UnsupportedOperationException("QueryBuilders does not support this operation.");
-//            return new PrefixTokenFilter(stream, ContextMapping.SEPARATOR, locations);
         }
 
         @Override

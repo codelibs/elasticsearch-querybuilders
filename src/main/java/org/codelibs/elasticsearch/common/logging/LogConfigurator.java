@@ -21,11 +21,7 @@ package org.codelibs.elasticsearch.common.logging;
 
 import org.codelibs.elasticsearch.querybuilders.mock.log4j.Level;
 import org.codelibs.elasticsearch.Version;
-import org.codelibs.elasticsearch.cli.UserException;
-import org.codelibs.elasticsearch.cluster.ClusterName;
-import org.codelibs.elasticsearch.common.SuppressForbidden;
 import org.codelibs.elasticsearch.common.settings.Settings;
-import org.codelibs.elasticsearch.env.Environment;
 
 import java.io.IOException;
 import java.nio.file.FileVisitOption;
@@ -54,25 +50,6 @@ public class LogConfigurator {
         // we initialize the status logger immediately otherwise Log4j will complain when we try to get the context
         configureStatusLogger();
         configureLoggerLevels(settings);
-    }
-
-    /**
-     * Configure logging reading from any log4j2.properties found in the config directory and its
-     * subdirectories from the specified environment. Will also configure logging to point the logs
-     * directory from the specified environment.
-     *
-     * @param environment the environment for reading configs and the logs path
-     * @throws IOException   if there is an issue readings any log4j2.properties in the config
-     *                       directory
-     * @throws UserException if there are no log4j2.properties in the specified configs path
-     */
-    public static void configure(final Environment environment) throws IOException, UserException {
-        Objects.requireNonNull(environment);
-        configure(environment.settings(), environment.configFile(), environment.logsFile());
-    }
-
-    private static void configure(final Settings settings, final Path configsPath, final Path logsPath) throws IOException, UserException {
-        throw new UnsupportedOperationException();
     }
 
     private static void configureStatusLogger() {
@@ -114,11 +91,6 @@ public class LogConfigurator {
                 return FileVisitResult.CONTINUE;
             }
         });
-    }
-
-    @SuppressForbidden(reason = "sets system property for logging configuration")
-    private static void setLogConfigurationSystemProperty(final Path logsPath, final Settings settings) {
-        System.setProperty("es.logs", logsPath.resolve(ClusterName.CLUSTER_NAME_SETTING.get(settings).value()).toString());
     }
 
 }
