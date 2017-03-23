@@ -36,7 +36,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * The abstract base builder for instances of {@link RescoreBuilder}.
+ * The abstract base builder for instances of {RescoreBuilder}.
  */
 public abstract class RescoreBuilder<RB extends RescoreBuilder<RB>> extends ToXContentToBytes implements NamedWriteable {
 

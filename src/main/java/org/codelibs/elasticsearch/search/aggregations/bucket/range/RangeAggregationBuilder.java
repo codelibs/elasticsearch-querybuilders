@@ -87,7 +87,7 @@ public class RangeAggregationBuilder extends AbstractRangeBuilder<RangeAggregati
     }
 
     /**
-     * Same as {@link #addRange(String, double, double)} but the key will be
+     * Same as {#addRange(String, double, double)} but the key will be
      * automatically generated based on <code>from</code> and
      * <code>to</code>.
      */
@@ -109,7 +109,7 @@ public class RangeAggregationBuilder extends AbstractRangeBuilder<RangeAggregati
     }
 
     /**
-     * Same as {@link #addUnboundedTo(String, double)} but the key will be
+     * Same as {#addUnboundedTo(String, double)} but the key will be
      * computed automatically.
      */
     public RangeAggregationBuilder addUnboundedTo(double to) {
@@ -130,7 +130,7 @@ public class RangeAggregationBuilder extends AbstractRangeBuilder<RangeAggregati
     }
 
     /**
-     * Same as {@link #addUnboundedFrom(String, double)} but the key will be
+     * Same as {#addUnboundedFrom(String, double)} but the key will be
      * computed automatically.
      */
     public RangeAggregationBuilder addUnboundedFrom(double from) {

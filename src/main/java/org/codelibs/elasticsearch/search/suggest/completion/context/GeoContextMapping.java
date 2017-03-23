@@ -38,13 +38,13 @@ import static org.codelibs.elasticsearch.common.geo.GeoHashUtils.addNeighbors;
 import static org.codelibs.elasticsearch.common.geo.GeoHashUtils.stringEncode;
 
 /**
- * A {@link ContextMapping} that uses a geo location/area as a
+ * A {ContextMapping} that uses a geo location/area as a
  * criteria.
  * The suggestions can be boosted and/or filtered depending on
  * whether it falls within an area, represented by a query geo hash
  * with a specified precision
  *
- * {@link GeoQueryContext} defines the options for constructing
+ * {GeoQueryContext} defines the options for constructing
  * a unit of query context for this context type
  */
 public class GeoContextMapping extends ContextMapping<GeoQueryContext> {
@@ -120,7 +120,7 @@ public class GeoContextMapping extends ContextMapping<GeoQueryContext> {
     }
 
     /**
-     * Parse a list of {@link GeoQueryContext}
+     * Parse a list of {GeoQueryContext}
      * using <code>parser</code>. A QueryContexts accepts one of the following forms:
      *
      * <ul>
@@ -140,7 +140,7 @@ public class GeoContextMapping extends ContextMapping<GeoQueryContext> {
      *     </ul>
      *     <li>String: <pre>GEO POINT</pre></li>
      *  </ul>
-     * see {@link GeoUtils#parseGeoPoint(String, GeoPoint)} for GEO POINT
+     * see {GeoUtils#parseGeoPoint(String, GeoPoint)} for GEO POINT
      */
     @Override
     public List<InternalQueryContext> toInternalQueryContexts(List<GeoQueryContext> queryContexts) {
@@ -207,7 +207,7 @@ public class GeoContextMapping extends ContextMapping<GeoQueryContext> {
          * Set the precision use o make suggestions
          *
          * @param precision
-         *            precision as distance with {@link DistanceUnit}. Default:
+         *            precision as distance with {DistanceUnit}. Default:
          *            meters
          * @return this
          */
@@ -221,7 +221,7 @@ public class GeoContextMapping extends ContextMapping<GeoQueryContext> {
          * @param precision
          *            precision value
          * @param unit
-         *            {@link DistanceUnit} to use
+         *            {DistanceUnit} to use
          * @return this
          */
         public Builder precision(double precision, DistanceUnit unit) {

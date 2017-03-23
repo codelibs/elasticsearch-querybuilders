@@ -24,7 +24,7 @@ import org.apache.lucene.index.SortedDocValues;
 import java.util.Set;
 
 /**
- * Specialization of {@link AtomicFieldData} for parent/child mappings.
+ * Specialization of {AtomicFieldData} for parent/child mappings.
  */
 public interface AtomicParentChildFieldData extends AtomicFieldData {
 
@@ -35,7 +35,7 @@ public interface AtomicParentChildFieldData extends AtomicFieldData {
 
     /**
      * Return the mapping for the given type. The returned
-     * {@link SortedDocValues} will map doc IDs to the identifier of their
+     * {SortedDocValues} will map doc IDs to the identifier of their
      * parent.
      */
     SortedDocValues getOrdinalsValues(String type);

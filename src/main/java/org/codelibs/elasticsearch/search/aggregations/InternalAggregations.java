@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.unmodifiableMap;
 /**
- * An internal implementation of {@link Aggregations}.
+ * An internal implementation of {Aggregations}.
  */
 public class InternalAggregations implements Aggregations, ToXContent, Streamable {
 
@@ -59,7 +59,7 @@ public class InternalAggregations implements Aggregations, ToXContent, Streamabl
     }
 
     /**
-     * Iterates over the {@link Aggregation}s.
+     * Iterates over the {Aggregation}s.
      */
     @Override
     public Iterator<Aggregation> iterator() {
@@ -67,7 +67,7 @@ public class InternalAggregations implements Aggregations, ToXContent, Streamabl
     }
 
     /**
-     * The list of {@link Aggregation}s.
+     * The list of {Aggregation}s.
      */
     @Override
     public List<Aggregation> asList() {
@@ -75,7 +75,7 @@ public class InternalAggregations implements Aggregations, ToXContent, Streamabl
     }
 
     /**
-     * Returns the {@link Aggregation}s keyed by map.
+     * Returns the {Aggregation}s keyed by map.
      */
     @Override
     public Map<String, Aggregation> asMap() {
@@ -83,7 +83,7 @@ public class InternalAggregations implements Aggregations, ToXContent, Streamabl
     }
 
     /**
-     * Returns the {@link Aggregation}s keyed by map.
+     * Returns the {Aggregation}s keyed by map.
      */
     @Override
     public Map<String, Aggregation> getAsMap() {

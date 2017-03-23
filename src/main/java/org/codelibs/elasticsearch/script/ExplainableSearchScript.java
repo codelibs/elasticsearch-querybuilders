@@ -43,7 +43,7 @@ import org.apache.lucene.search.Explanation;
 import java.io.IOException;
 
 /**
- * To be implemented by {@link SearchScript} which can provided an {@link Explanation} of the score
+ * To be implemented by {SearchScript} which can provided an {Explanation} of the score
  * This is currently not used inside elasticsearch but it is used, see for example here:
  * https://github.com/elastic/elasticsearch/issues/8561
  */

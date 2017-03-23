@@ -20,7 +20,7 @@
 package org.codelibs.elasticsearch.script;
 
 /**
- * A simpler base class instead of {@link AbstractSearchScript} for computations
+ * A simpler base class instead of {AbstractSearchScript} for computations
  * that return a double number.
  */
 public abstract class AbstractDoubleSearchScript extends AbstractSearchScript {

@@ -21,7 +21,7 @@ package org.codelibs.elasticsearch.common.compress;
 
 import org.codelibs.elasticsearch.common.xcontent.XContent;
 
-/** Exception indicating that we were expecting some {@link XContent} but could
+/** Exception indicating that we were expecting some {XContent} but could
  *  not detect its type. */
 public class NotXContentException extends RuntimeException {
 

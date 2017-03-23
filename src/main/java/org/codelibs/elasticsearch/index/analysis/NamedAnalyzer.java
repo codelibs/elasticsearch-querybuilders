@@ -25,8 +25,8 @@ import org.apache.lucene.analysis.DelegatingAnalyzerWrapper;
 import java.util.Objects;
 
 /**
- * Named analyzer is an analyzer wrapper around an actual analyzer ({@link #analyzer} that is associated
- * with a name ({@link #name()}.
+ * Named analyzer is an analyzer wrapper around an actual analyzer ({#analyzer} that is associated
+ * with a name ({#name()}.
  */
 public class NamedAnalyzer extends DelegatingAnalyzerWrapper {
 

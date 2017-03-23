@@ -41,17 +41,17 @@ public abstract class InternalMultiBucketAggregation<A extends InternalMultiBuck
     }
 
     /**
-     * Create a new copy of this {@link Aggregation} with the same settings as
-     * this {@link Aggregation} and contains the provided buckets.
+     * Create a new copy of this {Aggregation} with the same settings as
+     * this {Aggregation} and contains the provided buckets.
      *
      * @param buckets
-     *            the buckets to use in the new {@link Aggregation}
-     * @return the new {@link Aggregation}
+     *            the buckets to use in the new {Aggregation}
+     * @return the new {Aggregation}
      */
     public abstract A create(List<B> buckets);
 
     /**
-     * Create a new {@link InternalBucket} using the provided prototype bucket
+     * Create a new {InternalBucket} using the provided prototype bucket
      * and aggregations.
      *
      * @param aggregations

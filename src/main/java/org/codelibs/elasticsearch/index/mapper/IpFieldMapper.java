@@ -47,7 +47,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/** A {@link FieldMapper} for ip addresses. */
+/** A {FieldMapper} for ip addresses. */
 public class IpFieldMapper extends FieldMapper {
 
     public static final String CONTENT_TYPE = "ip";

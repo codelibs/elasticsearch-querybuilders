@@ -20,7 +20,7 @@ package org.codelibs.elasticsearch.index.fielddata;
 
 
 /**
- * {@link AtomicFieldData} specialization for geo points.
+ * {AtomicFieldData} specialization for geo points.
  */
 public interface AtomicGeoPointFieldData extends AtomicFieldData {
 

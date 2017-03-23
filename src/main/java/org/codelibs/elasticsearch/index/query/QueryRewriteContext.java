@@ -27,10 +27,10 @@ import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.script.Script;
 
 /**
- * Context object used to rewrite {@link QueryBuilder} instances into simplified version.
+ * Context object used to rewrite {QueryBuilder} instances into simplified version.
  */
 public class QueryRewriteContext implements ParseFieldMatcherSupplier {
-    /** Return the current {@link IndexReader}, or {@code null} if no index reader is available, for
+    /** Return the current {IndexReader}, or {@code null} if no index reader is available, for
      *  instance if we are on the coordinating node or if this rewrite context is used to index
      *  queries (percolation). */
     public IndexReader getIndexReader() {
@@ -43,14 +43,14 @@ public class QueryRewriteContext implements ParseFieldMatcherSupplier {
     }
 
     /**
-     * The registry used to build new {@link XContentParser}s. Contains registered named parsers needed to parse the query.
+     * The registry used to build new {XContentParser}s. Contains registered named parsers needed to parse the query.
      */
     public NamedXContentRegistry getXContentRegistry() {
         throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     /**
-     * Returns a new {@link QueryParseContext} that wraps the provided parser, using the ParseFieldMatcher settings that
+     * Returns a new {QueryParseContext} that wraps the provided parser, using the ParseFieldMatcher settings that
      * are configured in the index settings. The default script language will always default to Painless.
      */
     public QueryParseContext newParseContext(XContentParser parser) {

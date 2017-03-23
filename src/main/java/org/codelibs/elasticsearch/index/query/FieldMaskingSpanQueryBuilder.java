@@ -42,9 +42,9 @@ public class FieldMaskingSpanQueryBuilder extends AbstractQueryBuilder<FieldMask
     private final String fieldName;
 
     /**
-     * Constructs a new {@link FieldMaskingSpanQueryBuilder} given an inner {@link SpanQueryBuilder} for
+     * Constructs a new {FieldMaskingSpanQueryBuilder} given an inner {SpanQueryBuilder} for
      * a given field
-     * @param queryBuilder inner {@link SpanQueryBuilder}
+     * @param queryBuilder inner {SpanQueryBuilder}
      * @param fieldName the field name
      */
     public FieldMaskingSpanQueryBuilder(SpanQueryBuilder queryBuilder, String fieldName) {
@@ -81,7 +81,7 @@ public class FieldMaskingSpanQueryBuilder extends AbstractQueryBuilder<FieldMask
     }
 
     /**
-     * @return the inner {@link QueryBuilder}
+     * @return the inner {QueryBuilder}
      */
     public SpanQueryBuilder innerQuery() {
         return this.queryBuilder;

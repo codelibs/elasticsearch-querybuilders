@@ -39,8 +39,8 @@ import static java.util.Objects.requireNonNull;
 
 public class NamedXContentRegistry {
     /**
-     * The empty {@link NamedXContentRegistry} for use when you are sure that you aren't going to call
-     * {@link XContentParser#namedObject(Class, String, Object)}. Be *very* careful with this singleton because a parser using it will fail
+     * The empty {NamedXContentRegistry} for use when you are sure that you aren't going to call
+     * {XContentParser#namedObject(Class, String, Object)}. Be *very* careful with this singleton because a parser using it will fail
      * every call to {@linkplain XContentParser#namedObject(Class, String, Object)}. Every non-test usage really should be checked thorowly
      * and marked with a comment about how it was checked. That way anyone that sees code that uses it knows that it is potentially
      * dangerous.
@@ -59,7 +59,7 @@ public class NamedXContentRegistry {
 
     /**
      * Parses an object with the type T from parser.
-     * @deprecated prefer {@link FromXContent} if possible
+     * @deprecated prefer {FromXContent} if possible
      */
     @Deprecated
     public interface FromXContentWithContext<T> {
@@ -73,7 +73,7 @@ public class NamedXContentRegistry {
         /** The class that this entry can read. */
         public final Class<?> categoryClass;
 
-        /** A name for the entry which is unique within the {@link #categoryClass}. */
+        /** A name for the entry which is unique within the {#categoryClass}. */
         public final ParseField name;
 
         /** A parser capability of parser the entry's class. */
@@ -87,7 +87,7 @@ public class NamedXContentRegistry {
         }
         /**
          * Creates a new entry which can be stored by the registry.
-         * @deprecated prefer {@link Entry#Entry(Class, ParseField, FromXContent)}. Contexts will be removed when possible
+         * @deprecated prefer {Entry#Entry(Class, ParseField, FromXContent)}. Contexts will be removed when possible
          */
         @Deprecated
         public <T> Entry(Class<T> categoryClass, ParseField name, FromXContentWithContext<? extends T> parser) {
@@ -136,8 +136,8 @@ public class NamedXContentRegistry {
     }
 
     /**
-     * Parse a named object, throwing an exception if the parser isn't found. Throws an {@link ElasticsearchException} if the
-     * {@code categoryClass} isn't registered because this is almost always a bug. Throws a {@link UnknownNamedObjectException} if the
+     * Parse a named object, throwing an exception if the parser isn't found. Throws an {ElasticsearchException} if the
+     * {@code categoryClass} isn't registered because this is almost always a bug. Throws a {UnknownNamedObjectException} if the
      * {@code categoryClass} is registered but the {@code name} isn't.
      */
     public <T, C> T parseNamedObject(Class<T> categoryClass, String name, XContentParser parser, C context) throws IOException {
@@ -163,7 +163,7 @@ public class NamedXContentRegistry {
     }
 
     /**
-     * Thrown when {@link NamedXContentRegistry#parseNamedObject(Class, String, XContentParser, Object)} is called with an unregistered
+     * Thrown when {NamedXContentRegistry#parseNamedObject(Class, String, XContentParser, Object)} is called with an unregistered
      * name. When this bubbles up to the rest layer it is converted into a response with {@code 400 BAD REQUEST} status.
      */
     public static class UnknownNamedObjectException extends ParsingException {

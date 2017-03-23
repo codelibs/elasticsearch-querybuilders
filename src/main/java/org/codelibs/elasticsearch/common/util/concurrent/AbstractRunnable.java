@@ -51,20 +51,20 @@ public abstract class AbstractRunnable implements Runnable {
     }
 
     /**
-     * This method is invoked for all exception thrown by {@link #doRun()}
+     * This method is invoked for all exception thrown by {#doRun()}
      */
     public abstract void onFailure(Exception e);
 
     /**
      * This should be executed if the thread-pool executing this action rejected the execution.
-     * The default implementation forwards to {@link #onFailure(Exception)}
+     * The default implementation forwards to {#onFailure(Exception)}
      */
     public void onRejection(Exception e) {
         onFailure(e);
     }
 
     /**
-     * This method has the same semantics as {@link Runnable#run()}
+     * This method has the same semantics as {Runnable#run()}
      * @throws InterruptedException if the run method throws an InterruptedException
      */
     protected abstract void doRun() throws Exception;

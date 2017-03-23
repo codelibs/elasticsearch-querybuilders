@@ -29,7 +29,7 @@ import org.apache.lucene.util.Sorter;
 import java.util.Arrays;
 
 /**
- * Base class for building {@link SortedBinaryDocValues} instances based on unsorted content.
+ * Base class for building {SortedBinaryDocValues} instances based on unsorted content.
  */
 public abstract class SortingBinaryDocValues extends SortedBinaryDocValues {
 
@@ -54,7 +54,7 @@ public abstract class SortingBinaryDocValues extends SortedBinaryDocValues {
     }
 
     /**
-     * Make sure the {@link #values} array can store at least {@link #count} entries.
+     * Make sure the {#values} array can store at least {#count} entries.
      */
     protected final void grow() {
         if (values.length < count) {
@@ -69,7 +69,7 @@ public abstract class SortingBinaryDocValues extends SortedBinaryDocValues {
 
     /**
      * Sort values that are stored between offsets <code>0</code> and
-     * {@link #count} of {@link #values}.
+     * {#count} of {#values}.
      */
     protected final void sort() {
         sorter.sort(0, count);

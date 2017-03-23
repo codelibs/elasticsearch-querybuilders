@@ -29,13 +29,13 @@ import java.util.List;
 public class QueryValidationException extends ValidationException {
 
     /**
-     * Helper method than can be used to add error messages to an existing {@link QueryValidationException}.
+     * Helper method than can be used to add error messages to an existing {QueryValidationException}.
      * When passing {@code null} as the initial exception, a new exception is created.
      *
      * @param queryId the query that caused the error
      * @param validationError the error message to add to an initial exception
      * @param validationException an initial exception. Can be {@code null}, in which case a new exception is created.
-     * @return a {@link QueryValidationException} with added validation error message
+     * @return a {QueryValidationException} with added validation error message
      */
     public static QueryValidationException addValidationError(String queryId, String validationError, QueryValidationException validationException) {
         if (validationException == null) {
@@ -46,11 +46,11 @@ public class QueryValidationException extends ValidationException {
     }
 
     /**
-     * Helper method than can be used to add error messages to an existing {@link QueryValidationException}.
+     * Helper method than can be used to add error messages to an existing {QueryValidationException}.
      * When passing {@code null} as the initial exception, a new exception is created.
      * @param validationErrors the error messages to add to an initial exception
      * @param validationException an initial exception. Can be {@code null}, in which case a new exception is created.
-     * @return a {@link QueryValidationException} with added validation error message
+     * @return a {QueryValidationException} with added validation error message
      */
     public static QueryValidationException addValidationErrors(List<String> validationErrors, QueryValidationException validationException) {
         if (validationException == null) {

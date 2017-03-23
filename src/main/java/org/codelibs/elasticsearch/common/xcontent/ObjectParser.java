@@ -47,15 +47,15 @@ import static org.codelibs.elasticsearch.common.xcontent.XContentParser.Token.VA
 
 /**
  * A declarative, stateless parser that turns XContent into setter calls. A single parser should be defined for each object being parsed,
- * nested elements can be added via {@link #declareObject(BiConsumer, ContextParser, ParseField)} which should be satisfied where possible
- * by passing another instance of {@link ObjectParser}, this one customized for that Object.
+ * nested elements can be added via {#declareObject(BiConsumer, ContextParser, ParseField)} which should be satisfied where possible
+ * by passing another instance of {ObjectParser}, this one customized for that Object.
  * <p>
  * This class works well for object that do have a constructor argument or that can be built using information available from earlier in the
  * XContent. For objects that have constructors with required arguments that are specified on the same level as other fields see
- * {@link ConstructingObjectParser}.
+ * {ConstructingObjectParser}.
  * </p>
  * <p>
- * Instances of {@link ObjectParser} should be setup by declaring a constant field for the parsers and declaring all fields in a static
+ * Instances of {ObjectParser} should be setup by declaring a constant field for the parsers and declaring all fields in a static
  * block just below the creation of the parser. Like this:
  * </p>
  * <pre>{@code
@@ -65,8 +65,8 @@ import static org.codelibs.elasticsearch.common.xcontent.XContentParser.Token.VA
  *       PARSER.declareInt(Thing::setFruit, new ParseField("fruit"));
  *   }
  * }</pre>
- * It's highly recommended to use the high level declare methods like {@link #declareString(BiConsumer, ParseField)} instead of
- * {@link #declareField} which can be used to implement exceptional parsing operations not covered by the high level methods.
+ * It's highly recommended to use the high level declare methods like {#declareString(BiConsumer, ParseField)} instead of
+ * {#declareField} which can be used to implement exceptional parsing operations not covered by the high level methods.
  */
 public final class ObjectParser<Value, Context extends ParseFieldMatcherSupplier> extends AbstractObjectParser<Value, Context> {
     /**
@@ -120,10 +120,10 @@ public final class ObjectParser<Value, Context extends ParseFieldMatcherSupplier
     }
 
     /**
-     * Parses a Value from the given {@link XContentParser}
+     * Parses a Value from the given {XContentParser}
      * @param parser the parser to build a value from
-     * @param context must at least provide a {@link ParseFieldMatcher}
-     * @return a new value instance drawn from the provided value supplier on {@link #ObjectParser(String, Supplier)}
+     * @param context must at least provide a {ParseFieldMatcher}
+     * @return a new value instance drawn from the provided value supplier on {#ObjectParser(String, Supplier)}
      * @throws IOException if an IOException occurs.
      */
     @Override
@@ -135,7 +135,7 @@ public final class ObjectParser<Value, Context extends ParseFieldMatcherSupplier
     }
 
     /**
-     * Parses a Value from the given {@link XContentParser}
+     * Parses a Value from the given {XContentParser}
      * @param parser the parser to build a value from
      * @param value the value to fill from the parser
      * @param context a context that is passed along to all declared field parsers

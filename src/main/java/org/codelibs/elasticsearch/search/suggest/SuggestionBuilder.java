@@ -111,7 +111,7 @@ public abstract class SuggestionBuilder<T extends SuggestionBuilder<T>> implemen
 
 
     /**
-     * Same as in {@link SuggestBuilder#setGlobalText(String)}, but in the suggestion scope.
+     * Same as in {SuggestBuilder#setGlobalText(String)}, but in the suggestion scope.
      */
     @SuppressWarnings("unchecked")
     public T text(String text) {
@@ -153,7 +153,7 @@ public abstract class SuggestionBuilder<T extends SuggestionBuilder<T>> implemen
     }
 
     /**
-     * get the {@link #field()} parameter
+     * get the {#field()} parameter
      */
     public String field() {
         return this.field;
@@ -170,7 +170,7 @@ public abstract class SuggestionBuilder<T extends SuggestionBuilder<T>> implemen
     }
 
     /**
-     * get the {@link #analyzer()} parameter
+     * get the {#analyzer()} parameter
      */
     public String analyzer() {
         return this.analyzer;
@@ -189,7 +189,7 @@ public abstract class SuggestionBuilder<T extends SuggestionBuilder<T>> implemen
     }
 
     /**
-     * get the {@link #size()} parameter
+     * get the {#size()} parameter
      */
     public Integer size() {
         return this.size;
@@ -214,7 +214,7 @@ public abstract class SuggestionBuilder<T extends SuggestionBuilder<T>> implemen
     }
 
     /**
-     * get the {@link #shardSize()} parameter
+     * get the {#shardSize()} parameter
      */
     public Integer shardSize() {
         return this.shardSize;
@@ -321,7 +321,7 @@ public abstract class SuggestionBuilder<T extends SuggestionBuilder<T>> implemen
     }
 
     /**
-     * Indicates whether some other {@link SuggestionBuilder} of the same type is "equal to" this one.
+     * Indicates whether some other {SuggestionBuilder} of the same type is "equal to" this one.
      */
     protected abstract boolean doEquals(T other);
 
@@ -331,7 +331,7 @@ public abstract class SuggestionBuilder<T extends SuggestionBuilder<T>> implemen
     }
 
     /**
-     * HashCode for the subclass of {@link SuggestionBuilder} to implement.
+     * HashCode for the subclass of {SuggestionBuilder} to implement.
      */
     protected abstract int doHashCode();
 

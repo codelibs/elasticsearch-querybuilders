@@ -353,7 +353,7 @@ public final class InnerHitBuilder extends ToXContentToBytes implements Writeabl
     /**
      * Gets the stored fields to load and return.
      *
-     * @deprecated Use {@link InnerHitBuilder#getStoredFieldsContext()} instead.
+     * @deprecated Use {InnerHitBuilder#getStoredFieldsContext()} instead.
      */
     @Deprecated
     public List<String> getFieldNames() {
@@ -364,7 +364,7 @@ public final class InnerHitBuilder extends ToXContentToBytes implements Writeabl
      * Sets the stored fields to load and return.
      * If none are specified, the source of the document will be returned.
      *
-     * @deprecated Use {@link InnerHitBuilder#setStoredFieldNames(List)} instead.
+     * @deprecated Use {InnerHitBuilder#setStoredFieldNames(List)} instead.
      */
     @Deprecated
     public InnerHitBuilder setFieldNames(List<String> fieldNames) {
@@ -395,7 +395,7 @@ public final class InnerHitBuilder extends ToXContentToBytes implements Writeabl
     /**
      * Gets the docvalue fields.
      *
-     * @deprecated Use {@link InnerHitBuilder#getDocValueFields()} instead.
+     * @deprecated Use {InnerHitBuilder#getDocValueFields()} instead.
      */
     @Deprecated
     public List<String> getFieldDataFields() {
@@ -405,7 +405,7 @@ public final class InnerHitBuilder extends ToXContentToBytes implements Writeabl
     /**
      * Sets the stored fields to load from the docvalue and return.
      *
-     * @deprecated Use {@link InnerHitBuilder#setDocValueFields(List)} instead.
+     * @deprecated Use {InnerHitBuilder#setDocValueFields(List)} instead.
      */
     @Deprecated
     public InnerHitBuilder setFieldDataFields(List<String> fieldDataFields) {
@@ -416,7 +416,7 @@ public final class InnerHitBuilder extends ToXContentToBytes implements Writeabl
     /**
      * Adds a field to load from the docvalue and return.
      *
-     * @deprecated Use {@link InnerHitBuilder#addDocValueField(String)} instead.
+     * @deprecated Use {InnerHitBuilder#addDocValueField(String)} instead.
      */
     @Deprecated
     public InnerHitBuilder addFieldDataField(String field) {

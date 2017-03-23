@@ -147,7 +147,7 @@ public class FastCharArrayReader extends Reader {
      * Skips characters.  Returns the number of characters that were skipped.
      * <p>
      * The <code>n</code> parameter may be negative, even though the
-     * <code>skip</code> method of the {@link Reader} superclass throws
+     * <code>skip</code> method of the {Reader} superclass throws
      * an exception in this case. If <code>n</code> is negative, then
      * this method does nothing and returns <code>0</code>.
      *

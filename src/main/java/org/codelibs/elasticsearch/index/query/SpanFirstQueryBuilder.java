@@ -46,7 +46,7 @@ public class SpanFirstQueryBuilder extends AbstractQueryBuilder<SpanFirstQueryBu
     /**
      * Query that matches spans queries defined in <code>matchBuilder</code>
      * whose end position is less than or equal to <code>end</code>.
-     * @param matchBuilder inner {@link SpanQueryBuilder}
+     * @param matchBuilder inner {SpanQueryBuilder}
      * @param end maximum end position of the match, needs to be positive
      * @throws IllegalArgumentException for negative <code>end</code> positions
      */
@@ -77,7 +77,7 @@ public class SpanFirstQueryBuilder extends AbstractQueryBuilder<SpanFirstQueryBu
     }
 
     /**
-     * @return the inner {@link SpanQueryBuilder} defined in this query
+     * @return the inner {SpanQueryBuilder} defined in this query
      */
     public SpanQueryBuilder innerQuery() {
         return this.matchBuilder;

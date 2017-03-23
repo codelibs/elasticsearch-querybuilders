@@ -36,7 +36,7 @@ import java.util.Set;
 import static org.codelibs.elasticsearch.search.suggest.Suggest.COMPARATOR;
 
 /**
- * Suggestion response for {@link CompletionSuggester} results
+ * Suggestion response for {CompletionSuggester} results
  *
  * Response format for each entry:
  * {
@@ -111,7 +111,7 @@ public final class CompletionSuggestion extends Suggest.Suggestion<CompletionSug
 
     /**
      * Reduces suggestions to a single suggestion containing at most
-     * top {@link CompletionSuggestion#getSize()} options across <code>toReduce</code>
+     * top {CompletionSuggestion#getSize()} options across <code>toReduce</code>
      */
     public static CompletionSuggestion reduceTo(List<Suggest.Suggestion<Entry>> toReduce) {
         if (toReduce.isEmpty()) {

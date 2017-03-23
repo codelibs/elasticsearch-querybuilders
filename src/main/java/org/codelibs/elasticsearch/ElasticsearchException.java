@@ -48,13 +48,13 @@ public class ElasticsearchException extends RuntimeException implements ToXConte
     static final Version UNKNOWN_VERSION_ADDED = Version.fromId(0);
 
     /**
-     * Passed in the {@link Params} of {@link #toXContent(XContentBuilder, org.codelibs.elasticsearch.common.xcontent.ToXContent.Params, Throwable)}
+     * Passed in the {Params} of {#toXContent(XContentBuilder, org.codelibs.elasticsearch.common.xcontent.ToXContent.Params, Throwable)}
      * to control if the {@code caused_by} element should render. Unlike most parameters to {@code toXContent} methods this parameter is
      * internal only and not available as a URL parameter.
      */
     public static final String REST_EXCEPTION_SKIP_CAUSE = "rest.exception.cause.skip";
     /**
-     * Passed in the {@link Params} of {@link #toXContent(XContentBuilder, org.codelibs.elasticsearch.common.xcontent.ToXContent.Params, Throwable)}
+     * Passed in the {Params} of {#toXContent(XContentBuilder, org.codelibs.elasticsearch.common.xcontent.ToXContent.Params, Throwable)}
      * to control if the {@code stack_trace} element should render. Unlike most parameters to {@code toXContent} methods this parameter is
      * internal only and not available as a URL parameter. Use the {@code error_trace} parameter instead.
      */
@@ -151,7 +151,7 @@ public class ElasticsearchException extends RuntimeException implements ToXConte
 
     /**
      * Unwraps the actual cause from the exception for cases when the exception is a
-     * {@link ElasticsearchWrapperException}.
+     * {ElasticsearchWrapperException}.
      *
      * @see ExceptionsHelper#unwrapCause(Throwable)
      */
@@ -306,7 +306,7 @@ public class ElasticsearchException extends RuntimeException implements ToXConte
     }
 
     /**
-     * Static toXContent helper method that also renders non {@link org.codelibs.elasticsearch.ElasticsearchException} instances as XContent.
+     * Static toXContent helper method that also renders non {org.codelibs.elasticsearch.ElasticsearchException} instances as XContent.
      */
     public static void toXContent(XContentBuilder builder, Params params, Throwable ex) throws IOException {
         ex = ExceptionsHelper.unwrapCause(ex);
@@ -328,10 +328,10 @@ public class ElasticsearchException extends RuntimeException implements ToXConte
     }
 
     /**
-     * Generate a {@link ElasticsearchException} from a {@link XContentParser}. This does not
+     * Generate a {ElasticsearchException} from a {XContentParser}. This does not
      * return the original exception type (ie NodeClosedException for example) but just wraps
      * the type, the reason and the cause of the exception. It also recursively parses the
-     * tree structure of the cause, returning it as a tree structure of {@link ElasticsearchException}
+     * tree structure of the cause, returning it as a tree structure of {ElasticsearchException}
      * instances.
      */
     public static ElasticsearchException fromXContent(XContentParser parser) throws IOException {
@@ -395,7 +395,7 @@ public class ElasticsearchException extends RuntimeException implements ToXConte
 
     /**
      * Returns the root cause of this exception or multiple if different shards caused different exceptions.
-     * If the given exception is not an instance of {@link org.codelibs.elasticsearch.ElasticsearchException} an empty array
+     * If the given exception is not an instance of {org.codelibs.elasticsearch.ElasticsearchException} an empty array
      * is returned.
      */
     public static ElasticsearchException[] guessRootCauses(Throwable t) {

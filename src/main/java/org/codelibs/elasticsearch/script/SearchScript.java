@@ -30,7 +30,7 @@ public interface SearchScript {
     LeafSearchScript getLeafSearchScript(LeafReaderContext context) throws IOException;
 
     /**
-     * Indicates if document scores may be needed by this {@link SearchScript}.
+     * Indicates if document scores may be needed by this {SearchScript}.
      *
      * @return {@code true} if scores are needed.
      */

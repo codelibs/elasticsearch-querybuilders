@@ -138,7 +138,7 @@ public class Lucene {
     }
 
     /**
-     * Returns the number of documents in the index referenced by this {@link SegmentInfos}
+     * Returns the number of documents in the index referenced by this {SegmentInfos}
      */
     public static int getNumDocs(SegmentInfos info) {
         int numDocs = 0;
@@ -521,7 +521,7 @@ public class Lucene {
     }
 
     /**
-     * This exception is thrown when {@link org.codelibs.elasticsearch.common.lucene.Lucene.EarlyTerminatingCollector}
+     * This exception is thrown when {org.codelibs.elasticsearch.common.lucene.Lucene.EarlyTerminatingCollector}
      * reaches early termination
      * */
     public static final class EarlyTerminationException extends ElasticsearchException {
@@ -536,7 +536,7 @@ public class Lucene {
     }
 
     /**
-     * A collector that terminates early by throwing {@link org.codelibs.elasticsearch.common.lucene.Lucene.EarlyTerminationException}
+     * A collector that terminates early by throwing {org.codelibs.elasticsearch.common.lucene.Lucene.EarlyTerminationException}
      * when count of matched documents has reached <code>maxCountHits</code>
      */
     public static final class EarlyTerminatingCollector extends SimpleCollector {
@@ -624,8 +624,8 @@ public class Lucene {
 
     /**
      * Returns <tt>true</tt> iff the given exception or
-     * one of it's causes is an instance of {@link CorruptIndexException},
-     * {@link IndexFormatTooOldException}, or {@link IndexFormatTooNewException} otherwise <tt>false</tt>.
+     * one of it's causes is an instance of {CorruptIndexException},
+     * {IndexFormatTooOldException}, or {IndexFormatTooNewException} otherwise <tt>false</tt>.
      */
     public static boolean isCorruptionException(Throwable t) {
         return ExceptionsHelper.unwrapCorruption(t) != null;
@@ -740,8 +740,8 @@ public class Lucene {
     }
 
     /**
-     * Given a {@link Scorer}, return a {@link Bits} instance that will match
-     * all documents contained in the set. Note that the returned {@link Bits}
+     * Given a {Scorer}, return a {Bits} instance that will match
+     * all documents contained in the set. Note that the returned {Bits}
      * instance MUST be consumed in order.
      */
     public static Bits asSequentialAccessBits(final int maxDoc, @Nullable Scorer scorer) throws IOException {

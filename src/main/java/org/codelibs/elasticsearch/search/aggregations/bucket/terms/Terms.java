@@ -137,7 +137,7 @@ public interface Terms extends MultiBucketsAggregation {
         /**
          * Creates a bucket ordering strategy which sorts buckets based multiple criteria
          *
-         * @param   orders a list of {@link Order} objects to sort on, in order of priority
+         * @param   orders a list of {Order} objects to sort on, in order of priority
          */
         public static Order compound(List<Order> orders) {
             return new InternalOrder.CompoundOrder(orders);
@@ -146,7 +146,7 @@ public interface Terms extends MultiBucketsAggregation {
         /**
          * Creates a bucket ordering strategy which sorts buckets based multiple criteria
          *
-         * @param   orders a list of {@link Order} parameters to sort on, in order of priority
+         * @param   orders a list of {Order} parameters to sort on, in order of priority
          */
         public static Order compound(Order... orders) {
             return compound(Arrays.asList(orders));

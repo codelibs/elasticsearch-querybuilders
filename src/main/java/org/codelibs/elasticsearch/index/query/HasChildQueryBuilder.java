@@ -177,7 +177,7 @@ public class HasChildQueryBuilder extends AbstractQueryBuilder<HasChildQueryBuil
 
     /**
      * Sets whether the query builder should ignore unmapped types (and run a
-     * {@link MatchNoDocsQuery} in place of this query) or throw an exception if
+     * {MatchNoDocsQuery} in place of this query) or throw an exception if
      * the type is unmapped.
      */
     public HasChildQueryBuilder ignoreUnmapped(boolean ignoreUnmapped) {
@@ -187,7 +187,7 @@ public class HasChildQueryBuilder extends AbstractQueryBuilder<HasChildQueryBuil
 
     /**
      * Gets whether the query builder will ignore unmapped types (and run a
-     * {@link MatchNoDocsQuery} in place of this query) or throw an exception if
+     * {MatchNoDocsQuery} in place of this query) or throw an exception if
      * the type is unmapped.
      */
     public boolean ignoreUnmapped() {

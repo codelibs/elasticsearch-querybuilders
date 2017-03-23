@@ -53,7 +53,7 @@ public enum DateTimeUnit {
     }
 
     /**
-     * @return the {@link DateTimeField} for the provided {@link DateTimeZone} for this time unit
+     * @return the {DateTimeField} for the provided {DateTimeZone} for this time unit
      */
     public DateTimeField field(DateTimeZone tz) {
         return fieldFunction.apply(tz);

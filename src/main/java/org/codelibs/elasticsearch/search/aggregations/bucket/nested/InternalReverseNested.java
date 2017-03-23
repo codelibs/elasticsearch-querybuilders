@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Result of the {@link ReverseNestedAggregator}.
+ * Result of the {ReverseNestedAggregator}.
  */
 public class InternalReverseNested extends InternalSingleBucketAggregation implements ReverseNested {
     public InternalReverseNested(String name, long docCount, InternalAggregations aggregations, List<PipelineAggregator> pipelineAggregators,

@@ -72,7 +72,7 @@ public final class NetworkAddress {
     /**
      * Formats a network address and port for display purposes.
      * <p>
-     * This formats the address with {@link #format(InetAddress)}
+     * This formats the address with {#format(InetAddress)}
      * and appends the port number. IPv6 addresses will be bracketed.
      * Any host information, if present is ignored.
      * <p>

@@ -416,7 +416,7 @@ public class XContentMapValues {
     }
 
     /**
-     * This method is very lenient, use {@link #nodeBooleanValue} instead.
+     * This method is very lenient, use {#nodeBooleanValue} instead.
      */
     public static boolean lenientNodeBooleanValue(Object node, boolean defaultValue) {
         if (node == null) {
@@ -426,7 +426,7 @@ public class XContentMapValues {
     }
 
     /**
-     * This method is very lenient, use {@link #nodeBooleanValue} instead.
+     * This method is very lenient, use {#nodeBooleanValue} instead.
      */
     public static boolean lenientNodeBooleanValue(Object node) {
         if (node instanceof Boolean) {

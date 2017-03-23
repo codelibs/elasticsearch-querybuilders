@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.util.Locale;
 
 /**
- * The content type of {@link org.codelibs.elasticsearch.common.xcontent.XContent}.
+ * The content type of {org.codelibs.elasticsearch.common.xcontent.XContent}.
  */
 public enum XContentType implements Writeable {
 

@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 public class Regex {
 
     /**
-     * This Regex / {@link Pattern} flag is supported from Java 7 on.
+     * This Regex / {Pattern} flag is supported from Java 7 on.
      * If set on a Java6 JVM the flag will be ignored.
      */
     public static final int UNICODE_CHARACTER_CLASS = 0x100; // supported in JAVA7
@@ -51,7 +51,7 @@ public class Regex {
         return str.equals("*");
     }
 
-    /** Return an {@link Automaton} that matches the given pattern. */
+    /** Return an {Automaton} that matches the given pattern. */
     public static Automaton simpleMatchToAutomaton(String pattern) {
         List<Automaton> automata = new ArrayList<>();
         int previous = 0;

@@ -376,7 +376,7 @@ public class Joda {
 
         /**
          * We adjust the instant by displayOffset to adjust for the offset that might have been added in
-         * {@link DateTimeFormatter#printTo(Appendable, long, Chronology)} when using a time zone.
+         * {DateTimeFormatter#printTo(Appendable, long, Chronology)} when using a time zone.
          */
         @Override
         public void printTo(StringBuffer buf, long instant, Chronology chrono, int displayOffset, DateTimeZone displayZone, Locale locale) {
@@ -389,7 +389,7 @@ public class Joda {
 
         /**
          * We adjust the instant by displayOffset to adjust for the offset that might have been added in
-         * {@link DateTimeFormatter#printTo(Appendable, long, Chronology)} when using a time zone.
+         * {DateTimeFormatter#printTo(Appendable, long, Chronology)} when using a time zone.
          */
         @Override
         public void printTo(Writer out, long instant, Chronology chrono, int displayOffset, DateTimeZone displayZone, Locale locale) throws IOException {

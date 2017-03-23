@@ -25,9 +25,9 @@ import org.codelibs.elasticsearch.common.lucene.ScorerAware;
 import java.io.IOException;
 
 /**
- * A {@link LeafBucketCollector} that delegates all calls to the sub leaf
+ * A {LeafBucketCollector} that delegates all calls to the sub leaf
  * aggregator and sets the scorer on its source of values if it implements
- * {@link ScorerAware}.
+ * {ScorerAware}.
  */
 public class LeafBucketCollectorBase extends LeafBucketCollector {
 
@@ -36,7 +36,7 @@ public class LeafBucketCollectorBase extends LeafBucketCollector {
 
     /**
      * @param sub    The leaf collector for sub aggregations.
-     * @param values The values. {@link ScorerAware#setScorer} will be called automatically on them if they implement {@link ScorerAware}.
+     * @param values The values. {ScorerAware#setScorer} will be called automatically on them if they implement {ScorerAware}.
      */
     public LeafBucketCollectorBase(LeafBucketCollector sub, Object values) {
         this.sub = sub;

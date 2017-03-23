@@ -40,7 +40,7 @@ import java.io.IOException;
 public class ValuesSourceConfig<VS extends ValuesSource> {
 
     /**
-     * Resolve a {@link ValuesSourceConfig} given configuration parameters.
+     * Resolve a {ValuesSourceConfig} given configuration parameters.
      */
     public static <VS extends ValuesSource> ValuesSourceConfig<VS> resolve(
             QueryShardContext context,

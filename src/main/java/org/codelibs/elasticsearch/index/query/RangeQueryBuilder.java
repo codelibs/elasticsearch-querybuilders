@@ -146,8 +146,8 @@ public class RangeQueryBuilder extends AbstractQueryBuilder<RangeQueryBuilder> i
 
     /**
      * The from part of the range query. Null indicates unbounded.
-     * In case lower bound is assigned to a string, we internally convert it to a {@link BytesRef} because
-     * in {@link RangeQueryBuilder} field are later parsed as {@link BytesRef} and we need internal representation
+     * In case lower bound is assigned to a string, we internally convert it to a {BytesRef} because
+     * in {RangeQueryBuilder} field are later parsed as {BytesRef} and we need internal representation
      * of query to be equal regardless of whether it was created from XContent or via Java API.
      */
     public RangeQueryBuilder from(Object from, boolean includeLower) {
@@ -202,8 +202,8 @@ public class RangeQueryBuilder extends AbstractQueryBuilder<RangeQueryBuilder> i
 
     /**
      * Gets the upper range value for this query.
-     * In case upper bound is assigned to a string, we internally convert it to a {@link BytesRef} because
-     * in {@link RangeQueryBuilder} field are later parsed as {@link BytesRef} and we need internal representation
+     * In case upper bound is assigned to a string, we internally convert it to a {BytesRef} because
+     * in {RangeQueryBuilder} field are later parsed as {BytesRef} and we need internal representation
      * of query to be equal regardless of whether it was created from XContent or via Java API.
      */
     public Object to() {

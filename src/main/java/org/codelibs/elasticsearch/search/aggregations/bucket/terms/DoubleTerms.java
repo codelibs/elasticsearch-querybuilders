@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Result of the {@link TermsAggregator} when the field is some kind of decimal number like a float, double, or distance.
+ * Result of the {TermsAggregator} when the field is some kind of decimal number like a float, double, or distance.
  */
 public class DoubleTerms extends InternalMappedTerms<DoubleTerms, DoubleTerms.Bucket> {
     public static final String NAME = "dterms";

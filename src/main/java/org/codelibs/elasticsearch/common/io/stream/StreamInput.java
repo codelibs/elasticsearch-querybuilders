@@ -71,11 +71,11 @@ import static org.codelibs.elasticsearch.ElasticsearchException.readStackTrace;
  *
  * This class's methods are optimized so you can put the methods that read and write a class next to each other and you can scan them
  * visually for differences. That means that most variables should be read and written in a single line so even large objects fit both
- * reading and writing on the screen. It also means that the methods on this class are named very similarly to {@link StreamOutput}. Finally
+ * reading and writing on the screen. It also means that the methods on this class are named very similarly to {StreamOutput}. Finally
  * it means that the "barrier to entry" for adding new methods to this class is relatively low even though it is a shared class with code
  * everywhere. That being said, this class deals primarily with {@code List}s rather than Arrays. For the most part calls should adapt to
  * lists, either by storing {@code List}s internally or just converting to and from a {@code List} when calling. This comment is repeated
- * on {@link StreamInput}.
+ * on {StreamInput}.
  */
 public abstract class StreamInput extends InputStream {
     private Version version = Version.CURRENT;
@@ -119,8 +119,8 @@ public abstract class StreamInput extends InputStream {
 
     /**
      * Reads an optional bytes reference from this stream. It might hold an actual reference to the underlying bytes of the stream. Use this
-     * only if you must differentiate null from empty. Use {@link StreamInput#readBytesReference()} and
-     * {@link StreamOutput#writeBytesReference(BytesReference)} if you do not.
+     * only if you must differentiate null from empty. Use {StreamInput#readBytesReference()} and
+     * {StreamOutput#writeBytesReference(BytesReference)} if you do not.
      */
     @Nullable
     public BytesReference readOptionalBytesReference() throws IOException {
@@ -178,7 +178,7 @@ public abstract class StreamInput extends InputStream {
      * Reads an int stored in variable-length format.  Reads between one and
      * five bytes.  Smaller values take fewer bytes.  Negative numbers
      * will always use all 5 bytes and are therefore better serialized
-     * using {@link #readInt}
+     * using {#readInt}
      */
     public int readVInt() throws IOException {
         byte b = readByte();
@@ -215,7 +215,7 @@ public abstract class StreamInput extends InputStream {
 
     /**
      * Reads a long stored in variable-length format. Reads between one and ten bytes. Smaller values take fewer bytes. Negative numbers
-     * are encoded in ten bytes so prefer {@link #readLong()} or {@link #readZLong()} for negative numbers.
+     * are encoded in ten bytes so prefer {#readLong()} or {#readZLong()} for negative numbers.
      */
     public long readVLong() throws IOException {
         byte b = readByte();
@@ -459,7 +459,7 @@ public abstract class StreamInput extends InputStream {
     }
 
     /**
-     * Read a {@link Map} of {@code K}-type keys to {@code V}-type {@link List}s.
+     * Read a {Map} of {@code K}-type keys to {@code V}-type {List}s.
      * <pre><code>
      * Map&lt;String, List&lt;String&gt;&gt; map = in.readMapOfLists(StreamInput::readString, StreamInput::readString);
      * </code></pre>
@@ -592,7 +592,7 @@ public abstract class StreamInput extends InputStream {
     }
 
     /**
-     * Reads a {@link GeoPoint} from this stream input
+     * Reads a {GeoPoint} from this stream input
      */
     public GeoPoint readGeoPoint() throws IOException {
         return new GeoPoint(readDouble(), readDouble());
@@ -815,10 +815,10 @@ public abstract class StreamInput extends InputStream {
     }
 
     /**
-     * Reads a {@link NamedWriteable} from the current stream, by first reading its name and then looking for
+     * Reads a {NamedWriteable} from the current stream, by first reading its name and then looking for
      * the corresponding entry in the registry by name, so that the proper object can be read and returned.
-     * Default implementation throws {@link UnsupportedOperationException} as StreamInput doesn't hold a registry.
-     * Use {@link FilterInputStream} instead which wraps a stream and supports a {@link NamedWriteableRegistry} too.
+     * Default implementation throws {UnsupportedOperationException} as StreamInput doesn't hold a registry.
+     * Use {FilterInputStream} instead which wraps a stream and supports a {NamedWriteableRegistry} too.
      */
     @Nullable
     public <C extends NamedWriteable> C readNamedWriteable(@SuppressWarnings("unused") Class<C> categoryClass) throws IOException {
@@ -826,13 +826,13 @@ public abstract class StreamInput extends InputStream {
     }
 
     /**
-     * Reads a {@link NamedWriteable} from the current stream with the given name. It is assumed that the caller obtained the name
+     * Reads a {NamedWriteable} from the current stream with the given name. It is assumed that the caller obtained the name
      * from other source, so it's not read from the stream. The name is used for looking for
      * the corresponding entry in the registry by name, so that the proper object can be read and returned.
-     * Default implementation throws {@link UnsupportedOperationException} as StreamInput doesn't hold a registry.
-     * Use {@link FilterInputStream} instead which wraps a stream and supports a {@link NamedWriteableRegistry} too.
+     * Default implementation throws {UnsupportedOperationException} as StreamInput doesn't hold a registry.
+     * Use {FilterInputStream} instead which wraps a stream and supports a {NamedWriteableRegistry} too.
      *
-     * Prefer {@link StreamInput#readNamedWriteable(Class)} and {@link StreamOutput#writeNamedWriteable(NamedWriteable)} unless you
+     * Prefer {StreamInput#readNamedWriteable(Class)} and {StreamOutput#writeNamedWriteable(NamedWriteable)} unless you
      * have a compelling reason to use this method instead.
      */
     @Nullable
@@ -842,7 +842,7 @@ public abstract class StreamInput extends InputStream {
     }
 
     /**
-     * Reads an optional {@link NamedWriteable}.
+     * Reads an optional {NamedWriteable}.
      */
     @Nullable
     public <C extends NamedWriteable> C readOptionalNamedWriteable(Class<C> categoryClass) throws IOException {
@@ -853,7 +853,7 @@ public abstract class StreamInput extends InputStream {
     }
 
     /**
-     * Read a {@link List} of {@link Streamable} objects, using the {@code constructor} to instantiate each instance.
+     * Read a {List} of {Streamable} objects, using the {@code constructor} to instantiate each instance.
      * <p>
      * This is expected to take the form:
      * <code>
@@ -888,7 +888,7 @@ public abstract class StreamInput extends InputStream {
     }
 
     /**
-     * Reads a list of {@link NamedWriteable}s.
+     * Reads a list of {NamedWriteable}s.
      */
     public <T extends NamedWriteable> List<T> readNamedWriteableList(Class<T> categoryClass) throws IOException {
         int count = readArraySize();
@@ -908,8 +908,8 @@ public abstract class StreamInput extends InputStream {
     }
 
     /**
-     * Reads a vint via {@link #readVInt()} and applies basic checks to ensure the read array size is sane.
-     * This method uses {@link #ensureCanReadBytes(int)} to ensure this stream has enough bytes to read for the read array size.
+     * Reads a vint via {#readVInt()} and applies basic checks to ensure the read array size is sane.
+     * This method uses {#ensureCanReadBytes(int)} to ensure this stream has enough bytes to read for the read array size.
      */
     private int readArraySize() throws IOException {
         final int arraySize = readVInt();
@@ -927,7 +927,7 @@ public abstract class StreamInput extends InputStream {
     }
 
     /**
-     * This method throws an {@link EOFException} if the given number of bytes can not be read from the this stream. This method might
+     * This method throws an {EOFException} if the given number of bytes can not be read from the this stream. This method might
      * be a no-op depending on the underlying implementation if the information of the remaining bytes is not present.
      */
     protected abstract void ensureCanReadBytes(int length) throws EOFException;

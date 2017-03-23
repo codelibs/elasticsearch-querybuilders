@@ -259,7 +259,7 @@ public final class IpRangeAggregationBuilder
         return Collections.unmodifiableList(ranges);
     }
 
-    /** Add a new {@link Range} to this aggregation. */
+    /** Add a new {Range} to this aggregation. */
     public IpRangeAggregationBuilder addRange(Range range) {
         ranges.add(range);
         return this;
@@ -288,7 +288,7 @@ public final class IpRangeAggregationBuilder
     }
 
     /**
-     * Same as {@link #addMaskRange(String, String)} but uses the mask itself as
+     * Same as {#addMaskRange(String, String)} but uses the mask itself as
      * a key.
      */
     public IpRangeAggregationBuilder addMaskRange(String mask) {
@@ -296,7 +296,7 @@ public final class IpRangeAggregationBuilder
     }
 
     /**
-     * Same as {@link #addRange(String, String, String)} but the key will be
+     * Same as {#addRange(String, String, String)} but the key will be
      * automatically generated.
      */
     public IpRangeAggregationBuilder addRange(String from, String to) {
@@ -304,7 +304,7 @@ public final class IpRangeAggregationBuilder
     }
 
     /**
-     * Same as {@link #addRange(String, String, String)} but there will be no
+     * Same as {#addRange(String, String, String)} but there will be no
      * lower bound.
      */
     public IpRangeAggregationBuilder addUnboundedTo(String key, String to) {
@@ -313,7 +313,7 @@ public final class IpRangeAggregationBuilder
     }
 
     /**
-     * Same as {@link #addUnboundedTo(String, String)} but the key will be
+     * Same as {#addUnboundedTo(String, String)} but the key will be
      * generated automatically.
      */
     public IpRangeAggregationBuilder addUnboundedTo(String to) {
@@ -321,7 +321,7 @@ public final class IpRangeAggregationBuilder
     }
 
     /**
-     * Same as {@link #addRange(String, String, String)} but there will be no
+     * Same as {#addRange(String, String, String)} but there will be no
      * upper bound.
      */
     public IpRangeAggregationBuilder addUnboundedFrom(String key, String from) {
@@ -335,7 +335,7 @@ public final class IpRangeAggregationBuilder
     }
 
     /**
-     * Same as {@link #addUnboundedFrom(String, String)} but the key will be
+     * Same as {#addUnboundedFrom(String, String)} but the key will be
      * generated automatically.
      */
     public IpRangeAggregationBuilder addUnboundedFrom(String from) {

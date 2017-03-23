@@ -20,7 +20,7 @@
 package org.codelibs.elasticsearch.search.suggest.completion.context;
 
 /**
- * Builder for {@link ContextMapping}
+ * Builder for {ContextMapping}
  */
 public abstract class ContextBuilder<E extends ContextMapping> {
 
@@ -36,14 +36,14 @@ public abstract class ContextBuilder<E extends ContextMapping> {
     public abstract E build();
 
     /**
-     * Create a new {@link GeoContextMapping}
+     * Create a new {GeoContextMapping}
      */
     public static GeoContextMapping.Builder geo(String name) {
         return new GeoContextMapping.Builder(name);
     }
 
     /**
-     * Create a new {@link CategoryContextMapping}
+     * Create a new {CategoryContextMapping}
      */
     public static CategoryContextMapping.Builder category(String name) {
         return new CategoryContextMapping.Builder(name);

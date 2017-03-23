@@ -45,10 +45,10 @@ import java.util.TreeMap;
 
 /**
  * A query that parses a query string and runs it. There are two modes that this operates. The first,
- * when no field is added (using {@link #field(String)}, will run the query once and non prefixed fields
- * will use the {@link #defaultField(String)} set. The second, when one or more fields are added
- * (using {@link #field(String)}), will run the parsed query against the provided fields, and combine
- * them either using DisMax or a plain boolean query (see {@link #useDisMax(boolean)}).
+ * when no field is added (using {#field(String)}, will run the query once and non prefixed fields
+ * will use the {#defaultField(String)} set. The second, when one or more fields are added
+ * (using {#field(String)}), will run the parsed query against the provided fields, and combine
+ * them either using DisMax or a plain boolean query (see {#useDisMax(boolean)}).
  */
 public class QueryStringQueryBuilder extends AbstractQueryBuilder<QueryStringQueryBuilder> {
 
@@ -301,8 +301,8 @@ public class QueryStringQueryBuilder extends AbstractQueryBuilder<QueryStringQue
 
     /**
      * Adds a field to run the query string against. The field will be associated with the
-     * default boost of {@link AbstractQueryBuilder#DEFAULT_BOOST}.
-     * Use {@link #field(String, float)} to set a specific boost for the field.
+     * default boost of {AbstractQueryBuilder#DEFAULT_BOOST}.
+     * Use {#field(String, float)} to set a specific boost for the field.
      */
     public QueryStringQueryBuilder field(String field) {
         this.fieldsAndWeights.put(field, AbstractQueryBuilder.DEFAULT_BOOST);
@@ -359,11 +359,11 @@ public class QueryStringQueryBuilder extends AbstractQueryBuilder<QueryStringQue
     /**
      * Sets the boolean operator of the query parser used to parse the query string.
      * <p>
-     * In default mode ({@link Operator#OR}) terms without any modifiers
+     * In default mode ({Operator#OR}) terms without any modifiers
      * are considered optional: for example <code>capital of Hungary</code> is equal to
      * <code>capital OR of OR Hungary</code>.
      * <p>
-     * In {@link Operator#AND} mode terms are considered to be in conjunction: the
+     * In {Operator#AND} mode terms are considered to be in conjunction: the
      * above mentioned query is parsed as <code>capital AND of AND Hungary</code>
      */
     public QueryStringQueryBuilder defaultOperator(Operator defaultOperator) {

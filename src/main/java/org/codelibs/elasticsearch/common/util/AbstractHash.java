@@ -22,7 +22,7 @@ package org.codelibs.elasticsearch.common.util;
 import org.codelibs.elasticsearch.common.lease.Releasables;
 
 /**
- * Base implementation for {@link BytesRefHash} and {@link LongHash}, or any class that
+ * Base implementation for {BytesRefHash} and {LongHash}, or any class that
  * needs to map values to dense ords. This class is not thread-safe.
  */
 // IDs are internally stored as id + 1 so that 0 encodes for an empty slot

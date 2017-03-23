@@ -22,7 +22,7 @@ package org.codelibs.elasticsearch.index.fielddata;
 import org.apache.lucene.index.RandomAccessOrds;
 
 /**
- * Specialization of {@link AtomicFieldData} for data that is indexed with
+ * Specialization of {AtomicFieldData} for data that is indexed with
  * ordinals.
  */
 public interface AtomicOrdinalsFieldData extends AtomicFieldData {

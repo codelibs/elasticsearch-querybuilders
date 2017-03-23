@@ -40,8 +40,8 @@ import java.util.Locale;
  */
 public enum GeoDistance implements Writeable {
     /**
-     * Calculates distance as points on a plane. Faster, but less accurate than {@link #ARC}.
-     * @deprecated use {@link GeoUtils#planeDistance}
+     * Calculates distance as points on a plane. Faster, but less accurate than {#ARC}.
+     * @deprecated use {GeoUtils#planeDistance}
      */
     @Deprecated
     PLANE {
@@ -67,7 +67,7 @@ public enum GeoDistance implements Writeable {
      * Calculates distance factor.
      * Note: {@code calculate} is simply returning the RHS of the spherical law of cosines from 2 lat,lon points.
      * {@code normalize} also returns the RHS of the spherical law of cosines for a given distance
-     * @deprecated use {@link SloppyMath#haversinMeters} to get distance in meters, law of cosines is being removed
+     * @deprecated use {SloppyMath#haversinMeters} to get distance in meters, law of cosines is being removed
      */
     @Deprecated
     FACTOR {
@@ -91,7 +91,7 @@ public enum GeoDistance implements Writeable {
     },
     /**
      * Calculates distance as points on a globe.
-     * @deprecated use {@link GeoUtils#arcDistance}
+     * @deprecated use {GeoUtils#arcDistance}
      */
     @Deprecated
     ARC {
@@ -148,7 +148,7 @@ public enum GeoDistance implements Writeable {
     }
 
     /**
-     * Default {@link GeoDistance} function. This method should be used, If no specific function has been selected.
+     * Default {GeoDistance} function. This method should be used, If no specific function has been selected.
      * This is an alias for <code>SLOPPY_ARC</code>
      */
     @Deprecated
@@ -204,7 +204,7 @@ public enum GeoDistance implements Writeable {
     }
 
     /**
-     * Get a {@link GeoDistance} according to a given name. Valid values are
+     * Get a {GeoDistance} according to a given name. Valid values are
      *
      * <ul>
      *     <li><b>plane</b> for <code>GeoDistance.PLANE</code></li>
@@ -213,8 +213,8 @@ public enum GeoDistance implements Writeable {
      *     <li><b>arc</b> for <code>GeoDistance.ARC</code></li>
      * </ul>
      *
-     * @param name name of the {@link GeoDistance}
-     * @return a {@link GeoDistance}
+     * @param name name of the {GeoDistance}
+     * @return a {GeoDistance}
      */
     public static GeoDistance fromString(String name) {
         name = name.toLowerCase(Locale.ROOT);
@@ -360,7 +360,7 @@ public enum GeoDistance implements Writeable {
     }
 
     /**
-     * Basic implementation of {@link FixedSourceDistance}. This class keeps the basic parameters for a distance
+     * Basic implementation of {FixedSourceDistance}. This class keeps the basic parameters for a distance
      * functions based on a fixed source. Namely latitude, longitude and unit.
      */
     public abstract static class FixedSourceDistanceBase implements FixedSourceDistance {
@@ -402,7 +402,7 @@ public enum GeoDistance implements Writeable {
 
 
     /**
-     * Return a {@link SortedNumericDoubleValues} instance that returns the distances to a list of geo-points for each document.
+     * Return a {SortedNumericDoubleValues} instance that returns the distances to a list of geo-points for each document.
      */
     public static SortedNumericDoubleValues distanceValues(final MultiGeoPointValues geoPointValues, final FixedSourceDistance... distances) {
         final GeoPointValues singleValues = FieldData.unwrapSingleton(geoPointValues);

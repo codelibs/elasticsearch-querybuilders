@@ -40,7 +40,7 @@ import java.util.ListIterator;
 import java.util.Map;
 
 /**
- * Imelementation of {@link Histogram}.
+ * Imelementation of {Histogram}.
  */
 public final class InternalHistogram extends InternalMultiBucketAggregation<InternalHistogram, InternalHistogram.Bucket>
         implements Histogram, HistogramFactory {

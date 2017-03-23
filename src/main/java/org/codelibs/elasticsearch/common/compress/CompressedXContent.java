@@ -37,7 +37,7 @@ import java.util.zip.CRC32;
 import java.util.zip.CheckedOutputStream;
 
 /**
- * Similar class to the {@link String} class except that it internally stores
+ * Similar class to the {String} class except that it internally stores
  * data using a compressed representation in order to require less permanent
  * memory. Note that the compressed string might still sometimes need to be
  * decompressed in order to perform equality checks or to compute hash codes.
@@ -76,7 +76,7 @@ public final class CompressedXContent {
     }
 
     /**
-     * Create a {@link CompressedXContent} out of a {@link ToXContent} instance.
+     * Create a {CompressedXContent} out of a {ToXContent} instance.
      */
     public CompressedXContent(ToXContent xcontent, XContentType type, ToXContent.Params params) throws IOException {
         BytesStreamOutput bStream = new BytesStreamOutput();
@@ -94,7 +94,7 @@ public final class CompressedXContent {
     }
 
     /**
-     * Create a {@link CompressedXContent} out of a serialized {@link ToXContent}
+     * Create a {CompressedXContent} out of a serialized {ToXContent}
      * that may already be compressed.
      */
     public CompressedXContent(BytesReference data) throws IOException {
@@ -132,7 +132,7 @@ public final class CompressedXContent {
         return this.bytes;
     }
 
-    /** Return the compressed bytes as a {@link BytesReference}. */
+    /** Return the compressed bytes as a {BytesReference}. */
     public BytesReference compressedReference() {
         return new BytesArray(bytes);
     }

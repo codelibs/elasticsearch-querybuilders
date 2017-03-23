@@ -25,7 +25,7 @@ import org.apache.lucene.search.Explanation;
  * Implement this interface to provide a decay function that is executed on a
  * distance. For example, this could be an exponential drop of, a triangle
  * function or something of the kind. This is used, for example, by
- * {@link GaussDecayFunctionBuilder}.
+ * {GaussDecayFunctionBuilder}.
  *
  */
 public interface DecayFunction {

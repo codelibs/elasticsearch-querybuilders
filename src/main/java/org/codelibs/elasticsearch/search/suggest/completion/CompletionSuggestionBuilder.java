@@ -141,7 +141,7 @@ public class CompletionSuggestionBuilder extends SuggestionBuilder<CompletionSug
     }
 
     /**
-     * Same as {@link #prefix(String)} with fuzziness of <code>fuzziness</code>
+     * Same as {#prefix(String)} with fuzziness of <code>fuzziness</code>
      */
     public CompletionSuggestionBuilder prefix(String prefix, Fuzziness fuzziness) {
         super.prefix(prefix);
@@ -150,8 +150,8 @@ public class CompletionSuggestionBuilder extends SuggestionBuilder<CompletionSug
     }
 
     /**
-     * Same as {@link #prefix(String)} with full fuzzy options
-     * see {@link FuzzyOptions.Builder}
+     * Same as {#prefix(String)} with full fuzzy options
+     * see {FuzzyOptions.Builder}
      */
     public CompletionSuggestionBuilder prefix(String prefix, FuzzyOptions fuzzyOptions) {
         super.prefix(prefix);
@@ -169,8 +169,8 @@ public class CompletionSuggestionBuilder extends SuggestionBuilder<CompletionSug
     }
 
     /**
-     * Same as {@link #regex(String)} with full regular expression options
-     * see {@link RegexOptions.Builder}
+     * Same as {#regex(String)} with full regular expression options
+     * see {RegexOptions.Builder}
      */
     public CompletionSuggestionBuilder regex(String regex, RegexOptions regexOptions) {
         this.regex(regex);
@@ -181,8 +181,8 @@ public class CompletionSuggestionBuilder extends SuggestionBuilder<CompletionSug
     /**
      * Sets query contexts for completion
      * @param queryContexts named query contexts
-     *                      see {@link org.codelibs.elasticsearch.search.suggest.completion.context.CategoryQueryContext}
-     *                      and {@link org.codelibs.elasticsearch.search.suggest.completion.context.GeoQueryContext}
+     *                      see {org.codelibs.elasticsearch.search.suggest.completion.context.CategoryQueryContext}
+     *                      and {org.codelibs.elasticsearch.search.suggest.completion.context.GeoQueryContext}
      */
     public CompletionSuggestionBuilder contexts(Map<String, List<? extends ToXContent>> queryContexts) {
         Objects.requireNonNull(queryContexts, "contexts must not be null");
@@ -234,7 +234,7 @@ public class CompletionSuggestionBuilder extends SuggestionBuilder<CompletionSug
         }
 
         /**
-         * Setup a Geolocation for suggestions. See {@link GeolocationContextMapping}.
+         * Setup a Geolocation for suggestions. See {GeolocationContextMapping}.
          * @param lat Latitude of the location
          * @param lon Longitude of the Location
          * @return this
@@ -245,7 +245,7 @@ public class CompletionSuggestionBuilder extends SuggestionBuilder<CompletionSug
         }
 
         /**
-         * Setup a Geolocation for suggestions. See {@link GeolocationContextMapping}.
+         * Setup a Geolocation for suggestions. See {GeolocationContextMapping}.
          * @param lat Latitude of the location
          * @param lon Longitude of the Location
          * @param precisions precisions as string var-args
@@ -257,7 +257,7 @@ public class CompletionSuggestionBuilder extends SuggestionBuilder<CompletionSug
         }
 
         /**
-         * Setup a Geolocation for suggestions. See {@link GeolocationContextMapping}.
+         * Setup a Geolocation for suggestions. See {GeolocationContextMapping}.
          * @param geohash Geohash of the location
          * @return this
          */
@@ -267,7 +267,7 @@ public class CompletionSuggestionBuilder extends SuggestionBuilder<CompletionSug
         }
 
         /**
-         * Setup a Category for suggestions. See {@link CategoryContextMapping}.
+         * Setup a Category for suggestions. See {CategoryContextMapping}.
          * @param categories name of the category
          * @return this
          */
@@ -277,7 +277,7 @@ public class CompletionSuggestionBuilder extends SuggestionBuilder<CompletionSug
         }
 
         /**
-         * Setup a Category for suggestions. See {@link CategoryContextMapping}.
+         * Setup a Category for suggestions. See {CategoryContextMapping}.
          * @param categories name of the category
          * @return this
          */
@@ -287,7 +287,7 @@ public class CompletionSuggestionBuilder extends SuggestionBuilder<CompletionSug
         }
 
         /**
-         * Setup a Context Field for suggestions. See {@link CategoryContextMapping}.
+         * Setup a Context Field for suggestions. See {CategoryContextMapping}.
          * @param fieldvalues name of the category
          * @return this
          */
@@ -297,7 +297,7 @@ public class CompletionSuggestionBuilder extends SuggestionBuilder<CompletionSug
         }
 
         /**
-         * Setup a Context Field for suggestions. See {@link CategoryContextMapping}.
+         * Setup a Context Field for suggestions. See {CategoryContextMapping}.
          * @param fieldvalues name of the category
          * @return this
          */

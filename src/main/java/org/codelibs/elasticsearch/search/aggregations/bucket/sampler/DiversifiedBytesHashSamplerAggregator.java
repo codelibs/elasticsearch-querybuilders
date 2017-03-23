@@ -64,7 +64,7 @@ public class DiversifiedBytesHashSamplerAggregator extends SamplerAggregator {
     }
 
     /**
-     * A {@link DeferringBucketCollector} that identifies top scoring documents
+     * A {DeferringBucketCollector} that identifies top scoring documents
      * but de-duped by a key then passes only these on to nested collectors.
      * This implementation is only for use with a single bucket aggregation.
      */

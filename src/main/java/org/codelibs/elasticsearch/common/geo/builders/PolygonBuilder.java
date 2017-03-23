@@ -45,7 +45,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * The {@link PolygonBuilder} implements the groundwork to create polygons. This contains
+ * The {PolygonBuilder} implements the groundwork to create polygons. This contains
  * Methods to wrap polygons at the dateline and building shapes from the data held by the
  * builder.
  */
@@ -301,7 +301,7 @@ public class PolygonBuilder extends ShapeBuilder {
      * coordinates. The first linestring will be the shell of the polygon the others define holes
      * within the polygon.
      *
-     * @param factory {@link GeometryFactory} to use
+     * @param factory {GeometryFactory} to use
      * @param polygons definition of polygons
      * @return a new Multipolygon
      */

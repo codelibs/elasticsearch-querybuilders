@@ -27,8 +27,8 @@ import org.codelibs.elasticsearch.common.geo.GeoPoint;
 public abstract class GeoPointValues {
 
     /**
-     * Get the {@link GeoPoint} associated with <code>docID</code>.
-     * The returned {@link GeoPoint} might be reused across calls.
+     * Get the {GeoPoint} associated with <code>docID</code>.
+     * The returned {GeoPoint} might be reused across calls.
      * If the given <code>docID</code> does not have a value then the returned
      * geo point mught have both latitude and longitude set to 0.
      */

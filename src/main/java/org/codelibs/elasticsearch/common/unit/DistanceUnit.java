@@ -29,8 +29,8 @@ import java.io.IOException;
 /**
  * The DistanceUnit enumerates several units for measuring distances. These units
  * provide methods for converting strings and methods to convert units among each
- * others. Some methods like {@link DistanceUnit#getEarthCircumference} refer to
- * the earth ellipsoid defined in {@link GeoUtils}. The default unit used within
+ * others. Some methods like {DistanceUnit#getEarthCircumference} refer to
+ * the earth ellipsoid defined in {GeoUtils}. The default unit used within
  * this project is <code>METERS</code> which is defined by <code>DEFAULT</code>
  */
 public enum DistanceUnit implements Writeable {
@@ -175,7 +175,7 @@ public enum DistanceUnit implements Writeable {
     }
 
     /**
-     * Convert a String to a {@link DistanceUnit}
+     * Convert a String to a {DistanceUnit}
      *
      * @param unit name of the unit
      * @return unit matching the given name
@@ -193,7 +193,7 @@ public enum DistanceUnit implements Writeable {
     }
 
     /**
-     * Parses the suffix of a given distance string and return the corresponding {@link DistanceUnit}
+     * Parses the suffix of a given distance string and return the corresponding {DistanceUnit}
      *
      * @param distance string representing a distance
      * @param defaultUnit default unit to use, if no unit is provided by the string
@@ -224,8 +224,8 @@ public enum DistanceUnit implements Writeable {
         }
 
         /**
-         * Converts a {@link Distance} value given in a specific {@link DistanceUnit} into
-         * a value equal to the specified value but in a other {@link DistanceUnit}.
+         * Converts a {Distance} value given in a specific {DistanceUnit} into
+         * a value equal to the specified value but in a other {DistanceUnit}.
          *
          * @param unit unit of the result
          * @return converted distance
@@ -266,23 +266,23 @@ public enum DistanceUnit implements Writeable {
         }
 
         /**
-         * Parse a {@link Distance} from a given String. If no unit is given
+         * Parse a {Distance} from a given String. If no unit is given
          * <code>DistanceUnit.DEFAULT</code> will be used
          *
-         * @param distance String defining a {@link Distance}
-         * @return parsed {@link Distance}
+         * @param distance String defining a {Distance}
+         * @return parsed {Distance}
          */
         public static Distance parseDistance(String distance) {
             return parseDistance(distance, DEFAULT);
         }
 
         /**
-         * Parse a {@link Distance} from a given String
+         * Parse a {Distance} from a given String
          *
-         * @param distance String defining a {@link Distance}
-         * @param defaultUnit {@link DistanceUnit} to be assumed
+         * @param distance String defining a {Distance}
+         * @param defaultUnit {DistanceUnit} to be assumed
          *          if not unit is provided in the first argument
-         * @return parsed {@link Distance}
+         * @return parsed {Distance}
          */
         private static Distance parseDistance(String distance, DistanceUnit defaultUnit) {
             for (DistanceUnit unit : values()) {
@@ -297,12 +297,12 @@ public enum DistanceUnit implements Writeable {
     }
 
     /**
-     * Read a {@link DistanceUnit} from a {@link StreamInput}.
+     * Read a {DistanceUnit} from a {StreamInput}.
      *
-     * @param in {@link StreamInput} to read the {@link DistanceUnit} from
-     * @return {@link DistanceUnit} read from the {@link StreamInput}
-     * @throws IOException if no unit can be read from the {@link StreamInput}
-     * @throws IllegalArgumentException if no matching {@link DistanceUnit} can be found
+     * @param in {StreamInput} to read the {DistanceUnit} from
+     * @return {DistanceUnit} read from the {StreamInput}
+     * @throws IOException if no unit can be read from the {StreamInput}
+     * @throws IllegalArgumentException if no matching {DistanceUnit} can be found
      */
     public static DistanceUnit readFromStream(StreamInput in) throws IOException {
         byte b = in.readByte();
@@ -314,9 +314,9 @@ public enum DistanceUnit implements Writeable {
     }
 
     /**
-     * Write a {@link DistanceUnit} to a {@link StreamOutput}.
+     * Write a {DistanceUnit} to a {StreamOutput}.
      *
-     * @param out {@link StreamOutput} to write to
+     * @param out {StreamOutput} to write to
      */
     @Override
     public void writeTo(StreamOutput out) throws IOException {

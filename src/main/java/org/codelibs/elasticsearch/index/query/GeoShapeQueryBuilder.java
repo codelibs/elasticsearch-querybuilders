@@ -37,7 +37,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * {@link QueryBuilder} that builds a GeoShape Query
+ * {QueryBuilder} that builds a GeoShape Query
  */
 public class GeoShapeQueryBuilder extends AbstractQueryBuilder<GeoShapeQueryBuilder> {
     public static final String NAME = "geo_shape";
@@ -280,7 +280,7 @@ public class GeoShapeQueryBuilder extends AbstractQueryBuilder<GeoShapeQueryBuil
 
     /**
      * Sets whether the query builder should ignore unmapped fields (and run a
-     * {@link MatchNoDocsQuery} in place of this query) or throw an exception if
+     * {MatchNoDocsQuery} in place of this query) or throw an exception if
      * the field is unmapped.
      */
     public GeoShapeQueryBuilder ignoreUnmapped(boolean ignoreUnmapped) {
@@ -290,7 +290,7 @@ public class GeoShapeQueryBuilder extends AbstractQueryBuilder<GeoShapeQueryBuil
 
     /**
      * Gets whether the query builder will ignore unmapped fields (and run a
-     * {@link MatchNoDocsQuery} in place of this query) or throw an exception if
+     * {MatchNoDocsQuery} in place of this query) or throw an exception if
      * the field is unmapped.
      */
     public boolean ignoreUnmapped() {

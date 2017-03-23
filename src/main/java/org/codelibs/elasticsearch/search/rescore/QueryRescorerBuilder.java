@@ -68,7 +68,7 @@ public class QueryRescorerBuilder extends RescoreBuilder<QueryRescorerBuilder> {
     }
 
     /**
-     * Creates a new {@link QueryRescorerBuilder} instance
+     * Creates a new {QueryRescorerBuilder} instance
      * @param builder the query builder to build the rescore query from
      */
     public QueryRescorerBuilder(QueryBuilder builder) {
@@ -136,7 +136,7 @@ public class QueryRescorerBuilder extends RescoreBuilder<QueryRescorerBuilder> {
     }
 
     /**
-     * Sets the original query score mode. The default is {@link QueryRescoreMode#Total}.
+     * Sets the original query score mode. The default is {QueryRescoreMode#Total}.
      */
     public QueryRescorerBuilder setScoreMode(QueryRescoreMode scoreMode) {
         this.scoreMode = scoreMode;
@@ -207,8 +207,8 @@ public class QueryRescorerBuilder extends RescoreBuilder<QueryRescorerBuilder> {
     }
 
     /**
-     * Helper to be able to use {@link ObjectParser}, since we need the inner query builder
-     * for the constructor of {@link QueryRescorerBuilder}, but {@link ObjectParser} only
+     * Helper to be able to use {ObjectParser}, since we need the inner query builder
+     * for the constructor of {QueryRescorerBuilder}, but {ObjectParser} only
      * allows filling properties of an already constructed value.
      */
     private static class InnerBuilder {

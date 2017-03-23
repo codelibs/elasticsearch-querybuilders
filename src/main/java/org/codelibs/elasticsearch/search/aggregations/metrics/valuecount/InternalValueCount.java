@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * An internal implementation of {@link ValueCount}.
+ * An internal implementation of {ValueCount}.
  */
 public class InternalValueCount extends InternalNumericMetricsAggregation.SingleValue implements ValueCount {
     private final long value;

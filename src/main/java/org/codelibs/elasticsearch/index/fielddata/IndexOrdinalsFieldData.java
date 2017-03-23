@@ -25,19 +25,19 @@ import org.apache.lucene.index.IndexReader;
 
 
 /**
- * Specialization of {@link IndexFieldData} for data that is indexed with ordinals.
+ * Specialization of {IndexFieldData} for data that is indexed with ordinals.
  */
 public interface IndexOrdinalsFieldData extends IndexFieldData.Global<AtomicOrdinalsFieldData> {
 
     /**
-     * Load a global view of the ordinals for the given {@link IndexReader},
+     * Load a global view of the ordinals for the given {IndexReader},
      * potentially from a cache.
      */
     @Override
     IndexOrdinalsFieldData loadGlobal(DirectoryReader indexReader);
 
     /**
-     * Load a global view of the ordinals for the given {@link IndexReader}.
+     * Load a global view of the ordinals for the given {IndexReader}.
      */
     @Override
     IndexOrdinalsFieldData localGlobalDirect(DirectoryReader indexReader) throws Exception;

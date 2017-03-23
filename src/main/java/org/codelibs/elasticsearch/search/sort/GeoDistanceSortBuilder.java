@@ -221,7 +221,7 @@ public class GeoDistanceSortBuilder extends SortBuilder<GeoDistanceSortBuilder> 
     }
 
     /**
-     * The distance unit to use. Defaults to {@link org.codelibs.elasticsearch.common.unit.DistanceUnit#METERS}
+     * The distance unit to use. Defaults to {org.codelibs.elasticsearch.common.unit.DistanceUnit#METERS}
      */
     public GeoDistanceSortBuilder unit(DistanceUnit unit) {
         this.unit = unit;
@@ -229,7 +229,7 @@ public class GeoDistanceSortBuilder extends SortBuilder<GeoDistanceSortBuilder> 
     }
 
     /**
-     * Returns the distance unit to use. Defaults to {@link org.codelibs.elasticsearch.common.unit.DistanceUnit#METERS}
+     * Returns the distance unit to use. Defaults to {org.codelibs.elasticsearch.common.unit.DistanceUnit#METERS}
      */
     public DistanceUnit unit() {
         return this.unit;
@@ -369,8 +369,8 @@ public class GeoDistanceSortBuilder extends SortBuilder<GeoDistanceSortBuilder> 
     }
 
     /**
-     * Creates a new {@link GeoDistanceSortBuilder} from the query held by the {@link QueryParseContext} in
-     * {@link org.codelibs.elasticsearch.common.xcontent.XContent} format.
+     * Creates a new {GeoDistanceSortBuilder} from the query held by the {QueryParseContext} in
+     * {org.codelibs.elasticsearch.common.xcontent.XContent} format.
      *
      * @param context the input parse context. The state on the parser contained in this context will be changed as a side effect of this
      *        method call

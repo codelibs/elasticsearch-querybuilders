@@ -31,7 +31,7 @@ import static java.util.Collections.unmodifiableSet;
 /**
  * Registry for operations that use scripts as part of their execution. Can be standard operations of custom defined ones (via plugin).
  * Allows plugins to register custom operations that they use scripts for,
- * via {@link org.codelibs.elasticsearch.plugins.ScriptPlugin}
+ * via {org.codelibs.elasticsearch.plugins.ScriptPlugin}
  * Scripts can be enabled/disabled via fine-grained settings for each single registered operation.
  */
 public final class ScriptContextRegistry {
@@ -55,14 +55,14 @@ public final class ScriptContextRegistry {
     }
 
     /**
-     * @return a list that contains all the supported {@link ScriptContext}s, both standard ones and registered via plugins
+     * @return a list that contains all the supported {ScriptContext}s, both standard ones and registered via plugins
      */
     Collection<ScriptContext> scriptContexts() {
         return scriptContexts.values();
     }
 
     /**
-     * @return <tt>true</tt> if the provided {@link ScriptContext} is supported, <tt>false</tt> otherwise
+     * @return <tt>true</tt> if the provided {ScriptContext} is supported, <tt>false</tt> otherwise
      */
     boolean isSupportedContext(ScriptContext scriptContext) {
         return scriptContexts.containsKey(scriptContext.getKey());

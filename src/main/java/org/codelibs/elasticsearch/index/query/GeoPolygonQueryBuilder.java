@@ -131,7 +131,7 @@ public class GeoPolygonQueryBuilder extends AbstractQueryBuilder<GeoPolygonQuery
 
     /**
      * Sets whether the query builder should ignore unmapped fields (and run a
-     * {@link MatchNoDocsQuery} in place of this query) or throw an exception if
+     * {MatchNoDocsQuery} in place of this query) or throw an exception if
      * the field is unmapped.
      */
     public GeoPolygonQueryBuilder ignoreUnmapped(boolean ignoreUnmapped) {
@@ -141,7 +141,7 @@ public class GeoPolygonQueryBuilder extends AbstractQueryBuilder<GeoPolygonQuery
 
     /**
      * Gets whether the query builder will ignore unmapped fields (and run a
-     * {@link MatchNoDocsQuery} in place of this query) or throw an exception if
+     * {MatchNoDocsQuery} in place of this query) or throw an exception if
      * the field is unmapped.
      */
     public boolean ignoreUnmapped() {

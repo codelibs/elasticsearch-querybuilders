@@ -29,7 +29,7 @@ import org.codelibs.elasticsearch.common.xcontent.XContentFactory;
 import org.codelibs.elasticsearch.common.xcontent.XContentType;
 
 /**
- * Base class for {@link ToXContent} implementation that also support conversion to {@link BytesReference} for serialization purposes
+ * Base class for {ToXContent} implementation that also support conversion to {BytesReference} for serialization purposes
  */
 public abstract class ToXContentToBytes implements ToXContent {
 
@@ -44,17 +44,17 @@ public abstract class ToXContentToBytes implements ToXContent {
     }
 
     /**
-     * Returns a {@link org.codelibs.elasticsearch.common.bytes.BytesReference}
-     * containing the {@link ToXContent} output in binary format.
-     * Builds the request based on the default {@link XContentType}, either {@link Requests#CONTENT_TYPE} or provided as a constructor argument
+     * Returns a {org.codelibs.elasticsearch.common.bytes.BytesReference}
+     * containing the {ToXContent} output in binary format.
+     * Builds the request based on the default {XContentType}, either {Requests#CONTENT_TYPE} or provided as a constructor argument
      */
     public final BytesReference buildAsBytes() {
         return buildAsBytes(defaultType);
     }
 
     /**
-     * Returns a {@link org.codelibs.elasticsearch.common.bytes.BytesReference}
-     * containing the {@link ToXContent} output in binary format.
+     * Returns a {org.codelibs.elasticsearch.common.bytes.BytesReference}
+     * containing the {ToXContent} output in binary format.
      * Builds the request as the provided <code>contentType</code>
      */
     public final BytesReference buildAsBytes(XContentType contentType) {

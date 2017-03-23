@@ -34,7 +34,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Builder for {@link org.apache.lucene.search.spans.SpanContainingQuery}.
+ * Builder for {org.apache.lucene.search.spans.SpanContainingQuery}.
  */
 public class SpanContainingQueryBuilder extends AbstractQueryBuilder<SpanContainingQueryBuilder> implements SpanQueryBuilder {
     public static final String NAME = "span_containing";

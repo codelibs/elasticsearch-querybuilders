@@ -63,11 +63,11 @@ import java.util.Map;
  *
  * This class's methods are optimized so you can put the methods that read and write a class next to each other and you can scan them
  * visually for differences. That means that most variables should be read and written in a single line so even large objects fit both
- * reading and writing on the screen. It also means that the methods on this class are named very similarly to {@link StreamInput}. Finally
+ * reading and writing on the screen. It also means that the methods on this class are named very similarly to {StreamInput}. Finally
  * it means that the "barrier to entry" for adding new methods to this class is relatively low even though it is a shared class with code
  * everywhere. That being said, this class deals primarily with {@code List}s rather than Arrays. For the most part calls should adapt to
  * lists, either by storing {@code List}s internally or just converting to and from a {@code List} when calling. This comment is repeated
- * on {@link StreamInput}.
+ * on {StreamInput}.
  */
 public abstract class StreamOutput extends OutputStream {
 
@@ -152,7 +152,7 @@ public abstract class StreamOutput extends OutputStream {
 
     /**
      * Writes an optional bytes reference including a length header. Use this if you need to differentiate between null and empty bytes
-     * references. Use {@link #writeBytesReference(BytesReference)} and {@link StreamInput#readBytesReference()} if you do not.
+     * references. Use {#writeBytesReference(BytesReference)} and {StreamInput#readBytesReference()} if you do not.
      */
     public void writeOptionalBytesReference(@Nullable BytesReference bytes) throws IOException {
         if (bytes == null) {
@@ -191,7 +191,7 @@ public abstract class StreamOutput extends OutputStream {
      * Writes an int in a variable-length format.  Writes between one and
      * five bytes.  Smaller values take fewer bytes.  Negative numbers
      * will always use all 5 bytes and are therefore better serialized
-     * using {@link #writeInt}
+     * using {#writeInt}
      */
     public void writeVInt(int i) throws IOException {
         while ((i & ~0x7F) != 0) {
@@ -211,7 +211,7 @@ public abstract class StreamOutput extends OutputStream {
 
     /**
      * Writes a non-negative long in a variable-length format. Writes between one and ten bytes. Smaller values take fewer bytes. Negative
-     * numbers use ten bytes and trip assertions (if running in tests) so prefer {@link #writeLong(long)} or {@link #writeZLong(long)} for
+     * numbers use ten bytes and trip assertions (if running in tests) so prefer {#writeLong(long)} or {#writeZLong(long)} for
      * negative numbers.
      */
     public void writeVLong(long i) throws IOException {
@@ -223,7 +223,7 @@ public abstract class StreamOutput extends OutputStream {
 
     /**
      * Writes a long in a variable-length format without first checking if it is negative. Package private for testing. Use
-     * {@link #writeVLong(long)} instead.
+     * {#writeVLong(long)} instead.
      */
     void writeVLongNoCheck(long i) throws IOException {
         while ((i & ~0x7F) != 0) {
@@ -238,7 +238,7 @@ public abstract class StreamOutput extends OutputStream {
      * Values are remapped by sliding the sign bit into the lsb and then encoded as an unsigned number
      * e.g., 0 -;&gt; 0, -1 -;&gt; 1, 1 -;&gt; 2, ..., Long.MIN_VALUE -;&gt; -1, Long.MAX_VALUE -;&gt; -2
      * Numbers with small absolute value will have a small encoding
-     * If the numbers are known to be non-negative, use {@link #writeVLong(long)}
+     * If the numbers are known to be non-negative, use {#writeVLong(long)}
      */
     public void writeZLong(long i) throws IOException {
         // zig-zag encoding cf. https://developers.google.com/protocol-buffers/docs/encoding?hl=en
@@ -468,7 +468,7 @@ public abstract class StreamOutput extends OutputStream {
     }
 
     /**
-     * Write a {@link Map} of {@code K}-type keys to {@code V}-type {@link List}s.
+     * Write a {Map} of {@code K}-type keys to {@code V}-type {List}s.
      * <pre><code>
      * Map&lt;String, List&lt;String&gt;&gt; map = ...;
      * out.writeMapOfLists(map, StreamOutput::writeString, StreamOutput::writeString);
@@ -488,7 +488,7 @@ public abstract class StreamOutput extends OutputStream {
     }
 
     /**
-     * Write a {@link Map} of {@code K}-type keys to {@code V}-type.
+     * Write a {Map} of {@code K}-type keys to {@code V}-type.
      * <pre><code>
      * Map&lt;String, String&gt; map = ...;
      * out.writeMap(map, StreamOutput::writeString, StreamOutput::writeString);
@@ -850,7 +850,7 @@ public abstract class StreamOutput extends OutputStream {
     }
 
     /**
-     * Writes a {@link NamedWriteable} to the current stream, by first writing its name and then the object itself
+     * Writes a {NamedWriteable} to the current stream, by first writing its name and then the object itself
      */
     public void writeNamedWriteable(NamedWriteable namedWriteable) throws IOException {
         writeString(namedWriteable.getWriteableName());
@@ -858,7 +858,7 @@ public abstract class StreamOutput extends OutputStream {
     }
 
     /**
-     * Write an optional {@link NamedWriteable} to the stream.
+     * Write an optional {NamedWriteable} to the stream.
      */
     public void writeOptionalNamedWriteable(@Nullable NamedWriteable namedWriteable) throws IOException {
         if (namedWriteable == null) {
@@ -870,7 +870,7 @@ public abstract class StreamOutput extends OutputStream {
     }
 
     /**
-     * Writes the given {@link GeoPoint} to the stream
+     * Writes the given {GeoPoint} to the stream
      */
     public void writeGeoPoint(GeoPoint geoPoint) throws IOException {
         writeDouble(geoPoint.lat());
@@ -897,7 +897,7 @@ public abstract class StreamOutput extends OutputStream {
     }
 
     /**
-     * Writes a list of {@link Streamable} objects
+     * Writes a list of {Streamable} objects
      */
     public void writeStreamableList(List<? extends Streamable> list) throws IOException {
         writeVInt(list.size());
@@ -907,7 +907,7 @@ public abstract class StreamOutput extends OutputStream {
     }
 
     /**
-     * Writes a list of {@link Writeable} objects
+     * Writes a list of {Writeable} objects
      */
     public void writeList(List<? extends Writeable> list) throws IOException {
         writeVInt(list.size());
@@ -927,7 +927,7 @@ public abstract class StreamOutput extends OutputStream {
     }
 
     /**
-     * Writes a list of {@link NamedWriteable} objects.
+     * Writes a list of {NamedWriteable} objects.
      */
     public void writeNamedWriteableList(List<? extends NamedWriteable> list) throws IOException {
         writeVInt(list.size());

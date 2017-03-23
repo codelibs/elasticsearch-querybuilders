@@ -41,7 +41,7 @@ import java.util.Objects;
 
 /**
  * Defines how to perform suggesting. This builders allows a number of global options to be specified and
- * an arbitrary number of {@link SuggestionBuilder} instances.
+ * an arbitrary number of {SuggestionBuilder} instances.
  * <p>
  * Suggesting works by suggesting terms/phrases that appear in the suggest text that are similar compared
  * to the terms in provided text. These suggestions are based on several options described in this class.
@@ -82,7 +82,7 @@ public class SuggestBuilder extends ToXContentToBytes implements Writeable {
 
     /**
      * Sets the text to provide suggestions for. The suggest text is a required option that needs
-     * to be set either via this setter or via the {@link org.codelibs.elasticsearch.search.suggest.SuggestionBuilder#text(String)} method.
+     * to be set either via this setter or via the {org.codelibs.elasticsearch.search.suggest.SuggestionBuilder#text(String)} method.
      * <p>
      * The suggest text gets analyzed by the suggest analyzer or the suggest field search analyzer.
      * For each analyzed token, suggested terms are suggested if possible.
@@ -101,7 +101,7 @@ public class SuggestBuilder extends ToXContentToBytes implements Writeable {
     }
 
     /**
-     * Adds an {@link org.codelibs.elasticsearch.search.suggest.SuggestionBuilder} instance under a user defined name.
+     * Adds an {org.codelibs.elasticsearch.search.suggest.SuggestionBuilder} instance under a user defined name.
      * The order in which the <code>Suggestions</code> are added, is the same as in the response.
      * @throws IllegalArgumentException if two suggestions added have the same name
      */
@@ -116,7 +116,7 @@ public class SuggestBuilder extends ToXContentToBytes implements Writeable {
     }
 
     /**
-     * Get all the <code>Suggestions</code> that were added to the global {@link SuggestBuilder},
+     * Get all the <code>Suggestions</code> that were added to the global {SuggestBuilder},
      * together with their names
      */
     public Map<String, SuggestionBuilder<?>> getSuggestions() {

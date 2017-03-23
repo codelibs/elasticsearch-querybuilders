@@ -37,7 +37,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Span query that matches the union of its clauses. Maps to {@link SpanOrQuery}.
+ * Span query that matches the union of its clauses. Maps to {SpanOrQuery}.
  */
 public class SpanOrQueryBuilder extends AbstractQueryBuilder<SpanOrQueryBuilder> implements SpanQueryBuilder {
     public static final String NAME = "span_or";
@@ -80,7 +80,7 @@ public class SpanOrQueryBuilder extends AbstractQueryBuilder<SpanOrQueryBuilder>
     }
 
     /**
-     * @return the {@link SpanQueryBuilder} clauses that were set for this query
+     * @return the {SpanQueryBuilder} clauses that were set for this query
      */
     public List<SpanQueryBuilder> clauses() {
         return Collections.unmodifiableList(this.clauses);

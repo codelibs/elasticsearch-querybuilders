@@ -41,10 +41,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * A specialization of {@link DeferringBucketCollector} that collects all
+ * A specialization of {DeferringBucketCollector} that collects all
  * matches and then replays only the top scoring documents to child
  * aggregations. The method
- * {@link BestDocsDeferringCollector#createTopDocsCollector(int)} is designed to
+ * {BestDocsDeferringCollector#createTopDocsCollector(int)} is designed to
  * be overridden and allows subclasses to choose a custom collector
  * implementation for determining the top N matches.
  *

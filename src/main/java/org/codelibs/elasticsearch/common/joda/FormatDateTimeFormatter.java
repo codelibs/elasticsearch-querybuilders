@@ -25,7 +25,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- * A simple wrapper around {@link DateTimeFormatter} that retains the
+ * A simple wrapper around {DateTimeFormatter} that retains the
  * format that was used to create it.
  */
 public class FormatDateTimeFormatter {

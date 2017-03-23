@@ -39,12 +39,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A geohash cell filter that filters {@link GeoPoint}s by their geohashes. Basically the a
+ * A geohash cell filter that filters {GeoPoint}s by their geohashes. Basically the a
  * Geohash prefix is defined by the filter and all geohashes that are matching this
  * prefix will be returned. The <code>neighbors</code> flag allows to filter
  * geohashes that surround the given geohash. In general the neighborhood of a
  * geohash is defined by its eight adjacent cells.<br>
- * The structure of the {@link GeohashCellQuery} is defined as:
+ * The structure of the {GeohashCellQuery} is defined as:
  * <pre>
  * &quot;geohash_bbox&quot; {
  *     &quot;field&quot;:&quot;location&quot;,
@@ -182,7 +182,7 @@ public class GeohashCellQuery {
 
         /**
          * Sets whether the query builder should ignore unmapped fields (and run
-         * a {@link MatchNoDocsQuery} in place of this query) or throw an
+         * a {MatchNoDocsQuery} in place of this query) or throw an
          * exception if the field is unmapped.
          */
         public GeohashCellQuery.Builder ignoreUnmapped(boolean ignoreUnmapped) {
@@ -192,7 +192,7 @@ public class GeohashCellQuery {
 
         /**
          * Gets whether the query builder will ignore unmapped fields (and run a
-         * {@link MatchNoDocsQuery} in place of this query) or throw an
+         * {MatchNoDocsQuery} in place of this query) or throw an
          * exception if the field is unmapped.
          */
         public boolean ignoreUnmapped() {

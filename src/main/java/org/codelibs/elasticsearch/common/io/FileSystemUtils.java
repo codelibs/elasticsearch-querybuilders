@@ -35,7 +35,7 @@ import java.nio.file.Path;
 import java.util.stream.StreamSupport;
 
 /**
- * Elasticsearch utils to work with {@link java.nio.file.Path}
+ * Elasticsearch utils to work with {java.nio.file.Path}
  */
 public final class FileSystemUtils {
 
@@ -56,7 +56,7 @@ public final class FileSystemUtils {
     /**
      * Check whether the file denoted by the given path is hidden.
      * In practice, this will check if the file name starts with a dot.
-     * This should be preferred to {@link Files#isHidden(Path)} as this
+     * This should be preferred to {Files#isHidden(Path)} as this
      * does not depend on the operating system.
      */
     public static boolean isHidden(Path path) {

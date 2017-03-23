@@ -272,8 +272,8 @@ public class FieldSortBuilder extends SortBuilder<FieldSortBuilder> {
     }
 
     /**
-     * Creates a new {@link FieldSortBuilder} from the query held by the {@link QueryParseContext} in
-     * {@link org.codelibs.elasticsearch.common.xcontent.XContent} format.
+     * Creates a new {FieldSortBuilder} from the query held by the {QueryParseContext} in
+     * {org.codelibs.elasticsearch.common.xcontent.XContent} format.
      *
      * @param context the input parse context. The state on the parser contained in this context will be changed as a side effect of this
      *        method call

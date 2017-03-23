@@ -24,7 +24,7 @@ import org.codelibs.elasticsearch.ElasticsearchException;
 import java.io.Closeable;
 
 /**
- * Specialization of {@link AutoCloseable} that may only throw an {@link ElasticsearchException}.
+ * Specialization of {AutoCloseable} that may only throw an {ElasticsearchException}.
  */
 public interface Releasable extends Closeable {
 

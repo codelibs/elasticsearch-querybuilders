@@ -169,8 +169,8 @@ public class MatchQueryBuilder extends AbstractQueryBuilder<MatchQueryBuilder> {
     /**
      * Sets the type of the text query.
      *
-     * @deprecated Use {@link MatchPhraseQueryBuilder} for <code>phrase</code>
-     *             queries and {@link MatchPhrasePrefixQueryBuilder} for
+     * @deprecated Use {MatchPhraseQueryBuilder} for <code>phrase</code>
+     *             queries and {MatchPhrasePrefixQueryBuilder} for
      *             <code>phrase_prefix</code> queries
      */
     @Deprecated
@@ -185,8 +185,8 @@ public class MatchQueryBuilder extends AbstractQueryBuilder<MatchQueryBuilder> {
     /**
      * Get the type of the query.
      *
-     * @deprecated Use {@link MatchPhraseQueryBuilder} for <code>phrase</code>
-     *             queries and {@link MatchPhrasePrefixQueryBuilder} for
+     * @deprecated Use {MatchPhraseQueryBuilder} for <code>phrase</code>
+     *             queries and {MatchPhrasePrefixQueryBuilder} for
      *             <code>phrase_prefix</code> queries
      */
     @Deprecated
@@ -225,7 +225,7 @@ public class MatchQueryBuilder extends AbstractQueryBuilder<MatchQueryBuilder> {
     /**
      * Sets a slop factor for phrase queries
      *
-     * @deprecated for phrase queries use {@link MatchPhraseQueryBuilder}
+     * @deprecated for phrase queries use {MatchPhraseQueryBuilder}
      */
     @Deprecated
     public MatchQueryBuilder slop(int slop) {
@@ -239,7 +239,7 @@ public class MatchQueryBuilder extends AbstractQueryBuilder<MatchQueryBuilder> {
     /**
      * Get the slop factor for phrase queries.
      *
-     * @deprecated for phrase queries use {@link MatchPhraseQueryBuilder}
+     * @deprecated for phrase queries use {MatchPhraseQueryBuilder}
      */
     @Deprecated
     public int slop() {
@@ -378,8 +378,8 @@ public class MatchQueryBuilder extends AbstractQueryBuilder<MatchQueryBuilder> {
 
     /**
      * Sets query to use in case no query terms are available, e.g. after analysis removed them.
-     * Defaults to {@link MatchQuery.ZeroTermsQuery#NONE}, but can be set to
-     * {@link MatchQuery.ZeroTermsQuery#ALL} instead.
+     * Defaults to {MatchQuery.ZeroTermsQuery#NONE}, but can be set to
+     * {MatchQuery.ZeroTermsQuery#ALL} instead.
      */
     public MatchQueryBuilder zeroTermsQuery(MatchQuery.ZeroTermsQuery zeroTermsQuery) {
         if (zeroTermsQuery == null) {

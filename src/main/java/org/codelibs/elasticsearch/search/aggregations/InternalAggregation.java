@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * An internal implementation of {@link Aggregation}. Serves as a base class for all aggregation implementations.
+ * An internal implementation of {Aggregation}. Serves as a base class for all aggregation implementations.
  */
 public abstract class InternalAggregation implements Aggregation, ToXContent, NamedWriteable {
     /**

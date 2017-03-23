@@ -335,7 +335,7 @@ public class TopHitsAggregationBuilder extends AbstractAggregationBuilder<TopHit
     }
 
     /**
-     * Gets the {@link FetchSourceContext} which defines how the _source
+     * Gets the {FetchSourceContext} which defines how the _source
      * should be fetched.
      */
     public FetchSourceContext fetchSource() {

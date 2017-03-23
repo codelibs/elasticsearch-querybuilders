@@ -29,7 +29,7 @@ import java.util.Set;
 
 /**
  * A utility class for multi threaded operation that needs to be cancellable via interrupts. Every cancellable operation should be
- * executed via {@link #execute(Interruptable)}, which will capture the executing thread and make sure it is interrupted in the case
+ * executed via {#execute(Interruptable)}, which will capture the executing thread and make sure it is interrupted in the case
  * of cancellation.
  *
  * Cancellation policy: This class does not support external interruption via <code>Thread#interrupt()</code>. Always use #cancel() instead.
@@ -45,7 +45,7 @@ public class CancellableThreads {
     }
 
 
-    /** call this will throw an exception if operation was cancelled. Override {@link #onCancel(String, Exception)} for custom failure logic */
+    /** call this will throw an exception if operation was cancelled. Override {#onCancel(String, Exception)} for custom failure logic */
     public synchronized void checkForCancel() {
         if (isCancelled()) {
             onCancel(reason, null);
@@ -53,10 +53,10 @@ public class CancellableThreads {
     }
 
     /**
-     * called if {@link #checkForCancel()} was invoked after the operation was cancelled.
-     * the default implementation always throws an {@link ExecutionCancelledException}, suppressing
+     * called if {#checkForCancel()} was invoked after the operation was cancelled.
+     * the default implementation always throws an {ExecutionCancelledException}, suppressing
      * any other exception that occurred before cancellation
-     *  @param reason              reason for failure supplied by the caller of {@link #cancel}
+     *  @param reason              reason for failure supplied by the caller of {#cancel}
      * @param suppressedException any error that was encountered during the execution before the operation was cancelled.
      */
     protected void onCancel(String reason, @Nullable Exception suppressedException) {
@@ -76,7 +76,7 @@ public class CancellableThreads {
     }
 
     /**
-     * run the Interruptable, capturing the executing thread. Concurrent calls to {@link #cancel(String)} will interrupt this thread
+     * run the Interruptable, capturing the executing thread. Concurrent calls to {#cancel(String)} will interrupt this thread
      * causing the call to prematurely return.
      *
      * @param interruptable code to run
@@ -90,7 +90,7 @@ public class CancellableThreads {
         }
     }
     /**
-     * run the Interruptable, capturing the executing thread. Concurrent calls to {@link #cancel(String)} will interrupt this thread
+     * run the Interruptable, capturing the executing thread. Concurrent calls to {#cancel(String)} will interrupt this thread
      * causing the call to prematurely return.
      *
      * @param interruptable code to run
@@ -149,7 +149,7 @@ public class CancellableThreads {
         threads.remove(Thread.currentThread());
     }
 
-    /** cancel all current running operations. Future calls to {@link #checkForCancel()} will be failed with the given reason */
+    /** cancel all current running operations. Future calls to {#checkForCancel()} will be failed with the given reason */
     public synchronized void cancel(String reason) {
         if (cancelled) {
             // we were already cancelled, make sure we don't interrupt threads twice

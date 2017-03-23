@@ -24,7 +24,7 @@ import org.codelibs.elasticsearch.common.lucene.ScorerAware;
 import java.util.Map;
 
 /**
- * A per-segment {@link SearchScript}.
+ * A per-segment {SearchScript}.
  */
 public interface LeafSearchScript extends ScorerAware, ExecutableScript {
 

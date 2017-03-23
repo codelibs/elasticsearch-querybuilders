@@ -28,30 +28,30 @@ import java.io.IOException;
 public interface QueryBuilder extends NamedWriteable, ToXContent {
 
     /**
-     * Converts this QueryBuilder to a lucene {@link Query}.
+     * Converts this QueryBuilder to a lucene {Query}.
      * Returns <tt>null</tt> if this query should be ignored in the context of
      * parent queries.
      *
      * @param context additional information needed to construct the queries
-     * @return the {@link Query} or <tt>null</tt> if this query should be ignored upstream
+     * @return the {Query} or <tt>null</tt> if this query should be ignored upstream
      */
     Query toQuery(QueryShardContext context) throws IOException;
 
     /**
-     * Converts this QueryBuilder to an unscored lucene {@link Query} that acts as a filter.
+     * Converts this QueryBuilder to an unscored lucene {Query} that acts as a filter.
      * Returns <tt>null</tt> if this query should be ignored in the context of
      * parent queries.
      *
      * @param context additional information needed to construct the queries
-     * @return the {@link Query} or <tt>null</tt> if this query should be ignored upstream
+     * @return the {Query} or <tt>null</tt> if this query should be ignored upstream
      */
     Query toFilter(QueryShardContext context) throws IOException;
 
     /**
      * Sets the arbitrary name to be assigned to the query (see named queries).
      * Implementers should return the concrete type of the
-     * {@link QueryBuilder} so that calls can be chained. This is done
-     * automatically when extending {@link AbstractQueryBuilder}.
+     * {QueryBuilder} so that calls can be chained. This is done
+     * automatically when extending {AbstractQueryBuilder}.
      */
     QueryBuilder queryName(String queryName);
 
@@ -69,8 +69,8 @@ public interface QueryBuilder extends NamedWriteable, ToXContent {
      * Sets the boost for this query.  Documents matching this query will (in addition to the normal
      * weightings) have their score multiplied by the boost provided.
      * Implementers should return the concrete type of the
-     * {@link QueryBuilder} so that calls can be chained. This is done
-     * automatically when extending {@link AbstractQueryBuilder}.
+     * {QueryBuilder} so that calls can be chained. This is done
+     * automatically when extending {AbstractQueryBuilder}.
      */
     QueryBuilder boost(float boost);
 
@@ -89,9 +89,9 @@ public interface QueryBuilder extends NamedWriteable, ToXContent {
 
     /**
      * Rewrites the given query into its primitive form. Queries that for instance fetch resources from remote hosts or
-     * can simplify / optimize itself should do their heavy lifting during {@link #rewrite(QueryRewriteContext)}. This method
+     * can simplify / optimize itself should do their heavy lifting during {#rewrite(QueryRewriteContext)}. This method
      * rewrites the query until it doesn't change anymore.
-     * @throws IOException if an {@link IOException} occurs
+     * @throws IOException if an {IOException} occurs
      */
     static QueryBuilder rewriteQuery(QueryBuilder original, QueryRewriteContext context) throws IOException {
         QueryBuilder builder = original;

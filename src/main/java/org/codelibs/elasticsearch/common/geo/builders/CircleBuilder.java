@@ -42,7 +42,7 @@ public class CircleBuilder extends ShapeBuilder {
 
     /**
      * Creates a circle centered at [0.0, 0.0].
-     * Center can be changed by calling {@link #center(Coordinate)} later.
+     * Center can be changed by calling {#center(Coordinate)} later.
      */
     public CircleBuilder() {
         this.center = ZERO_ZERO;
@@ -92,7 +92,7 @@ public class CircleBuilder extends ShapeBuilder {
     }
 
     /**
-     * Set the radius of the circle. The String value will be parsed by {@link DistanceUnit}
+     * Set the radius of the circle. The String value will be parsed by {DistanceUnit}
      * @param radius Value and unit of the circle combined in a string
      * @return this
      */
@@ -102,7 +102,7 @@ public class CircleBuilder extends ShapeBuilder {
 
     /**
      * Set the radius of the circle
-     * @param radius radius of the circle (see {@link org.codelibs.elasticsearch.common.unit.DistanceUnit.Distance})
+     * @param radius radius of the circle (see {org.codelibs.elasticsearch.common.unit.DistanceUnit.Distance})
      * @return this
      */
     public CircleBuilder radius(Distance radius) {
@@ -112,7 +112,7 @@ public class CircleBuilder extends ShapeBuilder {
     /**
      * Set the radius of the circle
      * @param radius value of the circles radius
-     * @param unit unit name of the radius value (see {@link DistanceUnit})
+     * @param unit unit name of the radius value (see {DistanceUnit})
      * @return this
      */
     public CircleBuilder radius(double radius, String unit) {
@@ -122,7 +122,7 @@ public class CircleBuilder extends ShapeBuilder {
     /**
      * Set the radius of the circle
      * @param radius value of the circles radius
-     * @param unit unit of the radius value (see {@link DistanceUnit})
+     * @param unit unit of the radius value (see {DistanceUnit})
      * @return this
      */
     public CircleBuilder radius(double radius, DistanceUnit unit) {

@@ -265,7 +265,7 @@ public enum VersionType implements Writeable {
      * @param currentVersion  the current version for the document
      * @param expectedVersion the version specified for the write operation
      * @param deleted         true if the document is currently deleted (note that #currentVersion will typically be
-     *                        {@link Versions#NOT_FOUND}, but may be something else if the document was recently deleted
+     *                        {Versions#NOT_FOUND}, but may be something else if the document was recently deleted
      * @return true if versions conflict false o.w.
      */
     public abstract boolean isVersionConflictForWrites(long currentVersion, long expectedVersion, boolean deleted);
@@ -274,12 +274,12 @@ public enum VersionType implements Writeable {
     /**
      * Returns a human readable explanation for a version conflict on write.
      *
-     * Note that this method is only called if {@link #isVersionConflictForWrites(long, long, boolean)} returns true;
+     * Note that this method is only called if {#isVersionConflictForWrites(long, long, boolean)} returns true;
      *
      * @param currentVersion  the current version for the document
      * @param expectedVersion the version specified for the write operation
      * @param deleted         true if the document is currently deleted (note that #currentVersion will typically be
-     *                        {@link Versions#NOT_FOUND}, but may be something else if the document was recently deleted
+     *                        {Versions#NOT_FOUND}, but may be something else if the document was recently deleted
      */
     public abstract String explainConflictForWrites(long currentVersion, long expectedVersion, boolean deleted);
 
@@ -295,7 +295,7 @@ public enum VersionType implements Writeable {
     /**
      * Returns a human readable explanation for a version conflict on read.
      *
-     * Note that this method is only called if {@link #isVersionConflictForReads(long, long)} returns true;
+     * Note that this method is only called if {#isVersionConflictForReads(long, long)} returns true;
      *
      * @param currentVersion  the current version for the document
      * @param expectedVersion the version specified for the read operation

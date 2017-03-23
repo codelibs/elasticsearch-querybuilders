@@ -518,7 +518,7 @@ public final class CopyOnWriteHashMap<K, V> extends AbstractMap<K, V> {
     }
 
     /**
-     * Same as {@link #copyAndPut(Object, Object)} but for an arbitrary number of entries.
+     * Same as {#copyAndPut(Object, Object)} but for an arbitrary number of entries.
      */
     public CopyOnWriteHashMap<K, V> copyAndPutAll(Map<? extends K, ? extends V> other) {
         return copyAndPutAll(other.entrySet());
@@ -553,7 +553,7 @@ public final class CopyOnWriteHashMap<K, V> extends AbstractMap<K, V> {
     }
 
     /**
-     * Same as {@link #copyAndRemove(Object)} but for an arbitrary number of entries.
+     * Same as {#copyAndRemove(Object)} but for an arbitrary number of entries.
      */
     public CopyOnWriteHashMap<K, V> copyAndRemoveAll(Collection<?> keys) {
         CopyOnWriteHashMap<K, V> result = this;

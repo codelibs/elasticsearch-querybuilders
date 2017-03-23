@@ -34,7 +34,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Builder for {@link org.apache.lucene.search.spans.SpanWithinQuery}.
+ * Builder for {org.apache.lucene.search.spans.SpanWithinQuery}.
  */
 public class SpanWithinQueryBuilder extends AbstractQueryBuilder<SpanWithinQueryBuilder> implements SpanQueryBuilder {
     public static final String NAME = "span_within";

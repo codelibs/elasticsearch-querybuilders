@@ -26,7 +26,7 @@ import java.io.IOException;
  * across the wire" using Elasticsearch's internal protocol. If the implementer also implements equals and hashCode then a copy made by
  * serializing and deserializing must be equal and have the same hashCode. It isn't required that such a copy be entirely unchanged.
  * <p>
- * Prefer implementing this interface over implementing {@link Streamable} where possible. Lots of code depends on {@linkplain Streamable}
+ * Prefer implementing this interface over implementing {Streamable} where possible. Lots of code depends on {@linkplain Streamable}
  * so this isn't always possible.
  */
 public interface Writeable {
@@ -37,13 +37,13 @@ public interface Writeable {
     void writeTo(final StreamOutput out) throws IOException;
 
     /**
-     * Reference to a method that can write some object to a {@link StreamOutput}.
+     * Reference to a method that can write some object to a {StreamOutput}.
      * <p>
-     * By convention this is a method from {@link StreamOutput} itself (e.g., {@link StreamOutput#writeString}). If the value can be
+     * By convention this is a method from {StreamOutput} itself (e.g., {StreamOutput#writeString}). If the value can be
      * {@code null}, then the "optional" variant of methods should be used!
      * <p>
-     * Most classes should implement {@link Writeable} and the {@link Writeable#writeTo(StreamOutput)} method should <em>use</em>
-     * {@link StreamOutput} methods directly or this indirectly:
+     * Most classes should implement {Writeable} and the {Writeable#writeTo(StreamOutput)} method should <em>use</em>
+     * {StreamOutput} methods directly or this indirectly:
      * <pre><code>
      * public void writeTo(StreamOutput out) throws IOException {
      *     out.writeVInt(someValue);
@@ -67,7 +67,7 @@ public interface Writeable {
     /**
      * Reference to a method that can read some object from a stream. By convention this is a constructor that takes
      * {@linkplain StreamInput} as an argument for most classes and a static method for things like enums. Returning null from one of these
-     * is always wrong - for that we use methods like {@link StreamInput#readOptionalWriteable(Reader)}.
+     * is always wrong - for that we use methods like {StreamInput#readOptionalWriteable(Reader)}.
      * <p>
      * As most classes will implement this via a constructor (or a static method in the case of enumerations), it's something that should
      * look like:

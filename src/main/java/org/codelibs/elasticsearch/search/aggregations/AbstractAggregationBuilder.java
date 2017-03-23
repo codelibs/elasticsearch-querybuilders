@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Base implementation of a {@link AggregationBuilder}.
+ * Base implementation of a {AggregationBuilder}.
  */
 public abstract class AbstractAggregationBuilder<AB extends AbstractAggregationBuilder<AB>>
     extends AggregationBuilder {

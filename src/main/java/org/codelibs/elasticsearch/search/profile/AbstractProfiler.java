@@ -30,7 +30,7 @@ public class AbstractProfiler<PB extends AbstractProfileBreakdown<?>, E> {
     }
 
     /**
-     * Get the {@link AbstractProfileBreakdown} for the given element in the
+     * Get the {AbstractProfileBreakdown} for the given element in the
      * tree, potentially creating it if it did not exist.
      */
     public PB getQueryBreakdown(E query) {

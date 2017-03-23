@@ -26,11 +26,11 @@ import java.io.IOException;
  * across the wire" using Elasticsearch's internal protocol. If the implementer also implements equals and hashCode then a copy made by
  * serializing and deserializing must be equal and have the same hashCode. It isn't required that such a copy be entirely unchanged.
  *
- * Prefer implementing {@link Writeable} over implementing this interface where possible. Lots of code depends on this interface so this
+ * Prefer implementing {Writeable} over implementing this interface where possible. Lots of code depends on this interface so this
  * isn't always possible.
  *
  * Implementers of this interface almost always declare a no arg constructor that is exclusively used for creating "empty" objects on which
- * you then call {@link #readFrom(StreamInput)}. Because {@linkplain #readFrom(StreamInput)} isn't part of the constructor the fields
+ * you then call {#readFrom(StreamInput)}. Because {@linkplain #readFrom(StreamInput)} isn't part of the constructor the fields
  * on implementers cannot be final. It is these reasons that this interface has fallen out of favor compared to {@linkplain Writeable}.
  */
 public interface Streamable {

@@ -268,7 +268,7 @@ public enum ByteSizeUnit implements Writeable {
     }
 
     /**
-     * Reads a {@link ByteSizeUnit} from a given {@link StreamInput}
+     * Reads a {ByteSizeUnit} from a given {StreamInput}
      */
     public static ByteSizeUnit readFrom(StreamInput in) throws IOException {
         return ByteSizeUnit.fromId(in.readVInt());

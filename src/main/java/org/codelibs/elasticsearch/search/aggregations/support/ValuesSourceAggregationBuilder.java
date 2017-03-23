@@ -56,7 +56,7 @@ public abstract class ValuesSourceAggregationBuilder<VS extends ValuesSource, AB
 
         /**
          * Read an aggregation from a stream that serializes its targetValueType. This should only be used by subclasses that override
-         * {@link #serializeTargetValueType()} to return true.
+         * {#serializeTargetValueType()} to return true.
          */
         protected LeafOnly(StreamInput in, Type type, ValuesSourceType valuesSourceType) throws IOException {
             super(in, type, valuesSourceType);
@@ -101,7 +101,7 @@ public abstract class ValuesSourceAggregationBuilder<VS extends ValuesSource, AB
 
     /**
      * Read an aggregation from a stream that serializes its targetValueType. This should only be used by subclasses that override
-     * {@link #serializeTargetValueType()} to return true.
+     * {#serializeTargetValueType()} to return true.
      */
     protected ValuesSourceAggregationBuilder(StreamInput in, Type type, ValuesSourceType valuesSourceType) throws IOException {
         super(in, type);
@@ -207,7 +207,7 @@ public abstract class ValuesSourceAggregationBuilder<VS extends ValuesSource, AB
     }
 
     /**
-     * Sets the {@link ValueType} for the value produced by this aggregation
+     * Sets the {ValueType} for the value produced by this aggregation
      */
     @SuppressWarnings("unchecked")
     public AB valueType(ValueType valueType) {
@@ -219,7 +219,7 @@ public abstract class ValuesSourceAggregationBuilder<VS extends ValuesSource, AB
     }
 
     /**
-     * Gets the {@link ValueType} for the value produced by this aggregation
+     * Gets the {ValueType} for the value produced by this aggregation
      */
     public ValueType valueType() {
         return valueType;

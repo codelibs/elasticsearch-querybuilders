@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A specialization of {@link DeferringBucketCollector} that collects all
+ * A specialization of {DeferringBucketCollector} that collects all
  * matches and then is able to replay a given subset of buckets which represent
  * the survivors from a pruning process performed by the aggregator that owns
  * this collector.

@@ -27,9 +27,9 @@ import org.codelibs.elasticsearch.common.io.stream.Writeable;
 import java.io.IOException;
 
 /**
- * ScriptType represents the way a script is stored and retrieved from the {@link ScriptService}.
- * It's also used to by {@link ScriptSettings} and {@link ScriptModes} to determine whether or not
- * a {@link Script} is allowed to be executed based on both default and user-defined settings.
+ * ScriptType represents the way a script is stored and retrieved from the {ScriptService}.
+ * It's also used to by {ScriptSettings} and {ScriptModes} to determine whether or not
+ * a {Script} is allowed to be executed based on both default and user-defined settings.
  */
 public enum ScriptType implements Writeable {
 
@@ -37,16 +37,16 @@ public enum ScriptType implements Writeable {
      * INLINE scripts are specified in numerous queries and compiled on-the-fly.
      * They will be cached based on the lang and code of the script.
      * They are turned off by default because most languages are insecure
-     * (Groovy and others), but can be overriden by the specific {@link ScriptEngineService}
+     * (Groovy and others), but can be overriden by the specific {ScriptEngineService}
      * if the language is naturally secure (Painless, Mustache, and Expressions).
      */
     INLINE ( 0 , new ParseField("inline") , false ),
 
     /**
-     * STORED scripts are saved as part of the {@link org.codelibs.elasticsearch.cluster.ClusterState}
+     * STORED scripts are saved as part of the {org.codelibs.elasticsearch.cluster.ClusterState}
      * based on user requests.  They will be cached when they are first used in a query.
      * They are turned off by default because most languages are insecure
-     * (Groovy and others), but can be overriden by the specific {@link ScriptEngineService}
+     * (Groovy and others), but can be overriden by the specific {ScriptEngineService}
      * if the language is naturally secure (Painless, Mustache, and Expressions).
      */
     STORED ( 1 , new ParseField("stored", "id") , false ),
@@ -59,8 +59,8 @@ public enum ScriptType implements Writeable {
     FILE ( 2 , new ParseField("file") , true  );
 
     /**
-     * Reads an int from the input stream and converts it to a {@link ScriptType}.
-     * @return The ScriptType read from the stream. Throws an {@link IllegalStateException}
+     * Reads an int from the input stream and converts it to a {ScriptType}.
+     * @return The ScriptType read from the stream. Throws an {IllegalStateException}
      * if no ScriptType is found based on the id.
      */
     public static ScriptType readFrom(StreamInput in) throws IOException {
@@ -88,7 +88,7 @@ public enum ScriptType implements Writeable {
      * Standard constructor.
      * @param id A unique identifier for a type that can be read/written to a stream.
      * @param parseField Specifies the name used to parse input from queries.
-     * @param defaultEnabled Whether or not a {@link ScriptType} can be run by default.
+     * @param defaultEnabled Whether or not a {ScriptType} can be run by default.
      */
     ScriptType(int id, ParseField parseField, boolean defaultEnabled) {
         this.id = id;
@@ -102,14 +102,14 @@ public enum ScriptType implements Writeable {
     }
 
     /**
-     * @return The unique id for this {@link ScriptType}.
+     * @return The unique id for this {ScriptType}.
      */
     public int getId() {
         return id;
     }
 
     /**
-     * @return The unique name for this {@link ScriptType} based on the {@link ParseField}.
+     * @return The unique name for this {ScriptType} based on the {ParseField}.
      */
     public String getName() {
         return parseField.getPreferredName();
@@ -123,15 +123,15 @@ public enum ScriptType implements Writeable {
     }
 
     /**
-     * @return Whether or not a {@link ScriptType} can be run by default.  Note
-     * this can be potentially overriden by any {@link ScriptEngineService}.
+     * @return Whether or not a {ScriptType} can be run by default.  Note
+     * this can be potentially overriden by any {ScriptEngineService}.
      */
     public boolean isDefaultEnabled() {
         return defaultEnabled;
     }
 
     /**
-     * @return The same as calling {@link #getName()}.
+     * @return The same as calling {#getName()}.
      */
     @Override
     public String toString() {

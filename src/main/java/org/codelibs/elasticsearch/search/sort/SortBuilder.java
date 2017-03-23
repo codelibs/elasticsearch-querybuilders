@@ -66,7 +66,7 @@ public abstract class SortBuilder<T extends SortBuilder<T>> extends ToXContentTo
     }
 
     /**
-     * Create a @link {@link SortFieldAndFormat} from this builder.
+     * Create a @link {SortFieldAndFormat} from this builder.
      */
     protected abstract SortFieldAndFormat build(QueryShardContext context) throws IOException;
 
@@ -81,7 +81,7 @@ public abstract class SortBuilder<T extends SortBuilder<T>> extends ToXContentTo
     }
 
     /**
-     * Return the {@link SortOrder} used for this {@link SortBuilder}.
+     * Return the {SortOrder} used for this {SortBuilder}.
      */
     public SortOrder order() {
         return this.order;

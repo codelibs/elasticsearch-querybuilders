@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Results of the {@link TopHitsAggregator}.
+ * Results of the {TopHitsAggregator}.
  */
 public class InternalTopHits extends InternalMetricsAggregation implements TopHits {
     private int from;

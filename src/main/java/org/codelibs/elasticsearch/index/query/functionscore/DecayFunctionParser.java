@@ -62,8 +62,8 @@ import java.util.function.BiFunction;
  * parameters origin and scale.
  * <p>
  * To write a new decay scoring function, create a new class that extends
- * {@link DecayFunctionBuilder}, setup a PARSER field with this class, and
- * See {@link GaussDecayFunctionBuilder#PARSER} for an example.
+ * {DecayFunctionBuilder}, setup a PARSER field with this class, and
+ * See {GaussDecayFunctionBuilder#PARSER} for an example.
  */
 public final class DecayFunctionParser<DFB extends DecayFunctionBuilder<DFB>> implements ScoreFunctionParser<DFB> {
 

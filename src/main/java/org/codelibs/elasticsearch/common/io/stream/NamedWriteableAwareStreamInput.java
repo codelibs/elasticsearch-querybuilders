@@ -22,7 +22,7 @@ package org.codelibs.elasticsearch.common.io.stream;
 import java.io.IOException;
 
 /**
- * Wraps a {@link StreamInput} and associates it with a {@link NamedWriteableRegistry}
+ * Wraps a {StreamInput} and associates it with a {NamedWriteableRegistry}
  */
 public class NamedWriteableAwareStreamInput extends FilterStreamInput {
 

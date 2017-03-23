@@ -32,7 +32,7 @@ import org.apache.lucene.analysis.standard.StandardTokenizer;
 public class StandardHtmlStripAnalyzer extends StopwordAnalyzerBase {
 
     /**
-     * @deprecated use {@link StandardHtmlStripAnalyzer#StandardHtmlStripAnalyzer(CharArraySet)} instead
+     * @deprecated use {StandardHtmlStripAnalyzer#StandardHtmlStripAnalyzer(CharArraySet)} instead
      */
     @Deprecated
     public StandardHtmlStripAnalyzer() {

@@ -50,7 +50,7 @@ public abstract class AbstractInternalProfileTree<PB extends AbstractProfileBrea
     }
 
     /**
-     * Returns a {@link QueryProfileBreakdown} for a scoring query.  Scoring queries (e.g. those
+     * Returns a {QueryProfileBreakdown} for a scoring query.  Scoring queries (e.g. those
      * that are past the rewrite phase and are now being wrapped by createWeight() ) follow
      * a recursive progression.  We can track the dependency tree by a simple stack
      *
@@ -94,7 +94,7 @@ public abstract class AbstractInternalProfileTree<PB extends AbstractProfileBrea
      * Helper method to add a new node to the dependency tree.
      *
      * Initializes a new list in the dependency tree, saves the query and
-     * generates a new {@link QueryProfileBreakdown} to track the timings of
+     * generates a new {QueryProfileBreakdown} to track the timings of
      * this query
      *
      * @param element

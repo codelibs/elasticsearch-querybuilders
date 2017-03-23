@@ -22,11 +22,11 @@ package org.codelibs.elasticsearch.common;
 import org.codelibs.elasticsearch.common.settings.Settings;
 
 /**
- * Matcher to use in combination with {@link ParseField} while parsing requests.
+ * Matcher to use in combination with {ParseField} while parsing requests.
  *
  * @deprecated This class used to be useful to parse in strict mode and emit errors rather than deprecation warnings. Now that we return
  * warnings as response headers all the time, it is no longer useful and will soon be removed. The removal is in progress and there is
- * already no strict mode in fact. Use {@link ParseField} directly.
+ * already no strict mode in fact. Use {ParseField} directly.
  */
 @Deprecated
 public class ParseFieldMatcher {

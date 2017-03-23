@@ -22,7 +22,7 @@ package org.codelibs.elasticsearch.index.fielddata;
 import org.apache.lucene.index.RandomAccessOrds;
 
 /**
- * Base implementation of a {@link RandomAccessOrds} instance.
+ * Base implementation of a {RandomAccessOrds} instance.
  */
 public abstract class AbstractRandomAccessOrds extends RandomAccessOrds {
 

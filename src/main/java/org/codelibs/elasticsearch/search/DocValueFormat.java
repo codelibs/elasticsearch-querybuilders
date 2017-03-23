@@ -61,15 +61,15 @@ public interface DocValueFormat extends NamedWriteable {
      *  {@code keyword} and {@code ip} fields. */
     String format(BytesRef value);
 
-    /** Parse a value that was formatted with {@link #format(long)} back to the
+    /** Parse a value that was formatted with {#format(long)} back to the
      *  original long value. */
     long parseLong(String value, boolean roundUp, LongSupplier now);
 
-    /** Parse a value that was formatted with {@link #format(double)} back to
+    /** Parse a value that was formatted with {#format(double)} back to
      *  the original double value. */
     double parseDouble(String value, boolean roundUp, LongSupplier now);
 
-    /** Parse a value that was formatted with {@link #format(BytesRef)} back
+    /** Parse a value that was formatted with {#format(BytesRef)} back
      *  to the original BytesRef. */
     BytesRef parseBytesRef(String value);
 

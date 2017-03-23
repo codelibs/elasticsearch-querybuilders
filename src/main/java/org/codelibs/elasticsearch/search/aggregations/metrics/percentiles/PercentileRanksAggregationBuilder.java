@@ -164,7 +164,7 @@ public class PercentileRanksAggregationBuilder extends LeafOnly<ValuesSource.Num
 
     /**
      * Expert: set the number of significant digits in the values. Only relevant
-     * when using {@link PercentilesMethod#HDR}.
+     * when using {PercentilesMethod#HDR}.
      */
     public PercentileRanksAggregationBuilder numberOfSignificantValueDigits(int numberOfSignificantValueDigits) {
         if (numberOfSignificantValueDigits < 0 || numberOfSignificantValueDigits > 5) {
@@ -176,7 +176,7 @@ public class PercentileRanksAggregationBuilder extends LeafOnly<ValuesSource.Num
 
     /**
      * Expert: get the number of significant digits in the values. Only relevant
-     * when using {@link PercentilesMethod#HDR}.
+     * when using {PercentilesMethod#HDR}.
      */
     public int numberOfSignificantValueDigits() {
         return numberOfSignificantValueDigits;
@@ -184,7 +184,7 @@ public class PercentileRanksAggregationBuilder extends LeafOnly<ValuesSource.Num
 
     /**
      * Expert: set the compression. Higher values improve accuracy but also
-     * memory usage. Only relevant when using {@link PercentilesMethod#TDIGEST}.
+     * memory usage. Only relevant when using {PercentilesMethod#TDIGEST}.
      */
     public PercentileRanksAggregationBuilder compression(double compression) {
         if (compression < 0.0) {
@@ -197,7 +197,7 @@ public class PercentileRanksAggregationBuilder extends LeafOnly<ValuesSource.Num
 
     /**
      * Expert: get the compression. Higher values improve accuracy but also
-     * memory usage. Only relevant when using {@link PercentilesMethod#TDIGEST}.
+     * memory usage. Only relevant when using {PercentilesMethod#TDIGEST}.
      */
     public double compression() {
         return compression;

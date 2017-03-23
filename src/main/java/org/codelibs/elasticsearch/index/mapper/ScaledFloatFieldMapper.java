@@ -47,7 +47,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/** A {@link FieldMapper} for scaled floats. Values are internally multiplied
+/** A {FieldMapper} for scaled floats. Values are internally multiplied
  *  by a scaling factor and rounded to the closest long. */
 public class ScaledFloatFieldMapper extends FieldMapper {
 

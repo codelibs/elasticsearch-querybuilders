@@ -39,7 +39,7 @@ import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
 /**
- * {@link Compressor} implementation based on the DEFLATE compression algorithm.
+ * {Compressor} implementation based on the DEFLATE compression algorithm.
  */
 public class DeflateCompressor implements Compressor {
 

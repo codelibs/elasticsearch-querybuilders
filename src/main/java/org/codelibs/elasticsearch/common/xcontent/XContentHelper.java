@@ -82,7 +82,7 @@ public class XContentHelper {
     }
 
     /**
-     * Convert a string in some {@link XContent} format to a {@link Map}. Throws an {@link ElasticsearchParseException} if there is any
+     * Convert a string in some {XContent} format to a {Map}. Throws an {ElasticsearchParseException} if there is any
      * error.
      */
     public static Map<String, Object> convertToMap(XContent xContent, String string, boolean ordered) throws ElasticsearchParseException {
@@ -95,8 +95,8 @@ public class XContentHelper {
     }
 
     /**
-     * Convert a string in some {@link XContent} format to a {@link Map}. Throws an {@link ElasticsearchParseException} if there is any
-     * error. Note that unlike {@link #convertToMap(BytesReference, boolean)}, this doesn't automatically uncompress the input.
+     * Convert a string in some {XContent} format to a {Map}. Throws an {ElasticsearchParseException} if there is any
+     * error. Note that unlike {#convertToMap(BytesReference, boolean)}, this doesn't automatically uncompress the input.
      */
     public static Map<String, Object> convertToMap(XContent xContent, InputStream input, boolean ordered)
             throws ElasticsearchParseException {
@@ -282,7 +282,7 @@ public class XContentHelper {
     }
 
     /**
-     * Low level implementation detail of {@link XContentGenerator#copyCurrentStructure(XContentParser)}.
+     * Low level implementation detail of {XContentGenerator#copyCurrentStructure(XContentParser)}.
      */
     public static void copyCurrentStructure(XContentGenerator destination, XContentParser parser) throws IOException {
         XContentParser.Token token = parser.currentToken();
@@ -367,7 +367,7 @@ public class XContentHelper {
 
     /**
      * Writes a "raw" (bytes) field, handling cases where the bytes are compressed, and tries to optimize writing using
-     * {@link XContentBuilder#rawField(String, org.codelibs.elasticsearch.common.bytes.BytesReference)}.
+     * {XContentBuilder#rawField(String, org.codelibs.elasticsearch.common.bytes.BytesReference)}.
      */
     public static void writeRawField(String field, BytesReference source, XContentBuilder builder, ToXContent.Params params) throws IOException {
         Compressor compressor = CompressorFactory.compressor(source);
@@ -380,8 +380,8 @@ public class XContentHelper {
     }
 
     /**
-     * Returns the bytes that represent the XContent output of the provided {@link ToXContent} object, using the provided
-     * {@link XContentType}. Wraps the output into a new anonymous object depending on the value of the wrapInObject argument.
+     * Returns the bytes that represent the XContent output of the provided {ToXContent} object, using the provided
+     * {XContentType}. Wraps the output into a new anonymous object depending on the value of the wrapInObject argument.
      */
     public static BytesReference toXContent(ToXContent toXContent, XContentType xContentType, boolean wrapInObject) throws IOException {
         try (XContentBuilder builder = XContentBuilder.builder(xContentType.xContent())) {

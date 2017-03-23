@@ -234,7 +234,7 @@ public class SimpleQueryParser extends org.apache.lucene.queryparser.simple.Simp
         private String quoteFieldSuffix = null;
 
         /**
-         * Generates default {@link Settings} object (uses ROOT locale, does
+         * Generates default {Settings} object (uses ROOT locale, does
          * lowercase terms, no lenient parsing, no wildcard analysis).
          * */
         public Settings() {

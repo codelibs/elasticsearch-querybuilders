@@ -32,7 +32,7 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
 /**
- * Superclass for {@link ObjectParser} and {@link ConstructingObjectParser}. Defines most of the "declare" methods so they can be shared.
+ * Superclass for {ObjectParser} and {ConstructingObjectParser}. Defines most of the "declare" methods so they can be shared.
  */
 public abstract class AbstractObjectParser<Value, Context extends ParseFieldMatcherSupplier>
         implements BiFunction<XContentParser, Context, Value>, ContextParser<Context, Value> {
@@ -46,8 +46,8 @@ public abstract class AbstractObjectParser<Value, Context extends ParseFieldMatc
     }
 
     /**
-     * Declare some field. Usually it is easier to use {@link #declareString(BiConsumer, ParseField)} or
-     * {@link #declareObject(BiConsumer, ContextParser, ParseField)} rather than call this directly.
+     * Declare some field. Usually it is easier to use {#declareString(BiConsumer, ParseField)} or
+     * {#declareObject(BiConsumer, ContextParser, ParseField)} rather than call this directly.
      */
     public abstract <T> void declareField(BiConsumer<Value, T> consumer, ContextParser<Context, T> parser, ParseField parseField,
             ValueType type);

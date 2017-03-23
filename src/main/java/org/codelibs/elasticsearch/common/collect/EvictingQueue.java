@@ -56,7 +56,7 @@ public class EvictingQueue<T> implements Queue<T> {
     }
 
     /**
-     * Add the given element to the queue, possibly forcing an eviction from the head if {@link #remainingCapacity()} is
+     * Add the given element to the queue, possibly forcing an eviction from the head if {#remainingCapacity()} is
      * zero.
      *
      * @param t the element to add
@@ -144,7 +144,7 @@ public class EvictingQueue<T> implements Queue<T> {
     }
 
     /**
-     * Add the given elements to the queue, possibly forcing evictions from the head if {@link #remainingCapacity()} is
+     * Add the given elements to the queue, possibly forcing evictions from the head if {#remainingCapacity()} is
      * zero or becomes zero during the execution of this method.
      *
      * @param c the collection of elements to add

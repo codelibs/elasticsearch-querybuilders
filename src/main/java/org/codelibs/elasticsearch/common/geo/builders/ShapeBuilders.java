@@ -34,16 +34,16 @@ public class ShapeBuilders {
      *
      * @param longitude longitude of the point
      * @param latitude latitude of the point
-     * @return a new {@link PointBuilder}
+     * @return a new {PointBuilder}
      */
     public static PointBuilder newPoint(double longitude, double latitude) {
         return ShapeBuilders.newPoint(new Coordinate(longitude, latitude));
     }
 
     /**
-     * Create a new {@link PointBuilder} from a {@link Coordinate}
+     * Create a new {PointBuilder} from a {Coordinate}
      * @param coordinate coordinate defining the position of the point
-     * @return a new {@link PointBuilder}
+     * @return a new {PointBuilder}
      */
     public static PointBuilder newPoint(Coordinate coordinate) {
         return new PointBuilder().coordinate(coordinate);
@@ -51,7 +51,7 @@ public class ShapeBuilders {
 
     /**
      * Create a new set of points
-     * @return new {@link MultiPointBuilder}
+     * @return new {MultiPointBuilder}
      */
     public static MultiPointBuilder newMultiPoint(List<Coordinate> points) {
         return new MultiPointBuilder(points);
@@ -59,7 +59,7 @@ public class ShapeBuilders {
 
     /**
      * Create a new lineString
-     * @return a new {@link LineStringBuilder}
+     * @return a new {LineStringBuilder}
      */
     public static LineStringBuilder newLineString(List<Coordinate> list) {
         return new LineStringBuilder(list);
@@ -67,7 +67,7 @@ public class ShapeBuilders {
 
     /**
      * Create a new lineString
-     * @return a new {@link LineStringBuilder}
+     * @return a new {LineStringBuilder}
      */
     public static LineStringBuilder newLineString(CoordinatesBuilder coordinates) {
         return new LineStringBuilder(coordinates);
@@ -75,7 +75,7 @@ public class ShapeBuilders {
 
     /**
      * Create a new Collection of lineStrings
-     * @return a new {@link MultiLineStringBuilder}
+     * @return a new {MultiLineStringBuilder}
      */
     public static MultiLineStringBuilder newMultiLinestring() {
         return new MultiLineStringBuilder();
@@ -83,7 +83,7 @@ public class ShapeBuilders {
 
     /**
      * Create a new PolygonBuilder
-     * @return a new {@link PolygonBuilder}
+     * @return a new {PolygonBuilder}
      */
     public static PolygonBuilder newPolygon(List<Coordinate> shell) {
         return new PolygonBuilder(new CoordinatesBuilder().coordinates(shell));
@@ -91,7 +91,7 @@ public class ShapeBuilders {
 
     /**
      * Create a new PolygonBuilder
-     * @return a new {@link PolygonBuilder}
+     * @return a new {PolygonBuilder}
      */
     public static PolygonBuilder newPolygon(CoordinatesBuilder shell) {
         return new PolygonBuilder(shell);
@@ -99,7 +99,7 @@ public class ShapeBuilders {
 
     /**
      * Create a new Collection of polygons
-     * @return a new {@link MultiPolygonBuilder}
+     * @return a new {MultiPolygonBuilder}
      */
     public static MultiPolygonBuilder newMultiPolygon() {
         return new MultiPolygonBuilder();
@@ -107,7 +107,7 @@ public class ShapeBuilders {
 
     /**
      * Create a new Collection of polygons
-     * @return a new {@link MultiPolygonBuilder}
+     * @return a new {MultiPolygonBuilder}
      */
     public static MultiPolygonBuilder newMultiPolygon(ShapeBuilder.Orientation orientation) {
         return new MultiPolygonBuilder(orientation);
@@ -115,7 +115,7 @@ public class ShapeBuilders {
 
     /**
      * Create a new GeometryCollection
-     * @return a new {@link GeometryCollectionBuilder}
+     * @return a new {GeometryCollectionBuilder}
      */
     public static GeometryCollectionBuilder newGeometryCollection() {
         return new GeometryCollectionBuilder();
@@ -124,7 +124,7 @@ public class ShapeBuilders {
     /**
      * create a new Circle
      *
-     * @return a new {@link CircleBuilder}
+     * @return a new {CircleBuilder}
      */
     public static CircleBuilder newCircleBuilder() {
         return new CircleBuilder();
@@ -133,7 +133,7 @@ public class ShapeBuilders {
     /**
      * create a new rectangle
      *
-     * @return a new {@link EnvelopeBuilder}
+     * @return a new {EnvelopeBuilder}
      */
     public static EnvelopeBuilder newEnvelope(Coordinate topLeft, Coordinate bottomRight) {
         return new EnvelopeBuilder(topLeft, bottomRight);

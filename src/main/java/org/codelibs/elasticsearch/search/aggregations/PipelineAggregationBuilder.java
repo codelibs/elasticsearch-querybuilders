@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A factory that knows how to create an {@link PipelineAggregator} of a
+ * A factory that knows how to create an {PipelineAggregator} of a
  * specific type.
  */
 public abstract class PipelineAggregationBuilder extends ToXContentToBytes
@@ -78,7 +78,7 @@ public abstract class PipelineAggregationBuilder extends ToXContentToBytes
      */
     protected abstract PipelineAggregator create() throws IOException;
 
-    /** Associate metadata with this {@link PipelineAggregationBuilder}. */
+    /** Associate metadata with this {PipelineAggregationBuilder}. */
     public abstract PipelineAggregationBuilder setMetaData(Map<String, Object> metaData);
 
 }

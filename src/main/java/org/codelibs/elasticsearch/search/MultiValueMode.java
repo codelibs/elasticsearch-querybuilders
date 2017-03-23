@@ -512,7 +512,7 @@ public enum MultiValueMode implements Writeable {
     };
 
     /**
-     * A case insensitive version of {@link #valueOf(String)}
+     * A case insensitive version of {#valueOf(String)}
      *
      * @throws IllegalArgumentException if the given string doesn't match a sort mode or is <code>null</code>.
      */
@@ -525,7 +525,7 @@ public enum MultiValueMode implements Writeable {
     }
 
     /**
-     * Return a {@link NumericDocValues} instance that can be used to sort documents
+     * Return a {NumericDocValues} instance that can be used to sort documents
      * with this mode and the provided values. When a document has no value,
      * <code>missingValue</code> is returned.
      *
@@ -564,7 +564,7 @@ public enum MultiValueMode implements Writeable {
     }
 
     /**
-     * Return a {@link NumericDocValues} instance that can be used to sort root documents
+     * Return a {NumericDocValues} instance that can be used to sort root documents
      * with this mode, the provided values and filters for root/inner documents.
      *
      * For every root document, the values of its inner documents will be aggregated.
@@ -616,7 +616,7 @@ public enum MultiValueMode implements Writeable {
     }
 
     /**
-     * Return a {@link NumericDoubleValues} instance that can be used to sort documents
+     * Return a {NumericDoubleValues} instance that can be used to sort documents
      * with this mode and the provided values. When a document has no value,
      * <code>missingValue</code> is returned.
      *
@@ -655,7 +655,7 @@ public enum MultiValueMode implements Writeable {
     }
 
     /**
-     * Return a {@link NumericDoubleValues} instance that can be used to sort root documents
+     * Return a {NumericDoubleValues} instance that can be used to sort root documents
      * with this mode, the provided values and filters for root/inner documents.
      *
      * For every root document, the values of its inner documents will be aggregated.
@@ -707,7 +707,7 @@ public enum MultiValueMode implements Writeable {
     }
 
     /**
-     * Return a {@link BinaryDocValues} instance that can be used to sort documents
+     * Return a {BinaryDocValues} instance that can be used to sort documents
      * with this mode and the provided values. When a document has no value,
      * <code>missingValue</code> is returned.
      *
@@ -746,7 +746,7 @@ public enum MultiValueMode implements Writeable {
     }
 
     /**
-     * Return a {@link BinaryDocValues} instance that can be used to sort root documents
+     * Return a {BinaryDocValues} instance that can be used to sort root documents
      * with this mode, the provided values and filters for root/inner documents.
      *
      * For every root document, the values of its inner documents will be aggregated.
@@ -805,7 +805,7 @@ public enum MultiValueMode implements Writeable {
     }
 
     /**
-     * Return a {@link SortedDocValues} instance that can be used to sort documents
+     * Return a {SortedDocValues} instance that can be used to sort documents
      * with this mode and the provided values.
      *
      * Allowed Modes: MIN, MAX
@@ -843,7 +843,7 @@ public enum MultiValueMode implements Writeable {
     }
 
     /**
-     * Return a {@link SortedDocValues} instance that can be used to sort root documents
+     * Return a {SortedDocValues} instance that can be used to sort root documents
      * with this mode, the provided values and filters for root/inner documents.
      *
      * For every root document, the values of its inner documents will be aggregated.
@@ -905,7 +905,7 @@ public enum MultiValueMode implements Writeable {
     }
 
     /**
-     * Return a {@link NumericDoubleValues} instance that can be used to sort documents
+     * Return a {NumericDoubleValues} instance that can be used to sort documents
      * with this mode and the provided values. When a document has no value,
      * <code>missingValue</code> is returned.
      *

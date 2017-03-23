@@ -23,7 +23,7 @@ import org.apache.lucene.util.Accountable;
 import org.codelibs.elasticsearch.common.lease.Releasable;
 
 /**
- * The thread safe {@link org.apache.lucene.index.LeafReader} level cache of the data.
+ * The thread safe {org.apache.lucene.index.LeafReader} level cache of the data.
  */
 public interface AtomicFieldData extends Accountable, Releasable {
 

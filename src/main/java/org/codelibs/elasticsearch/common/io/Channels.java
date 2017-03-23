@@ -89,7 +89,7 @@ public final class Channels {
      *
      * @param channel         channel to read from
      * @param channelPosition position to read from
-     * @param dest            destination {@link java.nio.ByteBuffer} to put data in
+     * @param dest            destination {java.nio.ByteBuffer} to put data in
      */
     public static void readFromFileChannelWithEofException(FileChannel channel, long channelPosition, ByteBuffer dest) throws IOException {
         int read = readFromFileChannel(channel, channelPosition, dest);
@@ -103,7 +103,7 @@ public final class Channels {
      *
      * @param channel         channel to read from
      * @param channelPosition position to read from
-     * @param dest            destination {@link java.nio.ByteBuffer} to put data in
+     * @param dest            destination {java.nio.ByteBuffer} to put data in
      * @return total bytes read or -1 if an attempt was made to read past EOF. The method always tries to read all the bytes
      * that will fit in the destination byte buffer.
      */
@@ -155,7 +155,7 @@ public final class Channels {
     }
 
     /**
-     * Writes part of a byte array to a {@link java.nio.channels.WritableByteChannel}
+     * Writes part of a byte array to a {java.nio.channels.WritableByteChannel}
      *
      * @param source  byte array to copy from
      * @param channel target WritableByteChannel
@@ -166,7 +166,7 @@ public final class Channels {
 
 
     /**
-     * Writes part of a byte array to a {@link java.nio.channels.WritableByteChannel}
+     * Writes part of a byte array to a {java.nio.channels.WritableByteChannel}
      *
      * @param source  byte array to copy from
      * @param offset  start copying from this offset
@@ -188,7 +188,7 @@ public final class Channels {
     }
 
     /**
-     * Writes a {@link java.nio.ByteBuffer} to a {@link java.nio.channels.WritableByteChannel}
+     * Writes a {java.nio.ByteBuffer} to a {java.nio.channels.WritableByteChannel}
      *
      * @param byteBuffer source buffer
      * @param channel    channel to write to

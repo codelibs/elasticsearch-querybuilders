@@ -58,7 +58,7 @@ public abstract class Aggregator extends BucketCollector implements Releasable {
     }
 
     /**
-     * Returns whether one of the parents is a {@link BucketsAggregator}.
+     * Returns whether one of the parents is a {BucketsAggregator}.
      */
     public static boolean descendsFromBucketAggregator(Aggregator parent) {
         while (parent != null) {
@@ -76,7 +76,7 @@ public abstract class Aggregator extends BucketCollector implements Releasable {
     public abstract String name();
 
     /**
-     * Return the {@link SearchContext} attached with this {@link Aggregator}.
+     * Return the {SearchContext} attached with this {Aggregator}.
      */
     public abstract SearchContext context();
 

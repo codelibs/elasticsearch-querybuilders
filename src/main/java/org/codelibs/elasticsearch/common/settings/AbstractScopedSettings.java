@@ -256,7 +256,7 @@ public abstract class AbstractScopedSettings {
         }
 
         /**
-         * Returns a callable runnable that calls {@link #apply(Object, Settings, Settings)} if the settings
+         * Returns a callable runnable that calls {#apply(Object, Settings, Settings)} if the settings
          * actually changed. This allows to defer the update to a later point in time while keeping type safety.
          * If the value didn't change the returned runnable is a noop.
          */
@@ -270,7 +270,7 @@ public abstract class AbstractScopedSettings {
     }
 
     /**
-     * Returns the {@link Setting} for the given key or <code>null</code> if the setting can not be found.
+     * Returns the {Setting} for the given key or <code>null</code> if the setting can not be found.
      */
     public Setting<?> get(String key) {
         Setting<?> setting = keySettings.get(key);
@@ -333,7 +333,7 @@ public abstract class AbstractScopedSettings {
      * Updates a target settings builder with new, updated or deleted settings from a given settings builder.
      * <p>
      * Note: This method will only allow updates to dynamic settings. if a non-dynamic setting is updated an
-     * {@link IllegalArgumentException} is thrown instead.
+     * {IllegalArgumentException} is thrown instead.
      * </p>
      *
      * @param toApply the new settings to apply
@@ -444,12 +444,12 @@ public abstract class AbstractScopedSettings {
      * will be archived. This means the setting is prefixed with {@value ARCHIVED_SETTINGS_PREFIX}
      * and remains in the settings object. This can be used to detect invalid settings via APIs.
      *
-     * @param settings        the {@link Settings} instance to scan for unknown or invalid settings
+     * @param settings        the {Settings} instance to scan for unknown or invalid settings
      * @param unknownConsumer callback on unknown settings (consumer receives unknown key and its
      *                        associated value)
      * @param invalidConsumer callback on invalid settings (consumer receives invalid key, its
      *                        associated value and an exception)
-     * @return a {@link Settings} instance with the unknown or invalid settings archived
+     * @return a {Settings} instance with the unknown or invalid settings archived
      */
     public Settings archiveUnknownOrInvalidSettings(
         final Settings settings,

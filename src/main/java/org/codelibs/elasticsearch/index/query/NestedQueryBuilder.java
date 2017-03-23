@@ -114,7 +114,7 @@ public class NestedQueryBuilder extends AbstractQueryBuilder<NestedQueryBuilder>
 
     /**
      * Sets whether the query builder should ignore unmapped paths (and run a
-     * {@link MatchNoDocsQuery} in place of this query) or throw an exception if
+     * {MatchNoDocsQuery} in place of this query) or throw an exception if
      * the path is unmapped.
      */
     public NestedQueryBuilder ignoreUnmapped(boolean ignoreUnmapped) {
@@ -124,7 +124,7 @@ public class NestedQueryBuilder extends AbstractQueryBuilder<NestedQueryBuilder>
 
     /**
      * Gets whether the query builder will ignore unmapped fields (and run a
-     * {@link MatchNoDocsQuery} in place of this query) or throw an exception if
+     * {MatchNoDocsQuery} in place of this query) or throw an exception if
      * the path is unmapped.
      */
     public boolean ignoreUnmapped() {

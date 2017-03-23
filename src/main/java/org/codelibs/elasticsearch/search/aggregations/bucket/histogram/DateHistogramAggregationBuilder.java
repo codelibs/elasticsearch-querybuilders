@@ -169,8 +169,8 @@ public class DateHistogramAggregationBuilder
     }
 
     /** Set the interval on this builder, and return the builder so that calls can be chained.
-     *  If both {@link #interval()} and {@link #dateHistogramInterval()} are set, then the
-     *  {@link #dateHistogramInterval()} wins. */
+     *  If both {#interval()} and {#dateHistogramInterval()} are set, then the
+     *  {#dateHistogramInterval()} wins. */
     public DateHistogramAggregationBuilder interval(long interval) {
         if (interval < 1) {
             throw new IllegalArgumentException("[interval] must be 1 or greater for histogram aggregation [" + name + "]");
@@ -185,8 +185,8 @@ public class DateHistogramAggregationBuilder
     }
 
     /** Set the interval on this builder, and return the builder so that calls can be chained.
-     *  If both {@link #interval()} and {@link #dateHistogramInterval()} are set, then the
-     *  {@link #dateHistogramInterval()} wins. */
+     *  If both {#interval()} and {#dateHistogramInterval()} are set, then the
+     *  {#dateHistogramInterval()} wins. */
     public DateHistogramAggregationBuilder dateHistogramInterval(DateHistogramInterval dateHistogramInterval) {
         if (dateHistogramInterval == null) {
             throw new IllegalArgumentException("[dateHistogramInterval] must not be null: [" + name + "]");

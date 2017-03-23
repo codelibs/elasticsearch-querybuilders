@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * The {@link CategoryContextMapping} is used to define a {@link ContextMapping} that
+ * The {CategoryContextMapping} is used to define a {ContextMapping} that
  * references a field within a document. The value of the field in turn will be
  * used to setup the suggestions made by the completion suggester.
  */
@@ -55,7 +55,7 @@ public class CategoryContextMapping extends ContextMapping {
     private final FieldConfig defaultConfig;
 
     /**
-     * Create a new {@link CategoryContextMapping} with the default field
+     * Create a new {CategoryContextMapping} with the default field
      * <code>[_type]</code>
      */
     public CategoryContextMapping(String name) {
@@ -63,7 +63,7 @@ public class CategoryContextMapping extends ContextMapping {
     }
 
     /**
-     * Create a new {@link CategoryContextMapping} with the default field
+     * Create a new {CategoryContextMapping} with the default field
      * <code>[_type]</code>
      */
     public CategoryContextMapping(String name, String fieldName) {
@@ -71,7 +71,7 @@ public class CategoryContextMapping extends ContextMapping {
     }
 
     /**
-     * Create a new {@link CategoryContextMapping} with the default field
+     * Create a new {CategoryContextMapping} with the default field
      * <code>[_type]</code>
      */
     public CategoryContextMapping(String name, Iterable<String> defaultValues) {
@@ -79,7 +79,7 @@ public class CategoryContextMapping extends ContextMapping {
     }
 
     /**
-     * Create a new {@link CategoryContextMapping} with the default field
+     * Create a new {CategoryContextMapping} with the default field
      * <code>[_type]</code>
      */
     public CategoryContextMapping(String name, String fieldName, Iterable<String> defaultValues) {
@@ -90,7 +90,7 @@ public class CategoryContextMapping extends ContextMapping {
     }
 
     /**
-     * Name of the field used by this {@link CategoryContextMapping}
+     * Name of the field used by this {CategoryContextMapping}
      */
     public String getFieldName() {
         return fieldName;
@@ -106,12 +106,12 @@ public class CategoryContextMapping extends ContextMapping {
     }
 
     /**
-     * Load the specification of a {@link CategoryContextMapping}
+     * Load the specification of a {CategoryContextMapping}
      *
      * @param name
      *            name of the field to use. If <code>null</code> default field
      *            will be used
-     * @return new {@link CategoryContextMapping}
+     * @return new {CategoryContextMapping}
      */
     protected static CategoryContextMapping load(String name, Map<String, Object> config) throws ElasticsearchParseException {
         CategoryContextMapping.Builder mapping = new CategoryContextMapping.Builder(name);

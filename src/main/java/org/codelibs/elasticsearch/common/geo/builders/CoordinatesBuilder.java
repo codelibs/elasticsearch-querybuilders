@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * A builder for a list of coordinates.
  * Enables chaining of individual coordinates either as long/lat pairs
- * or as {@link Coordinate} elements, arrays or collections.
+ * or as {Coordinate} elements, arrays or collections.
  */
 public class CoordinatesBuilder {
 
@@ -58,7 +58,7 @@ public class CoordinatesBuilder {
     /**
      * Add an array of coordinates to the current coordinates
      *
-     * @param coordinates array of {@link Coordinate}s to add
+     * @param coordinates array of {Coordinate}s to add
      * @return this
      */
     public CoordinatesBuilder coordinates(Coordinate...coordinates) {
@@ -68,7 +68,7 @@ public class CoordinatesBuilder {
     /**
      * Add a collection of coordinates to the current coordinates
      *
-     * @param coordinates collection of {@link Coordinate}s to add
+     * @param coordinates collection of {Coordinate}s to add
      * @return this
      */
     public CoordinatesBuilder coordinates(Collection<? extends Coordinate> coordinates) {

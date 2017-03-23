@@ -92,7 +92,7 @@ public abstract class MappedFieldType extends FieldType {
     /** Return a fielddata builder for this field
      *  @throws IllegalArgumentException if the fielddata is not supported on this type.
      *  An IllegalArgumentException is needed in order to return an http error 400
-     *  when this error occurs in a request. see: {@link org.codelibs.elasticsearch.ExceptionsHelper#status}
+     *  when this error occurs in a request. see: {org.codelibs.elasticsearch.ExceptionsHelper#status}
      **/
     public IndexFieldData.Builder fielddataBuilder() {
         throw new IllegalArgumentException("Fielddata is not supported on field [" + name() + "] of type [" + typeName() + "]");
@@ -220,14 +220,14 @@ public abstract class MappedFieldType extends FieldType {
     }
 
     /** Generates a query that will only match documents that contain the given value.
-     *  The default implementation returns a {@link TermQuery} over the value bytes,
-     *  boosted by {@link #boost()}.
+     *  The default implementation returns a {TermQuery} over the value bytes,
+     *  boosted by {#boost()}.
      *  @throws IllegalArgumentException if {@code value} cannot be converted to the expected data type */
     public abstract Query termQuery(Object value, @Nullable QueryShardContext context);
 
     /** Build a constant-scoring query that matches all values. The default implementation uses a
-     * {@link ConstantScoreQuery} around a {@link BooleanQuery} whose {@link Occur#SHOULD} clauses
-     * are generated with {@link #termQuery}. */
+     * {ConstantScoreQuery} around a {BooleanQuery} whose {Occur#SHOULD} clauses
+     * are generated with {#termQuery}. */
     public Query termsQuery(List<?> values, @Nullable QueryShardContext context) {
         BooleanQuery.Builder builder = new BooleanQuery.Builder();
         for (Object value : values) {
@@ -260,7 +260,7 @@ public abstract class MappedFieldType extends FieldType {
     }
 
     /**
-     * @return a {@link FieldStats} instance that maps to the type of this
+     * @return a {FieldStats} instance that maps to the type of this
      * field or {@code null} if the provided index has no stats about the
      * current field
      */
@@ -289,9 +289,9 @@ public abstract class MappedFieldType extends FieldType {
         DISJOINT;
     }
 
-    /** Return whether all values of the given {@link IndexReader} are within the range,
+    /** Return whether all values of the given {IndexReader} are within the range,
      *  outside the range or cross the range. The default implementation returns
-     *  {@link Relation#INTERSECTS}, which is always fine to return when there is
+     *  {Relation#INTERSECTS}, which is always fine to return when there is
      *  no way to check whether values are actually within bounds. */
     public Relation isFieldWithinQuery(
         IndexReader reader,
@@ -309,7 +309,7 @@ public abstract class MappedFieldType extends FieldType {
 
     /** @throws IllegalArgumentException if the fielddata is not supported on this type.
      *  An IllegalArgumentException is needed in order to return an http error 400
-     *  when this error occurs in a request. see: {@link org.codelibs.elasticsearch.ExceptionsHelper#status}
+     *  when this error occurs in a request. see: {org.codelibs.elasticsearch.ExceptionsHelper#status}
      **/
     protected final void failIfNoDocValues() {
         if (hasDocValues() == false) {
@@ -335,9 +335,9 @@ public abstract class MappedFieldType extends FieldType {
         this.eagerGlobalOrdinals = eagerGlobalOrdinals;
     }
 
-    /** Return a {@link DocValueFormat} that can be used to display and parse
+    /** Return a {DocValueFormat} that can be used to display and parse
      *  values as returned by the fielddata API.
-     *  The default implementation returns a {@link DocValueFormat#RAW}. */
+     *  The default implementation returns a {DocValueFormat#RAW}. */
     public DocValueFormat docValueFormat(@Nullable String format, DateTimeZone timeZone) {
         if (format != null) {
             throw new IllegalArgumentException("Field [" + name() + "] of type [" + typeName() + "] does not support custom formats");
@@ -349,9 +349,9 @@ public abstract class MappedFieldType extends FieldType {
     }
 
     /**
-     * Extract a {@link Term} from a query created with {@link #termQuery} by
-     * recursively removing {@link BoostQuery} wrappers.
-     * @throws IllegalArgumentException if the wrapped query is not a {@link TermQuery}
+     * Extract a {Term} from a query created with {#termQuery} by
+     * recursively removing {BoostQuery} wrappers.
+     * @throws IllegalArgumentException if the wrapped query is not a {TermQuery}
      */
     public static Term extractTerm(Query termQuery) {
         throw new UnsupportedOperationException();

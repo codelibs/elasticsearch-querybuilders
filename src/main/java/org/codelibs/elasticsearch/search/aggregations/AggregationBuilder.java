@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * A factory that knows how to create an {@link Aggregator} of a specific type.
+ * A factory that knows how to create an {Aggregator} of a specific type.
  */
 public abstract class AggregationBuilder
     extends ToXContentToBytes
@@ -62,10 +62,10 @@ public abstract class AggregationBuilder
         return name;
     }
 
-    /** Internal: build an {@link AggregatorFactory} based on the configuration of this builder. */
+    /** Internal: build an {AggregatorFactory} based on the configuration of this builder. */
     protected abstract AggregatorFactory<?> build(SearchContext context, AggregatorFactory<?> parent) throws IOException;
 
-    /** Associate metadata with this {@link AggregationBuilder}. */
+    /** Associate metadata with this {AggregationBuilder}. */
     public abstract AggregationBuilder setMetaData(Map<String, Object> metaData);
 
     /** Add a sub aggregation to this builder. */
@@ -77,7 +77,7 @@ public abstract class AggregationBuilder
     /**
      * Internal: Registers sub-factories with this factory. The sub-factory will be
      * responsible for the creation of sub-aggregators under the aggregator
-     * created by this factory. This is only for use by {@link AggregatorParsers}.
+     * created by this factory. This is only for use by {AggregatorParsers}.
      *
      * @param subFactories
      *            The sub-factories

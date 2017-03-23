@@ -37,7 +37,7 @@ import static org.codelibs.elasticsearch.search.suggest.completion.context.Categ
 import static org.codelibs.elasticsearch.search.suggest.completion.context.CategoryContextMapping.CONTEXT_VALUE;
 
 /**
- * Defines the query context for {@link CategoryContextMapping}
+ * Defines the query context for {CategoryContextMapping}
  */
 public final class CategoryQueryContext implements ToXContent {
     public static final String NAME = "category";

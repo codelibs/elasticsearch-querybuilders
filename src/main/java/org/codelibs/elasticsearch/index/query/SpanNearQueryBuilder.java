@@ -39,7 +39,7 @@ import java.util.Optional;
 /**
  * Matches spans which are near one another. One can specify slop, the maximum number
  * of intervening unmatched positions, as well as whether matches are required to be in-order.
- * The span near query maps to Lucene {@link SpanNearQuery}.
+ * The span near query maps to Lucene {SpanNearQuery}.
  */
 public class SpanNearQueryBuilder extends AbstractQueryBuilder<SpanNearQueryBuilder> implements SpanQueryBuilder {
     public static final String NAME = "span_near";
@@ -108,7 +108,7 @@ public class SpanNearQueryBuilder extends AbstractQueryBuilder<SpanNearQueryBuil
     }
 
     /**
-     * @return the {@link SpanQueryBuilder} clauses that were set for this query
+     * @return the {SpanQueryBuilder} clauses that were set for this query
      */
     public List<SpanQueryBuilder> clauses() {
         return Collections.unmodifiableList(this.clauses);

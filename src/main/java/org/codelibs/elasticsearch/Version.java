@@ -206,7 +206,7 @@ public class Version {
     }
 
     /**
-     * Return the {@link Version} of Elasticsearch that has been used to create an index given its settings.
+     * Return the {Version} of Elasticsearch that has been used to create an index given its settings.
      *
      * @throws IllegalStateException if the given index settings doesn't contain a value for the key
      */
@@ -227,7 +227,7 @@ public class Version {
 
     /**
      * Returns the minimum version between the 2.
-     * @deprecated use {@link #min(Version, Version)} instead
+     * @deprecated use {#min(Version, Version)} instead
      */
     @Deprecated
     public static Version smallest(Version version1, Version version2) {

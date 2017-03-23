@@ -162,7 +162,7 @@ public abstract class BaseGeoPointFieldMapper extends FieldMapper {
                 return null;
             }
             /**
-             * we don't have a specific type for geo_point so we use an empty {@link FieldStats.Text}.
+             * we don't have a specific type for geo_point so we use an empty {FieldStats.Text}.
              * TODO: we should maybe support a new type that knows how to (de)encode the min/max information
              */
             return new FieldStats.Text(maxDoc, -1, -1, -1, isSearchable(), isAggregatable());

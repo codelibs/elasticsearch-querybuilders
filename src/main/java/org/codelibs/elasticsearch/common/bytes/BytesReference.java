@@ -211,7 +211,7 @@ public abstract class BytesReference implements Accountable, Comparable<BytesRef
     }
 
     /**
-     * Instead of adding the complexity of {@link InputStream#reset()} etc to the actual impl
+     * Instead of adding the complexity of {InputStream#reset()} etc to the actual impl
      * this wrapper builds it on top of the BytesReferenceStreamInput which is much simpler
      * that way.
      */

@@ -37,7 +37,7 @@ public class MultiPointBuilder extends CoordinateCollection<MultiPointBuilder> {
     public static final GeoShapeType TYPE = GeoShapeType.MULTIPOINT;
 
     /**
-     * Create a new {@link MultiPointBuilder}.
+     * Create a new {MultiPointBuilder}.
      * @param coordinates needs at least two coordinates to be valid, otherwise will throw an exception
      */
     public MultiPointBuilder(List<Coordinate> coordinates) {

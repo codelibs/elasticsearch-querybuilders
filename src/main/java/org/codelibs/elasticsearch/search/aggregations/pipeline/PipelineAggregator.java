@@ -34,7 +34,7 @@ import java.util.Map;
 
 public abstract class PipelineAggregator implements NamedWriteable {
     /**
-     * Parse the {@link PipelineAggregationBuilder} from a {@link QueryParseContext}.
+     * Parse the {PipelineAggregationBuilder} from a {QueryParseContext}.
      */
     @FunctionalInterface
     public interface Parser {

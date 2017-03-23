@@ -26,7 +26,7 @@ import org.codelibs.elasticsearch.search.aggregations.bucket.significant.Signifi
 import org.codelibs.elasticsearch.search.internal.SearchContext;
 
 /**
- * Heuristic for that {@link SignificantTerms} uses to pick out significant terms.
+ * Heuristic for that {SignificantTerms} uses to pick out significant terms.
  */
 public abstract class SignificanceHeuristic implements NamedWriteable, ToXContent {
     /**

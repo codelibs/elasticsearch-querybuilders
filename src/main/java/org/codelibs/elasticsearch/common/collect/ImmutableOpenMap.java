@@ -37,7 +37,7 @@ import java.util.Map;
 /**
  * An immutable map implementation based on open hash map.
  * <p>
- * Can be constructed using a {@link #builder()}, or using {@link #builder(ImmutableOpenMap)} (which is an optimized
+ * Can be constructed using a {#builder()}, or using {#builder(ImmutableOpenMap)} (which is an optimized
  * option to copy over existing content and modify it).
  */
 public final class ImmutableOpenMap<KType, VType> implements Iterable<ObjectObjectCursor<KType, VType>> {
@@ -93,7 +93,7 @@ public final class ImmutableOpenMap<KType, VType> implements Iterable<ObjectObje
     /**
      * Returns a cursor over the entries (key-value pairs) in this map. The iterator is
      * implemented as a cursor and it returns <b>the same cursor instance</b> on every
-     * call to {@link Iterator#next()}. To read the current key and value use the cursor's
+     * call to {Iterator#next()}. To read the current key and value use the cursor's
      * public fields. An example is shown below.
      * <pre>
      * for (IntShortCursor c : intShortMap)
@@ -115,7 +115,7 @@ public final class ImmutableOpenMap<KType, VType> implements Iterable<ObjectObje
 
     /**
      * Returns a specialized view of the keys of this associated container.
-     * The view additionally implements {@link ObjectLookupContainer}.
+     * The view additionally implements {ObjectLookupContainer}.
      */
     public ObjectLookupContainer<KType> keys() {
         return map.keys();

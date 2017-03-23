@@ -56,7 +56,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/** A {@link FieldMapper} for numeric types: byte, short, int, long, float and double. */
+/** A {FieldMapper} for numeric types: byte, short, int, long, float and double. */
 public class NumberFieldMapper extends FieldMapper {
 
     // this is private since it has a different default

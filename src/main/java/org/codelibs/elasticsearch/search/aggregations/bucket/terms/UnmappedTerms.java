@@ -33,13 +33,13 @@ import java.util.Map;
 import static java.util.Collections.emptyList;
 
 /**
- * Result of the {@link TermsAggregator} when the field is unmapped.
+ * Result of the {TermsAggregator} when the field is unmapped.
  */
 public class UnmappedTerms extends InternalTerms<UnmappedTerms, UnmappedTerms.Bucket> {
     public static final String NAME = "umterms";
 
     /**
-     * Concrete type that can't be built because Java needs a concrent type so {@link InternalTerms.Bucket} can have a self type but
+     * Concrete type that can't be built because Java needs a concrent type so {InternalTerms.Bucket} can have a self type but
      * {@linkplain UnmappedTerms} doesn't ever need to build it because it never returns any buckets.
      */
     protected abstract static class Bucket extends InternalTerms.Bucket<Bucket> {

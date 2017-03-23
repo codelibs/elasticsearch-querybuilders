@@ -29,7 +29,7 @@ import org.codelibs.elasticsearch.search.internal.SearchContext;
 import java.io.IOException;
 
 /**
- * A {@link BucketCollector} that records collected doc IDs and buckets and
+ * A {BucketCollector} that records collected doc IDs and buckets and
  * allows to replay a subset of the collected buckets.
  */
 public abstract class DeferringBucketCollector extends BucketCollector {

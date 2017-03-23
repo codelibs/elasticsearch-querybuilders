@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Interface for pull - parsing {@link XContent} see {@link XContentType} for supported types.
+ * Interface for pull - parsing {XContent} see {XContentType} for supported types.
  *
  * To obtain an instance of this class use the following pattern:
  *
@@ -144,14 +144,14 @@ public interface XContentParser extends Releasable {
     String textOrNull() throws IOException;
 
     /**
-     * Returns a BytesRef holding UTF-8 bytes or null if a null value is {@link Token#VALUE_NULL}.
-     * This method should be used to read text only binary content should be read through {@link #binaryValue()}
+     * Returns a BytesRef holding UTF-8 bytes or null if a null value is {Token#VALUE_NULL}.
+     * This method should be used to read text only binary content should be read through {#binaryValue()}
      */
     BytesRef utf8BytesOrNull() throws IOException;
 
     /**
      * Returns a BytesRef holding UTF-8 bytes.
-     * This method should be used to read text only binary content should be read through {@link #binaryValue()}
+     * This method should be used to read text only binary content should be read through {#binaryValue()}
      */
     BytesRef utf8Bytes() throws IOException;
 
@@ -216,26 +216,26 @@ public interface XContentParser extends Releasable {
      * Reads a plain binary value that was written via one of the following methods:
      *
      * <ul>
-     *     <li>{@link XContentBuilder#field(String, org.apache.lucene.util.BytesRef)}</li>
-     *     <li>{@link XContentBuilder#field(String, org.codelibs.elasticsearch.common.bytes.BytesReference)}</li>
-     *     <li>{@link XContentBuilder#field(String, byte[], int, int)}}</li>
-     *     <li>{@link XContentBuilder#field(String, byte[])}}</li>
+     *     <li>{XContentBuilder#field(String, org.apache.lucene.util.BytesRef)}</li>
+     *     <li>{XContentBuilder#field(String, org.codelibs.elasticsearch.common.bytes.BytesReference)}</li>
+     *     <li>{XContentBuilder#field(String, byte[], int, int)}}</li>
+     *     <li>{XContentBuilder#field(String, byte[])}}</li>
      * </ul>
      *
      * as well as via their <code>String</code> variants of the separated value methods.
      * Note: Do not use this method to read values written with:
      * <ul>
-     *     <li>{@link XContentBuilder#utf8Field(String, org.apache.lucene.util.BytesRef)}</li>
-     *     <li>{@link XContentBuilder#utf8Field(String, org.apache.lucene.util.BytesRef)}</li>
+     *     <li>{XContentBuilder#utf8Field(String, org.apache.lucene.util.BytesRef)}</li>
+     *     <li>{XContentBuilder#utf8Field(String, org.apache.lucene.util.BytesRef)}</li>
      * </ul>
      *
      * these methods write UTF-8 encoded strings and must be read through:
      * <ul>
-     *     <li>{@link XContentParser#utf8Bytes()}</li>
-     *     <li>{@link XContentParser#utf8BytesOrNull()}}</li>
-     *     <li>{@link XContentParser#text()} ()}</li>
-     *     <li>{@link XContentParser#textOrNull()} ()}</li>
-     *     <li>{@link XContentParser#textCharacters()} ()}}</li>
+     *     <li>{XContentParser#utf8Bytes()}</li>
+     *     <li>{XContentParser#utf8BytesOrNull()}}</li>
+     *     <li>{XContentParser#text()} ()}</li>
+     *     <li>{XContentParser#textOrNull()} ()}</li>
+     *     <li>{XContentParser#textCharacters()} ()}}</li>
      * </ul>
      *
      */
@@ -256,7 +256,7 @@ public interface XContentParser extends Releasable {
     <T> T namedObject(Class<T> categoryClass, String name, Object context) throws IOException;
 
     /**
-     * The registry used to resolve {@link #namedObject(Class, String, Object)}. Use this when building a sub-parser from this parser.
+     * The registry used to resolve {#namedObject(Class, String, Object)}. Use this when building a sub-parser from this parser.
      */
     NamedXContentRegistry getXContentRegistry();
 

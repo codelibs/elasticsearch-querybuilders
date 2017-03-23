@@ -160,7 +160,7 @@ public class TermsQueryBuilder extends AbstractQueryBuilder<TermsQueryBuilder> {
             Arrays.asList(BytesRef.class, String.class));
 
     /**
-     * Same as {@link #convert(List)} but on an {@link Iterable}.
+     * Same as {#convert(List)} but on an {Iterable}.
      */
     private static List<?> convert(Iterable<?> values) {
         List<?> list;
@@ -178,11 +178,11 @@ public class TermsQueryBuilder extends AbstractQueryBuilder<TermsQueryBuilder> {
 
     /**
      * Convert the list in a way that optimizes storage in the case that all
-     * elements are either integers or {@link String}s/{@link BytesRef}s. This
+     * elements are either integers or {String}s/{BytesRef}s. This
      * is useful to help garbage collections for use-cases that involve sending
      * very large terms queries to Elasticsearch. If the list does not only
-     * contain integers or {@link String}s, then a list is returned where all
-     * {@link String}s have been replaced with {@link BytesRef}s.
+     * contain integers or {String}s, then a list is returned where all
+     * {String}s have been replaced with {BytesRef}s.
      */
     static List<?> convert(List<?> list) {
         if (list.isEmpty()) {
@@ -246,10 +246,10 @@ public class TermsQueryBuilder extends AbstractQueryBuilder<TermsQueryBuilder> {
     }
 
     /**
-     * Convert the internal {@link List} of values back to a user-friendly list.
+     * Convert the internal {List} of values back to a user-friendly list.
      * Integers are kept as-is since the terms query does not make any difference
-     * between {@link Integer}s and {@link Long}s, but {@link BytesRef}s are
-     * converted back to {@link String}s.
+     * between {Integer}s and {Long}s, but {BytesRef}s are
+     * converted back to {String}s.
      */
     static List<Object> convertBack(List<?> list) {
         return new AbstractList<Object>() {

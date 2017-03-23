@@ -41,7 +41,7 @@ import java.util.Optional;
 import java.util.TreeMap;
 
 /**
- * Same as {@link MatchQueryBuilder} but supports multiple fields.
+ * Same as {MatchQueryBuilder} but supports multiple fields.
  */
 public class MultiMatchQueryBuilder extends AbstractQueryBuilder<MultiMatchQueryBuilder> {
     public static final String NAME = "multi_match";
@@ -411,7 +411,7 @@ public class MultiMatchQueryBuilder extends AbstractQueryBuilder<MultiMatchQuery
 
     /**
      * @deprecated use a tieBreaker of 1.0f to disable "dis-max"
-     * query or select the appropriate {@link Type}
+     * query or select the appropriate {Type}
      */
     @Deprecated
     public MultiMatchQueryBuilder useDisMax(Boolean useDisMax) {

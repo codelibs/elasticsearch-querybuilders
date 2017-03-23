@@ -53,7 +53,7 @@ import java.util.TreeMap;
  * <li>'{@code ~}N' at the end of phrases specifies near/slop query: <tt>"term1 term2"~5</tt>
  * </ul>
  * <p>
- * See: {@link SimpleQueryParser} for more information.
+ * See: {SimpleQueryParser} for more information.
  * <p>
  * This query supports these options:
  * <p>

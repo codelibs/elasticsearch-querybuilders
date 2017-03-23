@@ -22,7 +22,7 @@ package org.codelibs.elasticsearch.common.util;
 import java.util.Comparator;
 
 /**
- * {@link Comparator}-related utility methods.
+ * {Comparator}-related utility methods.
  */
 public enum Comparators {
     ;

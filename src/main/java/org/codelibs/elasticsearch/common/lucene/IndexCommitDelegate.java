@@ -27,8 +27,8 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * A simple delegate that delegates all {@link IndexCommit} calls to a delegated
- * {@link IndexCommit}.
+ * A simple delegate that delegates all {IndexCommit} calls to a delegated
+ * {IndexCommit}.
  *
  *
  */
@@ -37,7 +37,7 @@ public abstract class IndexCommitDelegate extends IndexCommit {
     protected final IndexCommit delegate;
 
     /**
-     * Constructs a new {@link IndexCommit} that will delegate all calls
+     * Constructs a new {IndexCommit} that will delegate all calls
      * to the provided delegate.
      *
      * @param delegate The delegate

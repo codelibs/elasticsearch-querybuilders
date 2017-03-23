@@ -19,7 +19,7 @@
 
 package org.codelibs.elasticsearch.index.analysis;
 
-/** Elasticsearch counterpart of {@link org.apache.lucene.analysis.util.MultiTermAwareComponent}. */
+/** Elasticsearch counterpart of {org.apache.lucene.analysis.util.MultiTermAwareComponent}. */
 public interface MultiTermAwareComponent {
 
     /** Returns an analysis component to handle analysis if multi-term queries.

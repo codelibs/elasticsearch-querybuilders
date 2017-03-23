@@ -31,7 +31,7 @@ public abstract class SuggestBuilders {
     /**
      * Creates a term suggestion lookup query with the provided <code>field</code>
      *
-     * @return a {@link org.codelibs.elasticsearch.search.suggest.term.TermSuggestionBuilder}
+     * @return a {org.codelibs.elasticsearch.search.suggest.term.TermSuggestionBuilder}
      * instance
      */
     public static TermSuggestionBuilder termSuggestion(String fieldname) {
@@ -41,7 +41,7 @@ public abstract class SuggestBuilders {
     /**
      * Creates a phrase suggestion lookup query with the provided <code>field</code>
      *
-     * @return a {@link org.codelibs.elasticsearch.search.suggest.phrase.PhraseSuggestionBuilder}
+     * @return a {org.codelibs.elasticsearch.search.suggest.phrase.PhraseSuggestionBuilder}
      * instance
      */
     public static PhraseSuggestionBuilder phraseSuggestion(String fieldname) {
@@ -51,7 +51,7 @@ public abstract class SuggestBuilders {
     /**
      * Creates a completion suggestion lookup query with the provided <code>field</code>
      *
-     * @return a {@link org.codelibs.elasticsearch.search.suggest.completion.CompletionSuggestionBuilder}
+     * @return a {org.codelibs.elasticsearch.search.suggest.completion.CompletionSuggestionBuilder}
      * instance
      */
     public static CompletionSuggestionBuilder completionSuggestion(String fieldname) {

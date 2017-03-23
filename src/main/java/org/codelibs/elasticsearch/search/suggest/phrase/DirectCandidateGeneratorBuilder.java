@@ -378,7 +378,7 @@ public final class DirectCandidateGeneratorBuilder implements CandidateGenerator
     }
 
     /**
-     * gets the type identifier of this {@link CandidateGenerator}
+     * gets the type identifier of this {CandidateGenerator}
      */
     @Override
     public String getType() {

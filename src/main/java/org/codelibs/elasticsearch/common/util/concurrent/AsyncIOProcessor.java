@@ -32,7 +32,7 @@ import java.util.function.Consumer;
 /**
  * This async IO processor allows to batch IO operations and have a single writer processing the write operations.
  * This can be used to ensure that threads can continue with other work while the actual IO operation is still processed
- * by a single worker. A worker in this context can be any caller of the {@link #put(Object, Consumer)} method since it will
+ * by a single worker. A worker in this context can be any caller of the {#put(Object, Consumer)} method since it will
  * hijack a worker if nobody else is currently processing queued items. If the internal queue has reached it's capacity incoming threads
  * might be blocked until other items are processed
  */

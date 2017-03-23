@@ -46,7 +46,7 @@ public class BigArrays implements Releasable {
     }
 
     /** Return the next size to grow to that is &gt;= <code>minTargetSize</code>.
-     *  Inspired from {@link ArrayUtil#oversize(int, int)} and adapted to play nicely with paging. */
+     *  Inspired from {ArrayUtil#oversize(int, int)} and adapted to play nicely with paging. */
     public static long overSize(long minTargetSize, int pageSize, int bytesPerElement) {
         if (minTargetSize < 0) {
             throw new IllegalArgumentException("minTargetSize must be >= 0");
@@ -416,7 +416,7 @@ public class BigArrays implements Releasable {
     }
 
     /**
-     * Allocate a new {@link ByteArray}.
+     * Allocate a new {ByteArray}.
      * @param size          the initial length of the array
      * @param clearOnResize whether values should be set to 0 on initialization and resize
      */
@@ -433,7 +433,7 @@ public class BigArrays implements Releasable {
     }
 
     /**
-     * Allocate a new {@link ByteArray} initialized with zeros.
+     * Allocate a new {ByteArray} initialized with zeros.
      * @param size          the initial length of the array
      */
     public ByteArray newByteArray(long size) {
@@ -497,7 +497,7 @@ public class BigArrays implements Releasable {
     }
 
     /**
-     * Allocate a new {@link IntArray}.
+     * Allocate a new {IntArray}.
      * @param size          the initial length of the array
      * @param clearOnResize whether values should be set to 0 on initialization and resize
      */
@@ -514,7 +514,7 @@ public class BigArrays implements Releasable {
     }
 
     /**
-     * Allocate a new {@link IntArray}.
+     * Allocate a new {IntArray}.
      * @param size          the initial length of the array
      */
     public IntArray newIntArray(long size) {
@@ -546,7 +546,7 @@ public class BigArrays implements Releasable {
     }
 
     /**
-     * Allocate a new {@link LongArray}.
+     * Allocate a new {LongArray}.
      * @param size          the initial length of the array
      * @param clearOnResize whether values should be set to 0 on initialization and resize
      */
@@ -563,7 +563,7 @@ public class BigArrays implements Releasable {
     }
 
     /**
-     * Allocate a new {@link LongArray}.
+     * Allocate a new {LongArray}.
      * @param size          the initial length of the array
      */
     public LongArray newLongArray(long size) {
@@ -595,7 +595,7 @@ public class BigArrays implements Releasable {
     }
 
     /**
-     * Allocate a new {@link DoubleArray}.
+     * Allocate a new {DoubleArray}.
      * @param size          the initial length of the array
      * @param clearOnResize whether values should be set to 0 on initialization and resize
      */
@@ -611,7 +611,7 @@ public class BigArrays implements Releasable {
         return validate(arr);
     }
 
-    /** Allocate a new {@link DoubleArray} of the given capacity. */
+    /** Allocate a new {DoubleArray} of the given capacity. */
     public DoubleArray newDoubleArray(long size) {
         return newDoubleArray(size, true);
     }
@@ -641,7 +641,7 @@ public class BigArrays implements Releasable {
     }
 
     /**
-     * Allocate a new {@link FloatArray}.
+     * Allocate a new {FloatArray}.
      * @param size          the initial length of the array
      * @param clearOnResize whether values should be set to 0 on initialization and resize
      */
@@ -657,7 +657,7 @@ public class BigArrays implements Releasable {
         return validate(array);
     }
 
-    /** Allocate a new {@link FloatArray} of the given capacity. */
+    /** Allocate a new {FloatArray} of the given capacity. */
     public FloatArray newFloatArray(long size) {
         return newFloatArray(size, true);
     }
@@ -687,7 +687,7 @@ public class BigArrays implements Releasable {
     }
 
     /**
-     * Allocate a new {@link ObjectArray}.
+     * Allocate a new {ObjectArray}.
      * @param size          the initial length of the array
      */
     public <T> ObjectArray<T> newObjectArray(long size) {

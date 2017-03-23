@@ -27,8 +27,8 @@ import java.util.Locale;
 import java.util.function.Supplier;
 
 /**
- * A set of static methods to get {@link Token} from {@link XContentParser}
- * while checking for their types and throw {@link ParsingException} if needed.
+ * A set of static methods to get {Token} from {XContentParser}
+ * while checking for their types and throw {ParsingException} if needed.
  */
 public final class XContentParserUtils {
 
@@ -36,8 +36,8 @@ public final class XContentParserUtils {
     }
 
     /**
-     * Makes sure that current token is of type {@link XContentParser.Token#FIELD_NAME} and the the field name is equal to the provided one
-     * @throws ParsingException if the token is not of type {@link XContentParser.Token#FIELD_NAME} or is not equal to the given field name
+     * Makes sure that current token is of type {XContentParser.Token#FIELD_NAME} and the the field name is equal to the provided one
+     * @throws ParsingException if the token is not of type {XContentParser.Token#FIELD_NAME} or is not equal to the given field name
      */
     public static void ensureFieldName(XContentParser parser, Token token, String fieldName) throws IOException {
         ensureExpectedToken(Token.FIELD_NAME, token, parser::getTokenLocation);

@@ -43,7 +43,7 @@ import java.util.function.BiFunction;
 import static org.codelibs.elasticsearch.common.xcontent.ObjectParser.fromList;
 
 /**
- * This abstract class holds parameters shared by {@link HighlightBuilder} and {@link HighlightBuilder.Field}
+ * This abstract class holds parameters shared by {HighlightBuilder} and {HighlightBuilder.Field}
  * and provides the common setters, equality, hashCode calculation and common serialization
  */
 public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterBuilder<?>> extends ToXContentToBytes implements Writeable {
@@ -132,7 +132,7 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * write common parameters to {@link StreamOutput}
+     * write common parameters to {StreamOutput}
      */
     @Override
     public final void writeTo(StreamOutput out) throws IOException {
@@ -179,7 +179,7 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * @return the value set by {@link #preTags(String...)}
+     * @return the value set by {#preTags(String...)}
      */
     public String[] preTags() {
         return this.preTags;
@@ -195,14 +195,14 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * @return the value set by {@link #postTags(String...)}
+     * @return the value set by {#postTags(String...)}
      */
     public String[] postTags() {
         return this.postTags;
     }
 
     /**
-     * Set the fragment size in characters, defaults to {@link HighlightBuilder#DEFAULT_FRAGMENT_CHAR_SIZE}
+     * Set the fragment size in characters, defaults to {HighlightBuilder#DEFAULT_FRAGMENT_CHAR_SIZE}
      */
     @SuppressWarnings("unchecked")
     public HB fragmentSize(Integer fragmentSize) {
@@ -211,14 +211,14 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * @return the value set by {@link #fragmentSize(Integer)}
+     * @return the value set by {#fragmentSize(Integer)}
      */
     public Integer fragmentSize() {
         return this.fragmentSize;
     }
 
     /**
-     * Set the number of fragments, defaults to {@link HighlightBuilder#DEFAULT_NUMBER_OF_FRAGMENTS}
+     * Set the number of fragments, defaults to {HighlightBuilder#DEFAULT_NUMBER_OF_FRAGMENTS}
      */
     @SuppressWarnings("unchecked")
     public HB numOfFragments(Integer numOfFragments) {
@@ -227,7 +227,7 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * @return the value set by {@link #numOfFragments(Integer)}
+     * @return the value set by {#numOfFragments(Integer)}
      */
     public Integer numOfFragments() {
         return this.numOfFragments;
@@ -246,7 +246,7 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * @return the value set by {@link #highlighterType(String)}
+     * @return the value set by {#highlighterType(String)}
      */
     public String highlighterType() {
         return this.highlighterType;
@@ -255,8 +255,8 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     /**
      * Sets what fragmenter to use to break up text that is eligible for highlighting.
      * This option is only applicable when using the plain highlighterType <tt>highlighter</tt>.
-     * Permitted values are "simple" or "span" relating to {@link SimpleFragmenter} and
-     * {@link SimpleSpanFragmenter} implementations respectively with the default being "span"
+     * Permitted values are "simple" or "span" relating to {SimpleFragmenter} and
+     * {SimpleSpanFragmenter} implementations respectively with the default being "span"
      */
     @SuppressWarnings("unchecked")
     public HB fragmenter(String fragmenter) {
@@ -265,7 +265,7 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * @return the value set by {@link #fragmenter(String)}
+     * @return the value set by {#fragmenter(String)}
      */
     public String fragmenter() {
         return this.fragmenter;
@@ -281,7 +281,7 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * @return the value set by {@link #highlightQuery(QueryBuilder)}
+     * @return the value set by {#highlightQuery(QueryBuilder)}
      */
     public QueryBuilder highlightQuery() {
         return this.highlightQuery;
@@ -298,7 +298,7 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
 
     /**
      * By default, fragments of a field are ordered by the order in the highlighted text.
-     * If set to {@link Order#SCORE}, this changes order to score of the fragments.
+     * If set to {Order#SCORE}, this changes order to score of the fragments.
      */
     @SuppressWarnings("unchecked")
     public HB order(Order scoreOrdered) {
@@ -307,7 +307,7 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * @return the value set by {@link #order(Order)}
+     * @return the value set by {#order(Order)}
      */
     public Order order() {
         return this.order;
@@ -325,7 +325,7 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * @return the value set by {@link #highlightFilter(Boolean)}
+     * @return the value set by {#highlightFilter(Boolean)}
      */
     public Boolean highlightFilter() {
         return this.highlightFilter;
@@ -342,7 +342,7 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * @return the value set by {@link #boundaryMaxScan(Integer)}
+     * @return the value set by {#boundaryMaxScan(Integer)}
      */
     public Integer boundaryMaxScan() {
         return this.boundaryMaxScan;
@@ -360,7 +360,7 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * @return the value set by {@link #boundaryChars(char[])}
+     * @return the value set by {#boundaryChars(char[])}
      */
     public char[] boundaryChars() {
         return this.boundaryChars;
@@ -376,7 +376,7 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * @return the value set by {@link #options(Map)}
+     * @return the value set by {#options(Map)}
      */
     public Map<String, Object> options() {
         return this.options;
@@ -394,7 +394,7 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * @return the value set by {@link #requireFieldMatch(Boolean)}
+     * @return the value set by {#requireFieldMatch(Boolean)}
      */
     public Boolean requireFieldMatch() {
         return this.requireFieldMatch;
@@ -413,7 +413,7 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * @return the value set by {@link #noMatchSize(Integer)}
+     * @return the value set by {#noMatchSize(Integer)}
      */
     public Integer noMatchSize() {
         return this.noMatchSize;
@@ -431,7 +431,7 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * @return the value set by {@link #phraseLimit(Integer)}
+     * @return the value set by {#phraseLimit(Integer)}
      */
     public Integer phraseLimit() {
         return this.phraseLimit;
@@ -447,7 +447,7 @@ public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterB
     }
 
     /**
-     * @return the value set by {@link #forceSource(Boolean)}
+     * @return the value set by {#forceSource(Boolean)}
      */
     public Boolean forceSource() {
         return this.forceSource;

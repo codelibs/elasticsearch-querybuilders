@@ -78,12 +78,12 @@ public abstract class InternalSingleBucketAggregation extends InternalAggregatio
     }
 
     /**
-     * Create a new copy of this {@link Aggregation} with the same settings as
-     * this {@link Aggregation} and contains the provided sub-aggregations.
+     * Create a new copy of this {Aggregation} with the same settings as
+     * this {Aggregation} and contains the provided sub-aggregations.
      *
      * @param subAggregations
-     *            the buckets to use in the new {@link Aggregation}
-     * @return the new {@link Aggregation}
+     *            the buckets to use in the new {Aggregation}
+     * @return the new {Aggregation}
      */
     public InternalSingleBucketAggregation create(InternalAggregations subAggregations) {
         return newAggregation(getName(), getDocCount(), subAggregations);

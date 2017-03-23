@@ -41,7 +41,7 @@ import static org.codelibs.elasticsearch.search.suggest.completion.context.GeoCo
 import static org.codelibs.elasticsearch.search.suggest.completion.context.GeoContextMapping.CONTEXT_VALUE;
 
 /**
- * Defines the query context for {@link GeoContextMapping}
+ * Defines the query context for {GeoContextMapping}
  */
 public final class GeoQueryContext implements ToXContent {
     public static final String NAME = "geo";

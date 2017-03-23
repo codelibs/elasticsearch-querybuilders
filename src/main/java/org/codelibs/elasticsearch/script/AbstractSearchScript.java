@@ -27,10 +27,10 @@ import java.util.Map;
  * A base class for any script type that is used during the search process (custom score, aggs, and so on).
  * <p>
  * If the script returns a specific numeric type, consider overriding the type specific base classes
- * such as {@link AbstractDoubleSearchScript} and {@link AbstractLongSearchScript}
+ * such as {AbstractDoubleSearchScript} and {AbstractLongSearchScript}
  * for better performance.
  * <p>
- * The use is required to implement the {@link #run()} method.
+ * The use is required to implement the {#run()} method.
  */
 public abstract class AbstractSearchScript extends AbstractExecutableScript implements LeafSearchScript {
 

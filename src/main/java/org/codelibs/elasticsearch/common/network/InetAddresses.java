@@ -180,11 +180,11 @@ public class InetAddresses {
     }
 
     /**
-     * Returns the string representation of an {@link InetAddress} suitable
+     * Returns the string representation of an {InetAddress} suitable
      * for inclusion in a URI.
      *
      * <p>For IPv4 addresses, this is identical to
-     * {@link InetAddress#getHostAddress()}, but for IPv6 addresses it
+     * {InetAddress#getHostAddress()}, but for IPv6 addresses it
      * compresses zeroes and surrounds the text with square brackets; for example
      * {@code "[2001:db8::1]"}.
      *
@@ -195,13 +195,13 @@ public class InetAddresses {
      * a URI containing an IPv6 string literal is of the form
      * {@code "http://[2001:db8::1]:8888/index.html"}.
      *
-     * <p>Use of either {@link InetAddresses#toAddrString},
-     * {@link InetAddress#getHostAddress()}, or this method is recommended over
-     * {@link InetAddress#toString()} when an IP address string literal is
-     * desired.  This is because {@link InetAddress#toString()} prints the
+     * <p>Use of either {InetAddresses#toAddrString},
+     * {InetAddress#getHostAddress()}, or this method is recommended over
+     * {InetAddress#toString()} when an IP address string literal is
+     * desired.  This is because {InetAddress#toString()} prints the
      * hostname and the IP address string joined by a "/".
      *
-     * @param ip {@link InetAddress} to be converted to URI string literal
+     * @param ip {InetAddress} to be converted to URI string literal
      * @return {@code String} containing URI-safe string literal
      */
     public static String toUriString(InetAddress ip) {
@@ -212,10 +212,10 @@ public class InetAddresses {
     }
 
     /**
-     * Returns the string representation of an {@link InetAddress}.
+     * Returns the string representation of an {InetAddress}.
      *
      * <p>For IPv4 addresses, this is identical to
-     * {@link InetAddress#getHostAddress()}, but for IPv6 addresses, the output
+     * {InetAddress#getHostAddress()}, but for IPv6 addresses, the output
      * follows <a href="http://tools.ietf.org/html/rfc5952">RFC 5952</a>
      * section 4.  The main difference is that this method uses "::" for zero
      * compression, while Java's version uses the uncompressed form.
@@ -224,7 +224,7 @@ public class InetAddresses {
      * IPv4-mapped IPv6 addresses such as "::c000:201".  The output does not
      * include a Scope ID.
      *
-     * @param ip {@link InetAddress} to be converted to an address string
+     * @param ip {InetAddress} to be converted to an address string
      * @return {@code String} containing the text-formatted IP address
      * @since 10.0
      */
@@ -316,13 +316,13 @@ public class InetAddresses {
     }
 
     /**
-     * Returns the {@link InetAddress} having the given string representation.
+     * Returns the {InetAddress} having the given string representation.
      *
      * <p>This deliberately avoids all nameservice lookups (e.g. no DNS).
      *
      * @param ipString {@code String} containing an IPv4 or IPv6 string literal, e.g.
      *     {@code "192.168.0.1"} or {@code "2001:db8::1"}
-     * @return {@link InetAddress} representing the argument
+     * @return {InetAddress} representing the argument
      * @throws IllegalArgumentException if the argument is not a valid IP string literal
      */
     public static InetAddress forString(String ipString) {
@@ -339,7 +339,7 @@ public class InetAddresses {
     /**
      * Convert a byte array into an InetAddress.
      *
-     * {@link InetAddress#getByAddress} is documented as throwing a checked
+     * {InetAddress#getByAddress} is documented as throwing a checked
      * exception "if IP address is of illegal length."  We replace it with
      * an unchecked exception, for use by callers who already know that addr
      * is an array of length 4 or 16.

@@ -27,17 +27,17 @@ import java.util.Map;
 public interface Aggregations extends Iterable<Aggregation> {
 
     /**
-     * The list of {@link Aggregation}s.
+     * The list of {Aggregation}s.
      */
     List<Aggregation> asList();
 
     /**
-     * Returns the {@link Aggregation}s keyed by aggregation name.
+     * Returns the {Aggregation}s keyed by aggregation name.
      */
     Map<String, Aggregation> asMap();
 
     /**
-     * Returns the {@link Aggregation}s keyed by aggregation name.
+     * Returns the {Aggregation}s keyed by aggregation name.
      */
     Map<String, Aggregation> getAsMap();
 

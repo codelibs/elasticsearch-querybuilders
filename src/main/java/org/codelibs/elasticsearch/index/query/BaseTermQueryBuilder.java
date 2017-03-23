@@ -101,8 +101,8 @@ public abstract class BaseTermQueryBuilder<QB extends BaseTermQueryBuilder<QB>> 
 
     /**
      * Constructs a new base term query.
-     * In case value is assigned to a string, we internally convert it to a {@link BytesRef}
-     * because in {@link TermQueryBuilder} and {@link SpanTermQueryBuilder} string values are parsed to {@link BytesRef}
+     * In case value is assigned to a string, we internally convert it to a {BytesRef}
+     * because in {TermQueryBuilder} and {SpanTermQueryBuilder} string values are parsed to {BytesRef}
      * and we want internal representation of query to be equal regardless of whether it was created from XContent or via Java API.
      *
      * @param fieldName  The name of the field
@@ -141,7 +141,7 @@ public abstract class BaseTermQueryBuilder<QB extends BaseTermQueryBuilder<QB>> 
 
     /**
      *  Returns the value used in this query.
-     *  If necessary, converts internal {@link BytesRef} representation back to string.
+     *  If necessary, converts internal {BytesRef} representation back to string.
      */
     public Object value() {
         return convertToStringIfBytesRef(this.value);

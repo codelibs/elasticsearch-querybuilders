@@ -33,10 +33,10 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Like {@link ObjectParser} but works with objects that have constructors whose arguments are mixed in with its other settings. Queries are
+ * Like {ObjectParser} but works with objects that have constructors whose arguments are mixed in with its other settings. Queries are
  * like this, for example <code>ids</code> requires <code>types</code> but always parses the <code>values</code> field on the same level. If
  * this doesn't sounds like what you want to parse have a look at
- * {@link ObjectParser#declareNamedObjects(BiConsumer, ObjectParser.NamedObjectParser, Consumer, ParseField)} which solves a slightly
+ * {ObjectParser#declareNamedObjects(BiConsumer, ObjectParser.NamedObjectParser, Consumer, ParseField)} which solves a slightly
  * different but similar sounding problem.
  * <p>
  * Anyway, {@linkplain ConstructingObjectParser} parses the fields in the order that they are in the XContent, collecting constructor
@@ -46,7 +46,7 @@ import java.util.function.Function;
  * </p>
  * <p>
  * Declaring a {@linkplain ConstructingObjectParser} is intentionally quite similar to declaring an {@linkplain ObjectParser}. The only
- * differences being that constructor arguments are declared with the consumer returned by the static {@link #constructorArg()} method and
+ * differences being that constructor arguments are declared with the consumer returned by the static {#constructorArg()} method and
  * that {@linkplain ConstructingObjectParser}'s constructor takes a lambda that must build the target object from a list of constructor
  * arguments:
  * </p>
@@ -108,7 +108,7 @@ public final class ConstructingObjectParser<Value, Context extends ParseFieldMat
      *        ObjectParser.
      * @param builder A function that builds the object from an array of Objects. Declare this inline with the parser, casting the elements
      *        of the array to the arguments so they work with your favorite constructor. The objects in the array will be in the same order
-     *        that you declared the {{@link #constructorArg()}s and none will be null. If any of the constructor arguments aren't defined in
+     *        that you declared the {{#constructorArg()}s and none will be null. If any of the constructor arguments aren't defined in
      *        the XContent then parsing will throw an error. We use an array here rather than a {@code Map<String, Object>} to save on
      *        allocations.
      */
@@ -125,7 +125,7 @@ public final class ConstructingObjectParser<Value, Context extends ParseFieldMat
      *        from external systems, never when parsing requests from users.
      * @param builder A function that builds the object from an array of Objects. Declare this inline with the parser, casting the elements
      *        of the array to the arguments so they work with your favorite constructor. The objects in the array will be in the same order
-     *        that you declared the {{@link #constructorArg()}s and none will be null. If any of the constructor arguments aren't defined in
+     *        that you declared the {{#constructorArg()}s and none will be null. If any of the constructor arguments aren't defined in
      *        the XContent then parsing will throw an error. We use an array here rather than a {@code Map<String, Object>} to save on
      *        allocations.
      */
@@ -135,7 +135,7 @@ public final class ConstructingObjectParser<Value, Context extends ParseFieldMat
     }
 
     /**
-     * Call this to do the actual parsing. This implements {@link BiFunction} for conveniently integrating with ObjectParser.
+     * Call this to do the actual parsing. This implements {BiFunction} for conveniently integrating with ObjectParser.
      */
     @Override
     public Value apply(XContentParser parser, Context context) {
@@ -154,7 +154,7 @@ public final class ConstructingObjectParser<Value, Context extends ParseFieldMat
     /**
      * Pass the {@linkplain BiConsumer} this returns the declare methods to declare a required constructor argument. See this class's
      * javadoc for an example. The order in which these are declared matters: it is the order that they come in the array passed to
-     * {@link #builder} and the order that missing arguments are reported to the user if any are missing. When all of these parameters are
+     * {#builder} and the order that missing arguments are reported to the user if any are missing. When all of these parameters are
      * parsed from the {@linkplain XContentParser} the target object is immediately built.
      */
     @SuppressWarnings("unchecked") // Safe because we never call the method. This is just trickery to make the interface pretty.
@@ -165,7 +165,7 @@ public final class ConstructingObjectParser<Value, Context extends ParseFieldMat
     /**
      * Pass the {@linkplain BiConsumer} this returns the declare methods to declare an optional constructor argument. See this class's
      * javadoc for an example. The order in which these are declared matters: it is the order that they come in the array passed to
-     * {@link #builder} and the order that missing arguments are reported to the user if any are missing. When all of these parameters are
+     * {#builder} and the order that missing arguments are reported to the user if any are missing. When all of these parameters are
      * parsed from the {@linkplain XContentParser} the target object is immediately built.
      */
     @SuppressWarnings("unchecked") // Safe because we never call the method. This is just trickery to make the interface pretty.
@@ -241,7 +241,7 @@ public final class ConstructingObjectParser<Value, Context extends ParseFieldMat
      */
     private class Target {
         /**
-         * Array of constructor args to be passed to the {@link ConstructingObjectParser#builder}.
+         * Array of constructor args to be passed to the {ConstructingObjectParser#builder}.
          */
         private final Object[] constructorArgs = new Object[constructorArgInfos.size()];
         /**
@@ -251,8 +251,8 @@ public final class ConstructingObjectParser<Value, Context extends ParseFieldMat
         private final XContentParser parser;
         /**
          * How many of the constructor parameters have we collected? We keep track of this so we don't have to count the
-         * {@link #constructorArgs} array looking for nulls when we receive another constructor parameter. When this is equal to the size of
-         * {@link #constructorArgs} we build the target object.
+         * {#constructorArgs} array looking for nulls when we receive another constructor parameter. When this is equal to the size of
+         * {#constructorArgs} we build the target object.
          */
         private int constructorArgsCollected = 0;
         /**

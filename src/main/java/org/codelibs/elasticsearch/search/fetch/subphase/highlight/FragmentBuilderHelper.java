@@ -31,7 +31,7 @@ import org.codelibs.elasticsearch.index.mapper.FieldMapper;
 import java.util.List;
 
 /**
- * Simple helper class for {@link FastVectorHighlighter} {@link FragmentsBuilder} implementations.
+ * Simple helper class for {FastVectorHighlighter} {FragmentsBuilder} implementations.
  */
 public final class FragmentBuilderHelper {
 
@@ -41,7 +41,7 @@ public final class FragmentBuilderHelper {
 
     /**
      * Fixes problems with broken analysis chains if positions and offsets are messed up that can lead to
-     * {@link StringIndexOutOfBoundsException} in the {@link FastVectorHighlighter}
+     * {StringIndexOutOfBoundsException} in the {FastVectorHighlighter}
      */
     public static WeightedFragInfo fixWeightedFragInfo(FieldMapper mapper, Field[] values, WeightedFragInfo fragInfo) {
         assert fragInfo != null : "FragInfo must not be null";

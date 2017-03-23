@@ -27,9 +27,9 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * A registry for {@link org.codelibs.elasticsearch.common.io.stream.Writeable.Reader} readers of {@link NamedWriteable}.
+ * A registry for {org.codelibs.elasticsearch.common.io.stream.Writeable.Reader} readers of {NamedWriteable}.
  *
- * The registration is keyed by the combination of the category class of {@link NamedWriteable}, and a name unique
+ * The registration is keyed by the combination of the category class of {NamedWriteable}, and a name unique
  * to that category.
  */
 public class NamedWriteableRegistry {
@@ -37,10 +37,10 @@ public class NamedWriteableRegistry {
     /** An entry in the registry, made up of a category class and name, and a reader for that category class. */
     public static class Entry {
 
-        /** The superclass of a {@link NamedWriteable} which will be read by {@link #reader}. */
+        /** The superclass of a {NamedWriteable} which will be read by {#reader}. */
         public final Class<?> categoryClass;
 
-        /** A name for the writeable which is unique to the {@link #categoryClass}. */
+        /** A name for the writeable which is unique to the {#categoryClass}. */
         public final String name;
 
         /** A reader capability of reading*/
@@ -98,7 +98,7 @@ public class NamedWriteableRegistry {
     }
 
     /**
-     * Returns a reader for a {@link NamedWriteable} object identified by the
+     * Returns a reader for a {NamedWriteable} object identified by the
      * name provided as argument and its category.
      */
     public <T> Writeable.Reader<? extends T> getReader(Class<T> categoryClass, String name) {

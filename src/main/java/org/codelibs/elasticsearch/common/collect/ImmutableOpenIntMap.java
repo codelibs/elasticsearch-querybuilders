@@ -39,7 +39,7 @@ import java.util.Map;
 /**
  * An immutable map implementation based on open hash map.
  * <p>
- * Can be constructed using a {@link #builder()}, or using {@link #builder(org.codelibs.elasticsearch.common.collect.ImmutableOpenIntMap)} (which is an optimized
+ * Can be constructed using a {#builder()}, or using {#builder(org.codelibs.elasticsearch.common.collect.ImmutableOpenIntMap)} (which is an optimized
  * option to copy over existing content and modify it).
  */
 public final class ImmutableOpenIntMap<VType> implements Iterable<IntObjectCursor<VType>> {
@@ -87,7 +87,7 @@ public final class ImmutableOpenIntMap<VType> implements Iterable<IntObjectCurso
     /**
      * Returns a cursor over the entries (key-value pairs) in this map. The iterator is
      * implemented as a cursor and it returns <b>the same cursor instance</b> on every
-     * call to {@link java.util.Iterator#next()}. To read the current key and value use the cursor's
+     * call to {java.util.Iterator#next()}. To read the current key and value use the cursor's
      * public fields. An example is shown below.
      * <pre>
      * for (IntShortCursor c : intShortMap)
@@ -109,7 +109,7 @@ public final class ImmutableOpenIntMap<VType> implements Iterable<IntObjectCurso
 
     /**
      * Returns a specialized view of the keys of this associated container.
-     * The view additionally implements {@link com.carrotsearch.hppc.ObjectLookupContainer}.
+     * The view additionally implements {com.carrotsearch.hppc.ObjectLookupContainer}.
      */
     public IntLookupContainer keys() {
         return map.keys();

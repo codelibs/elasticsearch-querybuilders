@@ -95,7 +95,7 @@ public class DateRangeAggregationBuilder extends AbstractRangeBuilder<DateRangeA
     }
 
     /**
-     * Same as {@link #addRange(String, String, String)} but the key will be
+     * Same as {#addRange(String, String, String)} but the key will be
      * automatically generated based on <code>from</code> and <code>to</code>.
      */
     public DateRangeAggregationBuilder addRange(String from, String to) {
@@ -116,7 +116,7 @@ public class DateRangeAggregationBuilder extends AbstractRangeBuilder<DateRangeA
     }
 
     /**
-     * Same as {@link #addUnboundedTo(String, String)} but the key will be
+     * Same as {#addUnboundedTo(String, String)} but the key will be
      * computed automatically.
      */
     public DateRangeAggregationBuilder addUnboundedTo(String to) {
@@ -137,7 +137,7 @@ public class DateRangeAggregationBuilder extends AbstractRangeBuilder<DateRangeA
     }
 
     /**
-     * Same as {@link #addUnboundedFrom(String, String)} but the key will be
+     * Same as {#addUnboundedFrom(String, String)} but the key will be
      * computed automatically.
      */
     public DateRangeAggregationBuilder addUnboundedFrom(String from) {
@@ -160,7 +160,7 @@ public class DateRangeAggregationBuilder extends AbstractRangeBuilder<DateRangeA
     }
 
     /**
-     * Same as {@link #addRange(String, double, double)} but the key will be
+     * Same as {#addRange(String, double, double)} but the key will be
      * automatically generated based on <code>from</code> and <code>to</code>.
      */
     public DateRangeAggregationBuilder addRange(double from, double to) {
@@ -181,7 +181,7 @@ public class DateRangeAggregationBuilder extends AbstractRangeBuilder<DateRangeA
     }
 
     /**
-     * Same as {@link #addUnboundedTo(String, double)} but the key will be
+     * Same as {#addUnboundedTo(String, double)} but the key will be
      * computed automatically.
      */
     public DateRangeAggregationBuilder addUnboundedTo(double to) {
@@ -202,7 +202,7 @@ public class DateRangeAggregationBuilder extends AbstractRangeBuilder<DateRangeA
     }
 
     /**
-     * Same as {@link #addUnboundedFrom(String, double)} but the key will be
+     * Same as {#addUnboundedFrom(String, double)} but the key will be
      * computed automatically.
      */
     public DateRangeAggregationBuilder addUnboundedFrom(double from) {
@@ -233,7 +233,7 @@ public class DateRangeAggregationBuilder extends AbstractRangeBuilder<DateRangeA
     }
 
     /**
-     * Same as {@link #addRange(String, DateTime, DateTime)} but the key will be
+     * Same as {#addRange(String, DateTime, DateTime)} but the key will be
      * automatically generated based on <code>from</code> and <code>to</code>.
      */
     public DateRangeAggregationBuilder addRange(DateTime from, DateTime to) {
@@ -254,7 +254,7 @@ public class DateRangeAggregationBuilder extends AbstractRangeBuilder<DateRangeA
     }
 
     /**
-     * Same as {@link #addUnboundedTo(String, DateTime)} but the key will be
+     * Same as {#addUnboundedTo(String, DateTime)} but the key will be
      * computed automatically.
      */
     public DateRangeAggregationBuilder addUnboundedTo(DateTime to) {
@@ -275,7 +275,7 @@ public class DateRangeAggregationBuilder extends AbstractRangeBuilder<DateRangeA
     }
 
     /**
-     * Same as {@link #addUnboundedFrom(String, DateTime)} but the key will be
+     * Same as {#addUnboundedFrom(String, DateTime)} but the key will be
      * computed automatically.
      */
     public DateRangeAggregationBuilder addUnboundedFrom(DateTime from) {

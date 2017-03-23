@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Objects;
 import static java.util.Collections.unmodifiableList;
 
-/** A {@link FieldMapper} for full-text fields. */
+/** A {FieldMapper} for full-text fields. */
 public class TextFieldMapper extends FieldMapper {
 
     public static final String CONTENT_TYPE = "text";

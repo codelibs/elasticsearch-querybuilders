@@ -44,10 +44,10 @@ public class DeprecationLogger {
     public static final String WARNING_HEADER = "Warning";
 
     /**
-     * This is set once by the {@code Node} constructor, but it uses {@link CopyOnWriteArraySet} to ensure that tests can run in parallel.
+     * This is set once by the {@code Node} constructor, but it uses {CopyOnWriteArraySet} to ensure that tests can run in parallel.
      * <p>
      * Integration tests will create separate nodes within the same classloader, thus leading to a shared, {@code static} state.
-     * In order for all tests to appropriately be handled, this must be able to remember <em>all</em> {@link ThreadContext}s that it is
+     * In order for all tests to appropriately be handled, this must be able to remember <em>all</em> {ThreadContext}s that it is
      * given in a thread safe manner.
      * <p>
      * For actual usage, multiple nodes do not share the same JVM and therefore this will only be set once in practice.
@@ -55,7 +55,7 @@ public class DeprecationLogger {
     private static final CopyOnWriteArraySet<ThreadContext> THREAD_CONTEXT = new CopyOnWriteArraySet<>();
 
     /**
-     * Set the {@link ThreadContext} used to add deprecation headers to network responses.
+     * Set the {ThreadContext} used to add deprecation headers to network responses.
      * <p>
      * This is expected to <em>only</em> be invoked by the {@code Node}'s constructor (therefore once outside of tests).
      *
@@ -72,7 +72,7 @@ public class DeprecationLogger {
     }
 
     /**
-     * Remove the {@link ThreadContext} used to add deprecation headers to network responses.
+     * Remove the {ThreadContext} used to add deprecation headers to network responses.
      * <p>
      * This is expected to <em>only</em> be invoked by the {@code Node}'s {@code close} method (therefore once outside of tests).
      *
@@ -112,9 +112,9 @@ public class DeprecationLogger {
     }
 
     /**
-     * Logs a deprecated message to the deprecation log, as well as to the local {@link ThreadContext}.
+     * Logs a deprecated message to the deprecation log, as well as to the local {ThreadContext}.
      *
-     * @param threadContexts The node's {@link ThreadContext} (outside of concurrent tests, this should only ever have one context).
+     * @param threadContexts The node's {ThreadContext} (outside of concurrent tests, this should only ever have one context).
      * @param message The deprecation message.
      * @param params The parameters used to fill in the message, if any exist.
      */

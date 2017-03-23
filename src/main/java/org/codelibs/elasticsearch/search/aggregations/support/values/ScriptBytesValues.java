@@ -28,7 +28,7 @@ import java.lang.reflect.Array;
 import java.util.Collection;
 
 /**
- * {@link SortedBinaryDocValues} implementation that reads values from a script.
+ * {SortedBinaryDocValues} implementation that reads values from a script.
  */
 public class ScriptBytesValues extends SortingBinaryDocValues implements ScorerAware {
 

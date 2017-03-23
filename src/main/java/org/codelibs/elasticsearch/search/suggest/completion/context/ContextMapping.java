@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * A {@link ContextMapping} defines criteria that can be used to
+ * A {ContextMapping} defines criteria that can be used to
  *
  * Implementations have to define how contexts are parsed at query/index time
  */
@@ -61,7 +61,7 @@ public abstract class ContextMapping<T extends ToXContent> implements ToXContent
     /**
      * Define a new context mapping of a specific type
      *
-     * @param type type of context mapping, either {@link Type#CATEGORY} or {@link Type#GEO}
+     * @param type type of context mapping, either {Type#CATEGORY} or {Type#GEO}
      * @param name name of context mapping
      */
     protected ContextMapping(Type type, String name) {

@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * A basic RefCounted implementation that is initialized with a
- * ref count of 1 and calls {@link #closeInternal()} once it reaches
+ * ref count of 1 and calls {#closeInternal()} once it reaches
  * a 0 ref count
  */
 public abstract class AbstractRefCounted implements RefCounted {

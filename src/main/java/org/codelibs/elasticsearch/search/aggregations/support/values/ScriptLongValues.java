@@ -30,7 +30,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * {@link LongValues} implementation which is based on a script
+ * {LongValues} implementation which is based on a script
  */
 public class ScriptLongValues extends SortingNumericDocValues implements ScorerAware {
 

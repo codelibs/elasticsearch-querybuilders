@@ -20,7 +20,7 @@
 package org.codelibs.elasticsearch.index.query;
 
 /**
- * Marker interface for a specific type of {@link QueryBuilder} that allows to build span queries
+ * Marker interface for a specific type of {QueryBuilder} that allows to build span queries
  */
 public interface SpanQueryBuilder extends QueryBuilder {
 

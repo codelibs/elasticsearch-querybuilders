@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * {@link OutputStream} that writes into underlying IndexOutput
+ * {OutputStream} that writes into underlying IndexOutput
  */
 public class IndexOutputOutputStream extends OutputStream {
 

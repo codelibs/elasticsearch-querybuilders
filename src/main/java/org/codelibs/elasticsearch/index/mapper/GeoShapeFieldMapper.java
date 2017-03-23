@@ -46,10 +46,10 @@ import java.util.Objects;
 
 
 /**
- * FieldMapper for indexing {@link org.locationtech.spatial4j.shape.Shape}s.
+ * FieldMapper for indexing {org.locationtech.spatial4j.shape.Shape}s.
  * <p>
  * Currently Shapes can only be indexed and can only be queried using
- * {@link org.codelibs.elasticsearch.index.query.GeoShapeQueryBuilder}, consequently
+ * {org.codelibs.elasticsearch.index.query.GeoShapeQueryBuilder}, consequently
  * a lot of behavior in this Mapper is disabled.
  * <p>
  * Format supported:
@@ -379,7 +379,7 @@ public class GeoShapeFieldMapper extends FieldMapper {
                 return null;
             }
             /**
-             * we don't have a specific type for geo_shape so we use an empty {@link FieldStats.Text}.
+             * we don't have a specific type for geo_shape so we use an empty {FieldStats.Text}.
              * TODO: we should maybe support a new type that knows how to (de)encode the min/max information
              */
             return new FieldStats.Text(maxDoc, -1, -1, -1, isSearchable(), isAggregatable());

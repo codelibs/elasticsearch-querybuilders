@@ -54,7 +54,7 @@ import java.util.Set;
 /**
  * A more like this query that finds documents that are "like" the provided set of document(s).
  *
- * The documents are provided as a set of strings and/or a list of {@link Item}.
+ * The documents are provided as a set of strings and/or a list of {Item}.
  */
 public class MoreLikeThisQueryBuilder extends AbstractQueryBuilder<MoreLikeThisQueryBuilder> {
     public static final String NAME = "more_like_this";
@@ -121,7 +121,7 @@ public class MoreLikeThisQueryBuilder extends AbstractQueryBuilder<MoreLikeThisQ
     private boolean failOnUnsupportedField = DEFAULT_FAIL_ON_UNSUPPORTED_FIELDS;
 
     /**
-     * A single item to be used for a {@link MoreLikeThisQueryBuilder}.
+     * A single item to be used for a {MoreLikeThisQueryBuilder}.
      */
     public static final class Item implements ToXContent, Writeable {
         public static final Item[] EMPTY_ARRAY = new Item[0];

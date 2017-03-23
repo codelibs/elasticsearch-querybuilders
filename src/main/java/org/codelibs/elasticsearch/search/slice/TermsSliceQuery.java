@@ -37,7 +37,7 @@ import org.apache.lucene.util.DocIdSetBuilder;
 import java.io.IOException;
 
 /**
- * A {@link SliceQuery} that uses the terms dictionary of a field to do the slicing.
+ * A {SliceQuery} that uses the terms dictionary of a field to do the slicing.
  *
  * <b>NOTE</b>: The cost of this filter is O(N*M) where N is the number of unique terms in the dictionary
  * and M is the average number of documents per term.

@@ -23,7 +23,7 @@ import org.codelibs.elasticsearch.common.geo.GeoPoint;
 import org.codelibs.elasticsearch.search.aggregations.Aggregation;
 
 /**
- * Interface for {@link org.codelibs.elasticsearch.search.aggregations.metrics.geocentroid.GeoCentroidAggregator}
+ * Interface for {org.codelibs.elasticsearch.search.aggregations.metrics.geocentroid.GeoCentroidAggregator}
  */
 public interface GeoCentroid extends Aggregation {
     GeoPoint centroid();

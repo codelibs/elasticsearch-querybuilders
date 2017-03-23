@@ -39,12 +39,12 @@ final class SingletonSortedNumericDoubleValues extends SortedNumericDoubleValues
     this.docsWithField = docsWithField instanceof MatchAllBits ? null : docsWithField;
   }
 
-  /** Return the wrapped {@link NumericDoubleValues} */
+  /** Return the wrapped {NumericDoubleValues} */
   public NumericDoubleValues getNumericDoubleValues() {
     return in;
   }
 
-  /** Return the wrapped {@link Bits} */
+  /** Return the wrapped {Bits} */
   public Bits getDocsWithField() {
     return docsWithField;
   }

@@ -62,8 +62,8 @@ public class ScriptSortBuilder extends SortBuilder<ScriptSortBuilder> {
      * @param script
      *            The script to use.
      * @param type
-     *            The type of the script, can be either {@link ScriptSortType#STRING} or
-     *            {@link ScriptSortType#NUMBER}
+     *            The type of the script, can be either {ScriptSortType#STRING} or
+     *            {ScriptSortType#NUMBER}
      */
     public ScriptSortBuilder(Script script, ScriptSortType type) {
         Objects.requireNonNull(script, "script cannot be null");
@@ -119,7 +119,7 @@ public class ScriptSortBuilder extends SortBuilder<ScriptSortBuilder> {
 
     /**
      * Defines which distance to use for sorting in the case a document contains multiple values.<br>
-     * For {@link ScriptSortType#STRING}, the set of possible values is restricted to {@link SortMode#MIN} and {@link SortMode#MAX}
+     * For {ScriptSortType#STRING}, the set of possible values is restricted to {SortMode#MIN} and {SortMode#MAX}
      */
     public ScriptSortBuilder sortMode(SortMode sortMode) {
         Objects.requireNonNull(sortMode, "sort mode cannot be null.");
@@ -204,8 +204,8 @@ public class ScriptSortBuilder extends SortBuilder<ScriptSortBuilder> {
     }
 
     /**
-     * Creates a new {@link ScriptSortBuilder} from the query held by the {@link QueryParseContext} in
-     * {@link org.codelibs.elasticsearch.common.xcontent.XContent} format.
+     * Creates a new {ScriptSortBuilder} from the query held by the {QueryParseContext} in
+     * {org.codelibs.elasticsearch.common.xcontent.XContent} format.
      *
      * @param context the input parse context. The state on the parser contained in this context will be changed as a side effect of this
      *        method call

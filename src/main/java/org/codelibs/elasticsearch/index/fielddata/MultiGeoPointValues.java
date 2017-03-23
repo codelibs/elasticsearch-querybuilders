@@ -21,7 +21,7 @@ package org.codelibs.elasticsearch.index.fielddata;
 import org.codelibs.elasticsearch.common.geo.GeoPoint;
 
 /**
- * A stateful lightweight per document set of {@link GeoPoint} values.
+ * A stateful lightweight per document set of {GeoPoint} values.
  * To iterate over values in a document use the following pattern:
  * <pre>
  *   GeoPointValues values = ..;
@@ -38,7 +38,7 @@ import org.codelibs.elasticsearch.common.geo.GeoPoint;
 public abstract class MultiGeoPointValues {
 
     /**
-     * Creates a new {@link MultiGeoPointValues} instance
+     * Creates a new {MultiGeoPointValues} instance
      */
     protected MultiGeoPointValues() {
     }
@@ -60,11 +60,11 @@ public abstract class MultiGeoPointValues {
     /**
      * Return the <code>i-th</code> value associated with the current document.
      * Behavior is undefined when <code>i</code> is undefined or greater than
-     * or equal to {@link #count()}.
+     * or equal to {#count()}.
      *
-     * Note: the returned {@link GeoPoint} might be shared across invocations.
+     * Note: the returned {GeoPoint} might be shared across invocations.
      *
-     * @return the next value for the current docID set to {@link #setDocument(int)}.
+     * @return the next value for the current docID set to {#setDocument(int)}.
      */
     public abstract GeoPoint valueAt(int i);
 

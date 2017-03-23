@@ -158,7 +158,7 @@ public abstract class AbstractQueryBuilder<QB extends AbstractQueryBuilder<QB>> 
     }
 
     /**
-     * Indicates whether some other {@link QueryBuilder} object of the same type is "equal to" this one.
+     * Indicates whether some other {QueryBuilder} object of the same type is "equal to" this one.
      */
     protected abstract boolean doEquals(QB other);
 
@@ -171,9 +171,9 @@ public abstract class AbstractQueryBuilder<QB extends AbstractQueryBuilder<QB>> 
 
     /**
      * This helper method checks if the object passed in is a string, if so it
-     * converts it to a {@link BytesRef}.
+     * converts it to a {BytesRef}.
      * @param obj the input object
-     * @return the same input object or a {@link BytesRef} representation if input was of type string
+     * @return the same input object or a {BytesRef} representation if input was of type string
      */
     protected static Object convertToBytesRefIfString(Object obj) {
         if (obj instanceof String) {
@@ -183,10 +183,10 @@ public abstract class AbstractQueryBuilder<QB extends AbstractQueryBuilder<QB>> 
     }
 
     /**
-     * This helper method checks if the object passed in is a {@link BytesRef}, if so it
+     * This helper method checks if the object passed in is a {BytesRef}, if so it
      * converts it to a utf8 string.
      * @param obj the input object
-     * @return the same input object or a utf8 string if input was of type {@link BytesRef}
+     * @return the same input object or a utf8 string if input was of type {BytesRef}
      */
     protected static Object convertToStringIfBytesRef(Object obj) {
         if (obj instanceof BytesRef) {
@@ -196,9 +196,9 @@ public abstract class AbstractQueryBuilder<QB extends AbstractQueryBuilder<QB>> 
     }
 
     /**
-     * Helper method to convert collection of {@link QueryBuilder} instances to lucene
-     * {@link Query} instances. {@link QueryBuilder} that return <tt>null</tt> calling
-     * their {@link QueryBuilder#toQuery(QueryShardContext)} method are not added to the
+     * Helper method to convert collection of {QueryBuilder} instances to lucene
+     * {Query} instances. {QueryBuilder} that return <tt>null</tt> calling
+     * their {QueryBuilder#toQuery(QueryShardContext)} method are not added to the
      * resulting collection.
      */
     protected static Collection<Query> toQueries(Collection<QueryBuilder> queryBuilders, QueryShardContext context) throws QueryShardException,
@@ -281,8 +281,8 @@ public abstract class AbstractQueryBuilder<QB extends AbstractQueryBuilder<QB>> 
 
     /**
      * Adds {@code boost} and {@code query_name} parsing to the
-     * {@link AbstractObjectParser} passed in. All query builders except
-     * {@link MatchAllQueryBuilder} and {@link MatchNoneQueryBuilder} support these fields so they
+     * {AbstractObjectParser} passed in. All query builders except
+     * {MatchAllQueryBuilder} and {MatchNoneQueryBuilder} support these fields so they
      * should use this method.
      */
     protected static void declareStandardFields(AbstractObjectParser<? extends QueryBuilder, ? extends ParseFieldMatcherSupplier> parser) {

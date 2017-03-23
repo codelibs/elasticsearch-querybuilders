@@ -25,7 +25,7 @@ import org.codelibs.elasticsearch.common.util.BigArrays;
 import org.codelibs.elasticsearch.common.util.ByteArray;
 
 /**
- * An extension to {@link PagedBytesReference} that requires releasing its content. This
+ * An extension to {PagedBytesReference} that requires releasing its content. This
  * class exists to make it explicit when a bytes reference needs to be released, and when not.
  */
 public final class ReleasablePagedBytesReference extends PagedBytesReference implements Releasable {

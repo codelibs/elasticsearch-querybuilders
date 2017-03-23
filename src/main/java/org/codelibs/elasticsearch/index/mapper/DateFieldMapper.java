@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-/** A {@link FieldMapper} for ip addresses. */
+/** A {FieldMapper} for ip addresses. */
 public class DateFieldMapper extends FieldMapper {
 
     public static final String CONTENT_TYPE = "date";

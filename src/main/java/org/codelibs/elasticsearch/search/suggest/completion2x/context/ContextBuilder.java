@@ -37,14 +37,14 @@ public abstract class ContextBuilder<E extends ContextMapping> {
     public abstract E build();
 
     /**
-     * Create a new {@link GeolocationContextMapping}
+     * Create a new {GeolocationContextMapping}
      */
     public static GeolocationContextMapping.Builder location(String name) {
         return new GeolocationContextMapping.Builder(name);
     }
 
     /**
-     * Create a new {@link GeolocationContextMapping} with given precision and
+     * Create a new {GeolocationContextMapping} with given precision and
      * neighborhood usage
      *
      * @param precision geohash length
@@ -55,14 +55,14 @@ public abstract class ContextBuilder<E extends ContextMapping> {
     }
 
     /**
-     * Create a new {@link CategoryContextMapping}
+     * Create a new {CategoryContextMapping}
      */
     public static CategoryContextMapping.Builder category(String name) {
         return new CategoryContextMapping.Builder(name, null);
     }
 
     /**
-     * Create a new {@link CategoryContextMapping} with default category
+     * Create a new {CategoryContextMapping} with default category
      *
      * @param defaultCategory category to use, if it is not provided
      */
@@ -71,7 +71,7 @@ public abstract class ContextBuilder<E extends ContextMapping> {
     }
 
     /**
-     * Create a new {@link CategoryContextMapping}
+     * Create a new {CategoryContextMapping}
      *
      * @param fieldname
      *            name of the field to use
@@ -81,7 +81,7 @@ public abstract class ContextBuilder<E extends ContextMapping> {
     }
 
     /**
-     * Create a new {@link CategoryContextMapping}
+     * Create a new {CategoryContextMapping}
      *
      * @param fieldname name of the field to use
      * @param defaultValues values to use, if the document not provides

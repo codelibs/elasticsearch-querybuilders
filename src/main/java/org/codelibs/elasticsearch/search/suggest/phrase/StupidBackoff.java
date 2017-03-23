@@ -46,7 +46,7 @@ import java.util.Objects;
  */
 public final class StupidBackoff extends SmoothingModel {
     /**
-     * Default discount parameter for {@link StupidBackoff} smoothing
+     * Default discount parameter for {StupidBackoff} smoothing
      */
     public static final double DEFAULT_BACKOFF_DISCOUNT = 0.4;
     public static final String NAME = "stupid_backoff";

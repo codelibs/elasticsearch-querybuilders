@@ -24,7 +24,7 @@ import org.codelibs.elasticsearch.script.Script;
 import org.codelibs.elasticsearch.search.sort.ScriptSortBuilder.ScriptSortType;
 
 /**
- * A set of static factory methods for {@link SortBuilder}s.
+ * A set of static factory methods for {SortBuilder}s.
  *
  *
  */

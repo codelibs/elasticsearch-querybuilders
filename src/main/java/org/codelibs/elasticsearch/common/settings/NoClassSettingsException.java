@@ -24,7 +24,7 @@ import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import java.io.IOException;
 
 /**
- * A specific type of {@link SettingsException} indicating failure to load a class
+ * A specific type of {SettingsException} indicating failure to load a class
  * based on a settings value.
  *
  *

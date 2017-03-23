@@ -384,7 +384,7 @@ public class Strings {
 
     /**
      * Capitalize a <code>String</code>, changing the first letter to
-     * upper case as per {@link Character#toUpperCase(char)}.
+     * upper case as per {Character#toUpperCase(char)}.
      * No other letters are changed.
      *
      * @param str the String to capitalize, may be <code>null</code>
@@ -888,16 +888,16 @@ public class Strings {
     }
 
     /**
-     * Return a {@link String} that is the json representation of the provided
-     * {@link ToXContent}.
+     * Return a {String} that is the json representation of the provided
+     * {ToXContent}.
      */
     public static String toString(ToXContent toXContent) {
         return toString(toXContent, false);
     }
 
     /**
-     * Return a {@link String} that is the json representation of the provided
-     * {@link ToXContent}.
+     * Return a {String} that is the json representation of the provided
+     * {ToXContent}.
      * @param wrapInObject set this to true if the ToXContent instance expects to be inside an object
      */
     public static String toString(ToXContent toXContent, boolean wrapInObject) {

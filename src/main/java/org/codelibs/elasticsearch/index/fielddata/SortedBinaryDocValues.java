@@ -23,7 +23,7 @@ import org.apache.lucene.util.BytesRef;
 
 /**
  * A list of per-document binary values, sorted
- * according to {@link BytesRef#compareTo(BytesRef)}.
+ * according to {BytesRef#compareTo(BytesRef)}.
  * There might be dups however.
  */
 public abstract class SortedBinaryDocValues {
@@ -41,7 +41,7 @@ public abstract class SortedBinaryDocValues {
     /**
      * Retrieve the value for the current document at the specified index.
      * An index ranges from {@code 0} to {@code count()-1}.
-     * Note that the returned {@link BytesRef} might be reused across invocations.
+     * Note that the returned {BytesRef} might be reused across invocations.
      */
     public abstract BytesRef valueAt(int index);
 

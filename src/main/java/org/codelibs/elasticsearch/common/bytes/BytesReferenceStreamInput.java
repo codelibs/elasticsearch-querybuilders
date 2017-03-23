@@ -26,8 +26,8 @@ import java.io.EOFException;
 import java.io.IOException;
 
 /**
- * A StreamInput that reads off a {@link BytesRefIterator}. This is used to provide
- * generic stream access to {@link BytesReference} instances without materializing the
+ * A StreamInput that reads off a {BytesRefIterator}. This is used to provide
+ * generic stream access to {BytesReference} instances without materializing the
  * underlying bytes reference.
  */
 final class BytesReferenceStreamInput extends StreamInput {

@@ -26,7 +26,7 @@ import java.io.UncheckedIOException;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/** Utility methods to work with {@link Releasable}s. */
+/** Utility methods to work with {Releasable}s. */
 public enum Releasables {
     ;
 
@@ -41,27 +41,27 @@ public enum Releasables {
         }
     }
 
-    /** Release the provided {@link Releasable}s. */
+    /** Release the provided {Releasable}s. */
     public static void close(Iterable<? extends Releasable> releasables) {
         close(releasables, false);
     }
 
-    /** Release the provided {@link Releasable}s. */
+    /** Release the provided {Releasable}s. */
     public static void close(Releasable... releasables) {
         close(Arrays.asList(releasables));
     }
 
-    /** Release the provided {@link Releasable}s, ignoring exceptions. */
+    /** Release the provided {Releasable}s, ignoring exceptions. */
     public static void closeWhileHandlingException(Iterable<Releasable> releasables) {
         close(releasables, true);
     }
 
-    /** Release the provided {@link Releasable}s, ignoring exceptions. */
+    /** Release the provided {Releasable}s, ignoring exceptions. */
     public static void closeWhileHandlingException(Releasable... releasables) {
         closeWhileHandlingException(Arrays.asList(releasables));
     }
 
-    /** Release the provided {@link Releasable}s, ignoring exceptions if <code>success</code> is <tt>false</tt>. */
+    /** Release the provided {Releasable}s, ignoring exceptions if <code>success</code> is <tt>false</tt>. */
     public static void close(boolean success, Iterable<Releasable> releasables) {
         if (success) {
             close(releasables);
@@ -70,7 +70,7 @@ public enum Releasables {
         }
     }
 
-    /** Release the provided {@link Releasable}s, ignoring exceptions if <code>success</code> is <tt>false</tt>. */
+    /** Release the provided {Releasable}s, ignoring exceptions if <code>success</code> is <tt>false</tt>. */
     public static void close(boolean success, Releasable... releasables) {
         close(success, Arrays.asList(releasables));
     }
@@ -96,7 +96,7 @@ public enum Releasables {
     }
 
     /**
-     * Equivalent to {@link #wrap(Releasable...)} but can be called multiple times without double releasing.
+     * Equivalent to {#wrap(Releasable...)} but can be called multiple times without double releasing.
      */
     public static Releasable releaseOnce(final Releasable... releasables) {
         final AtomicBoolean released = new AtomicBoolean(false);

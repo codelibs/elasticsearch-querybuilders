@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
- * {@link Scorer} wrapper that will compute how much time is spent on moving
+ * {Scorer} wrapper that will compute how much time is spent on moving
  * the iterator, confirming matches and computing scores.
  */
 final class ProfileScorer extends Scorer {

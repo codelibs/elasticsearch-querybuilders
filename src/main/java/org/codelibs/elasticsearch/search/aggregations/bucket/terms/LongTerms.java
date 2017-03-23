@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Result of the {@link TermsAggregator} when the field is some kind of whole number like a integer, long, or a date.
+ * Result of the {TermsAggregator} when the field is some kind of whole number like a integer, long, or a date.
  */
 public class LongTerms extends InternalMappedTerms<LongTerms, LongTerms.Bucket> {
     public static final String NAME = "lterms";

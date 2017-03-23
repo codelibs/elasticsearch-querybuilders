@@ -241,7 +241,7 @@ public class GeoUtils {
      * because when normalizing latitude it may be necessary to
      * add a shift of 180&deg; in the longitude.
      * For this purpose, you should call the
-     * {@link #normalizePoint(GeoPoint)} function.
+     * {#normalizePoint(GeoPoint)} function.
      *
      * @param lat Latitude to normalize
      * @return The normalized latitude.
@@ -341,17 +341,17 @@ public class GeoUtils {
         return rtn;
     }
     /**
-     * Parse a {@link GeoPoint} with a {@link XContentParser}:
+     * Parse a {GeoPoint} with a {XContentParser}:
      *
-     * @param parser {@link XContentParser} to parse the value from
-     * @return new {@link GeoPoint} parsed from the parse
+     * @param parser {XContentParser} to parse the value from
+     * @return new {GeoPoint} parsed from the parse
      */
     public static GeoPoint parseGeoPoint(XContentParser parser) throws IOException, ElasticsearchParseException {
         return parseGeoPoint(parser, new GeoPoint());
     }
 
     /**
-     * Parse a {@link GeoPoint} with a {@link XContentParser}. A geopoint has one of the following forms:
+     * Parse a {GeoPoint} with a {XContentParser}. A geopoint has one of the following forms:
      *
      * <ul>
      *     <li>Object: <pre>{&quot;lat&quot;: <i>&lt;latitude&gt;</i>, &quot;lon&quot;: <i>&lt;longitude&gt;</i>}</pre></li>
@@ -360,9 +360,9 @@ public class GeoUtils {
      *     <li>Array: <pre>[<i>&lt;longitude&gt;</i>,<i>&lt;latitude&gt;</i>]</pre></li>
      * </ul>
      *
-     * @param parser {@link XContentParser} to parse the value from
-     * @param point A {@link GeoPoint} that will be reset by the values parsed
-     * @return new {@link GeoPoint} parsed from the parse
+     * @param parser {XContentParser} to parse the value from
+     * @param point A {GeoPoint} that will be reset by the values parsed
+     * @return new {GeoPoint} parsed from the parse
      */
     public static GeoPoint parseGeoPoint(XContentParser parser, GeoPoint point) throws IOException, ElasticsearchParseException {
         double lat = Double.NaN;
@@ -458,7 +458,7 @@ public class GeoUtils {
         }
     }
 
-    /** parse a {@link GeoPoint} from a String */
+    /** parse a {GeoPoint} from a String */
     public static GeoPoint parseGeoPoint(String data, GeoPoint point) {
         int comma = data.indexOf(',');
         if(comma > 0) {
@@ -485,7 +485,7 @@ public class GeoUtils {
 
     /**
      * Return the distance (in meters) between 2 lat,lon geo points using a simple tangential plane
-     * this provides a faster alternative to {@link GeoUtils#arcDistance} when points are within 5 km
+     * this provides a faster alternative to {GeoUtils#arcDistance} when points are within 5 km
      */
     public static double planeDistance(double lat1, double lon1, double lat2, double lon2) {
         double x = (lon2 - lon1) * SloppyMath.TO_RADIANS * Math.cos((lat2 + lat1) / 2.0 * SloppyMath.TO_RADIANS);

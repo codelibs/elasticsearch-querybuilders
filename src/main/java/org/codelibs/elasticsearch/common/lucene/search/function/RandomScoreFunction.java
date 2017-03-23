@@ -28,7 +28,7 @@ import org.codelibs.elasticsearch.index.fielddata.SortedBinaryDocValues;
 import java.util.Objects;
 
 /**
- * Pseudo randomly generate a score for each {@link LeafScoreFunction#score}.
+ * Pseudo randomly generate a score for each {LeafScoreFunction#score}.
  */
 public class RandomScoreFunction extends ScoreFunction {
 

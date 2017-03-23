@@ -274,21 +274,21 @@ public class CardinalityAggregator extends NumericMetricsAggregator.SingleValue 
         public abstract long valueAt(int index);
 
         /**
-         * Return a {@link MurmurHash3Values} instance that computes hashes on the fly for each double value.
+         * Return a {MurmurHash3Values} instance that computes hashes on the fly for each double value.
          */
         public static MurmurHash3Values hash(SortedNumericDoubleValues values) {
             return new Double(values);
         }
 
         /**
-         * Return a {@link MurmurHash3Values} instance that computes hashes on the fly for each long value.
+         * Return a {MurmurHash3Values} instance that computes hashes on the fly for each long value.
          */
         public static MurmurHash3Values hash(SortedNumericDocValues values) {
             return new Long(values);
         }
 
         /**
-         * Return a {@link MurmurHash3Values} instance that computes hashes on the fly for each binary value.
+         * Return a {MurmurHash3Values} instance that computes hashes on the fly for each binary value.
          */
         public static MurmurHash3Values hash(SortedBinaryDocValues values) {
             return new Bytes(values);

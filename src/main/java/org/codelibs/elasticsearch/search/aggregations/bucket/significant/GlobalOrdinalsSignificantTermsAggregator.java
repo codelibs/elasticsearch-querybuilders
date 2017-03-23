@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * An global ordinal based implementation of significant terms, based on {@link SignificantStringTermsAggregator}.
+ * An global ordinal based implementation of significant terms, based on {SignificantStringTermsAggregator}.
  */
 public class GlobalOrdinalsSignificantTermsAggregator extends GlobalOrdinalsStringTermsAggregator {
 

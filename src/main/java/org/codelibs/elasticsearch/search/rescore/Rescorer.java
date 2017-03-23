@@ -39,31 +39,31 @@ public interface Rescorer {
     String name();
 
     /**
-     * Modifies the result of the previously executed search ({@link TopDocs})
-     * in place based on the given {@link RescoreSearchContext}.
+     * Modifies the result of the previously executed search ({TopDocs})
+     * in place based on the given {RescoreSearchContext}.
      *
      * @param topDocs        the result of the previously executed search
-     * @param context        the current {@link SearchContext}. This will never be <code>null</code>.
-     * @param rescoreContext the {@link RescoreSearchContext}. This will never be <code>null</code>
-     * @throws IOException if an {@link IOException} occurs during rescoring
+     * @param context        the current {SearchContext}. This will never be <code>null</code>.
+     * @param rescoreContext the {RescoreSearchContext}. This will never be <code>null</code>
+     * @throws IOException if an {IOException} occurs during rescoring
      */
     TopDocs rescore(TopDocs topDocs, SearchContext context, RescoreSearchContext rescoreContext) throws IOException;
 
     /**
-     * Executes an {@link Explanation} phase on the rescorer.
+     * Executes an {Explanation} phase on the rescorer.
      *
      * @param topLevelDocId the global / top-level document ID to explain
      * @param context the explanation for the results being fed to this rescorer
      * @param rescoreContext context for this rescorer
      * @param sourceExplanation explanation of the source of the documents being fed into this rescore
      * @return the explain for the given top level document ID.
-     * @throws IOException if an {@link IOException} occurs
+     * @throws IOException if an {IOException} occurs
      */
     Explanation explain(int topLevelDocId, SearchContext context, RescoreSearchContext rescoreContext,
                         Explanation sourceExplanation) throws IOException;
 
     /**
-     * Extracts all terms needed to execute this {@link Rescorer}. This method
+     * Extracts all terms needed to execute this {Rescorer}. This method
      * is executed in a distributed frequency collection roundtrip for
      */
     void extractTerms(SearchContext context, RescoreSearchContext rescoreContext, Set<Term> termsSet);

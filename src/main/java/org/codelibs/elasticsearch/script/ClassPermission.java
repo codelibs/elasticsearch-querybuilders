@@ -44,33 +44,33 @@ import java.util.Set;
  * <p>
  * Set of classes (allowed by special value <code>&lt;&lt;STANDARD&gt;&gt;</code>):
  * <ul>
- *   <li>{@link java.lang.Boolean}</li>
- *   <li>{@link java.lang.Byte}</li>
- *   <li>{@link java.lang.Character}</li>
- *   <li>{@link java.lang.Double}</li>
- *   <li>{@link java.lang.Integer}</li>
- *   <li>{@link java.lang.Long}</li>
- *   <li>{@link java.lang.Math}</li>
- *   <li>{@link java.lang.Object}</li>
- *   <li>{@link java.lang.Short}</li>
- *   <li>{@link java.lang.String}</li>
- *   <li>{@link java.math.BigDecimal}</li>
- *   <li>{@link java.util.ArrayList}</li>
- *   <li>{@link java.util.Arrays}</li>
- *   <li>{@link java.util.Date}</li>
- *   <li>{@link java.util.HashMap}</li>
- *   <li>{@link java.util.HashSet}</li>
- *   <li>{@link java.util.Iterator}</li>
- *   <li>{@link java.util.List}</li>
- *   <li>{@link java.util.Map}</li>
- *   <li>{@link java.util.Set}</li>
- *   <li>{@link java.util.UUID}</li>
- *   <li>{@link org.joda.time.DateTime}</li>
- *   <li>{@link org.joda.time.DateTimeUtils}</li>
- *   <li>{@link org.joda.time.DateTimeZone}</li>
- *   <li>{@link org.joda.time.Instant}</li>
- *   <li>{@link org.joda.time.ReadableDateTime}</li>
- *   <li>{@link org.joda.time.ReadableInstant}</li>
+ *   <li>{java.lang.Boolean}</li>
+ *   <li>{java.lang.Byte}</li>
+ *   <li>{java.lang.Character}</li>
+ *   <li>{java.lang.Double}</li>
+ *   <li>{java.lang.Integer}</li>
+ *   <li>{java.lang.Long}</li>
+ *   <li>{java.lang.Math}</li>
+ *   <li>{java.lang.Object}</li>
+ *   <li>{java.lang.Short}</li>
+ *   <li>{java.lang.String}</li>
+ *   <li>{java.math.BigDecimal}</li>
+ *   <li>{java.util.ArrayList}</li>
+ *   <li>{java.util.Arrays}</li>
+ *   <li>{java.util.Date}</li>
+ *   <li>{java.util.HashMap}</li>
+ *   <li>{java.util.HashSet}</li>
+ *   <li>{java.util.Iterator}</li>
+ *   <li>{java.util.List}</li>
+ *   <li>{java.util.Map}</li>
+ *   <li>{java.util.Set}</li>
+ *   <li>{java.util.UUID}</li>
+ *   <li>{org.joda.time.DateTime}</li>
+ *   <li>{org.joda.time.DateTimeUtils}</li>
+ *   <li>{org.joda.time.DateTimeZone}</li>
+ *   <li>{org.joda.time.Instant}</li>
+ *   <li>{org.joda.time.ReadableDateTime}</li>
+ *   <li>{org.joda.time.ReadableInstant}</li>
  * </ul>
  */
 public final class ClassPermission extends BasicPermission {

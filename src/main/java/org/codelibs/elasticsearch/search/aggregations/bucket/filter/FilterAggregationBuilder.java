@@ -46,7 +46,7 @@ public class FilterAggregationBuilder extends AbstractAggregationBuilder<FilterA
      * @param filter
      *            Set the filter to use, only documents that match this
      *            filter will fall into the bucket defined by this
-     *            {@link Filter} aggregation.
+     *            {Filter} aggregation.
      */
     public FilterAggregationBuilder(String name, QueryBuilder filter) {
         super(name, TYPE);

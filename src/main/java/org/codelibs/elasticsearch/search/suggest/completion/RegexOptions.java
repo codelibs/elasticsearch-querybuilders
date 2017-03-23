@@ -90,7 +90,7 @@ public class RegexOptions implements ToXContent, Writeable {
 
     /**
      * Returns internal regular expression syntax flag value
-     * see {@link RegexpFlag#value()}
+     * see {RegexpFlag#value()}
      */
     public int getFlagsValue() {
         return flagsValue;
@@ -157,7 +157,7 @@ public class RegexOptions implements ToXContent, Writeable {
 
         /**
          * Sets the regular expression syntax flags
-         * see {@link RegexpFlag}
+         * see {RegexpFlag}
          */
         public Builder setFlags(String flags) {
             this.flagsValue = RegexpFlag.resolveValue(flags);

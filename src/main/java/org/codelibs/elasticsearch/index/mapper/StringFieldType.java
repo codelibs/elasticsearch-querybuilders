@@ -34,7 +34,7 @@ import org.codelibs.elasticsearch.common.lucene.BytesRefs;
 import org.codelibs.elasticsearch.common.unit.Fuzziness;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 
-/** Base class for {@link MappedFieldType} implementations that use the same
+/** Base class for {MappedFieldType} implementations that use the same
  * representation for internal index terms as the external representation so
  * that partial matching queries such as prefix, wildcard and fuzzy queries
  * can be implemented. */

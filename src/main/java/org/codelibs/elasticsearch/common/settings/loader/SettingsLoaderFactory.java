@@ -29,7 +29,7 @@ public final class SettingsLoaderFactory {
     }
 
     /**
-     * Returns a {@link SettingsLoader} based on the source resource
+     * Returns a {SettingsLoader} based on the source resource
      * name. This factory method assumes that if the resource name ends
      * with ".json" then the content should be parsed as JSON, else if
      * the resource name ends with ".yml" or ".yaml" then the content
@@ -54,7 +54,7 @@ public final class SettingsLoaderFactory {
     }
 
     /**
-     * Returns a {@link SettingsLoader} based on the source content.
+     * Returns a {SettingsLoader} based on the source content.
      * This factory method assumes that if the underlying content
      * contains an opening and closing brace ('{' and '}') then the
      * content should be parsed as JSON, else if the underlying content

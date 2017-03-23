@@ -23,8 +23,8 @@ import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 
 /**
- * This interface should be implemented by classes like {@link QueryParseContext} or {@link QueryShardContext} that
- * are able to carry a {@link ParseFieldMatcher}.
+ * This interface should be implemented by classes like {QueryParseContext} or {QueryShardContext} that
+ * are able to carry a {ParseFieldMatcher}.
  */
 @FunctionalInterface
 public interface ParseFieldMatcherSupplier {

@@ -73,8 +73,8 @@ public class ScoreSortBuilder extends SortBuilder<ScoreSortBuilder> {
     }
 
     /**
-     * Creates a new {@link ScoreSortBuilder} from the query held by the {@link QueryParseContext} in
-     * {@link org.codelibs.elasticsearch.common.xcontent.XContent} format.
+     * Creates a new {ScoreSortBuilder} from the query held by the {QueryParseContext} in
+     * {org.codelibs.elasticsearch.common.xcontent.XContent} format.
      *
      * @param context the input parse context. The state on the parser contained in this context will be changed as a side effect of this
      *        method call

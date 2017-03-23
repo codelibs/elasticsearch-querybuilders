@@ -35,14 +35,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * A one stop to use {@link org.codelibs.elasticsearch.common.xcontent.XContent} and {@link XContentBuilder}.
+ * A one stop to use {org.codelibs.elasticsearch.common.xcontent.XContent} and {XContentBuilder}.
  */
 public class XContentFactory {
 
     private static final int GUESS_HEADER_LENGTH = 20;
 
     /**
-     * Returns a content builder using JSON format ({@link org.codelibs.elasticsearch.common.xcontent.XContentType#JSON}.
+     * Returns a content builder using JSON format ({org.codelibs.elasticsearch.common.xcontent.XContentType#JSON}.
      */
     public static XContentBuilder jsonBuilder() throws IOException {
         return contentBuilder(XContentType.JSON);
@@ -56,7 +56,7 @@ public class XContentFactory {
     }
 
     /**
-     * Returns a content builder using SMILE format ({@link org.codelibs.elasticsearch.common.xcontent.XContentType#SMILE}.
+     * Returns a content builder using SMILE format ({org.codelibs.elasticsearch.common.xcontent.XContentType#SMILE}.
      */
     public static XContentBuilder smileBuilder() throws IOException {
         return contentBuilder(XContentType.SMILE);
@@ -70,7 +70,7 @@ public class XContentFactory {
     }
 
     /**
-     * Returns a content builder using YAML format ({@link org.codelibs.elasticsearch.common.xcontent.XContentType#YAML}.
+     * Returns a content builder using YAML format ({org.codelibs.elasticsearch.common.xcontent.XContentType#YAML}.
      */
     public static XContentBuilder yamlBuilder() throws IOException {
         return contentBuilder(XContentType.YAML);
@@ -84,7 +84,7 @@ public class XContentFactory {
     }
 
     /**
-     * Returns a content builder using CBOR format ({@link org.codelibs.elasticsearch.common.xcontent.XContentType#CBOR}.
+     * Returns a content builder using CBOR format ({org.codelibs.elasticsearch.common.xcontent.XContentType#CBOR}.
      */
     public static XContentBuilder cborBuilder() throws IOException {
         return contentBuilder(XContentType.CBOR);
@@ -130,7 +130,7 @@ public class XContentFactory {
     }
 
     /**
-     * Returns the {@link org.codelibs.elasticsearch.common.xcontent.XContent} for the provided content type.
+     * Returns the {org.codelibs.elasticsearch.common.xcontent.XContent} for the provided content type.
      */
     public static XContent xContent(XContentType type) {
         if (type == null) {

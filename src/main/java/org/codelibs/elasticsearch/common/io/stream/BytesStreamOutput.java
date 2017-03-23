@@ -28,7 +28,7 @@ import org.codelibs.elasticsearch.common.util.ByteArray;
 import java.io.IOException;
 
 /**
- * A @link {@link StreamOutput} that uses {@link BigArrays} to acquire pages of
+ * A @link {StreamOutput} that uses {BigArrays} to acquire pages of
  * bytes, which avoids frequent reallocation &amp; copying of the internal data.
  */
 public class BytesStreamOutput extends StreamOutput implements BytesStream {
@@ -39,7 +39,7 @@ public class BytesStreamOutput extends StreamOutput implements BytesStream {
     protected int count;
 
     /**
-     * Create a non recycling {@link BytesStreamOutput} with an initial capacity of 0.
+     * Create a non recycling {BytesStreamOutput} with an initial capacity of 0.
      */
     public BytesStreamOutput() {
         // since this impl is not recycling anyway, don't bother aligning to
@@ -48,7 +48,7 @@ public class BytesStreamOutput extends StreamOutput implements BytesStream {
     }
 
     /**
-     * Create a non recycling {@link BytesStreamOutput} with enough initial pages acquired
+     * Create a non recycling {BytesStreamOutput} with enough initial pages acquired
      * to satisfy the capacity given by expected size.
      *
      * @param expectedSize the expected maximum size of the stream in bytes.
@@ -144,7 +144,7 @@ public class BytesStreamOutput extends StreamOutput implements BytesStream {
     }
 
     /**
-     * Returns the number of bytes used by the underlying {@link org.codelibs.elasticsearch.common.util.ByteArray}
+     * Returns the number of bytes used by the underlying {org.codelibs.elasticsearch.common.util.ByteArray}
      * @see org.codelibs.elasticsearch.common.util.ByteArray#ramBytesUsed()
      */
     public long ramBytesUsed() {

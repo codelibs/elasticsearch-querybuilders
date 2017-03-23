@@ -23,13 +23,13 @@ import java.io.IOException;
 import java.util.Optional;
 
 /**
- * Defines a query parser that is able to parse {@link QueryBuilder}s from {@link org.codelibs.elasticsearch.common.xcontent.XContent}.
+ * Defines a query parser that is able to parse {QueryBuilder}s from {org.codelibs.elasticsearch.common.xcontent.XContent}.
  */
 @FunctionalInterface
 public interface QueryParser<QB extends QueryBuilder> {
     /**
-     * Creates a new {@link QueryBuilder} from the query held by the {@link QueryParseContext}
-     * in {@link org.codelibs.elasticsearch.common.xcontent.XContent} format
+     * Creates a new {QueryBuilder} from the query held by the {QueryParseContext}
+     * in {org.codelibs.elasticsearch.common.xcontent.XContent} format
      *
      * @param parseContext
      *            the input parse context. The state on the parser contained in

@@ -78,7 +78,7 @@ public class WrapperQueryBuilder extends AbstractQueryBuilder<WrapperQueryBuilde
     }
 
     /**
-     * Creates a query builder given a query provided as a {@link BytesReference}
+     * Creates a query builder given a query provided as a {BytesReference}
      */
     public WrapperQueryBuilder(BytesReference source) {
         if (source == null || source.length() == 0) {

@@ -200,7 +200,7 @@ public class BoolQueryBuilder extends AbstractQueryBuilder<BoolQueryBuilder> {
     }
 
     /**
-     * @deprecated use {@link BoolQueryBuilder#minimumShouldMatch(int)} instead
+     * @deprecated use {BoolQueryBuilder#minimumShouldMatch(int)} instead
      */
     @Deprecated
     public BoolQueryBuilder minimumNumberShouldMatch(int minimumNumberShouldMatch) {
@@ -210,7 +210,7 @@ public class BoolQueryBuilder extends AbstractQueryBuilder<BoolQueryBuilder> {
 
 
     /**
-     * @deprecated use {@link BoolQueryBuilder#minimumShouldMatch(String)} instead
+     * @deprecated use {BoolQueryBuilder#minimumShouldMatch(String)} instead
      */
     @Deprecated
     public BoolQueryBuilder minimumNumberShouldMatch(String minimumNumberShouldMatch) {
@@ -262,7 +262,7 @@ public class BoolQueryBuilder extends AbstractQueryBuilder<BoolQueryBuilder> {
 
     /**
      * If a boolean query contains only negative ("must not") clauses should the
-     * BooleanQuery be enhanced with a {@link MatchAllDocsQuery} in order to act
+     * BooleanQuery be enhanced with a {MatchAllDocsQuery} in order to act
      * as a pure exclude. The default is <code>true</code>.
      */
     public BoolQueryBuilder adjustPureNegative(boolean adjustPureNegative) {

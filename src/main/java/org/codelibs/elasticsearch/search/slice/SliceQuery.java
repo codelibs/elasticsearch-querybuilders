@@ -24,7 +24,7 @@ import org.apache.lucene.search.Query;
 import java.util.Objects;
 
 /**
- * An abstract {@link Query} that defines an hash function to partition the documents in multiple slices.
+ * An abstract {Query} that defines an hash function to partition the documents in multiple slices.
  */
 public abstract class SliceQuery extends Query {
     private final String field;

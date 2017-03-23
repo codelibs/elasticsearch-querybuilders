@@ -24,8 +24,8 @@ import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import java.io.IOException;
 
 /**
- * Defines a parser that is able to parse {@link org.codelibs.elasticsearch.search.SearchExtBuilder}s
- * from {@link org.codelibs.elasticsearch.common.xcontent.XContent}.
+ * Defines a parser that is able to parse {org.codelibs.elasticsearch.search.SearchExtBuilder}s
+ * from {org.codelibs.elasticsearch.common.xcontent.XContent}.
  *
  * implementation which is the object that this parser returns when reading an incoming request form the REST layer.
  *

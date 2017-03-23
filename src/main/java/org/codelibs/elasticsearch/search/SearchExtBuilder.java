@@ -28,13 +28,13 @@ import org.codelibs.elasticsearch.common.xcontent.ToXContent;
 /**
  * Intermediate serializable representation of a search ext section. To be subclassed by plugins that support
  * a custom section as part of a search request, which will be provided within the ext element.
- * Any state needs to be serialized as part of the {@link Writeable#writeTo(StreamOutput)} method and
- * read from the incoming stream, usually done adding a constructor that takes {@link StreamInput} as
+ * Any state needs to be serialized as part of the {Writeable#writeTo(StreamOutput)} method and
+ * read from the incoming stream, usually done adding a constructor that takes {StreamInput} as
  * an argument.
  *
- * the incoming request from the REST layer into the proper {@link SearchExtBuilder} subclass.
+ * the incoming request from the REST layer into the proper {SearchExtBuilder} subclass.
  *
- * {@link #getWriteableName()} must return the same name as the one used for the registration
+ * {#getWriteableName()} must return the same name as the one used for the registration
  *
  * @see SearchExtParser
  */

@@ -41,13 +41,13 @@ import java.util.stream.Stream;
 /**
  * A ThreadContext is a map of string headers and a transient map of keyed objects that are associated with
  * a thread. It allows to store and retrieve header information across method calls, network calls as well as threads spawned from a
- * thread that has a {@link ThreadContext} associated with. Threads spawned from a {@link org.codelibs.elasticsearch.threadpool.ThreadPool} have out of the box
- * support for {@link ThreadContext} and all threads spawned will inherit the {@link ThreadContext} from the thread that it is forking from.".
+ * thread that has a {ThreadContext} associated with. Threads spawned from a {org.codelibs.elasticsearch.threadpool.ThreadPool} have out of the box
+ * support for {ThreadContext} and all threads spawned will inherit the {ThreadContext} from the thread that it is forking from.".
  * Network calls will also preserve the senders headers automatically.
  * <p>
  * Consumers of ThreadContext usually don't need to interact with adding or stashing contexts. Every elasticsearch thread is managed by a thread pool or executor
  * being responsible for stashing and restoring the threads context. For instance if a network request is received, all headers are deserialized from the network
- * and directly added as the headers of the threads {@link ThreadContext} (see {@link #readHeaders(StreamInput)}. In order to not modify the context that is currently
+ * and directly added as the headers of the threads {ThreadContext} (see {#readHeaders(StreamInput)}. In order to not modify the context that is currently
  * active on this thread the network code uses a try/with pattern to stash it's current context, read headers into a fresh one and once the request is handled or a handler thread
  * is forked (which in turn inherits the context) it restores the previous context. For instance:
  * </p>
@@ -98,7 +98,7 @@ public final class ThreadContext implements Closeable, Writeable {
 
     /**
      * Removes the current context and resets a default context. The removed context can be
-     * restored when closing the returned {@link StoredContext}
+     * restored when closing the returned {StoredContext}
      */
     public StoredContext stashContext() {
         final ThreadContextStruct context = threadLocal.get();
@@ -108,7 +108,7 @@ public final class ThreadContext implements Closeable, Writeable {
 
     /**
      * Removes the current context and resets a new context that contains a merge of the current headers and the given headers. The removed context can be
-     * restored when closing the returned {@link StoredContext}. The merge strategy is that headers that are already existing are preserved unless they are defaults.
+     * restored when closing the returned {StoredContext}. The merge strategy is that headers that are already existing are preserved unless they are defaults.
      */
     public StoredContext stashAndMergeHeaders(Map<String, String> headers) {
         final ThreadContextStruct context = threadLocal.get();
@@ -120,7 +120,7 @@ public final class ThreadContext implements Closeable, Writeable {
 
 
     /**
-     * Just like {@link #stashContext()} but no default context is set.
+     * Just like {#stashContext()} but no default context is set.
      * @param preserveResponseHeaders if set to <code>true</code> the response headers of the restore thread will be preserved.
      */
     public StoredContext newStoredContext(boolean preserveResponseHeaders) {
@@ -135,7 +135,7 @@ public final class ThreadContext implements Closeable, Writeable {
     }
 
     /**
-     * Returns a supplier that gathers a {@link #newStoredContext(boolean)} and restores it once the
+     * Returns a supplier that gathers a {#newStoredContext(boolean)} and restores it once the
      * returned supplier is invoked. The context returned from the supplier is a stored version of the
      * suppliers callers context that should be restored once the originally gathered context is not needed anymore.
      * For instance this method should be used like this:
@@ -160,7 +160,7 @@ public final class ThreadContext implements Closeable, Writeable {
     }
 
     /**
-     * Same as {@link #newRestorableContext(boolean)} but wraps an existing context to restore.
+     * Same as {#newRestorableContext(boolean)} but wraps an existing context to restore.
      * @param storedContext the context to restore
      */
     public Supplier<StoredContext> wrapRestorable(StoredContext storedContext) {
@@ -282,7 +282,7 @@ public final class ThreadContext implements Closeable, Writeable {
     }
 
     /**
-     * Unwraps a command that was previously wrapped by {@link #preserveContext(Runnable)}.
+     * Unwraps a command that was previously wrapped by {#preserveContext(Runnable)}.
      */
     public Runnable unwrap(Runnable command) {
         if (command instanceof ContextPreservingAbstractRunnable) {
@@ -344,7 +344,7 @@ public final class ThreadContext implements Closeable, Writeable {
         }
 
         /**
-         * This represents the default context and it should only ever be called by {@link #DEFAULT_CONTEXT}.
+         * This represents the default context and it should only ever be called by {#DEFAULT_CONTEXT}.
          */
         private ThreadContextStruct() {
             this(Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap());

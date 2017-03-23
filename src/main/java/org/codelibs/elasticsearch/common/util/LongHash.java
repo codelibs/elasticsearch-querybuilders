@@ -24,7 +24,7 @@ import org.codelibs.elasticsearch.common.lease.Releasable;
 /**
  * Specialized hash table implementation similar to BytesRefHash that maps
  * long values to ids. Collisions are resolved with open addressing and linear
- * probing, growth is smooth thanks to {@link BigArrays} and capacity is always
+ * probing, growth is smooth thanks to {BigArrays} and capacity is always
  * a multiple of 2 for faster identification of buckets.
  * This class is not thread-safe.
  */

@@ -22,7 +22,7 @@ package org.codelibs.elasticsearch.index.fielddata;
 import org.apache.lucene.index.SortedNumericDocValues;
 
 /**
- * Specialization of {@link AtomicFieldData} for numeric data.
+ * Specialization of {AtomicFieldData} for numeric data.
  */
 public interface AtomicNumericFieldData extends AtomicFieldData {
 

@@ -42,9 +42,9 @@ import java.util.Objects;
 import java.util.SortedMap;
 
 /**
- * A {@link ContextMapping} is used t define a context that may used
+ * A {ContextMapping} is used t define a context that may used
  * in conjunction with a suggester. To define a suggester that depends on a
- * specific context derived class of {@link ContextMapping} will be
+ * specific context derived class of {ContextMapping} will be
  * used to specify the kind of additional information required in order to make
  * suggestions.
  */
@@ -59,7 +59,7 @@ public abstract class ContextMapping implements ToXContent {
     /** Dummy Context Config matching the Dummy Mapping by providing an empty context*/
     public static final SortedMap<String, ContextConfig> EMPTY_CONFIG = Collections.emptySortedMap();
 
-    /** Dummy Context matching the Dummy Mapping by not wrapping a {@link TokenStream} */
+    /** Dummy Context matching the Dummy Mapping by not wrapping a {TokenStream} */
     public static final Context EMPTY_CONTEXT = new Context(EMPTY_CONFIG);
 
     public static final String FIELD_VALUE = "value";
@@ -110,9 +110,9 @@ public abstract class ContextMapping implements ToXContent {
      * Parse a query according to the context. Parsing starts at parsers <b>current</b> position
      *
      * @param name name of the context
-     * @param parser {@link XContentParser} providing the data of the query
+     * @param parser {XContentParser} providing the data of the query
      *
-     * @return {@link ContextQuery} according to this mapping
+     * @return {ContextQuery} according to this mapping
      *
      */
     public abstract ContextQuery parseQuery(String name, XContentParser parser) throws IOException, ElasticsearchParseException;
@@ -152,10 +152,10 @@ public abstract class ContextMapping implements ToXContent {
     }
 
     /**
-     * A collection of {@link ContextMapping}s, their {@link ContextConfig}uration and a
-     * Document form a complete {@link Context}. Since this Object provides all information used
-     * to setup a suggestion, it can be used to wrap the entire {@link TokenStream} used to build a
-     * path within the {@link FST}.
+     * A collection of {ContextMapping}s, their {ContextConfig}uration and a
+     * Document form a complete {Context}. Since this Object provides all information used
+     * to setup a suggestion, it can be used to wrap the entire {TokenStream} used to build a
+     * path within the {FST}.
      */
     public static class Context {
 
@@ -167,9 +167,9 @@ public abstract class ContextMapping implements ToXContent {
         }
 
         /**
-         * Wrap the {@link TokenStream} according to the provided informations of {@link ContextConfig}
+         * Wrap the {TokenStream} according to the provided informations of {ContextConfig}
          *
-         * @param tokenStream {@link TokenStream} to wrap
+         * @param tokenStream {TokenStream} to wrap
          *
          * @return wrapped token stream
          */
@@ -179,18 +179,18 @@ public abstract class ContextMapping implements ToXContent {
     }
 
     /**
-     *  A {@link ContextMapping} combined with the information provided by a document
-     *  form a {@link ContextConfig} which is used to build the underlying {@link FST}. This class hold
-     *  a simple method wrapping a {@link TokenStream} by provided document informations.
+     *  A {ContextMapping} combined with the information provided by a document
+     *  form a {ContextConfig} which is used to build the underlying {FST}. This class hold
+     *  a simple method wrapping a {TokenStream} by provided document informations.
      */
     public abstract static class ContextConfig {
     }
 
     /**
-     * A {@link ContextQuery} defines the context information for a specific {@link ContextMapping}
+     * A {ContextQuery} defines the context information for a specific {ContextMapping}
      * defined within a suggestion request. According to the parameters set in the request and the
-     * {@link ContextMapping} such a query is used to wrap the {@link TokenStream} of the actual
-     * suggestion request into a {@link TokenStream} with the context settings
+     * {ContextMapping} such a query is used to wrap the {TokenStream} of the actual
+     * suggestion request into a {TokenStream} with the context settings
      */
     public abstract static class ContextQuery implements ToXContent {
 
@@ -209,7 +209,7 @@ public abstract class ContextMapping implements ToXContent {
          * to find the matching paths with the fst
          *
          * @param preserveSep set an additional char (<code>XAnalyzingSuggester.SEP_LABEL</code>) between each context query
-         * @param queries list of {@link ContextQuery} defining the lookup context
+         * @param queries list of {ContextQuery} defining the lookup context
          *
          * @return Automaton matching the given Query
          */
@@ -240,7 +240,7 @@ public abstract class ContextMapping implements ToXContent {
         protected abstract Automaton toAutomaton();
 
         /**
-         * Parse a set of {@link ContextQuery} according to a given mapping
+         * Parse a set of {ContextQuery} according to a given mapping
          * @param mappings List of mapping defined y the suggest field
          * @param parser parser holding the settings of the queries. The parsers
          *        current token is assumed hold an array. The number of elements

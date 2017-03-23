@@ -67,7 +67,7 @@ import java.util.Objects;
 /**
  * A search source builder allowing to easily build search source. Simple
  * construction using
- * {@link org.codelibs.elasticsearch.search.builder.SearchSourceBuilder#searchSource()}.
+ * {org.codelibs.elasticsearch.search.builder.SearchSourceBuilder#searchSource()}.
  *
  */
 public final class SearchSourceBuilder extends ToXContentToBytes implements Writeable {
@@ -663,7 +663,7 @@ public final class SearchSourceBuilder extends ToXContentToBytes implements Writ
     }
 
     /**
-     * Gets the {@link FetchSourceContext} which defines how the _source should
+     * Gets the {FetchSourceContext} which defines how the _source should
      * be fetched.
      */
     public FetchSourceContext fetchSource() {
@@ -712,7 +712,7 @@ public final class SearchSourceBuilder extends ToXContentToBytes implements Writ
      * Adds a field to load from the docvalue and return as part of the
      * search request.
      *
-     * @deprecated Use {@link SearchSourceBuilder#docValueField(String)} instead.
+     * @deprecated Use {SearchSourceBuilder#docValueField(String)} instead.
      */
     @Deprecated
     public SearchSourceBuilder fieldDataField(String name) {
@@ -726,7 +726,7 @@ public final class SearchSourceBuilder extends ToXContentToBytes implements Writ
     /**
      * Gets the docvalue fields.
      *
-     * @deprecated Use {@link SearchSourceBuilder#docValueFields()} instead.
+     * @deprecated Use {SearchSourceBuilder#docValueFields()} instead.
      */
     @Deprecated
     public List<String> fieldDataFields() {
@@ -875,8 +875,8 @@ public final class SearchSourceBuilder extends ToXContentToBytes implements Writ
     }
 
     /**
-     * Create a shallow copy of this source replaced {@link #queryBuilder}, {@link #postQueryBuilder}, and {@linkplain slice}. Used by
-     * {@link #rewrite(QueryShardContext)} and {@link #copyWithNewSlice(SliceBuilder)}.
+     * Create a shallow copy of this source replaced {#queryBuilder}, {#postQueryBuilder}, and {@linkplain slice}. Used by
+     * {#rewrite(QueryShardContext)} and {#copyWithNewSlice(SliceBuilder)}.
      */
     private SearchSourceBuilder shallowCopy(QueryBuilder queryBuilder, QueryBuilder postQueryBuilder, SliceBuilder slice) {
         SearchSourceBuilder rewrittenBuilder = new SearchSourceBuilder();
@@ -911,7 +911,7 @@ public final class SearchSourceBuilder extends ToXContentToBytes implements Writ
     /**
      * Parse some xContent into this SearchSourceBuilder, overwriting any values specified in the xContent. Use this if you need to set up
      * different defaults than a regular SearchSourceBuilder would have and use
-     * {@link #fromXContent(QueryParseContext, AggregatorParsers, Suggesters, SearchExtRegistry)} if you have normal defaults.
+     * {#fromXContent(QueryParseContext, AggregatorParsers, Suggesters, SearchExtRegistry)} if you have normal defaults.
      */
     public void parseXContent(QueryParseContext context, AggregatorParsers aggParsers,
                               Suggesters suggesters, SearchExtRegistry searchExtRegistry)

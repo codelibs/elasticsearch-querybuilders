@@ -22,7 +22,7 @@ package org.codelibs.elasticsearch.index.query.functionscore;
 import org.codelibs.elasticsearch.script.Script;
 
 /**
- * Static method aliases for constructors of known {@link ScoreFunctionBuilder}s.
+ * Static method aliases for constructors of known {ScoreFunctionBuilder}s.
  */
 public class ScoreFunctionBuilders {
 

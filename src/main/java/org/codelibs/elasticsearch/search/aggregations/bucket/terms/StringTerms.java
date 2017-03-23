@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Result of the {@link TermsAggregator} when the field is a String.
+ * Result of the {TermsAggregator} when the field is a String.
  */
 public class StringTerms extends InternalMappedTerms<StringTerms, StringTerms.Bucket> {
     public static final String NAME = "sterms";

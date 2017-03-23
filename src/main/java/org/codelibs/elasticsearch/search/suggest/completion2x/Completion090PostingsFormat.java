@@ -56,7 +56,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This {@link PostingsFormat} is basically a T-Sink for a default postings
+ * This {PostingsFormat} is basically a T-Sink for a default postings
  * format that is used to store postings on disk fitting the lucene APIs and
  * builds a suggest FST as an auxiliary data structure next to the actual
  * postings format. It uses the delegate postings format for simplicity to
@@ -320,7 +320,7 @@ public class Completion090PostingsFormat extends PostingsFormat {
      * Returns total in-heap bytes used by all suggesters.  This method has CPU cost <code>O(numIndexedFields)</code>.
      *
      * @param fieldNamePatterns if non-null, any completion field name matching any of these patterns will break out its in-heap bytes
-     * separately in the returned {@link CompletionStats}
+     * separately in the returned {CompletionStats}
      */
     public CompletionStats completionStats(IndexReader indexReader, String ... fieldNamePatterns) {
         CompletionStats completionStats = new CompletionStats();

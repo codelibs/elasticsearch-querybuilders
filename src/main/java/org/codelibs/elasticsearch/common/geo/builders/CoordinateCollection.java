@@ -32,8 +32,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * The {@link CoordinateCollection} is an abstract base implementation for {@link LineStringBuilder} and {@link MultiPointBuilder}.
- * It holds a common list of {@link Coordinate}, provides setters for adding elements to the list and can render this to XContent.
+ * The {CoordinateCollection} is an abstract base implementation for {LineStringBuilder} and {MultiPointBuilder}.
+ * It holds a common list of {Coordinate}, provides setters for adding elements to the list and can render this to XContent.
  */
 public abstract class CoordinateCollection<E extends CoordinateCollection<E>> extends ShapeBuilder {
 
@@ -98,7 +98,7 @@ public abstract class CoordinateCollection<E extends CoordinateCollection<E>> ex
     /**
      * Add a array of coordinates to the collection
      *
-     * @param coordinates array of {@link Coordinate}s to add
+     * @param coordinates array of {Coordinate}s to add
      * @return this
      */
     public E coordinates(Coordinate...coordinates) {
@@ -108,7 +108,7 @@ public abstract class CoordinateCollection<E extends CoordinateCollection<E>> ex
     /**
      * Add a collection of coordinates to the collection
      *
-     * @param coordinates array of {@link Coordinate}s to add
+     * @param coordinates array of {Coordinate}s to add
      * @return this
      */
     public E coordinates(Collection<? extends Coordinate> coordinates) {
@@ -131,7 +131,7 @@ public abstract class CoordinateCollection<E extends CoordinateCollection<E>> ex
     }
 
     /**
-     * builds an array of coordinates to a {@link XContentBuilder}
+     * builds an array of coordinates to a {XContentBuilder}
      *
      * @param builder builder to use
      * @param closed repeat the first point at the end of the array if it's not already defines as last element of the array

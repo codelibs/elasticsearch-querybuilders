@@ -82,7 +82,7 @@ public final class Settings implements ToXContent {
     }
 
     /**
-     * The settings as a flat {@link java.util.Map}.
+     * The settings as a flat {java.util.Map}.
      * @return an unmodifiable map of settings
      */
     public Map<String, String> getAsMap() {
@@ -91,7 +91,7 @@ public final class Settings implements ToXContent {
     }
 
     /**
-     * The settings as a structured {@link java.util.Map}.
+     * The settings as a structured {java.util.Map}.
      */
     public Map<String, Object> getAsStructuredMap() {
         Map<String, Object> map = new HashMap<>(2);
@@ -575,8 +575,8 @@ public final class Settings implements ToXContent {
     }
 
     /**
-     * A builder allowing to put different settings and then {@link #build()} an immutable
-     * settings implementation. Use {@link Settings#builder()} in order to
+     * A builder allowing to put different settings and then {#build()} an immutable
+     * settings implementation. Use {Settings#builder()} in order to
      * construct it.
      */
     public static class Builder {
@@ -887,7 +887,7 @@ public final class Settings implements ToXContent {
 
         /**
          * Loads settings from the actual string content that represents them using the
-         * {@link SettingsLoaderFactory#loaderFromSource(String)}.
+         * {SettingsLoaderFactory#loaderFromSource(String)}.
          */
         public Builder loadFromSource(String source) {
             SettingsLoader settingsLoader = SettingsLoaderFactory.loaderFromSource(source);
@@ -902,7 +902,7 @@ public final class Settings implements ToXContent {
 
         /**
          * Loads settings from a url that represents them using the
-         * {@link SettingsLoaderFactory#loaderFromSource(String)}.
+         * {SettingsLoaderFactory#loaderFromSource(String)}.
          */
         public Builder loadFromPath(Path path) throws IOException {
             // NOTE: loadFromStream will close the input stream
@@ -911,7 +911,7 @@ public final class Settings implements ToXContent {
 
         /**
          * Loads settings from a stream that represents them using the
-         * {@link SettingsLoaderFactory#loaderFromSource(String)}.
+         * {SettingsLoaderFactory#loaderFromSource(String)}.
          */
         public Builder loadFromStream(String resourceName, InputStream is) throws IOException {
             SettingsLoader settingsLoader = SettingsLoaderFactory.loaderFromResource(resourceName);
@@ -1010,7 +1010,7 @@ public final class Settings implements ToXContent {
         }
 
         /**
-         * Builds a {@link Settings} (underlying uses {@link Settings}) based on everything
+         * Builds a {Settings} (underlying uses {Settings}) based on everything
          * set on this builder.
          */
         public Settings build() {

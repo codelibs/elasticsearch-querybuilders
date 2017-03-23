@@ -46,8 +46,8 @@ import java.util.Objects;
 
 /**
  * Script represents used-defined input that can be used to
- * compile and execute a script from the {@link ScriptService}
- * based on the {@link ScriptType}.
+ * compile and execute a script from the {ScriptService}
+ * based on the {ScriptType}.
  */
 public final class Script implements ToXContent, Writeable {
 
@@ -64,38 +64,38 @@ public final class Script implements ToXContent, Writeable {
     public static final String DEFAULT_TEMPLATE_LANG = "mustache";
 
     /**
-     * The default {@link ScriptType}.
+     * The default {ScriptType}.
      */
     public static final ScriptType DEFAULT_SCRIPT_TYPE = ScriptType.INLINE;
 
     /**
-     * Compiler option for {@link XContentType} used for templates.
+     * Compiler option for {XContentType} used for templates.
      */
     public static final String CONTENT_TYPE_OPTION = "content_type";
 
     /**
-     * Standard {@link ParseField} for outer level of script queries.
+     * Standard {ParseField} for outer level of script queries.
      */
     public static final ParseField SCRIPT_PARSE_FIELD = new ParseField("script");
 
     /**
-     * Standard {@link ParseField} for lang on the inner level.
+     * Standard {ParseField} for lang on the inner level.
      */
     public static final ParseField LANG_PARSE_FIELD = new ParseField("lang");
 
     /**
-     * Standard {@link ParseField} for options on the inner level.
+     * Standard {ParseField} for options on the inner level.
      */
     public static final ParseField OPTIONS_PARSE_FIELD = new ParseField("options");
 
     /**
-     * Standard {@link ParseField} for params on the inner level.
+     * Standard {ParseField} for params on the inner level.
      */
     public static final ParseField PARAMS_PARSE_FIELD = new ParseField("params");
 
     /**
-     * Helper class used by {@link ObjectParser} to store mutable {@link Script} variables and then
-     * construct an immutable {@link Script} object based on parsed XContent.
+     * Helper class used by {ObjectParser} to store mutable {Script} variables and then
+     * construct an immutable {Script} object based on parsed XContent.
      */
     private static final class Builder {
         private ScriptType type;
@@ -113,7 +113,7 @@ public final class Script implements ToXContent, Writeable {
         /**
          * Since inline scripts can accept code rather than just an id, they must also be able
          * to handle template parsing, hence the need for custom parsing code.  Templates can
-         * consist of either an {@link String} or a JSON object.  If a JSON object is discovered
+         * consist of either an {String} or a JSON object.  If a JSON object is discovered
          * then the content type option must also be saved as a compiler option.
          */
         private void setInline(XContentParser parser) {
@@ -161,7 +161,7 @@ public final class Script implements ToXContent, Writeable {
         }
 
         /**
-         * Helper method to throw an exception if more than one type of {@link Script} is specified.
+         * Helper method to throw an exception if more than one type of {Script} is specified.
          */
         private void throwOnlyOneOfType() {
             throw new IllegalArgumentException("must only use one of [" +
@@ -188,7 +188,7 @@ public final class Script implements ToXContent, Writeable {
         }
 
         /**
-         * Validates the parameters and creates an {@link Script}.
+         * Validates the parameters and creates an {Script}.
          * @param defaultLang The default lang is not a compile-time constant and must be provided
          *                    at run-time this way in case a legacy default language is used from
          *                    previously stored queries.
@@ -226,7 +226,7 @@ public final class Script implements ToXContent, Writeable {
     }
 
     /**
-     * Convenience method to call {@link Script#parse(XContentParser, ParseFieldMatcher, String)}
+     * Convenience method to call {Script#parse(XContentParser, ParseFieldMatcher, String)}
      * using the default scripting language.
      */
     public static Script parse(XContentParser parser, ParseFieldMatcher matcher) throws IOException {
@@ -234,24 +234,24 @@ public final class Script implements ToXContent, Writeable {
     }
 
     /**
-     * Convenience method to call {@link Script#parse(XContentParser, ParseFieldMatcher, String)} using the
-     * {@link ParseFieldMatcher} and scripting language provided by the {@link QueryParseContext}.
+     * Convenience method to call {Script#parse(XContentParser, ParseFieldMatcher, String)} using the
+     * {ParseFieldMatcher} and scripting language provided by the {QueryParseContext}.
      */
     public static Script parse(XContentParser parser, QueryParseContext context) throws IOException {
         return parse(parser, context.getParseFieldMatcher(), context.getDefaultScriptLanguage());
     }
 
     /**
-     * This will parse XContent into a {@link Script}.  The following formats can be parsed:
+     * This will parse XContent into a {Script}.  The following formats can be parsed:
      *
-     * The simple format defaults to an {@link ScriptType#INLINE} with no compiler options or user-defined params:
+     * The simple format defaults to an {ScriptType#INLINE} with no compiler options or user-defined params:
      *
      * Example:
      * {@code
      * "return Math.log(doc.popularity) * 100;"
      * }
      *
-     * The complex format where {@link ScriptType} and idOrCode are required while lang, options and params are not required.
+     * The complex format where {ScriptType} and idOrCode are required while lang, options and params are not required.
      *
      * {@code
      * {
@@ -301,12 +301,12 @@ public final class Script implements ToXContent, Writeable {
      * }
      * }
      *
-     * @param parser       The {@link XContentParser} to be used.
-     * @param matcher      The {@link ParseFieldMatcher} to be used.
+     * @param parser       The {XContentParser} to be used.
+     * @param matcher      The {ParseFieldMatcher} to be used.
      * @param defaultLang  The default language to use if no language is specified.  The default language isn't necessarily
-     *                     the one defined by {@link Script#DEFAULT_SCRIPT_LANG} due to backwards compatiblity requirements
+     *                     the one defined by {Script#DEFAULT_SCRIPT_LANG} due to backwards compatiblity requirements
      *                     related to stored queries using previously default languauges.
-     * @return             The parsed {@link Script}.
+     * @return             The parsed {Script}.
      */
     public static Script parse(XContentParser parser, ParseFieldMatcher matcher, String defaultLang) throws IOException {
         Objects.requireNonNull(defaultLang);
@@ -340,10 +340,10 @@ public final class Script implements ToXContent, Writeable {
 
     /**
      * Constructor for a script that does not need to use compiler options.
-     * @param type     The {@link ScriptType}.
-     * @param lang     The lang for this {@link Script}.
-     * @param idOrCode The id for this {@link Script} if the {@link ScriptType} is {@link ScriptType#FILE} or {@link ScriptType#STORED}.
-     *                 The code for this {@link Script} if the {@link ScriptType} is {@link ScriptType#INLINE}.
+     * @param type     The {ScriptType}.
+     * @param lang     The lang for this {Script}.
+     * @param idOrCode The id for this {Script} if the {ScriptType} is {ScriptType#FILE} or {ScriptType#STORED}.
+     *                 The code for this {Script} if the {ScriptType} is {ScriptType#INLINE}.
      * @param params   The user-defined params to be bound for script execution.
      */
     public Script(ScriptType type, String lang, String idOrCode, Map<String, Object> params) {
@@ -352,10 +352,10 @@ public final class Script implements ToXContent, Writeable {
 
     /**
      * Constructor for a script that requires the use of compiler options.
-     * @param type     The {@link ScriptType}.
-     * @param lang     The lang for this {@link Script}.
-     * @param idOrCode The id for this {@link Script} if the {@link ScriptType} is {@link ScriptType#FILE} or {@link ScriptType#STORED}.
-     *                 The code for this {@link Script} if the {@link ScriptType} is {@link ScriptType#INLINE}.
+     * @param type     The {ScriptType}.
+     * @param lang     The lang for this {Script}.
+     * @param idOrCode The id for this {Script} if the {ScriptType} is {ScriptType#FILE} or {ScriptType#STORED}.
+     *                 The code for this {Script} if the {ScriptType} is {ScriptType#INLINE}.
      * @param options  The options to be passed to the compiler for use at compile-time.
      * @param params   The user-defined params to be bound for script execution.
      */
@@ -373,7 +373,7 @@ public final class Script implements ToXContent, Writeable {
     }
 
     /**
-     * Creates a {@link Script} read from an input stream.
+     * Creates a {Script} read from an input stream.
      */
     public Script(StreamInput in) throws IOException {
         // Version 5.1+ requires all Script members to be non-null and supports the potential
@@ -494,8 +494,8 @@ public final class Script implements ToXContent, Writeable {
      *
      * Note that options and params will only be included if there have been any specified.
      *
-     * This also handles templates in a special way.  If the {@link Script#CONTENT_TYPE_OPTION} option
-     * is provided and the {@link ScriptType#INLINE} is specified then the template will be preserved as a raw field.
+     * This also handles templates in a special way.  If the {Script#CONTENT_TYPE_OPTION} option
+     * is provided and the {ScriptType#INLINE} is specified then the template will be preserved as a raw field.
      *
      * {@code
      * {
@@ -542,36 +542,36 @@ public final class Script implements ToXContent, Writeable {
     }
 
     /**
-     * @return The id for this {@link Script} if the {@link ScriptType} is {@link ScriptType#FILE} or {@link ScriptType#STORED}.
-     *         The code for this {@link Script} if the {@link ScriptType} is {@link ScriptType#INLINE}.
+     * @return The id for this {Script} if the {ScriptType} is {ScriptType#FILE} or {ScriptType#STORED}.
+     *         The code for this {Script} if the {ScriptType} is {ScriptType#INLINE}.
      */
     public String getIdOrCode() {
         return idOrCode;
     }
 
     /**
-     * @return The {@link ScriptType} for this {@link Script}.
+     * @return The {ScriptType} for this {Script}.
      */
     public ScriptType getType() {
         return type;
     }
 
     /**
-     * @return The language for this {@link Script}.
+     * @return The language for this {Script}.
      */
     public String getLang() {
         return lang;
     }
 
     /**
-     * @return The map of compiler options for this {@link Script}.
+     * @return The map of compiler options for this {Script}.
      */
     public Map<String, String> getOptions() {
         return options;
     }
 
     /**
-     * @return The map of user-defined params for this {@link Script}.
+     * @return The map of user-defined params for this {Script}.
      */
     public Map<String, Object> getParams() {
         return params;

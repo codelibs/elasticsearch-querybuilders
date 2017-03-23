@@ -32,7 +32,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Base implementation of a {@link PipelineAggregationBuilder}.
+ * Base implementation of a {PipelineAggregationBuilder}.
  */
 public abstract class AbstractPipelineAggregationBuilder<PAB extends AbstractPipelineAggregationBuilder<PAB>>
         extends PipelineAggregationBuilder {
@@ -134,7 +134,7 @@ public abstract class AbstractPipelineAggregationBuilder<PAB extends AbstractPip
     }
 
     /**
-     * @return <code>true</code> if the {@link AbstractPipelineAggregationBuilder}
+     * @return <code>true</code> if the {AbstractPipelineAggregationBuilder}
      *         overrides the XContent rendering of the bucketPath option.
      */
     protected boolean overrideBucketsPath() {

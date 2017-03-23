@@ -24,7 +24,7 @@ import org.codelibs.elasticsearch.common.bytes.BytesReference;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Both {@link String} and {@link BytesReference} representation of the text. Starts with one of those, and if
+ * Both {String} and {BytesReference} representation of the text. Starts with one of those, and if
  * the other is requests, caches the other one in a local reference so no additional conversion will be needed.
  */
 public final class Text implements Comparable<Text> {
@@ -55,14 +55,14 @@ public final class Text implements Comparable<Text> {
     }
 
     /**
-     * Whether a {@link BytesReference} view of the data is already materialized.
+     * Whether a {BytesReference} view of the data is already materialized.
      */
     public boolean hasBytes() {
         return bytes != null;
     }
 
     /**
-     * Returns a {@link BytesReference} view of the data.
+     * Returns a {BytesReference} view of the data.
      */
     public BytesReference bytes() {
         if (bytes == null) {
@@ -72,14 +72,14 @@ public final class Text implements Comparable<Text> {
     }
 
     /**
-     * Whether a {@link String} view of the data is already materialized.
+     * Whether a {String} view of the data is already materialized.
      */
     public boolean hasString() {
         return text != null;
     }
 
     /**
-     * Returns a {@link String} view of the data.
+     * Returns a {String} view of the data.
      */
     public String string() {
         return text == null ? bytes.utf8ToString() : text;

@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * An interface allowing to transfer an object to "XContent" using an {@link XContentBuilder}.
+ * An interface allowing to transfer an object to "XContent" using an {XContentBuilder}.
  */
 public interface ToXContent {
 

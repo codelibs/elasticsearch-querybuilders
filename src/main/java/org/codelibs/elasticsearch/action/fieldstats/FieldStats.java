@@ -56,9 +56,9 @@ public abstract class FieldStats<T> implements Writeable, ToXContent {
      * @param maxDoc Max number of docs
      * @param docCount  the number of documents that have at least one term for this field,
      *                  or -1 if this information isn't available for this field.
-     * @param sumDocFreq  the sum of {@link TermsEnum#docFreq()} for all terms in this field,
+     * @param sumDocFreq  the sum of {TermsEnum#docFreq()} for all terms in this field,
      *                    or -1 if this information isn't available for this field.
-     * @param sumTotalTermFreq the sum of {@link TermsEnum#totalTermFreq} for all terms in this field,
+     * @param sumTotalTermFreq the sum of {TermsEnum#totalTermFreq} for all terms in this field,
      *                         or -1 if this measure isn't available for this field.
      * @param isSearchable true if this field is searchable
      * @param isAggregatable true if this field is aggregatable
@@ -81,9 +81,9 @@ public abstract class FieldStats<T> implements Writeable, ToXContent {
      * @param maxDoc Max number of docs
      * @param docCount  the number of documents that have at least one term for this field,
      *                  or -1 if this information isn't available for this field.
-     * @param sumDocFreq  the sum of {@link TermsEnum#docFreq()} for all terms in this field,
+     * @param sumDocFreq  the sum of {TermsEnum#docFreq()} for all terms in this field,
      *                    or -1 if this information isn't available for this field.
-     * @param sumTotalTermFreq the sum of {@link TermsEnum#totalTermFreq} for all terms in this field,
+     * @param sumTotalTermFreq the sum of {TermsEnum#totalTermFreq} for all terms in this field,
      *                         or -1 if this measure isn't available for this field.
      * @param isSearchable true if this field is searchable
      * @param isAggregatable true if this field is aggregatable
@@ -237,7 +237,7 @@ public abstract class FieldStats<T> implements Writeable, ToXContent {
      * @param value The string to be parsed
      * @param optionalFormat A string describing how to parse the specified value. Whether this parameter is supported
      *                       depends on the implementation. If optionalFormat is specified and the implementation
-     *                       doesn't support it an {@link UnsupportedOperationException} is thrown
+     *                       doesn't support it an {UnsupportedOperationException} is thrown
      */
     protected abstract T valueOf(String value, String optionalFormat);
 

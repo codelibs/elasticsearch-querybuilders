@@ -24,8 +24,8 @@ import org.codelibs.elasticsearch.common.Nullable;
 import java.util.Map;
 
 /**
- * A factory to create instances of either {@link ExecutableScript} or {@link SearchScript}. Note,
- * if this factory creates {@link SearchScript}, it must extend {@link AbstractSearchScript}.
+ * A factory to create instances of either {ExecutableScript} or {SearchScript}. Note,
+ * if this factory creates {SearchScript}, it must extend {AbstractSearchScript}.
  *
  * @see AbstractExecutableScript
  * @see AbstractSearchScript
@@ -35,7 +35,7 @@ import java.util.Map;
 public interface NativeScriptFactory {
 
     /**
-     * Creates a new instance of either a {@link ExecutableScript} or a {@link SearchScript}.
+     * Creates a new instance of either a {ExecutableScript} or a {SearchScript}.
      *
      * @param params The parameters passed to the script. Can be <tt>null</tt>.
      */

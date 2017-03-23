@@ -27,7 +27,7 @@ import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.common.lucene.BytesRefs;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 
-/** Base {@link MappedFieldType} implementation for a field that is indexed
+/** Base {MappedFieldType} implementation for a field that is indexed
  *  with the inverted index. */
 abstract class TermBasedFieldType extends MappedFieldType {
 
@@ -39,7 +39,7 @@ abstract class TermBasedFieldType extends MappedFieldType {
 
     /** Returns the indexed value used to construct search "values".
      *  This method is used for the default implementations of most
-     *  query factory methods such as {@link #termQuery}. */
+     *  query factory methods such as {#termQuery}. */
     protected BytesRef indexedValueForSearch(Object value) {
         return BytesRefs.toBytesRef(value);
     }

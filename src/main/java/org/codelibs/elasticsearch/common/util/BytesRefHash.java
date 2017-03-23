@@ -27,7 +27,7 @@ import org.codelibs.elasticsearch.common.lease.Releasables;
 /**
  *  Specialized hash table implementation similar to Lucene's BytesRefHash that maps
  *  BytesRef values to ids. Collisions are resolved with open addressing and linear
- *  probing, growth is smooth thanks to {@link BigArrays}, hashes are cached for faster
+ *  probing, growth is smooth thanks to {BigArrays}, hashes are cached for faster
  *  re-hashing and capacity is always a multiple of 2 for faster identification of buckets.
  *  This class is not thread-safe.
  */
@@ -61,7 +61,7 @@ public final class BytesRefHash extends AbstractHash {
 
     /**
      * Return the key at <code>0 &lt;= index &lt;= capacity()</code>. The result is undefined if the slot is unused.
-     * <p>Beware that the content of the {@link BytesRef} may become invalid as soon as {@link #close()} is called</p>
+     * <p>Beware that the content of the {BytesRef} may become invalid as soon as {#close()} is called</p>
      */
     public BytesRef get(long id, BytesRef dest) {
         final long startOffset = startOffsets.get(id);
@@ -83,7 +83,7 @@ public final class BytesRefHash extends AbstractHash {
         }
     }
 
-    /** Sugar for {@link #find(BytesRef, int) find(key, key.hashCode()} */
+    /** Sugar for {#find(BytesRef, int) find(key, key.hashCode()} */
     public long find(BytesRef key) {
         return find(key, key.hashCode());
     }
@@ -146,7 +146,7 @@ public final class BytesRefHash extends AbstractHash {
         return set(key, rehash(code), size);
     }
 
-    /** Sugar to {@link #add(BytesRef, int) add(key, key.hashCode()}. */
+    /** Sugar to {#add(BytesRef, int) add(key, key.hashCode()}. */
     public long add(BytesRef key) {
         return add(key, key.hashCode());
     }

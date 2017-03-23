@@ -28,7 +28,7 @@ import org.codelibs.elasticsearch.search.suggest.Suggest.Suggestion;
 import java.io.IOException;
 
 /**
- * Suggestion entry returned from the {@link PhraseSuggester}.
+ * Suggestion entry returned from the {PhraseSuggester}.
  */
 public class PhraseSuggestion extends Suggest.Suggestion<PhraseSuggestion.Entry> {
     public static final int TYPE = 3;

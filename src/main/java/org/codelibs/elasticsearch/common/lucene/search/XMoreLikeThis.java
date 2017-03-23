@@ -126,22 +126,22 @@ import java.util.Set;
  * </ol>
  * <h3>More Advanced Usage</h3>
  * <p>
- * You may want to use {@link #setFieldNames setFieldNames(...)} so you can examine
+ * You may want to use {#setFieldNames setFieldNames(...)} so you can examine
  * multiple fields (e.g. body and title) for similarity.
  * <p>
  * Depending on the size of your index and the size and makeup of your documents you
  * may want to call the other set methods to control how the similarity queries are
  * generated:
  * <ul>
- * <li> {@link #setMinTermFreq setMinTermFreq(...)}
- * <li> {@link #setMinDocFreq setMinDocFreq(...)}
- * <li> {@link #setMaxDocFreq setMaxDocFreq(...)}
- * <li> {@link #setMaxDocFreqPct setMaxDocFreqPct(...)}
- * <li> {@link #setMinWordLen setMinWordLen(...)}
- * <li> {@link #setMaxWordLen setMaxWordLen(...)}
- * <li> {@link #setMaxQueryTerms setMaxQueryTerms(...)}
- * <li> {@link #setMaxNumTokensParsed setMaxNumTokensParsed(...)}
- * <li> {@link #setStopWords setStopWord(...)}
+ * <li> {#setMinTermFreq setMinTermFreq(...)}
+ * <li> {#setMinDocFreq setMinDocFreq(...)}
+ * <li> {#setMaxDocFreq setMaxDocFreq(...)}
+ * <li> {#setMaxDocFreqPct setMaxDocFreqPct(...)}
+ * <li> {#setMinWordLen setMinWordLen(...)}
+ * <li> {#setMaxWordLen setMaxWordLen(...)}
+ * <li> {#setMaxQueryTerms setMaxQueryTerms(...)}
+ * <li> {#setMaxNumTokensParsed setMaxNumTokensParsed(...)}
+ * <li> {#setStopWords setStopWord(...)}
  * </ul>
  * <hr>
  * <pre>
@@ -375,7 +375,7 @@ public final class XMoreLikeThis {
 
     /**
      * Sets the analyzer to use. An analyzer is not required for generating a query with the
-     * {@link #like(int)} method, all other 'like' methods require an analyzer.
+     * {#like(int)} method, all other 'like' methods require an analyzer.
      *
      * @param analyzer the analyzer to use to tokenize text.
      */
@@ -385,7 +385,7 @@ public final class XMoreLikeThis {
 
     /**
      * Returns the frequency below which terms will be ignored in the source doc. The default
-     * frequency is the {@link #DEFAULT_MIN_TERM_FREQ}.
+     * frequency is the {#DEFAULT_MIN_TERM_FREQ}.
      *
      * @return the frequency below which terms will be ignored in the source doc.
      */
@@ -404,7 +404,7 @@ public final class XMoreLikeThis {
 
     /**
      * Returns the frequency at which words will be ignored which do not occur in at least this
-     * many docs. The default frequency is {@link #DEFAULT_MIN_DOC_FREQ}.
+     * many docs. The default frequency is {#DEFAULT_MIN_DOC_FREQ}.
      *
      * @return the frequency at which words will be ignored which do not occur in at least this
      *         many docs.
@@ -427,7 +427,7 @@ public final class XMoreLikeThis {
     /**
      * Returns the maximum frequency in which words may still appear.
      * Words that appear in more than this many docs will be ignored. The default frequency is
-     * {@link #DEFAULT_MAX_DOC_FREQ}.
+     * {#DEFAULT_MAX_DOC_FREQ}.
      *
      * @return get the maximum frequency at which words are still allowed,
      *         words which occur in more docs than this are ignored.
@@ -461,7 +461,7 @@ public final class XMoreLikeThis {
 
     /**
      * Returns whether to boost terms in query based on "score" or not. The default is
-     * {@link #DEFAULT_BOOST}.
+     * {#DEFAULT_BOOST}.
      *
      * @return whether to boost terms in query based on "score" or not.
      * @see #setBoost
@@ -482,7 +482,7 @@ public final class XMoreLikeThis {
 
     /**
      * Returns the field names that will be used when generating the 'More Like This' query.
-     * The default field names that will be used is {@link #DEFAULT_FIELD_NAMES}.
+     * The default field names that will be used is {#DEFAULT_FIELD_NAMES}.
      *
      * @return the field names that will be used when generating the 'More Like This' query.
      */
@@ -504,7 +504,7 @@ public final class XMoreLikeThis {
 
     /**
      * Returns the minimum word length below which words will be ignored. Set this to 0 for no
-     * minimum word length. The default is {@link #DEFAULT_MIN_WORD_LENGTH}.
+     * minimum word length. The default is {#DEFAULT_MIN_WORD_LENGTH}.
      *
      * @return the minimum word length below which words will be ignored.
      */
@@ -523,7 +523,7 @@ public final class XMoreLikeThis {
 
     /**
      * Returns the maximum word length above which words will be ignored. Set this to 0 for no
-     * maximum word length. The default is {@link #DEFAULT_MAX_WORD_LENGTH}.
+     * maximum word length. The default is {#DEFAULT_MAX_WORD_LENGTH}.
      *
      * @return the maximum word length above which words will be ignored.
      */
@@ -565,7 +565,7 @@ public final class XMoreLikeThis {
 
     /**
      * Returns the maximum number of query terms that will be included in any generated query.
-     * The default is {@link #DEFAULT_MAX_QUERY_TERMS}.
+     * The default is {#DEFAULT_MAX_QUERY_TERMS}.
      *
      * @return the maximum number of query terms that will be included in any generated query.
      */
@@ -959,7 +959,7 @@ public final class XMoreLikeThis {
      * </ol>
      * This is a somewhat "advanced" routine, and in general only the 1st entry in the array is of interest.
      * This method is exposed so that you can identify the "interesting words" in a document.
-     * For an easier method to call see {@link #retrieveInterestingTerms retrieveInterestingTerms()}.
+     * For an easier method to call see {#retrieveInterestingTerms retrieveInterestingTerms()}.
      *
      * @param r the reader that has the content of the document
      * @param fieldName field passed to the analyzer to use when analyzing the content
@@ -990,7 +990,7 @@ public final class XMoreLikeThis {
 
     /**
      * Convenience routine to make it easy to return the most interesting words in a document.
-     * More advanced users will call {@link #retrieveTerms(Reader, String) retrieveTerms()} directly.
+     * More advanced users will call {#retrieveTerms(Reader, String) retrieveTerms()} directly.
      *
      * @param r the source document
      * @param fieldName field passed to analyzer to use when analyzing the content

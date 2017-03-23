@@ -25,7 +25,7 @@ import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import java.io.IOException;
 
 /**
- * Parses XContent into a {@link ScoreFunctionBuilder}.
+ * Parses XContent into a {ScoreFunctionBuilder}.
  */
 @FunctionalInterface
 public interface ScoreFunctionParser<FB extends ScoreFunctionBuilder<FB>> {

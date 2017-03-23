@@ -35,20 +35,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Utility methods, similar to Lucene's {@link DocValues}.
+ * Utility methods, similar to Lucene's {DocValues}.
  */
 public enum FieldData {
     ;
 
     /**
-     * Return a {@link SortedBinaryDocValues} that doesn't contain any value.
+     * Return a {SortedBinaryDocValues} that doesn't contain any value.
      */
     public static SortedBinaryDocValues emptySortedBinary(int maxDoc) {
         return singleton(DocValues.emptyBinary(), new Bits.MatchNoBits(maxDoc));
     }
 
     /**
-     * Return a {@link NumericDoubleValues} that doesn't contain any value.
+     * Return a {NumericDoubleValues} that doesn't contain any value.
      */
     public static NumericDoubleValues emptyNumericDouble() {
         return new NumericDoubleValues() {
@@ -61,7 +61,7 @@ public enum FieldData {
     }
 
     /**
-     * Return a {@link SortedNumericDoubleValues} that doesn't contain any value.
+     * Return a {SortedNumericDoubleValues} that doesn't contain any value.
      */
     public static SortedNumericDoubleValues emptySortedNumericDoubles(int maxDoc) {
         return singleton(emptyNumericDouble(), new Bits.MatchNoBits(maxDoc));
@@ -78,14 +78,14 @@ public enum FieldData {
     }
 
     /**
-     * Return a {@link SortedNumericDoubleValues} that doesn't contain any value.
+     * Return a {SortedNumericDoubleValues} that doesn't contain any value.
      */
     public static MultiGeoPointValues emptyMultiGeoPoints(int maxDoc) {
         return singleton(emptyGeoPoint(), new Bits.MatchNoBits(maxDoc));
     }
 
     /**
-     * Returns a {@link Bits} representing all documents from <code>dv</code> that have a value.
+     * Returns a {Bits} representing all documents from <code>dv</code> that have a value.
      */
     public static Bits docsWithValue(final SortedBinaryDocValues dv, final int maxDoc) {
       return new Bits() {
@@ -139,9 +139,9 @@ public enum FieldData {
     }
 
     /**
-     * Given a {@link SortedNumericDoubleValues}, return a {@link SortedNumericDocValues}
+     * Given a {SortedNumericDoubleValues}, return a {SortedNumericDocValues}
      * instance that will translate double values to sortable long bits using
-     * {@link NumericUtils#doubleToSortableLong(double)}.
+     * {NumericUtils#doubleToSortableLong(double)}.
      */
     public static SortedNumericDocValues toSortableLongBits(SortedNumericDoubleValues values) {
         final NumericDoubleValues singleton = unwrapSingleton(values);
@@ -164,9 +164,9 @@ public enum FieldData {
     }
 
     /**
-     * Given a {@link SortedNumericDocValues}, return a {@link SortedNumericDoubleValues}
+     * Given a {SortedNumericDocValues}, return a {SortedNumericDoubleValues}
      * instance that will translate long values to doubles using
-     * {@link NumericUtils#sortableLongToDouble(long)}.
+     * {NumericUtils#sortableLongToDouble(long)}.
      */
     public static SortedNumericDoubleValues sortableLongBitsToDoubles(SortedNumericDocValues values) {
         final NumericDocValues singleton = DocValues.unwrapSingleton(values);
@@ -189,7 +189,7 @@ public enum FieldData {
     }
 
     /**
-     * Wrap the provided {@link SortedNumericDocValues} instance to cast all values to doubles.
+     * Wrap the provided {SortedNumericDocValues} instance to cast all values to doubles.
      */
     public static SortedNumericDoubleValues castToDouble(final SortedNumericDocValues values) {
         final NumericDocValues singleton = DocValues.unwrapSingleton(values);
@@ -202,7 +202,7 @@ public enum FieldData {
     }
 
     /**
-     * Wrap the provided {@link SortedNumericDoubleValues} instance to cast all values to longs.
+     * Wrap the provided {SortedNumericDoubleValues} instance to cast all values to longs.
      */
     public static SortedNumericDocValues castToLong(final SortedNumericDoubleValues values) {
         final NumericDoubleValues singleton = unwrapSingleton(values);
@@ -215,15 +215,15 @@ public enum FieldData {
     }
 
     /**
-     * Returns a multi-valued view over the provided {@link NumericDoubleValues}.
+     * Returns a multi-valued view over the provided {NumericDoubleValues}.
      */
     public static SortedNumericDoubleValues singleton(NumericDoubleValues values, Bits docsWithField) {
         return new SingletonSortedNumericDoubleValues(values, docsWithField);
     }
 
     /**
-     * Returns a single-valued view of the {@link SortedNumericDoubleValues},
-     * if it was previously wrapped with {@link DocValues#singleton(NumericDocValues, Bits)},
+     * Returns a single-valued view of the {SortedNumericDoubleValues},
+     * if it was previously wrapped with {DocValues#singleton(NumericDocValues, Bits)},
      * or null.
      * @see DocValues#unwrapSingletonBits(SortedNumericDocValues)
      */
@@ -235,8 +235,8 @@ public enum FieldData {
     }
 
     /**
-     * Returns the documents with a value for the {@link SortedNumericDoubleValues},
-     * if it was previously wrapped with {@link #singleton(NumericDoubleValues, Bits)},
+     * Returns the documents with a value for the {SortedNumericDoubleValues},
+     * if it was previously wrapped with {#singleton(NumericDoubleValues, Bits)},
      * or null.
      */
     public static Bits unwrapSingletonBits(SortedNumericDoubleValues dv) {
@@ -248,15 +248,15 @@ public enum FieldData {
     }
 
     /**
-     * Returns a multi-valued view over the provided {@link GeoPointValues}.
+     * Returns a multi-valued view over the provided {GeoPointValues}.
      */
     public static MultiGeoPointValues singleton(GeoPointValues values, Bits docsWithField) {
         return new SingletonMultiGeoPointValues(values, docsWithField);
     }
 
     /**
-     * Returns a single-valued view of the {@link MultiGeoPointValues},
-     * if it was previously wrapped with {@link #singleton(GeoPointValues, Bits)},
+     * Returns a single-valued view of the {MultiGeoPointValues},
+     * if it was previously wrapped with {#singleton(GeoPointValues, Bits)},
      * or null.
      * @see #unwrapSingletonBits(MultiGeoPointValues)
      */
@@ -268,8 +268,8 @@ public enum FieldData {
     }
 
     /**
-     * Returns the documents with a value for the {@link MultiGeoPointValues},
-     * if it was previously wrapped with {@link #singleton(GeoPointValues, Bits)},
+     * Returns the documents with a value for the {MultiGeoPointValues},
+     * if it was previously wrapped with {#singleton(GeoPointValues, Bits)},
      * or null.
      */
     public static Bits unwrapSingletonBits(MultiGeoPointValues values) {
@@ -280,15 +280,15 @@ public enum FieldData {
     }
 
     /**
-     * Returns a multi-valued view over the provided {@link BinaryDocValues}.
+     * Returns a multi-valued view over the provided {BinaryDocValues}.
      */
     public static SortedBinaryDocValues singleton(BinaryDocValues values, Bits docsWithField) {
         return new SingletonSortedBinaryDocValues(values, docsWithField);
     }
 
     /**
-     * Returns a single-valued view of the {@link SortedBinaryDocValues},
-     * if it was previously wrapped with {@link #singleton(BinaryDocValues, Bits)},
+     * Returns a single-valued view of the {SortedBinaryDocValues},
+     * if it was previously wrapped with {#singleton(BinaryDocValues, Bits)},
      * or null.
      * @see #unwrapSingletonBits(SortedBinaryDocValues)
      */
@@ -300,8 +300,8 @@ public enum FieldData {
     }
 
     /**
-     * Returns the documents with a value for the {@link SortedBinaryDocValues},
-     * if it was previously wrapped with {@link #singleton(BinaryDocValues, Bits)},
+     * Returns the documents with a value for the {SortedBinaryDocValues},
+     * if it was previously wrapped with {#singleton(BinaryDocValues, Bits)},
      * or null.
      */
     public static Bits unwrapSingletonBits(SortedBinaryDocValues values) {
@@ -352,7 +352,7 @@ public enum FieldData {
     }
 
     /**
-     * Return a {@link String} representation of the provided values. That is
+     * Return a {String} representation of the provided values. That is
      * typically used for scripts or for the `map` execution mode of terms aggs.
      * NOTE: this is very slow!
      */
@@ -366,7 +366,7 @@ public enum FieldData {
     }
 
     /**
-     * Return a {@link String} representation of the provided values. That is
+     * Return a {String} representation of the provided values. That is
      * typically used for scripts or for the `map` execution mode of terms aggs.
      * NOTE: this is very slow!
      */
@@ -380,7 +380,7 @@ public enum FieldData {
     }
 
     /**
-     * Return a {@link String} representation of the provided values. That is
+     * Return a {String} representation of the provided values. That is
      * typically used for scripts or for the `map` execution mode of terms aggs.
      * NOTE: this is slow!
      */
@@ -405,7 +405,7 @@ public enum FieldData {
     }
 
     /**
-     * Return a {@link String} representation of the provided values. That is
+     * Return a {String} representation of the provided values. That is
      * typically used for scripts or for the `map` execution mode of terms aggs.
      * NOTE: this is very slow!
      */
@@ -419,7 +419,7 @@ public enum FieldData {
     }
 
     /**
-     * If <code>dv</code> is an instance of {@link RandomAccessOrds}, then return
+     * If <code>dv</code> is an instance of {RandomAccessOrds}, then return
      * it, otherwise wrap it into a slow wrapper that implements random access.
      */
     public static RandomAccessOrds maybeSlowRandomAccessOrds(final SortedSetDocValues dv) {

@@ -23,7 +23,7 @@ import org.apache.lucene.search.Explanation;
 
 import java.io.IOException;
 
-/** Per-leaf {@link ScoreFunction}. */
+/** Per-leaf {ScoreFunction}. */
 public abstract class LeafScoreFunction {
 
     public abstract double score(int docId, float subQueryScore);

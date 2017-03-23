@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Result of the {@link NestedAggregator}.
+ * Result of the {NestedAggregator}.
  */
 public class InternalNested extends InternalSingleBucketAggregation implements Nested {
     public InternalNested(String name, long docCount, InternalAggregations aggregations, List<PipelineAggregator> pipelineAggregators,

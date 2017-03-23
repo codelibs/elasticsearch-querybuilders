@@ -268,7 +268,7 @@ public class GeoBoundingBoxQueryBuilder extends AbstractQueryBuilder<GeoBounding
 
     /**
      * Sets whether the query builder should ignore unmapped fields (and run a
-     * {@link MatchNoDocsQuery} in place of this query) or throw an exception if
+     * {MatchNoDocsQuery} in place of this query) or throw an exception if
      * the field is unmapped.
      */
     public GeoBoundingBoxQueryBuilder ignoreUnmapped(boolean ignoreUnmapped) {
@@ -278,7 +278,7 @@ public class GeoBoundingBoxQueryBuilder extends AbstractQueryBuilder<GeoBounding
 
     /**
      * Gets whether the query builder will ignore unmapped fields (and run a
-     * {@link MatchNoDocsQuery} in place of this query) or throw an exception if
+     * {MatchNoDocsQuery} in place of this query) or throw an exception if
      * the field is unmapped.
      */
     public boolean ignoreUnmapped() {

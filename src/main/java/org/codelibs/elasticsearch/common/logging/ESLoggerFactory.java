@@ -27,7 +27,7 @@ import org.codelibs.elasticsearch.common.settings.Setting;
 import org.codelibs.elasticsearch.common.settings.Setting.Property;
 
 /**
- * Factory to get {@link Logger}s
+ * Factory to get {Logger}s
  */
 public final class ESLoggerFactory {
 

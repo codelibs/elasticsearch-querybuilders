@@ -81,7 +81,7 @@ public class Suggest implements Iterable<Suggest.Suggestion<? extends Entry<? ex
     }
 
     /**
-     * The number of suggestions in this {@link Suggest} result
+     * The number of suggestions in this {Suggest} result
      */
     public int size() {
         return suggestions.size();
@@ -194,7 +194,7 @@ public class Suggest implements Iterable<Suggest.Suggestion<? extends Entry<? ex
     }
 
     /**
-     * @return only suggestions of type <code>suggestionType</code> contained in this {@link Suggest} instance
+     * @return only suggestions of type <code>suggestionType</code> contained in this {Suggest} instance
      */
     public <T extends Suggestion> List<T> filter(Class<T> suggestionType) {
          return suggestions.stream()

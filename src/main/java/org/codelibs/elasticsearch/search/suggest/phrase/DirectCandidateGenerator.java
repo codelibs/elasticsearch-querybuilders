@@ -330,7 +330,7 @@ public final class DirectCandidateGenerator extends CandidateGenerator {
     }
 
     /** NOTE: this method closes the TokenStream, even on exception, which is awkward
-     *  because really the caller who called {@link Analyzer#tokenStream} should close it,
+     *  because really the caller who called {Analyzer#tokenStream} should close it,
      *  but when trying that there are recursion issues when we try to use the same
      *  TokenStream twice in the same recursion... */
     public static int analyze(TokenStream stream, TokenConsumer consumer) throws IOException {

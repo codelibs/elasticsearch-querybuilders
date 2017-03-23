@@ -27,7 +27,7 @@ import org.apache.lucene.search.Scorer;
 import org.apache.lucene.search.TwoPhaseIterator;
 import org.apache.lucene.search.Weight;
 
-/** A {@link Scorer} that filters out documents that have a score that is
+/** A {Scorer} that filters out documents that have a score that is
  *  lower than a configured constant. */
 final class MinScoreScorer extends Scorer {
 

@@ -32,7 +32,7 @@ import org.codelibs.elasticsearch.index.fielddata.SortedNumericDoubleValues;
 import java.io.IOException;
 
 /**
- * Utility class that allows to return views of {@link ValuesSource}s that
+ * Utility class that allows to return views of {ValuesSource}s that
  * replace the missing value with a configured value.
  */
 public enum MissingValues {

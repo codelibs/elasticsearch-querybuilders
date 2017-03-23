@@ -60,7 +60,7 @@ public class IdsQueryBuilder extends AbstractQueryBuilder<IdsQueryBuilder> {
 
     /**
      * Creates a new IdsQueryBuilder by providing the types of the documents to look for
-     * @deprecated Replaced by {@link #types(String...)}
+     * @deprecated Replaced by {#types(String...)}
      */
     @Deprecated
     public IdsQueryBuilder(String... types) {

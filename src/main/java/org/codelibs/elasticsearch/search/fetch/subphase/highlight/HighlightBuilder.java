@@ -89,7 +89,7 @@ public class HighlightBuilder extends AbstractHighlighterBuilder<HighlightBuilde
     public static final String[] DEFAULT_STYLED_POST_TAGS = {"</em>"};
 
     /**
-     * a {@link FieldOptions} with default settings
+     * a {FieldOptions} with default settings
      */
     static final FieldOptions defaultOptions = new SearchContextHighlight.FieldOptions.Builder()
             .preTags(DEFAULT_PRE_TAGS).postTags(DEFAULT_POST_TAGS).scoreOrdered(DEFAULT_SCORE_ORDERED)
@@ -226,7 +226,7 @@ public class HighlightBuilder extends AbstractHighlighterBuilder<HighlightBuilde
     }
 
     /**
-     * Getter for {@link #encoder(String)}
+     * Getter for {#encoder(String)}
      */
     public String encoder() {
         return this.encoder;
@@ -242,7 +242,7 @@ public class HighlightBuilder extends AbstractHighlighterBuilder<HighlightBuilde
     }
 
     /**
-     * Gets value set with {@link #useExplicitFieldOrder(boolean)}
+     * Gets value set with {#useExplicitFieldOrder(boolean)}
      */
     public Boolean useExplicitFieldOrder() {
         return this.useExplicitFieldOrder;
@@ -296,11 +296,11 @@ public class HighlightBuilder extends AbstractHighlighterBuilder<HighlightBuilde
     }
 
     /**
-     * Transfers field options present in the input {@link AbstractHighlighterBuilder} to the receiving
-     * {@link FieldOptions.Builder}, effectively overwriting existing settings
+     * Transfers field options present in the input {AbstractHighlighterBuilder} to the receiving
+     * {FieldOptions.Builder}, effectively overwriting existing settings
      * @param targetOptionsBuilder the receiving options builder
      * @param highlighterBuilder highlight builder with the input options
-     * @param context needed to convert {@link QueryBuilder} to {@link Query}
+     * @param context needed to convert {QueryBuilder} to {Query}
      * @throws IOException on errors parsing any optional nested highlight query
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })

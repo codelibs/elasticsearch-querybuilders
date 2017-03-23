@@ -25,7 +25,7 @@ import java.io.EOFException;
 import java.io.IOException;
 
 /**
- * Wraps a {@link StreamInput} and delegates to it. To be used to add functionality to an existing stream by subclassing.
+ * Wraps a {StreamInput} and delegates to it. To be used to add functionality to an existing stream by subclassing.
  */
 public abstract class FilterStreamInput extends StreamInput {
 

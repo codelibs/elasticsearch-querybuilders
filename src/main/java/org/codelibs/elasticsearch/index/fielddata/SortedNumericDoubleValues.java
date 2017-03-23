@@ -22,7 +22,7 @@ package org.codelibs.elasticsearch.index.fielddata;
 import org.apache.lucene.index.SortedNumericDocValues;
 
 /**
- * Clone of {@link SortedNumericDocValues} for double values.
+ * Clone of {SortedNumericDocValues} for double values.
  */
 public abstract class SortedNumericDoubleValues {
 

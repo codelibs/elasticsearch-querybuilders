@@ -104,7 +104,7 @@ public abstract class ShapeBuilder extends ToXContentToBytes implements NamedWri
      * Create a new Shape from this builder. Since calling this method could change the
      * defined shape. (by inserting new coordinates or change the position of points)
      * the builder looses its validity. So this method should only be called once on a builder
-     * @return new {@link Shape} defined by the builder
+     * @return new {Shape} defined by the builder
      */
     public abstract Shape build();
 
@@ -148,9 +148,9 @@ public abstract class ShapeBuilder extends ToXContentToBytes implements NamedWri
     }
 
     /**
-     * Create a new {@link ShapeBuilder} from {@link XContent}
+     * Create a new {ShapeBuilder} from {XContent}
      * @param parser parser to read the GeoShape from
-     * @return {@link ShapeBuilder} read from the parser or null
+     * @return {ShapeBuilder} read from the parser or null
      *          if the parsers current token has been <code>null</code>
      * @throws IOException if the input could not be read
      */
@@ -159,12 +159,12 @@ public abstract class ShapeBuilder extends ToXContentToBytes implements NamedWri
     }
 
     /**
-     * Create a new {@link ShapeBuilder} from {@link XContent}
+     * Create a new {ShapeBuilder} from {XContent}
      * @param parser parser to read the GeoShape from
      * @param geoDocMapper document field mapper reference required for spatial parameters relevant
      *                     to the shape construction process (e.g., orientation)
      *                     todo: refactor to place build specific parameters in the SpatialContext
-     * @return {@link ShapeBuilder} read from the parser or null
+     * @return {ShapeBuilder} read from the parser or null
      *          if the parsers current token has been <code>null</code>
      * @throws IOException if the input could not be read
      */
@@ -210,7 +210,7 @@ public abstract class ShapeBuilder extends ToXContentToBytes implements NamedWri
      *            x-coordinate of the vertical dateline
      * @return position of the intersection in the open range (0..1] if the line
      *         segment intersects with the line segment. Otherwise this method
-     *         returns {@link Double#NaN}
+     *         returns {Double#NaN}
      */
     protected static final double intersection(Coordinate p1, Coordinate p2, double dateline) {
         if (p1.x == p2.x && p1.x != dateline) {
@@ -310,7 +310,7 @@ public abstract class ShapeBuilder extends ToXContentToBytes implements NamedWri
     }
 
     /**
-     * This helper class implements a linked list for {@link Coordinate}. It contains
+     * This helper class implements a linked list for {Coordinate}. It contains
      * fields for a dateline intersection and component id
      */
     protected static final class Edge {
@@ -350,7 +350,7 @@ public abstract class ShapeBuilder extends ToXContentToBytes implements NamedWri
          *
          * @param position
          *            position of the intersection [0..1]
-         * @return the {@link Coordinate} of the intersection
+         * @return the {Coordinate} of the intersection
          */
         protected Coordinate intersection(double position) {
             return intersect = position(coordinate, next.coordinate, position);
@@ -427,7 +427,7 @@ public abstract class ShapeBuilder extends ToXContentToBytes implements NamedWri
     }
 
     /**
-     * Enumeration that lists all {@link GeoShapeType}s that can be handled
+     * Enumeration that lists all {GeoShapeType}s that can be handled
      */
     public static enum GeoShapeType {
         POINT("point"),

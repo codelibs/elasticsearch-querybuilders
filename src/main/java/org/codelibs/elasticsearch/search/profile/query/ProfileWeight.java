@@ -32,7 +32,7 @@ import java.util.Set;
 
 /**
  * Weight wrapper that will compute how much time it takes to build the
- * {@link Scorer} and then return a {@link Scorer} that is wrapped in
+ * {Scorer} and then return a {Scorer} that is wrapped in
  * order to compute timings as well.
  */
 public final class ProfileWeight extends Weight {

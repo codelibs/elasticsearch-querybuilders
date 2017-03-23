@@ -24,7 +24,7 @@ import org.apache.lucene.util.InPlaceMergeSorter;
 import org.apache.lucene.util.Sorter;
 
 /**
- * Base class for building {@link SortedNumericDoubleValues} instances based on unsorted content.
+ * Base class for building {SortedNumericDoubleValues} instances based on unsorted content.
  */
 public abstract class SortingNumericDoubleValues extends SortedNumericDoubleValues {
 
@@ -51,7 +51,7 @@ public abstract class SortingNumericDoubleValues extends SortedNumericDoubleValu
     }
 
     /**
-     * Set the {@link #count()} and ensure that the {@link #values} array can
+     * Set the {#count()} and ensure that the {#values} array can
      * store at least that many entries.
      */
     protected final void resize(int newSize) {
@@ -61,7 +61,7 @@ public abstract class SortingNumericDoubleValues extends SortedNumericDoubleValu
 
     /**
      * Sort values that are stored between offsets <code>0</code> and
-     * {@link #count} of {@link #values}.
+     * {#count} of {#values}.
      */
     protected final void sort() {
         sorter.sort(0, count);

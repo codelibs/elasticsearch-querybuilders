@@ -23,12 +23,12 @@ package org.codelibs.elasticsearch.common.util;
 import java.util.Locale;
 
 /**
- * Utilities for for dealing with {@link Locale} objects
+ * Utilities for for dealing with {Locale} objects
  */
 public class LocaleUtils {
 
     /**
-     * Parse the string describing a locale into a {@link Locale} object
+     * Parse the string describing a locale into a {Locale} object
      */
     public static Locale parse(String localeStr) {
         final String[] parts = localeStr.split("_", -1);
@@ -51,7 +51,7 @@ public class LocaleUtils {
     }
 
     /**
-     * Return a string for a {@link Locale} object
+     * Return a string for a {Locale} object
      */
     public static String toString(Locale locale) {
         // JAVA7 - use .toLanguageTag instead of .toString()

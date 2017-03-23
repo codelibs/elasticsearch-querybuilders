@@ -69,7 +69,7 @@ public class CompressorFactory {
     }
 
     /**
-     * Uncompress the provided data, data can be detected as compressed using {@link #isCompressed(BytesReference)}.
+     * Uncompress the provided data, data can be detected as compressed using {#isCompressed(BytesReference)}.
      */
     public static BytesReference uncompressIfNeeded(BytesReference bytes) throws IOException {
         Compressor compressor = compressor(bytes);
@@ -83,7 +83,7 @@ public class CompressorFactory {
         return uncompressed;
     }
 
-    /** Decompress the provided {@link BytesReference}. */
+    /** Decompress the provided {BytesReference}. */
     public static BytesReference uncompress(BytesReference bytes) throws IOException {
         Compressor compressor = compressor(bytes);
         if (compressor == null) {

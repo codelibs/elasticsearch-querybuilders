@@ -23,9 +23,9 @@ import org.apache.lucene.index.NumericDocValues;
 import org.apache.lucene.util.NumericUtils;
 
 /**
- * {@link NumericDocValues} instance that wraps a {@link NumericDoubleValues}
+ * {NumericDocValues} instance that wraps a {NumericDoubleValues}
  * and converts the doubles to sortable long bits using
- * {@link NumericUtils#doubleToSortableLong(double)}.
+ * {NumericUtils#doubleToSortableLong(double)}.
  */
 final class SortableLongBitsNumericDocValues extends NumericDocValues {
 

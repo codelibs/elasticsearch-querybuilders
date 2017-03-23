@@ -40,14 +40,14 @@ import java.util.Set;
 /**
  * Factory that creates instances of DateTimeFormatter based on the ISO8601 standard.
  * <p>
- * Date-time formatting is performed by the {@link DateTimeFormatter} class.
+ * Date-time formatting is performed by the {DateTimeFormatter} class.
  * Three classes provide factory methods to create formatters, and this is one.
- * The others are {@link DateTimeFormat} and {@link DateTimeFormatterBuilder}.
+ * The others are {DateTimeFormat} and {DateTimeFormatterBuilder}.
  * <p>
  * ISO8601 is the international standard for data interchange. It defines a
  * framework, rather than an absolute standard. As a result this provider has a
  * number of methods that represent common uses of the framework. The most common
- * formats are {@link #date() date}, {@link #time() time}, and {@link #dateTime() dateTime}.
+ * formats are {#date() date}, {#time() time}, and {#dateTime() dateTime}.
  * <p>
  * For example, to format a date time in ISO format:
  * <pre>
@@ -694,7 +694,7 @@ public class StrictISODateTimeFormat {
      * of year, and two digit day of month (yyyy-MM-dd).
      * <p>
      * The returned formatter prints and parses only this format.
-     * See {@link #dateParser()} for a more flexible parser that accepts different formats.
+     * See {#dateParser()} for a more flexible parser that accepts different formats.
      *
      * @return a formatter for yyyy-MM-dd
      */
@@ -711,7 +711,7 @@ public class StrictISODateTimeFormat {
      * The parser is strict by default, thus time string {@code 24:00} cannot be parsed.
      * <p>
      * The returned formatter prints and parses only this format, which includes milliseconds.
-     * See {@link #timeParser()} for a more flexible parser that accepts different formats.
+     * See {#timeParser()} for a more flexible parser that accepts different formats.
      *
      * @return a formatter for HH:mm:ss.SSSZZ
      */
@@ -727,7 +727,7 @@ public class StrictISODateTimeFormat {
      * The parser is strict by default, thus time string {@code 24:00} cannot be parsed.
      * <p>
      * The returned formatter prints and parses only this format, which excludes milliseconds.
-     * See {@link #timeParser()} for a more flexible parser that accepts different formats.
+     * See {#timeParser()} for a more flexible parser that accepts different formats.
      *
      * @return a formatter for HH:mm:ssZZ
      */
@@ -744,7 +744,7 @@ public class StrictISODateTimeFormat {
      * The parser is strict by default, thus time string {@code 24:00} cannot be parsed.
      * <p>
      * The returned formatter prints and parses only this format, which includes milliseconds.
-     * See {@link #timeParser()} for a more flexible parser that accepts different formats.
+     * See {#timeParser()} for a more flexible parser that accepts different formats.
      *
      * @return a formatter for 'T'HH:mm:ss.SSSZZ
      */
@@ -761,7 +761,7 @@ public class StrictISODateTimeFormat {
      * The parser is strict by default, thus time string {@code 24:00} cannot be parsed.
      * <p>
      * The returned formatter prints and parses only this format, which excludes milliseconds.
-     * See {@link #timeParser()} for a more flexible parser that accepts different formats.
+     * See {#timeParser()} for a more flexible parser that accepts different formats.
      *
      * @return a formatter for 'T'HH:mm:ssZZ
      */
@@ -777,7 +777,7 @@ public class StrictISODateTimeFormat {
      * The parser is strict by default, thus time string {@code 24:00} cannot be parsed.
      * <p>
      * The returned formatter prints and parses only this format, which includes milliseconds.
-     * See {@link #dateTimeParser()} for a more flexible parser that accepts different formats.
+     * See {#dateTimeParser()} for a more flexible parser that accepts different formats.
      *
      * @return a formatter for yyyy-MM-dd'T'HH:mm:ss.SSSZZ
      */
@@ -793,7 +793,7 @@ public class StrictISODateTimeFormat {
      * The parser is strict by default, thus time string {@code 24:00} cannot be parsed.
      * <p>
      * The returned formatter prints and parses only this format, which excludes milliseconds.
-     * See {@link #dateTimeParser()} for a more flexible parser that accepts different formats.
+     * See {#dateTimeParser()} for a more flexible parser that accepts different formats.
      *
      * @return a formatter for yyyy-MM-dd'T'HH:mm:ssZZ
      */
@@ -806,7 +806,7 @@ public class StrictISODateTimeFormat {
      * digit year and three digit dayOfYear (yyyy-DDD).
      * <p>
      * The returned formatter prints and parses only this format.
-     * See {@link #dateParser()} for a more flexible parser that accepts different formats.
+     * See {#dateParser()} for a more flexible parser that accepts different formats.
      *
      * @return a formatter for yyyy-DDD
      * @since 1.1
@@ -823,7 +823,7 @@ public class StrictISODateTimeFormat {
      * The parser is strict by default, thus time string {@code 24:00} cannot be parsed.
      * <p>
      * The returned formatter prints and parses only this format, which includes milliseconds.
-     * See {@link #dateTimeParser()} for a more flexible parser that accepts different formats.
+     * See {#dateTimeParser()} for a more flexible parser that accepts different formats.
      *
      * @return a formatter for yyyy-DDD'T'HH:mm:ss.SSSZZ
      * @since 1.1
@@ -840,7 +840,7 @@ public class StrictISODateTimeFormat {
      * The parser is strict by default, thus time string {@code 24:00} cannot be parsed.
      * <p>
      * The returned formatter prints and parses only this format, which excludes milliseconds.
-     * See {@link #dateTimeParser()} for a more flexible parser that accepts different formats.
+     * See {#dateTimeParser()} for a more flexible parser that accepts different formats.
      *
      * @return a formatter for yyyy-DDD'T'HH:mm:ssZZ
      * @since 1.1
@@ -854,7 +854,7 @@ public class StrictISODateTimeFormat {
      * week of weekyear, and one digit day of week (xxxx-'W'ww-e).
      * <p>
      * The returned formatter prints and parses only this format.
-     * See {@link #dateParser()} for a more flexible parser that accepts different formats.
+     * See {#dateParser()} for a more flexible parser that accepts different formats.
      *
      * @return a formatter for xxxx-'W'ww-e
      */
@@ -870,7 +870,7 @@ public class StrictISODateTimeFormat {
      * The parser is strict by default, thus time string {@code 24:00} cannot be parsed.
      * <p>
      * The returned formatter prints and parses only this format, which includes milliseconds.
-     * See {@link #dateTimeParser()} for a more flexible parser that accepts different formats.
+     * See {#dateTimeParser()} for a more flexible parser that accepts different formats.
      *
      * @return a formatter for xxxx-'W'ww-e'T'HH:mm:ss.SSSZZ
      */
@@ -886,7 +886,7 @@ public class StrictISODateTimeFormat {
      * The parser is strict by default, thus time string {@code 24:00} cannot be parsed.
      * <p>
      * The returned formatter prints and parses only this format, which excludes milliseconds.
-     * See {@link #dateTimeParser()} for a more flexible parser that accepts different formats.
+     * See {#dateTimeParser()} for a more flexible parser that accepts different formats.
      *
      * @return a formatter for xxxx-'W'ww-e'T'HH:mm:ssZZ
      */

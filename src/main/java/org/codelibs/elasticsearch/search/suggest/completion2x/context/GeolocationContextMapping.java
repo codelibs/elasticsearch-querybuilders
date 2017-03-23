@@ -43,7 +43,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * The {@link GeolocationContextMapping} allows to take GeoInfomation into account
+ * The {GeolocationContextMapping} allows to take GeoInfomation into account
  * during building suggestions. The mapping itself works with geohashes
  * explicitly and is configured by three parameters:
  * <ul>
@@ -56,7 +56,7 @@ import java.util.Map;
  * Internally this mapping wraps the suggestions into a form
  * <code>[geohash][suggestion]</code>. If the neighbor option is set the cells
  * next to the cell on the deepest geohash level ( <code>precision</code>) will
- * be indexed as well. The {@link TokenStream} used to build the {@link FST} for
+ * be indexed as well. The {TokenStream} used to build the {FST} for
  * geohases as prefixes.
  */
 public class GeolocationContextMapping extends ContextMapping {
@@ -74,7 +74,7 @@ public class GeolocationContextMapping extends ContextMapping {
     private final GeoConfig defaultConfig;
 
     /**
-     * Create a new {@link GeolocationContextMapping} with a given precision
+     * Create a new {GeolocationContextMapping} with a given precision
      *
      * @param precision
      *            length of the geohashes
@@ -94,7 +94,7 @@ public class GeolocationContextMapping extends ContextMapping {
     }
 
     /**
-     * load a {@link GeolocationContextMapping} by configuration. Such a configuration
+     * load a {GeolocationContextMapping} by configuration. Such a configuration
      * can set the parameters
      * <ul>
      * <li>precision [<code>String</code>, <code>Double</code>,
@@ -107,8 +107,8 @@ public class GeolocationContextMapping extends ContextMapping {
      * </ul>
      *
      * @param config
-     *            Configuration for {@link GeolocationContextMapping}
-     * @return new {@link GeolocationContextMapping} configured by the parameters of
+     *            Configuration for {GeolocationContextMapping}
+     * @return new {GeolocationContextMapping} configured by the parameters of
      *         <code>config</code>
      */
     protected static GeolocationContextMapping load(String name, Map<String, Object> config) {
@@ -461,7 +461,7 @@ public class GeolocationContextMapping extends ContextMapping {
          * Set the precision use o make suggestions
          *
          * @param precision
-         *            precision as distance with {@link DistanceUnit}. Default:
+         *            precision as distance with {DistanceUnit}. Default:
          *            meters
          * @return this
          */
@@ -475,7 +475,7 @@ public class GeolocationContextMapping extends ContextMapping {
          * @param precision
          *            precision value
          * @param unit
-         *            {@link DistanceUnit} to use
+         *            {DistanceUnit} to use
          * @return this
          */
         public Builder precision(double precision, DistanceUnit unit) {

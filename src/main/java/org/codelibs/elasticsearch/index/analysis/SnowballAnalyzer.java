@@ -31,12 +31,12 @@ import org.apache.lucene.analysis.standard.StandardFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.analysis.tr.TurkishLowerCaseFilter;
 
-/** Filters {@link StandardTokenizer} with {@link StandardFilter}, {@link
- * LowerCaseFilter}, {@link StopFilter} and {@link SnowballFilter}.
+/** Filters {StandardTokenizer} with {StandardFilter}, {@link
+ * LowerCaseFilter}, {StopFilter} and {SnowballFilter}.
  *
  * Available stemmers are listed in org.tartarus.snowball.ext.  The name of a
  * stemmer is the part of the class name before "Stemmer", e.g., the stemmer in
- * {@link org.tartarus.snowball.ext.EnglishStemmer} is named "English".
+ * {org.tartarus.snowball.ext.EnglishStemmer} is named "English".
 
  * @deprecated (3.1) Use the language-specific analyzer in modules/analysis instead.
  * This analyzer WAS removed in Lucene 5.0
@@ -57,9 +57,9 @@ public final class SnowballAnalyzer extends Analyzer {
     stopSet = CharArraySet.unmodifiableSet(CharArraySet.copy(stopWords));
   }
 
-  /** Constructs a {@link StandardTokenizer} filtered by a {@link
-      StandardFilter}, a {@link LowerCaseFilter}, a {@link StopFilter},
-      and a {@link SnowballFilter} */
+  /** Constructs a {StandardTokenizer} filtered by a {@link
+      StandardFilter}, a {LowerCaseFilter}, a {StopFilter},
+      and a {SnowballFilter} */
   @Override
   public TokenStreamComponents createComponents(String fieldName) {
     final Tokenizer tokenizer = new StandardTokenizer();

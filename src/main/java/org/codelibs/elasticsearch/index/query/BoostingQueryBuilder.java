@@ -60,7 +60,7 @@ public class BoostingQueryBuilder extends AbstractQueryBuilder<BoostingQueryBuil
 
 
     /**
-     * Create a new {@link BoostingQueryBuilder}
+     * Create a new {BoostingQueryBuilder}
      *
      * @param positiveQuery the positive query for this boosting query.
      * @param negativeQuery the negative query for this boosting query.

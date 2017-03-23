@@ -31,8 +31,8 @@ import java.util.Set;
  * <tt>${name}</tt>. Using <tt>PropertyPlaceholder</tt> these placeholders can be substituted for
  * user-supplied values.
  * <p>
- * Values for substitution can be supplied using a {@link Properties} instance or using a
- * {@link PlaceholderResolver}.
+ * Values for substitution can be supplied using a {Properties} instance or using a
+ * {PlaceholderResolver}.
  */
 class PropertyPlaceholder {
 

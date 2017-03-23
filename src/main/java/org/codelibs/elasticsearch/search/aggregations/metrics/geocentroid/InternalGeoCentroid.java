@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Serialization and merge logic for {@link GeoCentroidAggregator}.
+ * Serialization and merge logic for {GeoCentroidAggregator}.
  */
 public class InternalGeoCentroid extends InternalMetricsAggregation implements GeoCentroid {
     protected final GeoPoint centroid;

@@ -42,7 +42,7 @@ public class ParseField {
     /**
      * @param name
      *            the primary name for this field. This will be returned by
-     *            {@link #getPreferredName()}
+     *            {#getPreferredName()}
      * @param deprecatedNames
      *            names for this field which are deprecated and will not be
      *            accepted when strict matching is used.
@@ -80,8 +80,8 @@ public class ParseField {
     /**
      * @param deprecatedNames
      *            deprecated names to include with the returned
-     *            {@link ParseField}
-     * @return a new {@link ParseField} using the preferred name from this one
+     *            {ParseField}
+     * @return a new {ParseField} using the preferred name from this one
      *         but with the specified deprecated names
      */
     public ParseField withDeprecation(String... deprecatedNames) {
@@ -100,9 +100,9 @@ public class ParseField {
 
     /**
      * @param fieldName
-     *            the field name to match against this {@link ParseField}
+     *            the field name to match against this {ParseField}
      * @return true if <code>fieldName</code> matches any of the acceptable
-     *         names for this {@link ParseField}.
+     *         names for this {ParseField}.
      */
     public boolean match(String fieldName) {
         Objects.requireNonNull(fieldName, "fieldName cannot be null");
@@ -137,7 +137,7 @@ public class ParseField {
     }
 
     /**
-     * @return the message to use if this {@link ParseField} has been entirely
+     * @return the message to use if this {ParseField} has been entirely
      *         deprecated in favor of something else. This method will return
      *         <code>null</code> if the ParseField has not been completely
      *         deprecated.
@@ -147,7 +147,7 @@ public class ParseField {
     }
 
     /**
-     * @return an array of the names for the {@link ParseField} which are
+     * @return an array of the names for the {ParseField} which are
      *         deprecated.
      */
     public String[] getDeprecatedNames() {

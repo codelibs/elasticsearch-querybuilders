@@ -24,7 +24,7 @@ import java.io.Writer;
 import java.util.Arrays;
 
 /**
- * A similar class to {@link java.io.CharArrayWriter} allowing to get the underlying <tt>char[]</tt> buffer.
+ * A similar class to {java.io.CharArrayWriter} allowing to get the underlying <tt>char[]</tt> buffer.
  */
 public class FastCharArrayWriter extends Writer {
 
@@ -214,7 +214,7 @@ public class FastCharArrayWriter extends Writer {
     }
 
     /**
-     * Returns the underlying char array. Note, use {@link #size()} in order to know the size of
+     * Returns the underlying char array. Note, use {#size()} in order to know the size of
      * of the actual content within the array.
      */
     public char[] unsafeCharArray() {

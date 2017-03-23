@@ -54,12 +54,12 @@ import java.util.stream.Collectors;
  * A setting. Encapsulates typical stuff like default value, parsing, and scope.
  * Some (SettingsProperty.Dynamic) can by modified at run time using the API.
  * All settings inside elasticsearch or in any of the plugins should use this type-safe and generic settings infrastructure
- * together with {@link AbstractScopedSettings}. This class contains several utility methods that makes it straight forward
+ * together with {AbstractScopedSettings}. This class contains several utility methods that makes it straight forward
  * to add settings for the majority of the cases. For instance a simple boolean settings can be defined like this:
  * <pre>{@code
  * public static final Setting<Boolean>; MY_BOOLEAN = Setting.boolSetting("my.bool.setting", true, SettingsProperty.NodeScope);}
  * </pre>
- * To retrieve the value of the setting a {@link Settings} object can be passed directly to the {@link Setting#get(Settings)} method.
+ * To retrieve the value of the setting a {Settings} object can be passed directly to the {Setting#get(Settings)} method.
  * <pre>
  * final boolean myBooleanValue = MY_BOOLEAN.get(settings);
  * </pre>
@@ -190,8 +190,8 @@ public class Setting<T> extends ToXContentToBytes {
 
     /**
      * Returns the settings key or a prefix if this setting is a group setting.
-     * <b>Note: this method should not be used to retrieve a value from a {@link Settings} object.
-     * Use {@link #get(Settings)} instead</b>
+     * <b>Note: this method should not be used to retrieve a value from a {Settings} object.
+     * Use {#get(Settings)} instead</b>
      *
      * @see #isGroupSetting()
      */
@@ -258,7 +258,7 @@ public class Setting<T> extends ToXContentToBytes {
 
     /**
      * Returns <code>true</code> iff this setting is a group setting. Group settings represent a set of settings rather than a single value.
-     * The key, see {@link #getKey()}, in contrast to non-group settings is a prefix like <tt>cluster.store.</tt> that matches all settings
+     * The key, see {#getKey()}, in contrast to non-group settings is a prefix like <tt>cluster.store.</tt> that matches all settings
      * with this prefix.
      */
     boolean isGroupSetting() {
@@ -404,7 +404,7 @@ public class Setting<T> extends ToXContentToBytes {
     }
 
     /**
-     * Updates settings that depend on eachother. See {@link AbstractScopedSettings#addSettingsUpdateConsumer(Setting, Setting, BiConsumer)}
+     * Updates settings that depend on eachother. See {AbstractScopedSettings#addSettingsUpdateConsumer(Setting, Setting, BiConsumer)}
      * and its usage for details.
      */
     static <A, B> AbstractScopedSettings.SettingUpdater<Tuple<A, B>> compoundUpdater(final BiConsumer<A, B> consumer,
@@ -890,7 +890,7 @@ public class Setting<T> extends ToXContentToBytes {
     /**
      * This setting type allows to validate settings that have the same type and a common prefix. For instance feature.${type}=[true|false]
      * can easily be added with this setting. Yet, prefix key settings don't support updaters out of the box unless
-     * {@link #getConcreteSetting(String)} is used to pull the updater.
+     * {#getConcreteSetting(String)} is used to pull the updater.
      */
     public static <T> Setting<T> prefixKeySetting(String prefix, String defaultValue, Function<String, T> parser,
                                                   Property... properties) {
@@ -900,7 +900,7 @@ public class Setting<T> extends ToXContentToBytes {
     /**
      * This setting type allows to validate settings that have the same type and a common prefix and suffix. For instance
      * storage.${backend}.enable=[true|false] can easily be added with this setting. Yet, adfix key settings don't support updaters
-     * out of the box unless {@link #getConcreteSetting(String)} is used to pull the updater.
+     * out of the box unless {#getConcreteSetting(String)} is used to pull the updater.
      */
     public static <T> Setting<T> affixKeySetting(String prefix, String suffix, Function<Settings, String> defaultValue,
                                                  Function<String, T> parser, Property... properties) {

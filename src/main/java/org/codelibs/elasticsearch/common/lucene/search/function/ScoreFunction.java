@@ -63,7 +63,7 @@ public abstract class ScoreFunction {
     }
 
     /**
-     * Indicates whether some other {@link ScoreFunction} object of the same type is "equal to" this one.
+     * Indicates whether some other {ScoreFunction} object of the same type is "equal to" this one.
      */
     protected abstract boolean doEquals(ScoreFunction other);
 

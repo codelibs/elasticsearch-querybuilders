@@ -81,7 +81,7 @@ public final class ParentIdQueryBuilder extends AbstractQueryBuilder<ParentIdQue
 
     /**
      * Sets whether the query builder should ignore unmapped types (and run a
-     * {@link MatchNoDocsQuery} in place of this query) or throw an exception if
+     * {MatchNoDocsQuery} in place of this query) or throw an exception if
      * the type is unmapped.
      */
     public ParentIdQueryBuilder ignoreUnmapped(boolean ignoreUnmapped) {
@@ -91,7 +91,7 @@ public final class ParentIdQueryBuilder extends AbstractQueryBuilder<ParentIdQue
 
     /**
      * Gets whether the query builder will ignore unmapped types (and run a
-     * {@link MatchNoDocsQuery} in place of this query) or throw an exception if
+     * {MatchNoDocsQuery} in place of this query) or throw an exception if
      * the type is unmapped.
      */
     public boolean ignoreUnmapped() {

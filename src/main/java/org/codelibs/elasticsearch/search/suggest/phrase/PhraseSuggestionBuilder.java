@@ -189,7 +189,7 @@ public class PhraseSuggestionBuilder extends SuggestionBuilder<PhraseSuggestionB
     }
 
     /**
-     * get the {@link #gramSize(int)} parameter
+     * get the {#gramSize(int)} parameter
      */
     public Integer gramSize() {
         return this.gramSize;
@@ -250,7 +250,7 @@ public class PhraseSuggestionBuilder extends SuggestionBuilder<PhraseSuggestionB
     }
 
     /**
-     * get the {@link #realWordErrorLikelihood(float)} parameter
+     * get the {#realWordErrorLikelihood(float)} parameter
      */
     public Float realWordErrorLikelihood() {
         return this.realWordErrorLikelihood;
@@ -274,15 +274,15 @@ public class PhraseSuggestionBuilder extends SuggestionBuilder<PhraseSuggestionB
     }
 
     /**
-     * get the {@link #confidence()} parameter
+     * get the {#confidence()} parameter
      */
     public Float confidence() {
         return this.confidence;
     }
 
     /**
-     * Adds a {@link CandidateGenerator} to this suggester. The
-     * {@link CandidateGenerator} is used to draw candidates for each individual
+     * Adds a {CandidateGenerator} to this suggester. The
+     * {CandidateGenerator} is used to draw candidates for each individual
      * phrase term before the candidates are scored.
      */
     public PhraseSuggestionBuilder addCandidateGenerator(CandidateGenerator generator) {
@@ -313,7 +313,7 @@ public class PhraseSuggestionBuilder extends SuggestionBuilder<PhraseSuggestionB
     }
 
     /**
-     * get the setting for {@link #forceUnigrams()}
+     * get the setting for {#forceUnigrams()}
      */
     public Boolean forceUnigrams() {
         return this.forceUnigrams;
@@ -321,7 +321,7 @@ public class PhraseSuggestionBuilder extends SuggestionBuilder<PhraseSuggestionB
 
     /**
      * Sets an explicit smoothing model used for this suggester. The default is
-     * {@link StupidBackoff}.
+     * {StupidBackoff}.
      */
     public PhraseSuggestionBuilder smoothingModel(SmoothingModel model) {
         this.model = model;
@@ -329,7 +329,7 @@ public class PhraseSuggestionBuilder extends SuggestionBuilder<PhraseSuggestionB
     }
 
     /**
-     * Gets the {@link SmoothingModel}
+     * Gets the {SmoothingModel}
      */
     public SmoothingModel smoothingModel() {
         return this.model;
@@ -344,7 +344,7 @@ public class PhraseSuggestionBuilder extends SuggestionBuilder<PhraseSuggestionB
     }
 
     /**
-     * get the {@link #tokenLimit(int)} parameter
+     * get the {#tokenLimit(int)} parameter
      */
     public Integer tokenLimit() {
         return this.tokenLimit;
@@ -364,14 +364,14 @@ public class PhraseSuggestionBuilder extends SuggestionBuilder<PhraseSuggestionB
     }
 
     /**
-     * get the pre-tag for the highlighter set with {@link #highlight(String, String)}
+     * get the pre-tag for the highlighter set with {#highlight(String, String)}
      */
     public String preTag() {
         return this.preTag;
     }
 
     /**
-     * get the post-tag for the highlighter set with {@link #highlight(String, String)}
+     * get the post-tag for the highlighter set with {#highlight(String, String)}
      */
     public String postTag() {
         return this.postTag;
@@ -632,7 +632,7 @@ public class PhraseSuggestionBuilder extends SuggestionBuilder<PhraseSuggestionB
     }
 
     /**
-     * {@link CandidateGenerator} interface.
+     * {CandidateGenerator} interface.
      */
     public interface CandidateGenerator extends Writeable, ToXContent {
         String getType();

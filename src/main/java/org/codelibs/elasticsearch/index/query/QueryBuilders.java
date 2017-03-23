@@ -263,10 +263,10 @@ public abstract class QueryBuilders {
 
     /**
      * A query that parses a query string and runs it. There are two modes that this operates. The first,
-     * when no field is added (using {@link QueryStringQueryBuilder#field(String)}, will run the query once and non prefixed fields
-     * will use the {@link QueryStringQueryBuilder#defaultField(String)} set. The second, when one or more fields are added
-     * (using {@link QueryStringQueryBuilder#field(String)}), will run the parsed query against the provided fields, and combine
-     * them either using DisMax or a plain boolean query (see {@link QueryStringQueryBuilder#useDisMax(boolean)}).
+     * when no field is added (using {QueryStringQueryBuilder#field(String)}, will run the query once and non prefixed fields
+     * will use the {QueryStringQueryBuilder#defaultField(String)} set. The second, when one or more fields are added
+     * (using {QueryStringQueryBuilder#field(String)}), will run the parsed query against the provided fields, and combine
+     * them either using DisMax or a plain boolean query (see {QueryStringQueryBuilder#useDisMax(boolean)}).
      *
      * @param queryString The query string to run
      */
@@ -277,7 +277,7 @@ public abstract class QueryBuilders {
     /**
      * A query that acts similar to a query_string query, but won't throw
      * exceptions for any weird string syntax. See
-     * {@link org.apache.lucene.queryparser.simple.SimpleQueryParser} for the full
+     * {org.apache.lucene.queryparser.simple.SimpleQueryParser} for the full
      * supported syntax.
      */
     public static SimpleQueryStringBuilder simpleQueryStringQuery(String queryString) {
@@ -354,11 +354,11 @@ public abstract class QueryBuilders {
     }
 
     /**
-     * Creates a {@link SpanQueryBuilder} which allows having a sub query
-     * which implements {@link MultiTermQueryBuilder}. This is useful for
+     * Creates a {SpanQueryBuilder} which allows having a sub query
+     * which implements {MultiTermQueryBuilder}. This is useful for
      * having e.g. wildcard or fuzzy queries inside spans.
      *
-     * @param multiTermQueryBuilder The {@link MultiTermQueryBuilder} that
+     * @param multiTermQueryBuilder The {MultiTermQueryBuilder} that
      *                              backs the created builder.
      */
 

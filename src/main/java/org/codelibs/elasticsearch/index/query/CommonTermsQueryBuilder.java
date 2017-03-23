@@ -41,8 +41,8 @@ import java.util.Optional;
  * and high-frequency terms are added to an optional boolean clause. The
  * optional clause is only executed if the required "low-frequency' clause
  * matches. Scores produced by this query will be slightly different to plain
- * {@link BooleanQuery} scorer mainly due to differences in the
- * {@link Similarity#coord(int,int) number of leave queries} in the required
+ * {BooleanQuery} scorer mainly due to differences in the
+ * {Similarity#coord(int,int) number of leave queries} in the required
  * boolean clause. In the most cases high-frequency terms are unlikely to
  * significantly contribute to the document score unless at least one of the
  * low-frequency terms are matched such that this query can improve query
@@ -138,7 +138,7 @@ public class CommonTermsQueryBuilder extends AbstractQueryBuilder<CommonTermsQue
 
     /**
      * Sets the operator to use for terms with a high document frequency
-     * (greater than or equal to {@link #cutoffFrequency(float)}. Defaults to
+     * (greater than or equal to {#cutoffFrequency(float)}. Defaults to
      * <tt>AND</tt>.
      */
     public CommonTermsQueryBuilder highFreqOperator(Operator operator) {
@@ -152,7 +152,7 @@ public class CommonTermsQueryBuilder extends AbstractQueryBuilder<CommonTermsQue
 
     /**
      * Sets the operator to use for terms with a low document frequency (less
-     * than {@link #cutoffFrequency(float)}. Defaults to <tt>AND</tt>.
+     * than {#cutoffFrequency(float)}. Defaults to <tt>AND</tt>.
      */
     public CommonTermsQueryBuilder lowFreqOperator(Operator operator) {
         this.lowFreqOperator = (operator == null) ? DEFAULT_LOW_FREQ_OCCUR : operator;

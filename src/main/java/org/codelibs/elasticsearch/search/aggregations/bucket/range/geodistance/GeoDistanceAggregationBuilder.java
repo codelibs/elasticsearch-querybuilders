@@ -249,7 +249,7 @@ public class GeoDistanceAggregationBuilder extends ValuesSourceAggregationBuilde
     }
 
     /**
-     * Return the {@link GeoPoint} that is used for distance computations.
+     * Return the {GeoPoint} that is used for distance computations.
      */
     public GeoPoint origin() {
         return origin;
@@ -292,7 +292,7 @@ public class GeoDistanceAggregationBuilder extends ValuesSourceAggregationBuilde
     }
 
     /**
-     * Same as {@link #addRange(String, double, double)} but the key will be
+     * Same as {#addRange(String, double, double)} but the key will be
      * automatically generated based on <code>from</code> and
      * <code>to</code>.
      */
@@ -314,7 +314,7 @@ public class GeoDistanceAggregationBuilder extends ValuesSourceAggregationBuilde
     }
 
     /**
-     * Same as {@link #addUnboundedTo(String, double)} but the key will be
+     * Same as {#addUnboundedTo(String, double)} but the key will be
      * computed automatically.
      */
     public GeoDistanceAggregationBuilder addUnboundedTo(double to) {
@@ -335,7 +335,7 @@ public class GeoDistanceAggregationBuilder extends ValuesSourceAggregationBuilde
     }
 
     /**
-     * Same as {@link #addUnboundedFrom(String, double)} but the key will be
+     * Same as {#addUnboundedFrom(String, double)} but the key will be
      * computed automatically.
      */
     public GeoDistanceAggregationBuilder addUnboundedFrom(double from) {

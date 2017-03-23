@@ -45,7 +45,7 @@ public class RatioValue {
     }
 
     /**
-     * Parses the provided string as a {@link RatioValue}, the string can
+     * Parses the provided string as a {RatioValue}, the string can
      * either be in percentage format (eg. 73.5%), or a floating-point ratio
      * format (eg. 0.735)
      */

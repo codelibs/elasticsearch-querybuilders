@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A parser for parsing requests for a {@link BucketMetricsPipelineAggregator}
+ * A parser for parsing requests for a {BucketMetricsPipelineAggregator}
  */
 public abstract class BucketMetricsParser implements PipelineAggregator.Parser {
 

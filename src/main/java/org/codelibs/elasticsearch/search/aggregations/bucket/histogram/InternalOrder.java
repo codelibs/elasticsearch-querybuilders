@@ -28,7 +28,7 @@ import java.util.Comparator;
 import java.util.Objects;
 
 /**
- * An internal {@link Histogram.Order} strategy which is identified by a unique id.
+ * An internal {Histogram.Order} strategy which is identified by a unique id.
  */
 class InternalOrder extends Histogram.Order {
 

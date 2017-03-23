@@ -25,7 +25,7 @@ public interface Derivative extends SimpleValue {
 
     /**
      * Returns the normalized value. If no normalised factor has been specified
-     * this method will return {@link #value()}
+     * this method will return {#value()}
      *
      * @return the normalized value
      */

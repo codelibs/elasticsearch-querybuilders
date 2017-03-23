@@ -43,7 +43,7 @@ import java.util.Map;
 
 /**
  * An aggregator for date values. Every date is rounded down using a configured
- * {@link Rounding}.
+ * {Rounding}.
  *
  * @see Rounding
  */

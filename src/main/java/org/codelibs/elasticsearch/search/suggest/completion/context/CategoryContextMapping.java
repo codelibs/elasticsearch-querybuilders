@@ -32,10 +32,10 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * A {@link ContextMapping} that uses a simple string as a criteria
+ * A {ContextMapping} that uses a simple string as a criteria
  * The suggestions are boosted and/or filtered by their associated
  * category (string) value.
- * {@link CategoryQueryContext} defines options for constructing
+ * {CategoryQueryContext} defines options for constructing
  * a unit of query context for this context type
  */
 public class CategoryContextMapping extends ContextMapping<CategoryQueryContext> {
@@ -49,7 +49,7 @@ public class CategoryContextMapping extends ContextMapping<CategoryQueryContext>
     private final String fieldName;
 
     /**
-     * Create a new {@link CategoryContextMapping} with field
+     * Create a new {CategoryContextMapping} with field
      * <code>fieldName</code>
      */
     private CategoryContextMapping(String name, String fieldName) {
@@ -65,9 +65,9 @@ public class CategoryContextMapping extends ContextMapping<CategoryQueryContext>
     }
 
     /**
-     * Loads a <code>name</code>d {@link CategoryContextMapping} instance
+     * Loads a <code>name</code>d {CategoryContextMapping} instance
      * from a map.
-     * see {@link ContextMappings#load(Object, Version)}
+     * see {ContextMappings#load(Object, Version)}
      *
      * Acceptable map param: <code>path</code>
      */
@@ -95,7 +95,7 @@ public class CategoryContextMapping extends ContextMapping<CategoryQueryContext>
     }
 
     /**
-     * Parse a list of {@link CategoryQueryContext}
+     * Parse a list of {CategoryQueryContext}
      * using <code>parser</code>. A QueryContexts accepts one of the following forms:
      *
      * <ul>
@@ -141,7 +141,7 @@ public class CategoryContextMapping extends ContextMapping<CategoryQueryContext>
     }
 
     /**
-     * Builder for {@link CategoryContextMapping}
+     * Builder for {CategoryContextMapping}
      */
     public static class Builder extends ContextBuilder<CategoryContextMapping> {
 
@@ -149,7 +149,7 @@ public class CategoryContextMapping extends ContextMapping<CategoryQueryContext>
 
         /**
          * Create a builder for
-         * a named {@link CategoryContextMapping}
+         * a named {CategoryContextMapping}
          * @param name name of the mapping
          */
         public Builder(String name) {

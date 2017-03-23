@@ -71,7 +71,7 @@ public final class UTF8StreamWriter extends Writer {
      * @param out the output stream.
      * @return this UTF-8 writer.
      * @throws IllegalStateException if this writer is being reused and
-     *                               it has not been {@link #close closed} or {@link #reset reset}.
+     *                               it has not been {#close closed} or {#reset reset}.
      */
     public UTF8StreamWriter setOutput(OutputStream out) {
         if (_outputStream != null) {
@@ -298,7 +298,7 @@ public final class UTF8StreamWriter extends Writer {
     }
 
     /**
-     * Closes and {@link #reset resets} this writer for reuse.
+     * Closes and {#reset resets} this writer for reuse.
      *
      * @throws IOException if an I/O error occurs
      */
@@ -332,7 +332,7 @@ public final class UTF8StreamWriter extends Writer {
     }
 
     /**
-     * @deprecated Replaced by {@link #setOutput(OutputStream)}
+     * @deprecated Replaced by {#setOutput(OutputStream)}
      */
     @Deprecated
     public UTF8StreamWriter setOutputStream(OutputStream out) {

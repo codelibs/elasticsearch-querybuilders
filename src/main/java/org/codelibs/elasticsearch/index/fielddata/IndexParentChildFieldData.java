@@ -26,19 +26,19 @@ import org.apache.lucene.index.IndexReader;
 
 
 /**
- * Soecialization of {@link IndexFieldData} for parent/child mappings.
+ * Soecialization of {IndexFieldData} for parent/child mappings.
  */
 public interface IndexParentChildFieldData extends IndexFieldData.Global<AtomicParentChildFieldData> {
 
     /**
-     * Load a global view of the ordinals for the given {@link IndexReader},
+     * Load a global view of the ordinals for the given {IndexReader},
      * potentially from a cache.
      */
     @Override
     IndexParentChildFieldData loadGlobal(DirectoryReader indexReader);
 
     /**
-     * Load a global view of the ordinals for the given {@link IndexReader}.
+     * Load a global view of the ordinals for the given {IndexReader}.
      */
     @Override
     IndexParentChildFieldData localGlobalDirect(DirectoryReader indexReader) throws Exception;

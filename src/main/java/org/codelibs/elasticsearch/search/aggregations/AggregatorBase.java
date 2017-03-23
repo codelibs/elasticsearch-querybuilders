@@ -85,7 +85,7 @@ public abstract class AggregatorBase extends Aggregator {
     }
 
     /**
-     * Get a {@link LeafBucketCollector} for the given ctx, which should
+     * Get a {LeafBucketCollector} for the given ctx, which should
      * delegate to the given collector.
      */
     protected abstract LeafBucketCollector getLeafCollector(LeafReaderContext ctx, LeafBucketCollector sub) throws IOException;
@@ -137,7 +137,7 @@ public abstract class AggregatorBase extends Aggregator {
      * of a child aggregation until a first pass is complete and a set of buckets has
      * been pruned.
      * Deferring collection will require the recording of all doc/bucketIds from the first
-     * pass and then the sub class should call {@link #runDeferredCollections(long...)}
+     * pass and then the sub class should call {#runDeferredCollections(long...)}
      * for the selected set of buckets that survive the pruning.
      * @param aggregator the child aggregator
      * @return true if the aggregator should be deferred

@@ -229,8 +229,8 @@ public class FuzzyOptions implements ToXContent, Writeable {
         }
 
         /**
-         * Sets the level of fuzziness used to create suggestions using a {@link Fuzziness} instance.
-         * The default value is {@link Fuzziness#ONE} which allows for an "edit distance" of one.
+         * Sets the level of fuzziness used to create suggestions using a {Fuzziness} instance.
+         * The default value is {Fuzziness#ONE} which allows for an "edit distance" of one.
          */
         public Builder setFuzziness(int editDistance) {
             if (editDistance < 0 || editDistance > 2) {
@@ -241,8 +241,8 @@ public class FuzzyOptions implements ToXContent, Writeable {
         }
 
         /**
-         * Sets the level of fuzziness used to create suggestions using a {@link Fuzziness} instance.
-         * The default value is {@link Fuzziness#ONE} which allows for an "edit distance" of one.
+         * Sets the level of fuzziness used to create suggestions using a {Fuzziness} instance.
+         * The default value is {Fuzziness#ONE} which allows for an "edit distance" of one.
          */
         public Builder setFuzziness(Fuzziness fuzziness) {
             Objects.requireNonNull(fuzziness, "fuzziness must not be null");

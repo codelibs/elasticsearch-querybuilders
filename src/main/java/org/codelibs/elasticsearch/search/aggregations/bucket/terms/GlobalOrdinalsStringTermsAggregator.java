@@ -252,7 +252,7 @@ public class GlobalOrdinalsStringTermsAggregator extends AbstractStringTermsAggr
     }
 
     /**
-     * Variant of {@link GlobalOrdinalsStringTermsAggregator} that rebases hashes in order to make them dense. Might be
+     * Variant of {GlobalOrdinalsStringTermsAggregator} that rebases hashes in order to make them dense. Might be
      * useful in case few hashes are visited.
      */
     public static class WithHash extends GlobalOrdinalsStringTermsAggregator {
@@ -322,7 +322,7 @@ public class GlobalOrdinalsStringTermsAggregator extends AbstractStringTermsAggr
     }
 
     /**
-     * Variant of {@link GlobalOrdinalsStringTermsAggregator} that resolves global ordinals post segment collection
+     * Variant of {GlobalOrdinalsStringTermsAggregator} that resolves global ordinals post segment collection
      * instead of on the fly for each match.This is beneficial for low cardinality fields, because it can reduce
      * the amount of look-ups significantly.
      */

@@ -250,10 +250,10 @@ public class TimeValue implements Writeable, Comparable<TimeValue> {
     }
 
     /**
-     * Returns a {@link String} representation of the current {@link TimeValue}.
+     * Returns a {String} representation of the current {TimeValue}.
      *
      * Note that this method might produce fractional time values (ex 1.6m) which cannot be
-     * parsed by method like {@link TimeValue#parse(String, String, int)}.
+     * parsed by method like {TimeValue#parse(String, String, int)}.
      */
     @Override
     public String toString() {

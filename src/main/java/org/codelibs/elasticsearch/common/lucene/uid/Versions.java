@@ -91,7 +91,7 @@ public class Versions {
     private Versions() {
     }
 
-    /** Wraps an {@link LeafReaderContext}, a doc ID <b>relative to the context doc base</b> and a version. */
+    /** Wraps an {LeafReaderContext}, a doc ID <b>relative to the context doc base</b> and a version. */
     public static class DocIdAndVersion {
         public final int docId;
         public final long version;
@@ -132,7 +132,7 @@ public class Versions {
 
     /**
      * Load the version for the uid from the reader, returning<ul>
-     * <li>{@link #NOT_FOUND} if no matching doc exists,
+     * <li>{#NOT_FOUND} if no matching doc exists,
      * <li>the version associated with the provided uid otherwise
      * </ul>
      */

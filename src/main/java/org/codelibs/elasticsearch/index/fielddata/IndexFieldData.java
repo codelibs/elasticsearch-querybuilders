@@ -40,7 +40,7 @@ import java.io.IOException;
 
 /**
  * Thread-safe utility class that allows to get per-segment values via the
- * {@link #load(LeafReaderContext)} method.
+ * {#load(LeafReaderContext)} method.
  */
 public interface IndexFieldData<FD extends AtomicFieldData> extends IndexComponent {
 
@@ -104,14 +104,14 @@ public interface IndexFieldData<FD extends AtomicFieldData> extends IndexCompone
             }
 
             /**
-             * Get a {@link BitDocIdSet} that matches the root documents.
+             * Get a {BitDocIdSet} that matches the root documents.
              */
             public BitSet rootDocs(LeafReaderContext ctx) throws IOException {
                 return rootFilter.getBitSet(ctx);
             }
 
             /**
-             * Get a {@link DocIdSet} that matches the inner documents.
+             * Get a {DocIdSet} that matches the inner documents.
              */
             public DocIdSetIterator innerDocs(LeafReaderContext ctx) throws IOException {
                 final IndexReaderContext topLevelCtx = ReaderUtil.getTopLevelContext(ctx);
@@ -195,11 +195,11 @@ public interface IndexFieldData<FD extends AtomicFieldData> extends IndexCompone
         public abstract SortField.Type reducedType();
 
         /**
-         * Return a missing value that is understandable by {@link SortField#setMissingValue(Object)}.
+         * Return a missing value that is understandable by {SortField#setMissingValue(Object)}.
          * Most implementations return null because they already replace the value at the fielddata level.
          * However this can't work in case of strings since there is no such thing as a string which
          * compares greater than any other string, so in that case we need to return
-         * {@link SortField#STRING_FIRST} or {@link SortField#STRING_LAST} so that the coordinating node
+         * {SortField#STRING_FIRST} or {SortField#STRING_LAST} so that the coordinating node
          * knows how to deal with null values.
          */
         public Object missingValue(boolean reversed) {

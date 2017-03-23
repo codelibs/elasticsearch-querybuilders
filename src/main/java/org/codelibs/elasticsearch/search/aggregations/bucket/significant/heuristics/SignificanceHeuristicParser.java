@@ -27,7 +27,7 @@ import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import java.io.IOException;
 
 /**
- * Parses {@link SignificanceHeuristic}s from an {@link XContentParser}.
+ * Parses {SignificanceHeuristic}s from an {XContentParser}.
  */
 @FunctionalInterface
 public interface SignificanceHeuristicParser {

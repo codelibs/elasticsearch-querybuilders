@@ -81,7 +81,7 @@ public class MultiPolygonBuilder extends ShapeBuilder {
 
     /**
      * Add a shallow copy of the polygon to the multipolygon. This will apply the orientation of the
-     * {@link MultiPolygonBuilder} to the polygon if polygon has different orientation.
+     * {MultiPolygonBuilder} to the polygon if polygon has different orientation.
      */
     public MultiPolygonBuilder polygon(PolygonBuilder polygon) {
         PolygonBuilder pb = new PolygonBuilder(new CoordinatesBuilder().coordinates(polygon.shell().coordinates(false)), this.orientation);

@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Results of the {@link ParentToChildrenAggregator}.
+ * Results of the {ParentToChildrenAggregator}.
  */
 public class InternalChildren extends InternalSingleBucketAggregation implements Children {
     public InternalChildren(String name, long docCount, InternalAggregations aggregations, List<PipelineAggregator> pipelineAggregators,

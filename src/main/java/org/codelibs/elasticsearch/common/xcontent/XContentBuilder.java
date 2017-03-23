@@ -56,31 +56,31 @@ import java.util.concurrent.TimeUnit;
 public final class XContentBuilder implements BytesStream, Releasable, Flushable {
 
     /**
-     * Create a new {@link XContentBuilder} using the given {@link XContent} content.
+     * Create a new {XContentBuilder} using the given {XContent} content.
      * <p>
-     * The builder uses an internal {@link BytesStreamOutput} output stream to build the content.
+     * The builder uses an internal {BytesStreamOutput} output stream to build the content.
      * </p>
      *
-     * @param xContent the {@link XContent}
-     * @return a new {@link XContentBuilder}
-     * @throws IOException if an {@link IOException} occurs while building the content
+     * @param xContent the {XContent}
+     * @return a new {XContentBuilder}
+     * @throws IOException if an {IOException} occurs while building the content
      */
     public static XContentBuilder builder(XContent xContent) throws IOException {
         return new XContentBuilder(xContent, new BytesStreamOutput());
     }
 
     /**
-     * Create a new {@link XContentBuilder} using the given {@link XContent} content and some inclusive and/or exclusive filters.
+     * Create a new {XContentBuilder} using the given {XContent} content and some inclusive and/or exclusive filters.
      * <p>
-     * The builder uses an internal {@link BytesStreamOutput} output stream to build the content. When both exclusive and
+     * The builder uses an internal {BytesStreamOutput} output stream to build the content. When both exclusive and
      * inclusive filters are provided, the underlying builder will first use exclusion filters to remove fields and then will check the
      * remaining fields against the inclusive filters.
      * <p>
      *
-     * @param xContent the {@link XContent}
+     * @param xContent the {XContent}
      * @param includes the inclusive filters: only fields and objects that match the inclusive filters will be written to the output.
      * @param excludes the exclusive filters: only fields and objects that don't match the exclusive filters will be written to the output.
-     * @throws IOException if an {@link IOException} occurs while building the content
+     * @throws IOException if an {IOException} occurs while building the content
      */
     public static XContentBuilder builder(XContent xContent, Set<String> includes, Set<String> excludes) throws IOException {
         return new XContentBuilder(xContent, new BytesStreamOutput(), includes, excludes);
@@ -136,7 +136,7 @@ public final class XContentBuilder implements BytesStream, Releasable, Flushable
 
     /**
      * Constructs a new builder using the provided XContent and an OutputStream. Make sure
-     * to call {@link #close()} when the builder is done with.
+     * to call {#close()} when the builder is done with.
      */
     public XContentBuilder(XContent xContent, OutputStream bos) throws IOException {
         this(xContent, bos, Collections.emptySet(), Collections.emptySet());
@@ -146,7 +146,7 @@ public final class XContentBuilder implements BytesStream, Releasable, Flushable
      * Constructs a new builder using the provided XContent, an OutputStream and
      * some filters. If filters are specified, only those values matching a
      * filter will be written to the output stream. Make sure to call
-     * {@link #close()} when the builder is done with.
+     * {#close()} when the builder is done with.
      */
     public XContentBuilder(XContent xContent, OutputStream bos, Set<String> includes) throws IOException {
         this(xContent, bos, includes, Collections.emptySet());
@@ -157,7 +157,7 @@ public final class XContentBuilder implements BytesStream, Releasable, Flushable
      * inclusive filters are provided, the underlying builder will first use exclusion filters to remove fields and then will check the
      * remaining fields against the inclusive filters.
      * <p>
-     * Make sure to call {@link #close()} when the builder is done with.
+     * Make sure to call {#close()} when the builder is done with.
      *
      * @param os       the output stream
      * @param includes the inclusive filters: only fields and objects that match the inclusive filters will be written to the output.
@@ -182,7 +182,7 @@ public final class XContentBuilder implements BytesStream, Releasable, Flushable
     }
 
     /**
-     * Indicate that the current {@link XContentBuilder} must write a line feed ("\n")
+     * Indicate that the current {XContentBuilder} must write a line feed ("\n")
      * at the end of the built object.
      * <p>
      * This only applies for JSON XContent type. It has no effect for other types.
@@ -582,27 +582,27 @@ public final class XContentBuilder implements BytesStream, Releasable, Flushable
     }
 
     /**
-     * Writes the binary content of the given {@link BytesRef}.
+     * Writes the binary content of the given {BytesRef}.
      *
-     * Use {@link org.codelibs.elasticsearch.common.xcontent.XContentParser#binaryValue()} to read the value back
+     * Use {org.codelibs.elasticsearch.common.xcontent.XContentParser#binaryValue()} to read the value back
      */
     public XContentBuilder field(String name, BytesRef value) throws IOException {
         return field(name).binaryValue(value);
     }
 
     /**
-     * Writes the binary content of the given {@link BytesRef} as UTF-8 bytes.
+     * Writes the binary content of the given {BytesRef} as UTF-8 bytes.
      *
-     * Use {@link XContentParser#utf8Bytes()} to read the value back
+     * Use {XContentParser#utf8Bytes()} to read the value back
      */
     public XContentBuilder utf8Field(String name, BytesRef value) throws IOException {
         return field(name).utf8Value(value);
     }
 
     /**
-     * Writes the binary content of the given {@link BytesRef}.
+     * Writes the binary content of the given {BytesRef}.
      *
-     * Use {@link org.codelibs.elasticsearch.common.xcontent.XContentParser#binaryValue()} to read the value back
+     * Use {org.codelibs.elasticsearch.common.xcontent.XContentParser#binaryValue()} to read the value back
      */
     public XContentBuilder binaryValue(BytesRef value) throws IOException {
         if (value == null) {
@@ -613,9 +613,9 @@ public final class XContentBuilder implements BytesStream, Releasable, Flushable
     }
 
     /**
-     * Writes the binary content of the given {@link BytesRef} as UTF-8 bytes.
+     * Writes the binary content of the given {BytesRef} as UTF-8 bytes.
      *
-     * Use {@link XContentParser#utf8Bytes()} to read the value back
+     * Use {XContentParser#utf8Bytes()} to read the value back
      */
     public XContentBuilder utf8Value(BytesRef value) throws IOException {
         if (value == null) {
@@ -626,18 +626,18 @@ public final class XContentBuilder implements BytesStream, Releasable, Flushable
     }
 
     /**
-     * Writes the binary content of the given {@link BytesReference}.
+     * Writes the binary content of the given {BytesReference}.
      *
-     * Use {@link org.codelibs.elasticsearch.common.xcontent.XContentParser#binaryValue()} to read the value back
+     * Use {org.codelibs.elasticsearch.common.xcontent.XContentParser#binaryValue()} to read the value back
      */
     public XContentBuilder field(String name, BytesReference value) throws IOException {
         return field(name).value(value);
     }
 
     /**
-     * Writes the binary content of the given {@link BytesReference}.
+     * Writes the binary content of the given {BytesReference}.
      *
-     * Use {@link org.codelibs.elasticsearch.common.xcontent.XContentParser#binaryValue()} to read the value back
+     * Use {org.codelibs.elasticsearch.common.xcontent.XContentParser#binaryValue()} to read the value back
      */
     public XContentBuilder value(BytesReference value) throws IOException {
         return (value == null) ? nullValue() : binaryValue(value.toBytesRef());

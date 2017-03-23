@@ -24,8 +24,8 @@ import org.codelibs.elasticsearch.common.io.ReleasableBytesStream;
 import org.codelibs.elasticsearch.common.util.BigArrays;
 
 /**
- * An bytes stream output that allows providing a {@link BigArrays} instance
- * expecting it to require releasing its content ({@link #bytes()}) once done.
+ * An bytes stream output that allows providing a {BigArrays} instance
+ * expecting it to require releasing its content ({#bytes()}) once done.
  * <p>
  * Please note, its is the responsibility of the caller to make sure the bytes
  * reference do not "escape" and are released only once.

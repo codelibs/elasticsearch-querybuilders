@@ -39,7 +39,7 @@ import java.util.Set;
 
 /**
  * ContextMappings indexes context-enabled suggestion fields
- * and creates context queries for defined {@link ContextMapping}s
+ * and creates context queries for defined {ContextMapping}s
  */
 public class ContextMappings implements ToXContent {
     private final List<ContextMapping> contextMappings;
@@ -78,7 +78,7 @@ public class ContextMappings implements ToXContent {
     }
 
     /**
-     * Wraps a {@link CompletionQuery} with context queries
+     * Wraps a {CompletionQuery} with context queries
      *
      * @param query base completion query to wrap
      * @param queryContexts a map of context mapping name and collected query contexts
@@ -129,10 +129,10 @@ public class ContextMappings implements ToXContent {
     }
 
     /**
-     * Loads {@link ContextMappings} from configuration
+     * Loads {ContextMappings} from configuration
      *
      * Expected configuration:
-     *  List of maps representing {@link ContextMapping}
+     *  List of maps representing {ContextMapping}
      *  [{"name": .., "type": .., ..}, {..}]
      *
      */
@@ -160,9 +160,9 @@ public class ContextMappings implements ToXContent {
     }
 
     /**
-     * Writes a list of objects specified by the defined {@link ContextMapping}s
+     * Writes a list of objects specified by the defined {ContextMapping}s
      *
-     * see {@link ContextMapping#toXContent(XContentBuilder, Params)}
+     * see {ContextMapping#toXContent(XContentBuilder, Params)}
      */
     @Override
     public XContentBuilder toXContent(XContentBuilder builder, Params params) throws IOException {

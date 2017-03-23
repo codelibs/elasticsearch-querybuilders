@@ -53,7 +53,7 @@ import java.io.IOException;
 public abstract class ValuesSource {
 
     /**
-     * Get the current {@link BytesValues}.
+     * Get the current {BytesValues}.
      */
     public abstract SortedBinaryDocValues bytesValues(LeafReaderContext context) throws IOException;
 
@@ -232,10 +232,10 @@ public abstract class ValuesSource {
         /** Whether the underlying data is floating-point or not. */
         public abstract boolean isFloatingPoint();
 
-        /** Get the current {@link SortedNumericDocValues}. */
+        /** Get the current {SortedNumericDocValues}. */
         public abstract SortedNumericDocValues longValues(LeafReaderContext context) throws IOException;
 
-        /** Get the current {@link SortedNumericDoubleValues}. */
+        /** Get the current {SortedNumericDoubleValues}. */
         public abstract SortedNumericDoubleValues doubleValues(LeafReaderContext context) throws IOException;
 
         @Override
