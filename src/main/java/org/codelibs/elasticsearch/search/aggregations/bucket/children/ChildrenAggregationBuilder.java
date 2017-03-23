@@ -29,7 +29,6 @@ import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.search.aggregations.AggregatorFactories.Builder;
 import org.codelibs.elasticsearch.search.aggregations.AggregatorFactory;
 import org.codelibs.elasticsearch.search.aggregations.InternalAggregation.Type;
-import org.codelibs.elasticsearch.search.aggregations.support.FieldContext;
 import org.codelibs.elasticsearch.search.aggregations.support.ValueType;
 import org.codelibs.elasticsearch.search.aggregations.support.ValuesSource.Bytes.ParentChild;
 import org.codelibs.elasticsearch.search.aggregations.support.ValuesSourceAggregationBuilder;

@@ -49,11 +49,11 @@ public class ScriptException extends ElasticsearchException {
     private final List<String> scriptStack;
     private final String script;
     private final String lang;
-    
+
     /**
      * Create a new ScriptException.
-     * @param message A short and simple summary of what happened, such as "compile error". 
-     *                Must not be {@code null}. 
+     * @param message A short and simple summary of what happened, such as "compile error".
+     *                Must not be {@code null}.
      * @param cause The underlying cause of the exception. Must not be {@code null}.
      * @param scriptStack An implementation-specific "stacktrace" for the error in the script.
      *                Must not be {@code null}, but can be empty (though this should be avoided if possible).
@@ -85,7 +85,7 @@ public class ScriptException extends ElasticsearchException {
         out.writeString(script);
         out.writeString(lang);
     }
-    
+
     @Override
     protected void innerToXContent(XContentBuilder builder, Params params) throws IOException {
         super.innerToXContent(builder, params);
@@ -101,7 +101,7 @@ public class ScriptException extends ElasticsearchException {
     public List<String> getScriptStack() {
         return scriptStack;
     }
-    
+
     /**
      * Returns the identifier for which script.
      * @return script's name or source text that identifies the script.
@@ -109,7 +109,7 @@ public class ScriptException extends ElasticsearchException {
     public String getScript() {
         return script;
     }
-    
+
     /**
      * Returns the language of the script.
      * @return the {@code lang} parameter of the scripting engine.
@@ -118,7 +118,7 @@ public class ScriptException extends ElasticsearchException {
         return lang;
     }
 
-    /** 
+    /**
      * Returns a JSON version of this exception for debugging.
      */
     public String toJsonString() {

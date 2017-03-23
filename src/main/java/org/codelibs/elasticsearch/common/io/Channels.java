@@ -23,7 +23,6 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.channels.GatheringByteChannel;
 import java.nio.channels.WritableByteChannel;
 
 public final class Channels {

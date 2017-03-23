@@ -334,9 +334,9 @@ public final class CopyOnWriteHashMap<K, V> extends AbstractMap<K, V> {
 
         private Node<K, V> newSubNode(int hashBits) {
             if (hashBits <= 0) {
-                return new Leaf<K, V>();
+                return new Leaf<>();
             } else {
-                return new InnerNode<K, V>();
+                return new InnerNode<>();
             }
         }
 

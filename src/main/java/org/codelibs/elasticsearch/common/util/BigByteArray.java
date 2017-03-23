@@ -44,7 +44,7 @@ final class BigByteArray extends AbstractBigArray implements ByteArray {
             pages[i] = newBytePage(i);
         }
     }
-    
+
     @Override
     public byte get(long index) {
         final int pageIndex = pageIndex(index);

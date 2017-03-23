@@ -30,7 +30,6 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +41,7 @@ public abstract class NetworkUtils {
 
     /** no instantation */
     private NetworkUtils() {}
-    
+
     /**
      * By default we bind to any addresses on an interface/name, unless restricted by :ipv4 etc.
      * This property is unrelated to that, this is about what we *publish*. Today the code pretty much
@@ -76,14 +75,14 @@ public abstract class NetworkUtils {
         }
         SUPPORTS_V6 = v;
     }
-    
+
     /** Sorts an address by preference. This way code like publishing can just pick the first one */
     static int sortKey(InetAddress address, boolean prefer_v6) {
         int key = address.getAddress().length;
         if (prefer_v6) {
             key = -key;
         }
-        
+
         if (address.isAnyLocalAddress()) {
             key += 5;
         }
@@ -103,38 +102,30 @@ public abstract class NetworkUtils {
         return key;
     }
 
-    /** 
+    /**
      * Sorts addresses by order of preference. This is used to pick the first one for publishing
      * @deprecated remove this when multihoming is really correct
      */
     @Deprecated
     // only public because of silly multicast
     public static void sortAddresses(List<InetAddress> list) {
-        Collections.sort(list, new Comparator<InetAddress>() {
-            @Override
-            public int compare(InetAddress left, InetAddress right) {
-                int cmp = Integer.compare(sortKey(left, PREFER_V6), sortKey(right, PREFER_V6));
-                if (cmp == 0) {
-                    cmp = new BytesRef(left.getAddress()).compareTo(new BytesRef(right.getAddress()));
-                }
-                return cmp;
+        Collections.sort(list, (left, right) -> {
+            int cmp = Integer.compare(sortKey(left, PREFER_V6), sortKey(right, PREFER_V6));
+            if (cmp == 0) {
+                cmp = new BytesRef(left.getAddress()).compareTo(new BytesRef(right.getAddress()));
             }
+            return cmp;
         });
     }
-    
+
     /** Return all interfaces (and subinterfaces) on the system */
     static List<NetworkInterface> getInterfaces() throws SocketException {
         List<NetworkInterface> all = new ArrayList<>();
         addAllInterfaces(all, Collections.list(NetworkInterface.getNetworkInterfaces()));
-        Collections.sort(all, new Comparator<NetworkInterface>() {
-            @Override
-            public int compare(NetworkInterface left, NetworkInterface right) {
-                return Integer.compare(left.getIndex(), right.getIndex());
-            }
-        });
+        Collections.sort(all, (left, right) -> Integer.compare(left.getIndex(), right.getIndex()));
         return all;
     }
-    
+
     /** Helper for getInterfaces, recursively adds subinterfaces to {@code target} */
     private static void addAllInterfaces(List<NetworkInterface> target, List<NetworkInterface> level) {
         if (!level.isEmpty()) {
@@ -144,12 +135,12 @@ public abstract class NetworkUtils {
             }
         }
     }
-    
+
     /** Returns system default for SO_REUSEADDR */
     public static boolean defaultReuseAddress() {
         return Constants.WINDOWS ? false : true;
     }
-    
+
     /** Returns all interface-local scope (loopback) addresses for interfaces that are up. */
     static InetAddress[] getLoopbackAddresses() throws SocketException {
         List<InetAddress> list = new ArrayList<>();
@@ -170,7 +161,7 @@ public abstract class NetworkUtils {
         }
         return list.toArray(new InetAddress[list.size()]);
     }
-    
+
     /** Returns all site-local scope (private) addresses for interfaces that are up. */
     static InetAddress[] getSiteLocalAddresses() throws SocketException {
         List<InetAddress> list = new ArrayList<>();
@@ -188,14 +179,14 @@ public abstract class NetworkUtils {
         }
         return list.toArray(new InetAddress[list.size()]);
     }
-    
+
     /** Returns all global scope addresses for interfaces that are up. */
     static InetAddress[] getGlobalAddresses() throws SocketException {
         List<InetAddress> list = new ArrayList<>();
         for (NetworkInterface intf : getInterfaces()) {
             if (intf.isUp()) {
                 for (InetAddress address : Collections.list(intf.getInetAddresses())) {
-                    if (address.isLoopbackAddress() == false && 
+                    if (address.isLoopbackAddress() == false &&
                         address.isSiteLocalAddress() == false &&
                         address.isLinkLocalAddress() == false) {
                         list.add(address);
@@ -208,8 +199,8 @@ public abstract class NetworkUtils {
         }
         return list.toArray(new InetAddress[list.size()]);
     }
-    
-    /** Returns all addresses (any scope) for interfaces that are up. 
+
+    /** Returns all addresses (any scope) for interfaces that are up.
      *  This is only used to pick a publish address, when the user set network.host to a wildcard */
     static InetAddress[] getAllAddresses() throws SocketException {
         List<InetAddress> list = new ArrayList<>();
@@ -225,7 +216,7 @@ public abstract class NetworkUtils {
         }
         return list.toArray(new InetAddress[list.size()]);
     }
-    
+
     /** Returns addresses for the given interface (it must be marked up) */
     static InetAddress[] getAddressesForInterface(String name) throws SocketException {
         Optional<NetworkInterface> networkInterface = getInterfaces().stream().filter((netIf) -> name.equals(netIf.getName())).findFirst();
@@ -242,7 +233,7 @@ public abstract class NetworkUtils {
         }
         return list.toArray(new InetAddress[list.size()]);
     }
-    
+
     /** Returns only the IPV4 addresses in {@code addresses} */
     static InetAddress[] filterIPV4(InetAddress addresses[]) {
         List<InetAddress> list = new ArrayList<>();
@@ -256,7 +247,7 @@ public abstract class NetworkUtils {
         }
         return list.toArray(new InetAddress[list.size()]);
     }
-    
+
     /** Returns only the IPV6 addresses in {@code addresses} */
     static InetAddress[] filterIPV6(InetAddress addresses[]) {
         List<InetAddress> list = new ArrayList<>();

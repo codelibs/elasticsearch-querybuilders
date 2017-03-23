@@ -19,8 +19,6 @@
 
 package org.codelibs.elasticsearch.search.aggregations.bucket.filters;
 
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Weight;
 import org.codelibs.elasticsearch.search.aggregations.Aggregator;
 import org.codelibs.elasticsearch.search.aggregations.AggregatorFactories;

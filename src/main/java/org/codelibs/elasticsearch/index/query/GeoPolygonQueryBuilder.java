@@ -19,13 +19,8 @@
 
 package org.codelibs.elasticsearch.index.query;
 
-import org.apache.lucene.document.LatLonPoint;
-import org.apache.lucene.geo.Polygon;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.spatial.geopoint.document.GeoPointField;
-import org.apache.lucene.spatial.geopoint.search.GeoPointInPolygonQuery;
-import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.Strings;
@@ -36,10 +31,6 @@ import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
-import org.codelibs.elasticsearch.index.fielddata.IndexGeoPointFieldData;
-import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-import org.codelibs.elasticsearch.index.search.geo.GeoPolygonQuery;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -210,7 +201,7 @@ public class GeoPolygonQueryBuilder extends AbstractQueryBuilder<GeoPolygonQuery
                         currentFieldName = parser.currentName();
                     } else if (token == XContentParser.Token.START_ARRAY) {
                         if (POINTS_FIELD.match(currentFieldName)) {
-                            shell = new ArrayList<GeoPoint>();
+                            shell = new ArrayList<>();
                             while ((token = parser.nextToken()) != Token.END_ARRAY) {
                                 shell.add(GeoUtils.parseGeoPoint(parser));
                             }

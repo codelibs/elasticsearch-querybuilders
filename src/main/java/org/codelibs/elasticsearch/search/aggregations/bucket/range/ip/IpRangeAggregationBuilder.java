@@ -72,7 +72,9 @@ public final class IpRangeAggregationBuilder
         PARSER.declareBoolean(IpRangeAggregationBuilder::keyed, RangeAggregator.KEYED_FIELD);
 
         PARSER.declareObjectArray((agg, ranges) -> {
-            for (Range range : ranges) agg.addRange(range);
+            for (Range range : ranges) {
+                agg.addRange(range);
+            }
         }, IpRangeAggregationBuilder::parseRange, RangeAggregator.RANGES_FIELD);
     }
 
@@ -81,7 +83,7 @@ public final class IpRangeAggregationBuilder
     }
 
     private static Range parseRange(XContentParser parser, QueryParseContext context) throws IOException {
-        final ParseFieldMatcher parseFieldMatcher = context.getParseFieldMatcher();
+        context.getParseFieldMatcher();
         String key = null;
         String from = null;
         String to = null;

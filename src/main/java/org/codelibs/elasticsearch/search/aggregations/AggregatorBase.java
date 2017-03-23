@@ -18,16 +18,11 @@
  */
 package org.codelibs.elasticsearch.search.aggregations;
 
-import org.codelibs.elasticsearch.common.breaker.CircuitBreaker;
 import org.apache.lucene.index.LeafReaderContext;
-import org.codelibs.elasticsearch.common.breaker.CircuitBreakingException;
 import org.codelibs.elasticsearch.search.aggregations.bucket.BestBucketsDeferringCollector;
 import org.codelibs.elasticsearch.search.aggregations.bucket.DeferringBucketCollector;
 import org.codelibs.elasticsearch.search.aggregations.pipeline.PipelineAggregator;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
-import org.codelibs.elasticsearch.search.internal.SearchContext.Lifetime;
-import org.codelibs.elasticsearch.search.query.QueryPhaseExecutionException;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,8 +48,6 @@ public abstract class AggregatorBase extends Aggregator {
     private Map<String, Aggregator> subAggregatorbyName;
     private DeferringBucketCollector recordingWrapper;
     private final List<PipelineAggregator> pipelineAggregators;
-    private boolean failed = false;
-
     /**
      * Constructs a new Aggregator.
      *
@@ -188,8 +181,8 @@ public abstract class AggregatorBase extends Aggregator {
     public Aggregator subAggregator(String aggName) {
         if (subAggregatorbyName == null) {
             subAggregatorbyName = new HashMap<>(subAggregators.length);
-            for (int i = 0; i < subAggregators.length; i++) {
-                subAggregatorbyName.put(subAggregators[i].name(), subAggregators[i]);
+            for (Aggregator subAggregator : subAggregators) {
+                subAggregatorbyName.put(subAggregator.name(), subAggregator);
             }
         }
         return subAggregatorbyName.get(aggName);

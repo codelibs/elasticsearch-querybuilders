@@ -20,12 +20,8 @@
 package org.codelibs.elasticsearch.search.aggregations.bucket;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.apache.lucene.search.DocIdSetIterator;
-import org.apache.lucene.search.Scorer;
-import org.apache.lucene.search.Weight;
 import org.apache.lucene.util.packed.PackedInts;
 import org.apache.lucene.util.packed.PackedLongValues;
-import org.codelibs.elasticsearch.common.util.BigArrays;
 import org.codelibs.elasticsearch.common.util.LongHash;
 import org.codelibs.elasticsearch.search.aggregations.Aggregator;
 import org.codelibs.elasticsearch.search.aggregations.BucketCollector;
@@ -45,14 +41,7 @@ import java.util.List;
  */
 public class BestBucketsDeferringCollector extends DeferringBucketCollector {
     private static class Entry {
-        final LeafReaderContext context;
-        final PackedLongValues docDeltas;
-        final PackedLongValues buckets;
-
         public Entry(LeafReaderContext context, PackedLongValues docDeltas, PackedLongValues buckets) {
-            this.context = context;
-            this.docDeltas = docDeltas;
-            this.buckets = buckets;
         }
     }
 

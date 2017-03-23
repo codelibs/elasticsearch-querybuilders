@@ -21,14 +21,6 @@ package org.codelibs.elasticsearch.search.fetch.subphase.highlight;
 import org.apache.lucene.search.highlight.DefaultEncoder;
 import org.apache.lucene.search.highlight.Encoder;
 import org.apache.lucene.search.highlight.SimpleHTMLEncoder;
-import org.codelibs.elasticsearch.index.mapper.FieldMapper;
-import org.codelibs.elasticsearch.search.internal.SearchContext;
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-
-import static java.util.Collections.singleton;
 
 public final class HighlightUtils {
 

@@ -21,24 +21,16 @@ package org.codelibs.elasticsearch.index.query;
 
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.spatial.geopoint.document.GeoPointField;
-import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.ParseField;
-import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.Strings;
 import org.codelibs.elasticsearch.common.geo.GeoDistance;
 import org.codelibs.elasticsearch.common.geo.GeoPoint;
-import org.codelibs.elasticsearch.common.geo.GeoUtils;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.logging.DeprecationLogger;
 import org.codelibs.elasticsearch.common.logging.Loggers;
 import org.codelibs.elasticsearch.common.unit.DistanceUnit;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.fielddata.IndexGeoPointFieldData;
-import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;

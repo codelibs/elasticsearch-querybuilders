@@ -21,9 +21,6 @@ package org.codelibs.elasticsearch.index.mapper;
 
 import org.codelibs.elasticsearch.common.settings.Settings;
 
-import java.io.IOException;
-import java.util.Map;
-
 
 /**
  * A mapper for a builtin field containing metadata about a document.

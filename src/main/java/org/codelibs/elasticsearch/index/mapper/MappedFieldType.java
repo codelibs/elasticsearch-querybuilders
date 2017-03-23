@@ -36,7 +36,6 @@ import org.apache.lucene.search.TermQuery;
 import org.codelibs.elasticsearch.action.fieldstats.FieldStats;
 import org.codelibs.elasticsearch.common.Nullable;
 import org.codelibs.elasticsearch.common.joda.DateMathParser;
-import org.codelibs.elasticsearch.common.lucene.all.AllTermQuery;
 import org.codelibs.elasticsearch.common.unit.Fuzziness;
 import org.codelibs.elasticsearch.index.analysis.NamedAnalyzer;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
@@ -48,7 +47,6 @@ import org.joda.time.DateTimeZone;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * This defines the core properties and functions to operate on a field.
@@ -114,15 +112,6 @@ public abstract class MappedFieldType extends FieldType {
 
     /** Returns the name of this type, as would be specified in mapping properties */
     public abstract String typeName();
-
-    /** Checks this type is the same type as other. Adds a conflict if they are different. */
-    private void checkTypeName(MappedFieldType other) {
-        if (typeName().equals(other.typeName()) == false) {
-            throw new IllegalArgumentException("mapper [" + name + "] cannot be changed from type [" + typeName() + "] to [" + other.typeName() + "]");
-        } else if (getClass() != other.getClass()) {
-            throw new IllegalStateException("Type names equal for class " + getClass().getSimpleName() + " and " + other.getClass().getSimpleName());
-        }
-    }
 
     /**
      * Checks for any conflicts between this field type and other.

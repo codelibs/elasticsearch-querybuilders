@@ -21,13 +21,9 @@ package org.codelibs.elasticsearch.index.mapper;
 
 import java.util.List;
 
-import org.apache.lucene.index.Term;
 import org.apache.lucene.queries.TermsQuery;
-import org.apache.lucene.search.BoostQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.BytesRef;
-import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.lucene.BytesRefs;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 

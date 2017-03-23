@@ -74,8 +74,9 @@ public final class UTF8StreamWriter extends Writer {
      *                               it has not been {@link #close closed} or {@link #reset reset}.
      */
     public UTF8StreamWriter setOutput(OutputStream out) {
-        if (_outputStream != null)
+        if (_outputStream != null) {
             throw new IllegalStateException("Writer not closed or reset");
+        }
         _outputStream = out;
         return this;
     }
@@ -316,8 +317,9 @@ public final class UTF8StreamWriter extends Writer {
      * @throws IOException if an I/O error occurs
      */
     private void flushBuffer() throws IOException {
-        if (_outputStream == null)
+        if (_outputStream == null) {
             throw new IOException("Stream closed");
+        }
         _outputStream.write(_bytes, 0, _index);
         _index = 0;
     }

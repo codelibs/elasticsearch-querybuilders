@@ -19,19 +19,15 @@ package org.codelibs.elasticsearch.common.lucene.uid;
  * under the License.
  */
 
-import org.apache.lucene.index.Fields;
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.NumericDocValues;
 import org.apache.lucene.index.PostingsEnum;
-import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.search.DocIdSetIterator;
 import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.common.lucene.uid.Versions.DocIdAndVersion;
-import org.codelibs.elasticsearch.index.mapper.UidFieldMapper;
-
 import java.io.IOException;
 
 

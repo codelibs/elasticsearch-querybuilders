@@ -18,27 +18,13 @@
  */
 package org.codelibs.elasticsearch.search.fetch.subphase.highlight;
 
-import org.apache.lucene.search.highlight.Encoder;
-import org.apache.lucene.search.vectorhighlight.BaseFragmentsBuilder;
-import org.apache.lucene.search.vectorhighlight.BoundaryScanner;
-import org.apache.lucene.search.vectorhighlight.FieldFragList;
-import org.apache.lucene.search.vectorhighlight.FieldPhraseList.WeightedPhraseInfo;
 import org.apache.lucene.search.vectorhighlight.FieldQuery;
 import org.apache.lucene.search.vectorhighlight.FragListBuilder;
 import org.apache.lucene.search.vectorhighlight.FragmentsBuilder;
-import org.apache.lucene.search.vectorhighlight.ScoreOrderFragmentsBuilder;
 import org.apache.lucene.search.vectorhighlight.SimpleBoundaryScanner;
-import org.apache.lucene.search.vectorhighlight.SimpleFieldFragList;
-import org.apache.lucene.search.vectorhighlight.SimpleFragListBuilder;
-import org.apache.lucene.search.vectorhighlight.SingleFragListBuilder;
 import org.codelibs.elasticsearch.common.settings.Setting;
 import org.codelibs.elasticsearch.common.settings.Settings;
-import org.codelibs.elasticsearch.common.text.Text;
 import org.codelibs.elasticsearch.index.mapper.FieldMapper;
-import org.codelibs.elasticsearch.search.fetch.FetchPhaseExecutionException;
-import org.codelibs.elasticsearch.search.internal.SearchContext;
-
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,7 +37,6 @@ public class FastVectorHighlighter implements Highlighter {
 
     public static final Setting<Boolean> SETTING_TV_HIGHLIGHT_MULTI_VALUE = Setting.boolSetting("search.highlight.term_vector_multi_value",
         true, Setting.Property.NodeScope);
-    private static final String CACHE_KEY = "highlight-fsv";
     private final Boolean termVectorMultiValue;
 
     public FastVectorHighlighter(Settings settings) {
@@ -70,14 +55,5 @@ public class FastVectorHighlighter implements Highlighter {
     }
 
     private class MapperHighlightEntry {
-        public FragListBuilder fragListBuilder;
-        public FragmentsBuilder fragmentsBuilder;
-    }
-
-    private class HighlighterEntry {
-        public org.apache.lucene.search.vectorhighlight.FastVectorHighlighter fvh;
-        public FieldQuery noFieldMatchFieldQuery;
-        public FieldQuery fieldMatchFieldQuery;
-        public Map<FieldMapper, MapperHighlightEntry> mappers = new HashMap<>();
     }
 }

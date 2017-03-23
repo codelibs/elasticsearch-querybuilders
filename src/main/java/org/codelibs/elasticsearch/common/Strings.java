@@ -99,8 +99,13 @@ public class Strings {
 
             char ch = s.charAt(pos++);
             if (ch == '\\') {
-                if (!decode) sb.append(ch);
-                if (pos >= end) break;  // ERROR, or let it go?
+                if (!decode) {
+                    sb.append(ch);
+                }
+                if (pos >= end)
+                 {
+                    break;  // ERROR, or let it go?
+                }
                 ch = s.charAt(pos++);
                 if (decode) {
                     switch (ch) {
@@ -506,8 +511,11 @@ public class Strings {
     }
 
     public static String[] splitStringByCommaToArray(final String s) {
-        if (s == null || s.isEmpty()) return Strings.EMPTY_ARRAY;
-        else return s.split(",");
+        if (s == null || s.isEmpty()) {
+            return Strings.EMPTY_ARRAY;
+        } else {
+            return s.split(",");
+        }
     }
 
     /**

@@ -56,14 +56,18 @@ public class RandomScoreFunction extends ScoreFunction {
         this.originalSeed = seed;
         this.saltedSeed = seed ^ salt;
         this.uidFieldData = uidFieldData;
-        if (uidFieldData == null) throw new NullPointerException("uid missing");
+        if (uidFieldData == null) {
+            throw new NullPointerException("uid missing");
+        }
     }
 
     @Override
     public LeafScoreFunction getLeafScoreFunction(LeafReaderContext ctx) {
         AtomicFieldData leafData = uidFieldData.load(ctx);
         final SortedBinaryDocValues uidByteData = leafData.getBytesValues();
-        if (uidByteData == null) throw new NullPointerException("failed to get uid byte data");
+        if (uidByteData == null) {
+            throw new NullPointerException("failed to get uid byte data");
+        }
 
         return new LeafScoreFunction() {
 

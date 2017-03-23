@@ -284,7 +284,7 @@ public class HighlightBuilder extends AbstractHighlighterBuilder<HighlightBuilde
             final SearchContextHighlight.FieldOptions.Builder fieldOptionsBuilder = new SearchContextHighlight.FieldOptions.Builder();
             fieldOptionsBuilder.fragmentOffset(field.fragmentOffset);
             if (field.matchedFields != null) {
-                Set<String> matchedFields = new HashSet<String>(field.matchedFields.length);
+                Set<String> matchedFields = new HashSet<>(field.matchedFields.length);
                 Collections.addAll(matchedFields, field.matchedFields);
                 fieldOptionsBuilder.matchedFields(matchedFields);
             }

@@ -175,7 +175,7 @@ public class FiltersAggregationBuilder extends AbstractAggregationBuilder<Filter
             throws IOException {
         List<KeyedFilter> rewrittenFilters = new ArrayList<>();
         for(KeyedFilter kf : filters) {
-            rewrittenFilters.add(new KeyedFilter(kf.key(), QueryBuilder.rewriteQuery(kf.filter(), 
+            rewrittenFilters.add(new KeyedFilter(kf.key(), QueryBuilder.rewriteQuery(kf.filter(),
                     context.getQueryShardContext())));
         }
         return new FiltersAggregatorFactory(name, type, rewrittenFilters, keyed, otherBucket, otherBucketKey, context, parent,

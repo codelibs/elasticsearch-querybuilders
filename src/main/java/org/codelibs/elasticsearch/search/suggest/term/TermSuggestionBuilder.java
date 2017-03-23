@@ -35,7 +35,6 @@ import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
-import org.codelibs.elasticsearch.search.suggest.DirectSpellcheckerSettings;
 import org.codelibs.elasticsearch.search.suggest.SortBy;
 import org.codelibs.elasticsearch.search.suggest.SuggestionBuilder;
 import org.codelibs.elasticsearch.search.suggest.SuggestionSearchContext.SuggestionContext;
@@ -391,7 +390,7 @@ public class TermSuggestionBuilder extends SuggestionBuilder<TermSuggestionBuild
     static TermSuggestionBuilder innerFromXContent(QueryParseContext parseContext) throws IOException {
         XContentParser parser = parseContext.parser();
         TermSuggestionBuilder tmpSuggestion = new TermSuggestionBuilder("_na_");
-        ParseFieldMatcher parseFieldMatcher = parseContext.getParseFieldMatcher();
+        parseContext.getParseFieldMatcher();
         XContentParser.Token token;
         String currentFieldName = null;
         String fieldname = null;

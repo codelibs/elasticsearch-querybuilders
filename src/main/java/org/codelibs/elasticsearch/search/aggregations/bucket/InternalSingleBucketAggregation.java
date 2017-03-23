@@ -80,7 +80,7 @@ public abstract class InternalSingleBucketAggregation extends InternalAggregatio
     /**
      * Create a new copy of this {@link Aggregation} with the same settings as
      * this {@link Aggregation} and contains the provided sub-aggregations.
-     * 
+     *
      * @param subAggregations
      *            the buckets to use in the new {@link Aggregation}
      * @return the new {@link Aggregation}

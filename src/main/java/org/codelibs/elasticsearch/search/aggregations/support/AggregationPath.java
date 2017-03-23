@@ -126,13 +126,21 @@ public class AggregationPath {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
 
             PathElement token = (PathElement) o;
 
-            if (key != null ? !key.equals(token.key) : token.key != null) return false;
-            if (!name.equals(token.name)) return false;
+            if (key != null ? !key.equals(token.key) : token.key != null) {
+                return false;
+            }
+            if (!name.equals(token.name)) {
+                return false;
+            }
 
             return true;
         }

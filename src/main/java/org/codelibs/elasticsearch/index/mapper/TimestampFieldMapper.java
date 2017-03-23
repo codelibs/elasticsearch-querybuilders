@@ -19,9 +19,6 @@
 
 package org.codelibs.elasticsearch.index.mapper;
 
-import org.apache.lucene.document.NumericDocValuesField;
-import org.apache.lucene.index.IndexOptions;
-import org.apache.lucene.index.IndexableField;
 import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.joda.FormatDateTimeFormatter;
 import org.codelibs.elasticsearch.common.joda.Joda;
@@ -30,12 +27,6 @@ import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import static org.codelibs.elasticsearch.common.xcontent.support.XContentMapValues.lenientNodeBooleanValue;
 
 public class TimestampFieldMapper extends MetadataFieldMapper {
 

@@ -115,7 +115,7 @@ public enum ValueType implements Writeable {
     public String getPreferredName() {
         return preferredName;
     }
-    
+
     public ValuesSourceType getValuesSourceType() {
         return valuesSourceType;
     }

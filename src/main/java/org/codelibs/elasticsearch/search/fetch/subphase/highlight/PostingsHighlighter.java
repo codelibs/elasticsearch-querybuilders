@@ -18,43 +18,22 @@
  */
 package org.codelibs.elasticsearch.search.fetch.subphase.highlight;
 
-import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexOptions;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.highlight.Encoder;
-import org.apache.lucene.search.postingshighlight.CustomSeparatorBreakIterator;
-import org.apache.lucene.util.CollectionUtil;
 import org.codelibs.elasticsearch.common.Strings;
-import org.codelibs.elasticsearch.common.text.Text;
 import org.codelibs.elasticsearch.index.mapper.FieldMapper;
-import org.codelibs.elasticsearch.search.fetch.FetchPhaseExecutionException;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
-import org.codelibs.elasticsearch.search.fetch.subphase.highlight.HighlightUtils.Encoders;
-
-import java.io.IOException;
-import java.text.BreakIterator;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 public class PostingsHighlighter implements Highlighter {
-
-    private static final String CACHE_KEY = "highlight-postings";
 
     @Override
     public HighlightField highlight(HighlighterContext highlighterContext) {
 
         FieldMapper fieldMapper = highlighterContext.mapper;
-        SearchContextHighlight.Field field = highlighterContext.field;
         if (canHighlight(fieldMapper) == false) {
             throw new IllegalArgumentException("the field [" + highlighterContext.fieldName
                     + "] should be indexed with positions and offsets in the postings list to be used with postings highlighter");
         }
-
-        SearchContext context = highlighterContext.context;
 
         throw new UnsupportedOperationException("QueryBuilders does not support this operation.");
         /*        FetchSubPhase.HitContext hitContext = highlighterContext.hitContext;
@@ -135,13 +114,6 @@ public class PostingsHighlighter implements Highlighter {
     @Override
     public boolean canHighlight(FieldMapper fieldMapper) {
         return fieldMapper.fieldType().indexOptions() == IndexOptions.DOCS_AND_FREQS_AND_POSITIONS_AND_OFFSETS;
-    }
-
-    private static String mergeFieldValues(List<Object> fieldValues, char valuesSeparator) {
-        //postings highlighter accepts all values in a single string, as offsets etc. need to match with content
-        //loaded from stored fields, we merge all values using a proper separator
-        String rawValue = Strings.collectionToDelimitedString(fieldValues, String.valueOf(valuesSeparator));
-        return rawValue.substring(0, Math.min(rawValue.length(), Integer.MAX_VALUE - 1));
     }
 
 }

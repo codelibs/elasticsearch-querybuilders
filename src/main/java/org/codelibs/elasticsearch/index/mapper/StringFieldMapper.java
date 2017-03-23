@@ -20,28 +20,20 @@
 package org.codelibs.elasticsearch.index.mapper;
 
 import org.codelibs.elasticsearch.querybuilders.mock.log4j.Logger;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.SortedSetDocValuesField;
 import org.apache.lucene.index.IndexOptions;
-import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.logging.DeprecationLogger;
 import org.codelibs.elasticsearch.common.logging.Loggers;
 import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.common.xcontent.support.XContentMapValues;
 import org.codelibs.elasticsearch.index.analysis.NamedAnalyzer;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -147,8 +139,8 @@ public class StringFieldMapper extends FieldMapper {
         @Override
         protected void setupFieldType(BuilderContext context) {
             super.setupFieldType(context);
-            if (fieldType().hasDocValues() && ((StringFieldType) fieldType()).fielddata()) {
-                ((StringFieldType) fieldType()).setFielddata(false);
+            if (fieldType().hasDocValues() && fieldType().fielddata()) {
+                fieldType().setFielddata(false);
             }
         }
 
@@ -241,6 +233,7 @@ public class StringFieldMapper extends FieldMapper {
                     fielddataMinFrequency, fielddataMaxFrequency, fielddataMinSegmentSize);
         }
 
+        @Override
         public StringFieldType clone() {
             return new StringFieldType(this);
         }

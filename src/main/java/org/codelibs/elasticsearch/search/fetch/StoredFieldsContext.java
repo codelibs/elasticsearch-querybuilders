@@ -20,7 +20,6 @@
 package org.codelibs.elasticsearch.search.fetch;
 
 import org.codelibs.elasticsearch.common.ParsingException;
-import org.codelibs.elasticsearch.common.Strings;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.io.stream.Writeable;
@@ -30,7 +29,6 @@ import org.codelibs.elasticsearch.index.query.QueryParseContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -119,12 +117,18 @@ public class StoredFieldsContext implements Writeable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         StoredFieldsContext that = (StoredFieldsContext) o;
 
-        if (fetchFields != that.fetchFields) return false;
+        if (fetchFields != that.fetchFields) {
+            return false;
+        }
         return fieldNames != null ? fieldNames.equals(that.fieldNames) : that.fieldNames == null;
 
     }

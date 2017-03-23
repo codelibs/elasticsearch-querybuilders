@@ -109,25 +109,17 @@ public interface CharMatcher {
         public CharMatcher build() {
             switch (matchers.size()) {
             case 0:
-                return new CharMatcher() {
-                    @Override
-                    public boolean isTokenChar(int c) {
-                        return false;
-                    }
-                };
+                return c -> false;
             case 1:
                 return matchers.iterator().next();
             default:
-                return new CharMatcher() {
-                    @Override
-                    public boolean isTokenChar(int c) {
-                        for (CharMatcher matcher : matchers) {
-                            if (matcher.isTokenChar(c)) {
-                                return true;
-                            }
+                return c -> {
+                    for (CharMatcher matcher : matchers) {
+                        if (matcher.isTokenChar(c)) {
+                            return true;
                         }
-                        return false;
                     }
+                    return false;
                 };
             }
         }

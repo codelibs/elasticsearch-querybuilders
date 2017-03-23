@@ -18,11 +18,7 @@
  */
 package org.codelibs.elasticsearch.search.aggregations.metrics.tophits;
 
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.search.TopFieldDocs;
-import org.codelibs.elasticsearch.ExceptionsHelper;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.lucene.Lucene;

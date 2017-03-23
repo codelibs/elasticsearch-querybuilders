@@ -167,6 +167,7 @@ public class CancellableThreads {
 
 
     public interface Interruptable extends IOInterruptable {
+        @Override
         void run() throws InterruptedException;
     }
 

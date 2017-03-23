@@ -19,21 +19,17 @@
 
 package org.codelibs.elasticsearch.search.sort;
 
-import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
-import org.apache.lucene.search.join.BitSetProducer;
 import org.codelibs.elasticsearch.action.support.ToXContentToBytes;
 import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.io.stream.NamedWriteable;
-import org.codelibs.elasticsearch.common.lucene.search.Queries;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
 import org.codelibs.elasticsearch.index.query.QueryBuilder;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
-import org.codelibs.elasticsearch.index.query.QueryShardException;
 import org.codelibs.elasticsearch.search.DocValueFormat;
 
 import java.io.IOException;

@@ -384,7 +384,7 @@ public final class Script implements ToXContent, Writeable {
             this.lang = in.readString();
             this.idOrCode = in.readString();
             @SuppressWarnings("unchecked")
-            Map<String, String> options = (Map<String, String>)(Map)in.readMap();
+            Map<String, String> options = (Map)in.readMap();
             this.options = options;
             this.params = in.readMap();
             // Prior to version 5.1 the script members are read in certain cases as optional and given
@@ -436,7 +436,7 @@ public final class Script implements ToXContent, Writeable {
             out.writeString(lang);
             out.writeString(idOrCode);
             @SuppressWarnings("unchecked")
-            Map<String, Object> options = (Map<String, Object>)(Map)this.options;
+            Map<String, Object> options = (Map)this.options;
             out.writeMap(options);
             out.writeMap(params);
             // Prior to version 5.1 the Script members were possibly written as optional or null, though this is no longer
@@ -579,15 +579,27 @@ public final class Script implements ToXContent, Writeable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Script script = (Script)o;
 
-        if (type != script.type) return false;
-        if (!lang.equals(script.lang)) return false;
-        if (!idOrCode.equals(script.idOrCode)) return false;
-        if (!options.equals(script.options)) return false;
+        if (type != script.type) {
+            return false;
+        }
+        if (!lang.equals(script.lang)) {
+            return false;
+        }
+        if (!idOrCode.equals(script.idOrCode)) {
+            return false;
+        }
+        if (!options.equals(script.options)) {
+            return false;
+        }
         return params.equals(script.params);
 
     }

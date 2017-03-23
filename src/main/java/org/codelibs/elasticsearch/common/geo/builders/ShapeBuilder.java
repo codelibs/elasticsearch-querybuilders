@@ -91,10 +91,12 @@ public abstract class ShapeBuilder extends ToXContentToBytes implements NamedWri
     protected JtsGeometry jtsGeometry(Geometry geom) {
         //dateline180Check is false because ElasticSearch does it's own dateline wrapping
         JtsGeometry jtsGeometry = new JtsGeometry(geom, SPATIAL_CONTEXT, false, multiPolygonMayOverlap);
-        if (autoValidateJtsGeometry)
+        if (autoValidateJtsGeometry) {
             jtsGeometry.validate();
-        if (autoIndexJtsGeometry)
+        }
+        if (autoIndexJtsGeometry) {
             jtsGeometry.index();
+        }
         return jtsGeometry;
     }
 

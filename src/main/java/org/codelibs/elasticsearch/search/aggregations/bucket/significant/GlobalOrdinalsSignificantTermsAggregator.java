@@ -18,7 +18,6 @@
  */
 package org.codelibs.elasticsearch.search.aggregations.bucket.significant;
 
-import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.common.lease.Releasables;
@@ -39,8 +38,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import static java.util.Collections.emptyList;
 
 /**
  * An global ordinal based implementation of significant terms, based on {@link SignificantStringTermsAggregator}.

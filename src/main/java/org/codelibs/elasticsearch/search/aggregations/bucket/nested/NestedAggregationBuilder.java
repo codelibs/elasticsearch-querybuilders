@@ -26,7 +26,6 @@ import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.search.aggregations.AbstractAggregationBuilder;
-import org.codelibs.elasticsearch.search.aggregations.AggregationExecutionException;
 import org.codelibs.elasticsearch.search.aggregations.AggregatorFactories.Builder;
 import org.codelibs.elasticsearch.search.aggregations.AggregatorFactory;
 import org.codelibs.elasticsearch.search.aggregations.InternalAggregation.Type;

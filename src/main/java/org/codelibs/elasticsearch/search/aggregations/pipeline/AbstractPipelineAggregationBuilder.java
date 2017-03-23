@@ -152,20 +152,26 @@ public abstract class AbstractPipelineAggregationBuilder<PAB extends AbstractPip
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null)
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         @SuppressWarnings("unchecked")
         AbstractPipelineAggregationBuilder<PAB> other = (AbstractPipelineAggregationBuilder<PAB>) obj;
-        if (!Objects.equals(name, other.name))
+        if (!Objects.equals(name, other.name)) {
             return false;
-        if (!Objects.equals(type, other.type))
+        }
+        if (!Objects.equals(type, other.type)) {
             return false;
-        if (!Objects.deepEquals(bucketsPaths, other.bucketsPaths))
+        }
+        if (!Objects.deepEquals(bucketsPaths, other.bucketsPaths)) {
             return false;
-        if (!Objects.equals(metaData, other.metaData))
+        }
+        if (!Objects.equals(metaData, other.metaData)) {
             return false;
+        }
         return doEquals(obj);
     }
 

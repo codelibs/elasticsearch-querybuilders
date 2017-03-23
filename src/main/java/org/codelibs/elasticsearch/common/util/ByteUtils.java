@@ -109,29 +109,45 @@ public enum ByteUtils {
     public static long readVLong(ByteArrayDataInput in) {
         // unwinded because of hotspot bugs, see Lucene's impl
         byte b = in.readByte();
-        if (b >= 0) return b;
+        if (b >= 0) {
+            return b;
+        }
         long i = b & 0x7FL;
         b = in.readByte();
         i |= (b & 0x7FL) << 7;
-        if (b >= 0) return i;
+        if (b >= 0) {
+            return i;
+        }
         b = in.readByte();
         i |= (b & 0x7FL) << 14;
-        if (b >= 0) return i;
+        if (b >= 0) {
+            return i;
+        }
         b = in.readByte();
         i |= (b & 0x7FL) << 21;
-        if (b >= 0) return i;
+        if (b >= 0) {
+            return i;
+        }
         b = in.readByte();
         i |= (b & 0x7FL) << 28;
-        if (b >= 0) return i;
+        if (b >= 0) {
+            return i;
+        }
         b = in.readByte();
         i |= (b & 0x7FL) << 35;
-        if (b >= 0) return i;
+        if (b >= 0) {
+            return i;
+        }
         b = in.readByte();
         i |= (b & 0x7FL) << 42;
-        if (b >= 0) return i;
+        if (b >= 0) {
+            return i;
+        }
         b = in.readByte();
         i |= (b & 0x7FL) << 49;
-        if (b >= 0) return i;
+        if (b >= 0) {
+            return i;
+        }
         b = in.readByte();
         i |= (b & 0xFFL) << 56;
         return i;

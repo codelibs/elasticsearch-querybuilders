@@ -67,8 +67,8 @@ public class IncludeExclude implements Writeable, ToXContent {
     public static final ParseField PARTITION_FIELD = new ParseField("partition");
     public static final ParseField NUM_PARTITIONS_FIELD = new ParseField("num_partitions");
     // Needed to add this seed for a deterministic term hashing policy
-    // otherwise tests fail to get expected results and worse, shards 
-    // can disagree on which terms hash to the required partition. 
+    // otherwise tests fail to get expected results and worse, shards
+    // can disagree on which terms hash to the required partition.
     private static final int HASH_PARTITIONING_SEED = 31;
 
     // for parsing purposes only
@@ -103,7 +103,7 @@ public class IncludeExclude implements Writeable, ToXContent {
         } else if (token == XContentParser.Token.START_ARRAY) {
             return new IncludeExclude(new TreeSet<>(parseArrayToSet(parser)), null);
         } else if (token == XContentParser.Token.START_OBJECT) {
-            ParseFieldMatcher parseFieldMatcher = context.getParseFieldMatcher();
+            context.getParseFieldMatcher();
             String currentFieldName = null;
             Integer partition = null, numPartitions = null;
             while ((token = parser.nextToken()) != XContentParser.Token.END_OBJECT) {
@@ -179,6 +179,7 @@ public class IncludeExclude implements Writeable, ToXContent {
             }
         }
 
+        @Override
         public boolean accept(long value) {
             return ((valids == null) || (valids.contains(value))) && ((invalids == null) || (!invalids.contains(value)));
         }

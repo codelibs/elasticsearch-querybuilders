@@ -20,26 +20,16 @@
 package org.codelibs.elasticsearch.index.mapper;
 
 import org.apache.lucene.index.FieldInfo;
-import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.util.LegacyNumericUtils;
-import org.codelibs.elasticsearch.ElasticsearchParseException;
-import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.action.fieldstats.FieldStats;
 import org.codelibs.elasticsearch.common.Explicit;
 import org.codelibs.elasticsearch.common.Nullable;
-import org.codelibs.elasticsearch.common.collect.Iterators;
 import org.codelibs.elasticsearch.common.geo.GeoHashUtils;
-import org.codelibs.elasticsearch.common.geo.GeoPoint;
-import org.codelibs.elasticsearch.common.geo.GeoUtils;
 import org.codelibs.elasticsearch.common.logging.DeprecationLogger;
 import org.codelibs.elasticsearch.common.logging.Loggers;
 import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.common.xcontent.support.XContentMapValues;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 import org.codelibs.elasticsearch.index.query.QueryShardException;
@@ -142,11 +132,8 @@ public abstract class BaseGeoPointFieldMapper extends FieldMapper {
                                 Settings indexSettings, FieldMapper latMapper, FieldMapper lonMapper,
                                 FieldMapper geoHashMapper, MultiFields multiFields, Explicit<Boolean> ignoreMalformed, CopyTo copyTo);
 
+        @Override
         public Y build(Mapper.BuilderContext context) {
-            throw new UnsupportedOperationException();
-        }
-
-        private Y buildLegacy(Mapper.BuilderContext context) {
             throw new UnsupportedOperationException();
         }
     }
@@ -208,7 +195,9 @@ public abstract class BaseGeoPointFieldMapper extends FieldMapper {
 
         @Override
         public boolean equals(Object o) {
-            if (!super.equals(o)) return false;
+            if (!super.equals(o)) {
+                return false;
+            }
             LegacyGeoPointFieldType that = (LegacyGeoPointFieldType) o;
             return  geoHashPrecision == that.geoHashPrecision &&
                     geoHashPrefixEnabled == that.geoHashPrefixEnabled &&

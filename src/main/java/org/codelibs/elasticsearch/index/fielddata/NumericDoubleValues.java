@@ -37,7 +37,7 @@ public abstract class NumericDoubleValues {
    * @return numeric value
    */
   public abstract double get(int docID);
-  
+
   // TODO: this interaction with sort comparators is really ugly...
   /** Returns numeric docvalues view of raw double bits */
   public NumericDocValues getRawDoubleValues() {
@@ -48,7 +48,7 @@ public abstract class NumericDoubleValues {
         }
       };
   }
-  
+
   // yes... this is doing what the previous code was doing...
   /** Returns numeric docvalues view of raw float bits */
   public NumericDocValues getRawFloatValues() {

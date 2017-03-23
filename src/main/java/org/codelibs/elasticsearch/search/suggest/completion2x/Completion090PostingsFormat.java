@@ -32,7 +32,6 @@ import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.SegmentReadState;
 import org.apache.lucene.index.SegmentWriteState;
 import org.apache.lucene.index.Terms;
-import org.apache.lucene.search.suggest.Lookup;
 import org.apache.lucene.store.IOContext.Context;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
@@ -46,8 +45,6 @@ import org.apache.lucene.util.Version;
 import org.codelibs.elasticsearch.common.logging.Loggers;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
 import org.codelibs.elasticsearch.search.suggest.completion.CompletionStats;
-import org.codelibs.elasticsearch.search.suggest.completion.CompletionSuggestionContext;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

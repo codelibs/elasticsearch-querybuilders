@@ -19,17 +19,10 @@
 
 package org.codelibs.elasticsearch.search.suggest.completion.context;
 
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.index.DocValuesType;
-import org.apache.lucene.index.IndexableField;
-import org.codelibs.elasticsearch.ElasticsearchParseException;
 import org.codelibs.elasticsearch.common.geo.GeoPoint;
 import org.codelibs.elasticsearch.common.geo.GeoUtils;
 import org.codelibs.elasticsearch.common.unit.DistanceUnit;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
-import org.codelibs.elasticsearch.index.mapper.FieldMapper;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 
 import java.io.IOException;
@@ -39,7 +32,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.codelibs.elasticsearch.common.geo.GeoHashUtils.addNeighbors;
@@ -180,11 +172,19 @@ public class GeoContextMapping extends ContextMapping<GeoQueryContext> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         GeoContextMapping that = (GeoContextMapping) o;
-        if (precision != that.precision) return false;
+        if (precision != that.precision) {
+            return false;
+        }
         return !(fieldName != null ? !fieldName.equals(that.fieldName) : that.fieldName != null);
 
     }

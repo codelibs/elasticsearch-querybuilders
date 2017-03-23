@@ -30,14 +30,12 @@ import org.codelibs.elasticsearch.search.aggregations.AggregatorFactories;
 import org.codelibs.elasticsearch.search.aggregations.InternalAggregation;
 import org.codelibs.elasticsearch.search.aggregations.LeafBucketCollector;
 import org.codelibs.elasticsearch.search.aggregations.LeafBucketCollectorBase;
-import org.codelibs.elasticsearch.search.aggregations.bucket.terms.support.BucketPriorityQueue;
 import org.codelibs.elasticsearch.search.aggregations.bucket.terms.support.IncludeExclude;
 import org.codelibs.elasticsearch.search.aggregations.pipeline.PipelineAggregator;
 import org.codelibs.elasticsearch.search.aggregations.support.ValuesSource;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 

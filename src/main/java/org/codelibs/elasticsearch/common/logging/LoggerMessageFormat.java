@@ -166,8 +166,9 @@ public class LoggerMessageFormat {
             final int len = a.length;
             for (int i = 0; i < len; i++) {
                 deeplyAppendParameter(sbuf, a[i], seen);
-                if (i != len - 1)
+                if (i != len - 1) {
                     sbuf.append(", ");
+                }
             }
             // allow repeats in siblings
             seen.remove(a);
@@ -182,8 +183,9 @@ public class LoggerMessageFormat {
         final int len = a.length;
         for (int i = 0; i < len; i++) {
             sbuf.append(a[i]);
-            if (i != len - 1)
+            if (i != len - 1) {
                 sbuf.append(", ");
+            }
         }
         sbuf.append(']');
     }
@@ -193,8 +195,9 @@ public class LoggerMessageFormat {
         final int len = a.length;
         for (int i = 0; i < len; i++) {
             sbuf.append(a[i]);
-            if (i != len - 1)
+            if (i != len - 1) {
                 sbuf.append(", ");
+            }
         }
         sbuf.append(']');
     }
@@ -204,8 +207,9 @@ public class LoggerMessageFormat {
         final int len = a.length;
         for (int i = 0; i < len; i++) {
             sbuf.append(a[i]);
-            if (i != len - 1)
+            if (i != len - 1) {
                 sbuf.append(", ");
+            }
         }
         sbuf.append(']');
     }
@@ -215,8 +219,9 @@ public class LoggerMessageFormat {
         final int len = a.length;
         for (int i = 0; i < len; i++) {
             sbuf.append(a[i]);
-            if (i != len - 1)
+            if (i != len - 1) {
                 sbuf.append(", ");
+            }
         }
         sbuf.append(']');
     }
@@ -226,8 +231,9 @@ public class LoggerMessageFormat {
         final int len = a.length;
         for (int i = 0; i < len; i++) {
             sbuf.append(a[i]);
-            if (i != len - 1)
+            if (i != len - 1) {
                 sbuf.append(", ");
+            }
         }
         sbuf.append(']');
     }
@@ -237,8 +243,9 @@ public class LoggerMessageFormat {
         final int len = a.length;
         for (int i = 0; i < len; i++) {
             sbuf.append(a[i]);
-            if (i != len - 1)
+            if (i != len - 1) {
                 sbuf.append(", ");
+            }
         }
         sbuf.append(']');
     }
@@ -248,8 +255,9 @@ public class LoggerMessageFormat {
         final int len = a.length;
         for (int i = 0; i < len; i++) {
             sbuf.append(a[i]);
-            if (i != len - 1)
+            if (i != len - 1) {
                 sbuf.append(", ");
+            }
         }
         sbuf.append(']');
     }
@@ -259,8 +267,9 @@ public class LoggerMessageFormat {
         final int len = a.length;
         for (int i = 0; i < len; i++) {
             sbuf.append(a[i]);
-            if (i != len - 1)
+            if (i != len - 1) {
                 sbuf.append(", ");
+            }
         }
         sbuf.append(']');
     }

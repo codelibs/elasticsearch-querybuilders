@@ -18,7 +18,6 @@
  */
 package org.codelibs.elasticsearch.search.suggest.completion;
 
-import org.codelibs.elasticsearch.common.Nullable;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.io.stream.Streamable;
@@ -32,11 +31,6 @@ import java.io.IOException;
  *
  */
 public class CompletionStats implements Streamable, ToXContent {
-
-    private static final String COMPLETION = "completion";
-    private static final String SIZE_IN_BYTES = "size_in_bytes";
-    private static final String SIZE = "size";
-    private static final String FIELDS = "fields";
 
     private long sizeInBytes;
 

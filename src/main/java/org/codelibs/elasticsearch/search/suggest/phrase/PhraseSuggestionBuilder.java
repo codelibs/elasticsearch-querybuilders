@@ -19,7 +19,6 @@
 package org.codelibs.elasticsearch.search.suggest.phrase;
 
 
-import org.apache.lucene.analysis.Analyzer;
 import org.codelibs.elasticsearch.ElasticsearchParseException;
 import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.ParseFieldMatcher;
@@ -27,22 +26,16 @@ import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.io.stream.Writeable;
-import org.codelibs.elasticsearch.common.lucene.BytesRefs;
 import org.codelibs.elasticsearch.common.xcontent.ToXContent;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
-import org.codelibs.elasticsearch.index.analysis.NamedAnalyzer;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
-import org.codelibs.elasticsearch.script.ExecutableScript;
 import org.codelibs.elasticsearch.script.Script;
-import org.codelibs.elasticsearch.script.ScriptContext;
 import org.codelibs.elasticsearch.script.ScriptType;
 import org.codelibs.elasticsearch.search.suggest.SuggestionBuilder;
 import org.codelibs.elasticsearch.search.suggest.SuggestionSearchContext.SuggestionContext;
-import org.codelibs.elasticsearch.search.suggest.phrase.PhraseSuggestionContext.DirectCandidateGenerator;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,7 +45,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Function;
 
 /**
  * Defines the actual suggest command for phrase suggestions ( <tt>phrase</tt>).

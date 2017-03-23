@@ -58,16 +58,6 @@ public class ParameterizedMessage implements Message {
     private void init(final String messagePattern) {
     }
 
-    private void initThrowable(final Object[] params, final int usedParams) {
-        if (params != null) {
-            final int argCount = params.length;
-            if (usedParams < argCount && this.throwable == null && params[argCount - 1] instanceof Throwable) {
-                this.throwable = (Throwable) params[argCount - 1];
-            }
-        }
-    }
-
-
     @Override
     public String getFormat() {
         return messagePattern;

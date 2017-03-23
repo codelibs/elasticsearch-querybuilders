@@ -19,8 +19,6 @@
 
 package org.codelibs.elasticsearch.common.settings;
 
-import org.codelibs.elasticsearch.querybuilders.mock.log4j.message.ParameterizedMessage;
-import org.codelibs.elasticsearch.querybuilders.mock.log4j.util.Supplier;
 import org.apache.lucene.search.spell.LevensteinDistance;
 import org.apache.lucene.util.CollectionUtil;
 import org.codelibs.elasticsearch.ExceptionsHelper;
@@ -47,7 +45,6 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractScopedSettings {
     public static final String ARCHIVED_SETTINGS_PREFIX = "archived.";
-    private Settings lastSettingsApplied = Settings.EMPTY;
     private final List<SettingUpdater<?>> settingUpdaters = new CopyOnWriteArrayList<>();
     private final Map<String, Setting<?>> complexMatchers;
     private final Map<String, Setting<?>> keySettings;
@@ -57,7 +54,6 @@ public abstract class AbstractScopedSettings {
     private static final Pattern AFFIX_KEY_PATTERN = Pattern.compile("^(?:[-\\w]+[.])+(?:[*][.])+[-\\w]+$");
 
     protected AbstractScopedSettings(Settings settings, Set<Setting<?>> settingsSet, Setting.Property scope) {
-        this.lastSettingsApplied = Settings.EMPTY;
         this.scope = scope;
         Map<String, Setting<?>> complexMatchers = new HashMap<>();
         Map<String, Setting<?>> keySettings = new HashMap<>();
@@ -90,7 +86,6 @@ public abstract class AbstractScopedSettings {
     }
 
     protected AbstractScopedSettings(Settings nodeSettings, Settings scopeSettings, AbstractScopedSettings other) {
-        this.lastSettingsApplied = scopeSettings;
         this.scope = other.scope;
         complexMatchers = other.complexMatchers;
         keySettings = other.keySettings;

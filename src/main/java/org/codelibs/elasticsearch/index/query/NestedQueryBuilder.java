@@ -21,14 +21,11 @@ package org.codelibs.elasticsearch.index.query;
 
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.join.BitSetProducer;
 import org.apache.lucene.search.join.ScoreMode;
-import org.apache.lucene.search.join.ToParentBlockJoinQuery;
 import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
-import org.codelibs.elasticsearch.common.lucene.search.Queries;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 

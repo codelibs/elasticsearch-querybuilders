@@ -79,8 +79,9 @@ public abstract class Rounding implements Streamable {
 
         public Builder(TimeValue interval) {
             this.unit = null;
-            if (interval.millis() < 1)
+            if (interval.millis() < 1) {
                 throw new IllegalArgumentException("Zero or negative time interval not supported");
+            }
             this.interval = interval.millis();
         }
 
@@ -224,8 +225,9 @@ public abstract class Rounding implements Streamable {
         }
 
         TimeIntervalRounding(long interval, DateTimeZone timeZone) {
-            if (interval < 1)
+            if (interval < 1) {
                 throw new IllegalArgumentException("Zero or negative time interval not supported");
+            }
             this.interval = interval;
             this.timeZone = timeZone;
         }

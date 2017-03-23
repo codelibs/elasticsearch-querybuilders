@@ -19,20 +19,17 @@
 
 package org.codelibs.elasticsearch.index.query;
 
-import org.apache.lucene.queries.TermsQuery;
 import org.apache.lucene.search.Query;
 import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.Strings;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
-import org.codelibs.elasticsearch.common.lucene.search.Queries;
 import org.codelibs.elasticsearch.common.xcontent.ObjectParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;

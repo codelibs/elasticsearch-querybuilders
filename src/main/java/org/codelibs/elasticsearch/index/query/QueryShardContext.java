@@ -19,40 +19,6 @@
 
 package org.codelibs.elasticsearch.index.query;
 
-import static java.util.Collections.unmodifiableMap;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.function.LongSupplier;
-
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.join.BitSetProducer;
-import org.apache.lucene.search.similarities.Similarity;
-import org.apache.lucene.util.SetOnce;
-import org.codelibs.elasticsearch.Version;
-import org.codelibs.elasticsearch.common.ParsingException;
-import org.codelibs.elasticsearch.common.Strings;
-import org.codelibs.elasticsearch.common.bytes.BytesReference;
-import org.codelibs.elasticsearch.common.lucene.search.Queries;
-import org.codelibs.elasticsearch.common.xcontent.NamedXContentRegistry;
-import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
-import org.codelibs.elasticsearch.index.mapper.ContentPath;
-import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-import org.codelibs.elasticsearch.index.mapper.Mapper;
-import org.codelibs.elasticsearch.index.mapper.TextFieldMapper;
-import org.codelibs.elasticsearch.index.query.support.NestedScope;
-import org.codelibs.elasticsearch.script.CompiledScript;
-import org.codelibs.elasticsearch.script.ExecutableScript;
-import org.codelibs.elasticsearch.script.Script;
-import org.codelibs.elasticsearch.script.ScriptContext;
-import org.codelibs.elasticsearch.script.SearchScript;
-
 /**
  * Context object used to create lucene queries on the shard level.
  */

@@ -19,11 +19,9 @@
 package org.codelibs.elasticsearch.search.suggest.completion;
 
 import org.apache.lucene.search.suggest.document.CompletionQuery;
-import org.codelibs.elasticsearch.common.unit.Fuzziness;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 import org.codelibs.elasticsearch.search.suggest.SuggestionSearchContext;
 import org.codelibs.elasticsearch.search.suggest.completion.context.ContextMapping;
-import org.codelibs.elasticsearch.search.suggest.completion.context.ContextMappings;
 import org.codelibs.elasticsearch.search.suggest.completion2x.context.ContextMapping.ContextQuery;
 
 import java.util.Collections;

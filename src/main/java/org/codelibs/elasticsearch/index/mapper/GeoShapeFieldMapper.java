@@ -18,11 +18,9 @@
  */
 package org.codelibs.elasticsearch.index.mapper;
 
-import org.apache.lucene.document.Field;
 import org.apache.lucene.index.FieldInfo;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.spatial.prefix.PrefixTreeStrategy;
 import org.apache.lucene.spatial.prefix.RecursivePrefixTreeStrategy;
@@ -31,7 +29,6 @@ import org.apache.lucene.spatial.prefix.tree.GeohashPrefixTree;
 import org.apache.lucene.spatial.prefix.tree.PackedQuadPrefixTree;
 import org.apache.lucene.spatial.prefix.tree.QuadPrefixTree;
 import org.apache.lucene.spatial.prefix.tree.SpatialPrefixTree;
-import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.action.fieldstats.FieldStats;
 import org.codelibs.elasticsearch.common.Explicit;
 import org.codelibs.elasticsearch.common.geo.GeoUtils;
@@ -41,20 +38,11 @@ import org.codelibs.elasticsearch.common.geo.builders.ShapeBuilder.Orientation;
 import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.unit.DistanceUnit;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.common.xcontent.support.XContentMapValues;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 import org.codelibs.elasticsearch.index.query.QueryShardException;
-import org.locationtech.spatial4j.shape.Point;
-import org.locationtech.spatial4j.shape.Shape;
-import org.locationtech.spatial4j.shape.jts.JtsGeometry;
-
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-
-import static org.codelibs.elasticsearch.common.xcontent.support.XContentMapValues.lenientNodeBooleanValue;
 
 
 /**
@@ -197,7 +185,9 @@ public class GeoShapeFieldMapper extends FieldMapper {
 
         @Override
         public boolean equals(Object o) {
-            if (!super.equals(o)) return false;
+            if (!super.equals(o)) {
+                return false;
+            }
             GeoShapeFieldType that = (GeoShapeFieldType) o;
             return treeLevels == that.treeLevels &&
                 precisionInMeters == that.precisionInMeters &&

@@ -552,7 +552,7 @@ public final class HyperLogLogPlusPlus implements Releasable {
         }
         return counts;
     }
-    
+
     /** looks and smells like the old openbitset. */
     static class OpenBitSet {
         LongBitSet impl = new LongBitSet(64);
@@ -564,16 +564,16 @@ public final class HyperLogLogPlusPlus implements Releasable {
                 return false;
             }
         }
-        
+
         void ensureCapacity(long bit) {
             impl = LongBitSet.ensureCapacity(impl, bit);
         }
-        
+
         void set(long bit) {
             ensureCapacity(bit);
             impl.set(bit);
         }
-        
+
         void clear(long bit) {
             ensureCapacity(bit);
             impl.clear(bit);

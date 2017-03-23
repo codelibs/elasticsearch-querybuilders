@@ -340,22 +340,30 @@ public abstract class ValuesSourceAggregationBuilder<VS extends ValuesSource, AB
     @Override
     protected final boolean doEquals(Object obj) {
         ValuesSourceAggregationBuilder<?, ?> other = (ValuesSourceAggregationBuilder<?, ?>) obj;
-        if (!Objects.equals(field, other.field))
+        if (!Objects.equals(field, other.field)) {
             return false;
-        if (!Objects.equals(format, other.format))
+        }
+        if (!Objects.equals(format, other.format)) {
             return false;
-        if (!Objects.equals(missing, other.missing))
+        }
+        if (!Objects.equals(missing, other.missing)) {
             return false;
-        if (!Objects.equals(script, other.script))
+        }
+        if (!Objects.equals(script, other.script)) {
             return false;
-        if (!Objects.equals(targetValueType, other.targetValueType))
+        }
+        if (!Objects.equals(targetValueType, other.targetValueType)) {
             return false;
-        if (!Objects.equals(timeZone, other.timeZone))
+        }
+        if (!Objects.equals(timeZone, other.timeZone)) {
             return false;
-        if (!Objects.equals(valueType, other.valueType))
+        }
+        if (!Objects.equals(valueType, other.valueType)) {
             return false;
-        if (!Objects.equals(valuesSourceType, other.valuesSourceType))
+        }
+        if (!Objects.equals(valuesSourceType, other.valuesSourceType)) {
             return false;
+        }
         return innerEquals(obj);
     }
 

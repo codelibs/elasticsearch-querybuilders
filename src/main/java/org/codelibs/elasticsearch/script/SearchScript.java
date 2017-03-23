@@ -31,7 +31,7 @@ public interface SearchScript {
 
     /**
      * Indicates if document scores may be needed by this {@link SearchScript}.
-     * 
+     *
      * @return {@code true} if scores are needed.
      */
     boolean needsScores();

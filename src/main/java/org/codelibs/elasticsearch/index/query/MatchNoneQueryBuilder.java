@@ -20,7 +20,6 @@
 package org.codelibs.elasticsearch.index.query;
 
 import org.apache.lucene.search.Query;
-import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;

@@ -24,16 +24,10 @@ import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.io.stream.Writeable;
 import org.codelibs.elasticsearch.common.xcontent.ToXContent;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.search.profile.aggregation.AggregationProfileShardResult;
-import org.codelibs.elasticsearch.search.profile.aggregation.AggregationProfiler;
 import org.codelibs.elasticsearch.search.profile.query.QueryProfileShardResult;
-import org.codelibs.elasticsearch.search.profile.query.QueryProfiler;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

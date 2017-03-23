@@ -20,7 +20,6 @@ package org.codelibs.elasticsearch.search.aggregations.metrics.percentiles.tdige
 
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.search.DocValueFormat;
-import org.codelibs.elasticsearch.search.aggregations.metrics.percentiles.InternalPercentile;
 import org.codelibs.elasticsearch.search.aggregations.metrics.percentiles.Percentile;
 import org.codelibs.elasticsearch.search.aggregations.metrics.percentiles.Percentiles;
 import org.codelibs.elasticsearch.search.aggregations.pipeline.PipelineAggregator;
@@ -79,12 +78,10 @@ public class InternalTDigestPercentiles extends AbstractInternalTDigestPercentil
     public static class Iter implements Iterator<Percentile> {
 
         private final double[] percents;
-        private final TDigestState state;
         private int i;
 
         public Iter(double[] percents, TDigestState state) {
             this.percents = percents;
-            this.state = state;
             i = 0;
         }
 

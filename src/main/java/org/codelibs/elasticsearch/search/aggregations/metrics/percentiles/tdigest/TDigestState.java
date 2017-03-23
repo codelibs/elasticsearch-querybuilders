@@ -25,8 +25,6 @@ import java.io.IOException;
 
 public class TDigestState {
 
-    private final double compression;
-
     public TDigestState(double compression) {
         throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }

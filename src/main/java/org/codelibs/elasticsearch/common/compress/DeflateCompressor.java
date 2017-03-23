@@ -88,6 +88,7 @@ public class DeflateCompressor implements Compressor {
         decompressedIn = new BufferedInputStream(decompressedIn, BUFFER_SIZE);
         return new InputStreamStreamInput(decompressedIn) {
             final AtomicBoolean closed = new AtomicBoolean(false);
+            @Override
             public void close() throws IOException {
                 try {
                     super.close();
@@ -111,6 +112,7 @@ public class DeflateCompressor implements Compressor {
         compressedOut = new BufferedOutputStream(compressedOut, BUFFER_SIZE);
         return new OutputStreamStreamOutput(compressedOut) {
             final AtomicBoolean closed = new AtomicBoolean(false);
+            @Override
             public void close() throws IOException {
                 try {
                     super.close();

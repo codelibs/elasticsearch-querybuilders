@@ -25,8 +25,8 @@ import org.apache.lucene.search.vectorhighlight.FieldFragList.WeightedFragInfo;
 import org.codelibs.elasticsearch.index.mapper.FieldMapper;
 
 /**
- * Direct Subclass of Lucene's org.apache.lucene.search.vectorhighlight.SimpleFragmentsBuilder 
- * that corrects offsets for broken analysis chains. 
+ * Direct Subclass of Lucene's org.apache.lucene.search.vectorhighlight.SimpleFragmentsBuilder
+ * that corrects offsets for broken analysis chains.
  */
 public class SimpleFragmentsBuilder extends org.apache.lucene.search.vectorhighlight.SimpleFragmentsBuilder {
     protected final FieldMapper mapper;
@@ -36,7 +36,7 @@ public class SimpleFragmentsBuilder extends org.apache.lucene.search.vectorhighl
         super(preTags, postTags, boundaryScanner);
         this.mapper = mapper;
     }
-    
+
     @Override
     protected String makeFragment( StringBuilder buffer, int[] index, Field[] values, WeightedFragInfo fragInfo,
             String[] preTags, String[] postTags, Encoder encoder ){

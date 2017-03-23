@@ -148,11 +148,13 @@ public class GeometryCollectionBuilder extends ShapeBuilder {
             shapes.add(shape.build());
         }
 
-        if (shapes.size() == 1)
+        if (shapes.size() == 1) {
             return shapes.get(0);
-        else
+        }
+        else {
             return new XShapeCollection<>(shapes, SPATIAL_CONTEXT);
         //note: ShapeCollection is probably faster than a Multi* geom.
+        }
     }
 
     @Override

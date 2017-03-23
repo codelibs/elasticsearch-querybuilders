@@ -188,8 +188,8 @@ public class FiltersAggregator extends BucketsAggregator {
     public InternalAggregation buildEmptyAggregation() {
         InternalAggregations subAggs = buildEmptySubAggregations();
         List<InternalFilters.InternalBucket> buckets = new ArrayList<>(filters.length);
-        for (int i = 0; i < keys.length; i++) {
-            InternalFilters.InternalBucket bucket = new InternalFilters.InternalBucket(keys[i], 0, subAggs, keyed);
+        for (String key : keys) {
+            InternalFilters.InternalBucket bucket = new InternalFilters.InternalBucket(key, 0, subAggs, keyed);
             buckets.add(bucket);
         }
 

@@ -19,9 +19,7 @@
 
 package org.codelibs.elasticsearch.index.query;
 
-import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.ParseField;
@@ -33,10 +31,8 @@ import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.joda.DateMathParser;
 import org.codelibs.elasticsearch.common.joda.FormatDateTimeFormatter;
 import org.codelibs.elasticsearch.common.joda.Joda;
-import org.codelibs.elasticsearch.common.lucene.BytesRefs;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.mapper.DateFieldMapper;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
 import org.joda.time.DateTimeZone;
 

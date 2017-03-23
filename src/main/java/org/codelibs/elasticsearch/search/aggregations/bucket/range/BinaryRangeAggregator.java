@@ -187,7 +187,10 @@ public final class BinaryRangeAggregator extends BucketsAggregator {
                 }
                 mid = (lo + hi) >>> 1;
             }
-            if (lo > hi) return lo; // no potential candidate
+            if (lo > hi)
+             {
+                return lo; // no potential candidate
+            }
 
             // binary search the lower bound
             int startLo = lo, startHi = mid;
@@ -280,7 +283,10 @@ public final class BinaryRangeAggregator extends BucketsAggregator {
                 }
                 mid = (lo + hi) >>> 1;
             }
-            if (lo > hi) return lo; // no potential candidate
+            if (lo > hi)
+             {
+                return lo; // no potential candidate
+            }
 
             // binary search the lower bound
             int startLo = lo, startHi = mid;

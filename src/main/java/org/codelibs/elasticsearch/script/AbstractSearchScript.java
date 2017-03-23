@@ -20,8 +20,6 @@
 package org.codelibs.elasticsearch.script;
 
 import org.apache.lucene.search.Scorer;
-import org.codelibs.elasticsearch.index.fielddata.ScriptDocValues;
-
 import java.io.IOException;
 import java.util.Map;
 

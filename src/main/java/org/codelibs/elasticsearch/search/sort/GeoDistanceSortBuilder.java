@@ -19,20 +19,11 @@
 
 package org.codelibs.elasticsearch.search.sort;
 
-import org.apache.lucene.document.LatLonDocValuesField;
-import org.apache.lucene.index.LeafReaderContext;
-import org.apache.lucene.index.NumericDocValues;
-import org.apache.lucene.search.DocIdSetIterator;
-import org.apache.lucene.search.FieldComparator;
-import org.apache.lucene.search.SortField;
-import org.apache.lucene.util.BitSet;
 import org.codelibs.elasticsearch.ElasticsearchParseException;
-import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.ParseFieldMatcher;
 import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.geo.GeoDistance;
-import org.codelibs.elasticsearch.common.geo.GeoDistance.FixedSourceDistance;
 import org.codelibs.elasticsearch.common.geo.GeoPoint;
 import org.codelibs.elasticsearch.common.geo.GeoUtils;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
@@ -41,20 +32,10 @@ import org.codelibs.elasticsearch.common.unit.DistanceUnit;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
-import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
-import org.codelibs.elasticsearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.codelibs.elasticsearch.index.fielddata.IndexGeoPointFieldData;
-import org.codelibs.elasticsearch.index.fielddata.MultiGeoPointValues;
-import org.codelibs.elasticsearch.index.fielddata.NumericDoubleValues;
-import org.codelibs.elasticsearch.index.fielddata.SortedNumericDoubleValues;
-import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
 import org.codelibs.elasticsearch.index.query.GeoValidationMethod;
 import org.codelibs.elasticsearch.index.query.QueryBuilder;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
-import org.codelibs.elasticsearch.search.DocValueFormat;
-import org.codelibs.elasticsearch.search.MultiValueMode;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -398,7 +379,7 @@ public class GeoDistanceSortBuilder extends SortBuilder<GeoDistanceSortBuilder> 
      */
     public static GeoDistanceSortBuilder fromXContent(QueryParseContext context, String elementName) throws IOException {
         XContentParser parser = context.parser();
-        ParseFieldMatcher parseFieldMatcher = context.getParseFieldMatcher();
+        context.getParseFieldMatcher();
         String fieldName = null;
         List<GeoPoint> geoPoints = new ArrayList<>();
         DistanceUnit unit = DistanceUnit.DEFAULT;

@@ -20,8 +20,6 @@
 package org.codelibs.elasticsearch.common.io.stream;
 
 import org.codelibs.elasticsearch.ElasticsearchException;
-import org.codelibs.elasticsearch.ExceptionsHelper;
-
 import java.io.IOException;
 
 /**

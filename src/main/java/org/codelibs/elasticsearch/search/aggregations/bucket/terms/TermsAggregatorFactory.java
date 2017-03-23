@@ -19,10 +19,8 @@
 
 package org.codelibs.elasticsearch.search.aggregations.bucket.terms;
 
-import org.apache.lucene.search.IndexSearcher;
 import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.search.DocValueFormat;
-import org.codelibs.elasticsearch.search.aggregations.AggregationExecutionException;
 import org.codelibs.elasticsearch.search.aggregations.Aggregator;
 import org.codelibs.elasticsearch.search.aggregations.Aggregator.SubAggCollectionMode;
 import org.codelibs.elasticsearch.search.aggregations.AggregatorFactories;
@@ -30,8 +28,6 @@ import org.codelibs.elasticsearch.search.aggregations.AggregatorFactory;
 import org.codelibs.elasticsearch.search.aggregations.InternalAggregation;
 import org.codelibs.elasticsearch.search.aggregations.InternalAggregation.Type;
 import org.codelibs.elasticsearch.search.aggregations.NonCollectingAggregator;
-import org.codelibs.elasticsearch.search.aggregations.bucket.BucketUtils;
-import org.codelibs.elasticsearch.search.aggregations.bucket.terms.TermsAggregator.BucketCountThresholds;
 import org.codelibs.elasticsearch.search.aggregations.bucket.terms.support.IncludeExclude;
 import org.codelibs.elasticsearch.search.aggregations.pipeline.PipelineAggregator;
 import org.codelibs.elasticsearch.search.aggregations.support.ValuesSource;
@@ -46,23 +42,14 @@ import java.util.Map;
 public class TermsAggregatorFactory extends ValuesSourceAggregatorFactory<ValuesSource, TermsAggregatorFactory> {
 
     private final Terms.Order order;
-    private final IncludeExclude includeExclude;
-    private final String executionHint;
-    private final SubAggCollectionMode collectMode;
     private final TermsAggregator.BucketCountThresholds bucketCountThresholds;
-    private boolean showTermDocCountError;
-
     public TermsAggregatorFactory(String name, Type type, ValuesSourceConfig<ValuesSource> config, Terms.Order order,
             IncludeExclude includeExclude, String executionHint, SubAggCollectionMode collectMode,
             TermsAggregator.BucketCountThresholds bucketCountThresholds, boolean showTermDocCountError, SearchContext context,
             AggregatorFactory<?> parent, AggregatorFactories.Builder subFactoriesBuilder, Map<String, Object> metaData) throws IOException {
         super(name, type, config, context, parent, subFactoriesBuilder, metaData);
         this.order = order;
-        this.includeExclude = includeExclude;
-        this.executionHint = executionHint;
-        this.collectMode = collectMode;
         this.bucketCountThresholds = bucketCountThresholds;
-        this.showTermDocCountError = showTermDocCountError;
     }
 
     @Override

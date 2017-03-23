@@ -22,17 +22,13 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.suggest.Lookup;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
-import org.codelibs.elasticsearch.common.lucene.Lucene;
 import org.codelibs.elasticsearch.common.text.Text;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.search.suggest.Suggest;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

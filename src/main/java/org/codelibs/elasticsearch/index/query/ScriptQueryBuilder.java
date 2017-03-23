@@ -33,7 +33,6 @@ import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.script.LeafSearchScript;
 import org.codelibs.elasticsearch.script.Script;
-import org.codelibs.elasticsearch.script.ScriptContext;
 import org.codelibs.elasticsearch.script.SearchScript;
 
 import java.io.IOException;

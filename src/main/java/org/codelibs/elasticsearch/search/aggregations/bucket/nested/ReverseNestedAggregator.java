@@ -26,7 +26,6 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.join.BitSetProducer;
 import org.apache.lucene.util.BitSet;
 import org.codelibs.elasticsearch.common.ParseField;
-import org.codelibs.elasticsearch.common.lucene.search.Queries;
 import org.codelibs.elasticsearch.search.aggregations.Aggregator;
 import org.codelibs.elasticsearch.search.aggregations.AggregatorFactories;
 import org.codelibs.elasticsearch.search.aggregations.InternalAggregation;

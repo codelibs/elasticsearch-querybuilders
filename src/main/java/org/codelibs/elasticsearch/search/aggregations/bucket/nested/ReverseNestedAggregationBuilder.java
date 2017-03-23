@@ -25,10 +25,7 @@ import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
-import org.codelibs.elasticsearch.index.query.support.NestedScope;
-import org.codelibs.elasticsearch.search.SearchParseException;
 import org.codelibs.elasticsearch.search.aggregations.AbstractAggregationBuilder;
-import org.codelibs.elasticsearch.search.aggregations.AggregationExecutionException;
 import org.codelibs.elasticsearch.search.aggregations.AggregatorFactories.Builder;
 import org.codelibs.elasticsearch.search.aggregations.AggregatorFactory;
 import org.codelibs.elasticsearch.search.aggregations.InternalAggregation.Type;
@@ -84,16 +81,6 @@ public class ReverseNestedAggregationBuilder extends AbstractAggregationBuilder<
     protected AggregatorFactory<?> doBuild(SearchContext context, AggregatorFactory<?> parent, Builder subFactoriesBuilder)
             throws IOException {
         throw new UnsupportedOperationException("querybuilders does not support this operation.");
-    }
-
-    private static NestedAggregatorFactory findNestedAggregatorFactory(AggregatorFactory<?> parent) {
-        if (parent == null) {
-            return null;
-        } else if (parent instanceof NestedAggregatorFactory) {
-            return (NestedAggregatorFactory) parent;
-        } else {
-            return findNestedAggregatorFactory(parent.getParent());
-        }
     }
 
     @Override

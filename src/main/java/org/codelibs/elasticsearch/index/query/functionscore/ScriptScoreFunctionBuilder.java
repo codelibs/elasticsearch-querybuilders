@@ -23,16 +23,11 @@ import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.lucene.search.function.ScoreFunction;
-import org.codelibs.elasticsearch.common.lucene.search.function.ScriptScoreFunction;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
-import org.codelibs.elasticsearch.index.query.QueryShardException;
 import org.codelibs.elasticsearch.script.Script;
-import org.codelibs.elasticsearch.script.ScriptContext;
-import org.codelibs.elasticsearch.script.SearchScript;
-
 import java.io.IOException;
 import java.util.Objects;
 

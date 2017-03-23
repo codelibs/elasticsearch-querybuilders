@@ -4,7 +4,6 @@ import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.common.Nullable;
 import org.codelibs.elasticsearch.common.unit.TimeValue;
 import org.codelibs.elasticsearch.common.xcontent.XContentHelper;
-import org.codelibs.elasticsearch.common.xcontent.yaml.YamlXContent;
 import org.codelibs.elasticsearch.index.query.QueryBuilder;
 import org.codelibs.elasticsearch.script.Script;
 import org.codelibs.elasticsearch.search.SearchExtBuilder;

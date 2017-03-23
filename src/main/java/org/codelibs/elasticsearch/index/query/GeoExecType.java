@@ -28,7 +28,7 @@ import java.io.IOException;
 
 /** Specifies how a geo query should be run. */
 public enum GeoExecType implements Writeable {
-    
+
     MEMORY(0), INDEXED(1);
 
     private final int ordinal;

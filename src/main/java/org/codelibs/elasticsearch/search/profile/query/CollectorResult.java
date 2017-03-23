@@ -140,7 +140,7 @@ public class CollectorResult implements ToXContent, Writeable {
         builder = builder.startObject()
                 .field(NAME.getPreferredName(), getName())
                 .field(REASON.getPreferredName(), getReason())
-                .field(TIME.getPreferredName(), String.format(Locale.US, "%.10gms", (double) (getTime() / 1000000.0)));
+                .field(TIME.getPreferredName(), String.format(Locale.US, "%.10gms", getTime() / 1000000.0));
 
         if (!children.isEmpty()) {
             builder = builder.startArray(CHILDREN.getPreferredName());

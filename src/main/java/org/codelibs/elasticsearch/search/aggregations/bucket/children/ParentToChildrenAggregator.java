@@ -18,11 +18,8 @@
  */
 package org.codelibs.elasticsearch.search.aggregations.bucket.children;
 
-import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.SortedDocValues;
-import org.apache.lucene.search.ConstantScoreScorer;
-import org.apache.lucene.search.DocIdSetIterator;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Scorer;
 import org.apache.lucene.search.Weight;
@@ -53,7 +50,6 @@ public class ParentToChildrenAggregator extends SingleBucketAggregator {
     static final ParseField TYPE_FIELD = new ParseField("type");
 
     private final String parentType;
-    private final Weight childFilter;
     private final Weight parentFilter;
     private final ValuesSource.Bytes.WithOrdinals.ParentChild valuesSource;
 
@@ -65,8 +61,6 @@ public class ParentToChildrenAggregator extends SingleBucketAggregator {
     // Most of the times a parent doesn't have multiple buckets, since there is only one document per parent ord,
     // only in the case of terms agg if a parent doc has multiple terms per field this is needed:
     private final LongObjectPagedHashMap<long[]> parentOrdToOtherBuckets;
-    private boolean multipleBucketsPerParentOrd = false;
-
     public ParentToChildrenAggregator(String name, AggregatorFactories factories, SearchContext context,
                                       Aggregator parent, String parentType, Query childFilter, Query parentFilter,
                                       ValuesSource.Bytes.WithOrdinals.ParentChild valuesSource,
@@ -115,7 +109,6 @@ public class ParentToChildrenAggregator extends SingleBucketAggregator {
                             } else {
                                 parentOrdToOtherBuckets.put(globalOrdinal, new long[]{bucket});
                             }
-                            multipleBucketsPerParentOrd = true;
                         }
                     }
                 }

@@ -29,7 +29,7 @@ public class Iterators {
         }
 
         // explicit generic type argument needed for type inference
-        return new ConcatenatedIterator<T>(iterators);
+        return new ConcatenatedIterator<>(iterators);
     }
 
     static class ConcatenatedIterator<T> implements Iterator<T> {

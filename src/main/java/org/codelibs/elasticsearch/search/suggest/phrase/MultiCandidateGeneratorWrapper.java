@@ -24,7 +24,6 @@ import org.codelibs.elasticsearch.search.suggest.phrase.DirectCandidateGenerator
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Comparator;
 //TODO public for tests
 public final class MultiCandidateGeneratorWrapper extends CandidateGenerator {
 

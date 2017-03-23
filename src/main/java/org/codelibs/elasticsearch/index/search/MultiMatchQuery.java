@@ -19,7 +19,6 @@
 
 package org.codelibs.elasticsearch.index.search;
 
-import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanClause.Occur;
@@ -30,7 +29,6 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.ElasticsearchParseException;
-import org.codelibs.elasticsearch.common.collect.Tuple;
 import org.codelibs.elasticsearch.common.lucene.search.MatchNoDocsQuery;
 import org.codelibs.elasticsearch.common.lucene.search.Queries;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
@@ -41,7 +39,6 @@ import org.codelibs.elasticsearch.index.query.QueryShardContext;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;

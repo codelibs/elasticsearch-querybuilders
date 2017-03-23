@@ -37,7 +37,6 @@ import org.codelibs.elasticsearch.common.lucene.Lucene;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -130,8 +129,9 @@ public class FiltersFunctionScoreQuery extends Query {
             return rewritten;
         }
         Query newQ = subQuery.rewrite(reader);
-        if (newQ == subQuery)
+        if (newQ == subQuery) {
             return this;
+        }
         return new FiltersFunctionScoreQuery(newQ, scoreMode, filterFunctions, maxBoost, minScore, combineFunction);
     }
 

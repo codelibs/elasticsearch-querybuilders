@@ -20,18 +20,9 @@
 package org.codelibs.elasticsearch.search.aggregations.metrics.tophits;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.apache.lucene.search.FieldDoc;
 import org.apache.lucene.search.LeafCollector;
-import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.Scorer;
-import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.search.TopDocsCollector;
-import org.apache.lucene.search.TopFieldCollector;
-import org.apache.lucene.search.TopFieldDocs;
-import org.apache.lucene.search.TopScoreDocCollector;
-import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.common.lease.Releasables;
-import org.codelibs.elasticsearch.common.lucene.Lucene;
 import org.codelibs.elasticsearch.common.util.LongObjectPagedHashMap;
 import org.codelibs.elasticsearch.search.aggregations.Aggregator;
 import org.codelibs.elasticsearch.search.aggregations.InternalAggregation;
@@ -40,9 +31,6 @@ import org.codelibs.elasticsearch.search.aggregations.LeafBucketCollectorBase;
 import org.codelibs.elasticsearch.search.aggregations.metrics.MetricsAggregator;
 import org.codelibs.elasticsearch.search.aggregations.pipeline.PipelineAggregator;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
-import org.codelibs.elasticsearch.search.rescore.RescoreSearchContext;
-import org.codelibs.elasticsearch.search.sort.SortAndFormats;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -53,12 +41,7 @@ public class TopHitsAggregator extends MetricsAggregator {
 
     /** Simple wrapper around a top-level collector and the current leaf collector. */
     private static class TopDocsAndLeafCollector {
-        final TopDocsCollector<?> topLevelCollector;
         LeafCollector leafCollector;
-
-        TopDocsAndLeafCollector(TopDocsCollector<?> topLevelCollector) {
-            this.topLevelCollector = topLevelCollector;
-        }
     }
 
     final LongObjectPagedHashMap<TopDocsAndLeafCollector> topDocsCollectors;
@@ -78,17 +61,10 @@ public class TopHitsAggregator extends MetricsAggregator {
     public LeafBucketCollector getLeafCollector(final LeafReaderContext ctx,
             final LeafBucketCollector sub) throws IOException {
 
-        for (LongObjectPagedHashMap.Cursor<TopDocsAndLeafCollector> cursor : topDocsCollectors) {
-            cursor.value.leafCollector = cursor.value.topLevelCollector.getLeafCollector(ctx);
-        }
-
         return new LeafBucketCollectorBase(sub, null) {
-
-            Scorer scorer;
 
             @Override
             public void setScorer(Scorer scorer) throws IOException {
-                this.scorer = scorer;
                 for (LongObjectPagedHashMap.Cursor<TopDocsAndLeafCollector> cursor : topDocsCollectors) {
                     cursor.value.leafCollector.setScorer(scorer);
                 }

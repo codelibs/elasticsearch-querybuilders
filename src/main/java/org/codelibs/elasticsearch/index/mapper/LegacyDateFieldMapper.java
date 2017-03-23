@@ -20,11 +20,8 @@
 package org.codelibs.elasticsearch.index.mapper;
 
 import org.apache.lucene.index.FieldInfo;
-import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.Terms;
-import org.apache.lucene.search.LegacyNumericRangeQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
@@ -37,21 +34,16 @@ import org.codelibs.elasticsearch.common.joda.DateMathParser;
 import org.codelibs.elasticsearch.common.joda.FormatDateTimeFormatter;
 import org.codelibs.elasticsearch.common.joda.Joda;
 import org.codelibs.elasticsearch.common.settings.Settings;
-import org.codelibs.elasticsearch.common.util.LocaleUtils;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
-import org.codelibs.elasticsearch.index.fielddata.IndexNumericFieldData.NumericType;
 import org.codelibs.elasticsearch.index.query.QueryRewriteContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 import org.codelibs.elasticsearch.search.DocValueFormat;
 import org.joda.time.DateTimeZone;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -163,7 +155,9 @@ public class LegacyDateFieldMapper extends LegacyNumberFieldMapper {
 
         @Override
         public boolean equals(Object o) {
-            if (!super.equals(o)) return false;
+            if (!super.equals(o)) {
+                return false;
+            }
             DateFieldType that = (DateFieldType) o;
             return Objects.equals(dateTimeFormatter.format(), that.dateTimeFormatter.format()) &&
                    Objects.equals(dateTimeFormatter.locale(), that.dateTimeFormatter.locale()) &&
@@ -276,11 +270,6 @@ public class LegacyDateFieldMapper extends LegacyNumberFieldMapper {
 
         public Query rangeQuery(Object lowerTerm, Object upperTerm, boolean includeLower, boolean includeUpper,
                 @Nullable DateTimeZone timeZone, @Nullable DateMathParser forcedDateParser, QueryShardContext context) {
-            throw new UnsupportedOperationException();
-        }
-
-        private Query innerRangeQuery(Object lowerTerm, Object upperTerm, boolean includeLower, boolean includeUpper,
-                @Nullable DateTimeZone timeZone, @Nullable DateMathParser forcedDateParser, QueryRewriteContext context) {
             throw new UnsupportedOperationException();
         }
 

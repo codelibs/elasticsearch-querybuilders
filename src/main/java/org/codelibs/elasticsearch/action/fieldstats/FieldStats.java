@@ -368,23 +368,45 @@ public abstract class FieldStats<T> implements Writeable, ToXContent {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         FieldStats<?> that = (FieldStats<?>) o;
 
-        if (type != that.type) return false;
-        if (maxDoc != that.maxDoc) return false;
-        if (docCount != that.docCount) return false;
-        if (sumDocFreq != that.sumDocFreq) return false;
-        if (sumTotalTermFreq != that.sumTotalTermFreq) return false;
-        if (isSearchable != that.isSearchable) return false;
-        if (isAggregatable != that.isAggregatable) return false;
-        if (hasMinMax != that.hasMinMax) return false;
+        if (type != that.type) {
+            return false;
+        }
+        if (maxDoc != that.maxDoc) {
+            return false;
+        }
+        if (docCount != that.docCount) {
+            return false;
+        }
+        if (sumDocFreq != that.sumDocFreq) {
+            return false;
+        }
+        if (sumTotalTermFreq != that.sumTotalTermFreq) {
+            return false;
+        }
+        if (isSearchable != that.isSearchable) {
+            return false;
+        }
+        if (isAggregatable != that.isAggregatable) {
+            return false;
+        }
+        if (hasMinMax != that.hasMinMax) {
+            return false;
+        }
         if (hasMinMax == false) {
             return true;
         }
-        if (!minValue.equals(that.minValue)) return false;
+        if (!minValue.equals(that.minValue)) {
+            return false;
+        }
         return maxValue.equals(that.maxValue);
 
     }
@@ -530,7 +552,9 @@ public abstract class FieldStats<T> implements Writeable, ToXContent {
 
         @Override
         public boolean equals(Object o) {
-            if (!super.equals(o)) return false;
+            if (!super.equals(o)) {
+                return false;
+            }
             Date that = (Date) o;
             return Objects.equals(formatter == null ? null : formatter.format(),
                 that.formatter == null ? null : that.formatter.format());

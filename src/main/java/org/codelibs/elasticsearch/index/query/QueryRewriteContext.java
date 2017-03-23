@@ -24,12 +24,7 @@ import org.codelibs.elasticsearch.common.ParseFieldMatcherSupplier;
 import org.codelibs.elasticsearch.common.bytes.BytesReference;
 import org.codelibs.elasticsearch.common.xcontent.NamedXContentRegistry;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.script.ExecutableScript;
 import org.codelibs.elasticsearch.script.Script;
-import org.codelibs.elasticsearch.script.ScriptContext;
-import org.codelibs.elasticsearch.script.ScriptSettings;
-
-import java.util.function.LongSupplier;
 
 /**
  * Context object used to rewrite {@link QueryBuilder} instances into simplified version.

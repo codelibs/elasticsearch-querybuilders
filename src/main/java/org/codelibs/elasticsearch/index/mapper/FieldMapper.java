@@ -21,10 +21,8 @@ package org.codelibs.elasticsearch.index.mapper;
 
 import com.carrotsearch.hppc.cursors.ObjectCursor;
 import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
-import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexOptions;
-import org.apache.lucene.index.IndexableField;
 import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.collect.ImmutableOpenMap;
 import org.codelibs.elasticsearch.common.lucene.Lucene;
@@ -38,7 +36,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -534,12 +531,7 @@ public abstract class FieldMapper extends Mapper implements Cloneable {
             if (!mappers.isEmpty()) {
                 // sort the mappers so we get consistent serialization format
                 Mapper[] sortedMappers = mappers.values().toArray(Mapper.class);
-                Arrays.sort(sortedMappers, new Comparator<Mapper>() {
-                    @Override
-                    public int compare(Mapper o1, Mapper o2) {
-                        return o1.name().compareTo(o2.name());
-                    }
-                });
+                Arrays.sort(sortedMappers, (o1, o2) -> o1.name().compareTo(o2.name()));
                 builder.startObject("fields");
                 for (Mapper mapper : sortedMappers) {
                     mapper.toXContent(builder, params);

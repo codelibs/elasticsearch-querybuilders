@@ -19,32 +19,8 @@
 
 package org.codelibs.elasticsearch.search.fetch.subphase;
 
-import org.apache.lucene.index.LeafReader;
-import org.apache.lucene.index.LeafReaderContext;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause.Occur;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.ConstantScoreScorer;
-import org.apache.lucene.search.ConstantScoreWeight;
-import org.apache.lucene.search.DocIdSetIterator;
-import org.apache.lucene.search.DocValuesTermsQuery;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Scorer;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.search.TopDocsCollector;
-import org.apache.lucene.search.TopFieldCollector;
-import org.apache.lucene.search.TopScoreDocCollector;
-import org.apache.lucene.search.Weight;
-import org.apache.lucene.search.join.BitSetProducer;
-import org.apache.lucene.util.BitSet;
-import org.codelibs.elasticsearch.ExceptionsHelper;
-import org.codelibs.elasticsearch.common.lucene.Lucene;
-import org.codelibs.elasticsearch.common.lucene.search.Queries;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;

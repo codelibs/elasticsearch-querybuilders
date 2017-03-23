@@ -19,32 +19,19 @@
 
 package org.codelibs.elasticsearch.index.mapper;
 
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.SortedSetDocValuesField;
 import org.apache.lucene.index.IndexOptions;
-import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
-import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.lucene.Lucene;
 import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.common.xcontent.support.XContentMapValues;
 import org.codelibs.elasticsearch.index.analysis.NamedAnalyzer;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-
 import static java.util.Collections.unmodifiableList;
 
 /**
@@ -143,6 +130,7 @@ public final class KeywordFieldMapper extends FieldMapper {
             this.normalizer = ref.normalizer;
         }
 
+        @Override
         public KeywordFieldType clone() {
             return new KeywordFieldType(this);
         }

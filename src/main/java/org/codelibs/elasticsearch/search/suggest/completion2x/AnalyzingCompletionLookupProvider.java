@@ -19,8 +19,6 @@
 
 package org.codelibs.elasticsearch.search.suggest.completion2x;
 
-import com.carrotsearch.hppc.ObjectLongHashMap;
-
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.codecs.FieldsConsumer;
@@ -28,8 +26,6 @@ import org.apache.lucene.index.PostingsEnum;
 import org.apache.lucene.index.Fields;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
-import org.apache.lucene.search.DocIdSetIterator;
-import org.apache.lucene.search.suggest.Lookup;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.util.Accountable;
@@ -37,28 +33,16 @@ import org.apache.lucene.util.Accountables;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.IOUtils;
 import org.apache.lucene.util.IntsRef;
-import org.apache.lucene.util.automaton.Automaton;
-import org.apache.lucene.util.fst.ByteSequenceOutputs;
 import org.apache.lucene.util.fst.FST;
-import org.apache.lucene.util.fst.PairOutputs;
 import org.apache.lucene.util.fst.PairOutputs.Pair;
-import org.apache.lucene.util.fst.PositiveIntOutputs;
-import org.codelibs.elasticsearch.common.regex.Regex;
-import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-import org.codelibs.elasticsearch.search.suggest.completion.CompletionStats;
-import org.codelibs.elasticsearch.search.suggest.completion.CompletionSuggestionContext;
-import org.codelibs.elasticsearch.search.suggest.completion.FuzzyOptions;
 import org.codelibs.elasticsearch.search.suggest.completion2x.Completion090PostingsFormat.CompletionLookupProvider;
 import org.codelibs.elasticsearch.search.suggest.completion2x.Completion090PostingsFormat.LookupFactory;
-import org.codelibs.elasticsearch.search.suggest.completion2x.context.ContextMapping.ContextQuery;
-
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 public class AnalyzingCompletionLookupProvider extends CompletionLookupProvider {
 
@@ -78,8 +62,6 @@ public class AnalyzingCompletionLookupProvider extends CompletionLookupProvider 
 
     private final boolean preserveSep;
     private final boolean preservePositionIncrements;
-    private final int maxSurfaceFormsPerAnalyzedForm;
-    private final int maxGraphExpansions;
     private final boolean hasPayloads;
 //    private final XAnalyzingSuggester prototype;
 
@@ -87,8 +69,6 @@ public class AnalyzingCompletionLookupProvider extends CompletionLookupProvider 
         this.preserveSep = preserveSep;
         this.preservePositionIncrements = preservePositionIncrements;
         this.hasPayloads = hasPayloads;
-        this.maxSurfaceFormsPerAnalyzedForm = MAX_SURFACE_FORMS_PER_ANALYZED_FORM;
-        this.maxGraphExpansions = MAX_GRAPH_EXPANSIONS;
         throw new UnsupportedOperationException("QueryBuilders does not support this operation.");
         /*int options = preserveSep ? XAnalyzingSuggester.PRESERVE_SEP : 0;
         // needs to fixed in the suggester first before it can be supported
@@ -148,10 +128,8 @@ public class AnalyzingCompletionLookupProvider extends CompletionLookupProvider 
                     if (terms == null) {
                         continue;
                     }
-                    TermsEnum termsEnum = terms.iterator();
-                    PostingsEnum docsEnum = null;
-                    final SuggestPayload spare = new SuggestPayload();
-                    int maxAnalyzedPathsForOneInput = 0;
+                    terms.iterator();
+                    new SuggestPayload();
                     throw new UnsupportedOperationException("QueryBuilders does not support this operation.");
 //                    final XAnalyzingSuggester.XBuilder builder = new XAnalyzingSuggester.XBuilder(
 //                        maxSurfaceFormsPerAnalyzedForm, hasPayloads, XAnalyzingSuggester.PAYLOAD_SEP);

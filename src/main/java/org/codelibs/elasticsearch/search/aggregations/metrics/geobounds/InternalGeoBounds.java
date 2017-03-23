@@ -82,7 +82,7 @@ public class InternalGeoBounds extends InternalMetricsAggregation implements Geo
     public String getWriteableName() {
         return GeoBoundsAggregationBuilder.NAME;
     }
-    
+
     @Override
     public InternalAggregation doReduce(List<InternalAggregation> aggregations, ReduceContext reduceContext) {
         double top = Double.NEGATIVE_INFINITY;
@@ -187,21 +187,21 @@ public class InternalGeoBounds extends InternalMetricsAggregation implements Geo
     private static class BoundingBox {
         private final GeoPoint topLeft;
         private final GeoPoint bottomRight;
-        
+
         public BoundingBox(GeoPoint topLeft, GeoPoint bottomRight) {
             this.topLeft = topLeft;
             this.bottomRight = bottomRight;
         }
-        
+
         public GeoPoint topLeft() {
             return topLeft;
         }
-        
+
         public GeoPoint bottomRight() {
             return bottomRight;
         }
     }
-    
+
     private BoundingBox resolveBoundingBox() {
         if (Double.isInfinite(top)) {
             return null;

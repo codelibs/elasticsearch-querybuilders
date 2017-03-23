@@ -19,10 +19,7 @@
 
 package org.codelibs.elasticsearch.index.query;
 
-import org.apache.lucene.search.BoostQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.spans.SpanBoostQuery;
-import org.apache.lucene.search.spans.SpanQuery;
 import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.action.support.ToXContentToBytes;
 import org.codelibs.elasticsearch.common.ParseField;

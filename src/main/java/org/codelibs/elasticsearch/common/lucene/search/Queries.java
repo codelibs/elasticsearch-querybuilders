@@ -19,15 +19,12 @@
 
 package org.codelibs.elasticsearch.common.lucene.search;
 
-import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.ConstantScoreQuery;
 import org.apache.lucene.search.MatchAllDocsQuery;
-import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.common.Nullable;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -82,7 +79,9 @@ public class Queries {
             return false;
         }
         for (BooleanClause clause : clauses) {
-            if (!clause.isProhibited()) return false;
+            if (!clause.isProhibited()) {
+                return false;
+            }
         }
         return true;
     }

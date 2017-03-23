@@ -22,18 +22,12 @@ package org.codelibs.elasticsearch.search.aggregations.metrics.scripted;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.script.CompiledScript;
-import org.codelibs.elasticsearch.script.ExecutableScript;
 import org.codelibs.elasticsearch.script.Script;
-import org.codelibs.elasticsearch.script.ScriptContext;
 import org.codelibs.elasticsearch.search.aggregations.InternalAggregation;
 import org.codelibs.elasticsearch.search.aggregations.metrics.InternalMetricsAggregation;
 import org.codelibs.elasticsearch.search.aggregations.pipeline.PipelineAggregator;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

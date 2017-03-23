@@ -131,8 +131,7 @@ public final class DirectCandidateGenerator extends CandidateGenerator {
         spellchecker.setThresholdFrequency(this.suggestMode == SuggestMode.SUGGEST_ALWAYS ? 0 : thresholdFrequency(frequency, dictSize));
         SuggestWord[] suggestSimilar = spellchecker.suggestSimilar(new Term(field, term), numCandidates, reader, this.suggestMode);
         List<Candidate> candidates = new ArrayList<>(suggestSimilar.length);
-        for (int i = 0; i < suggestSimilar.length; i++) {
-            SuggestWord suggestWord = suggestSimilar[i];
+        for (SuggestWord suggestWord : suggestSimilar) {
             BytesRef candidate = new BytesRef(suggestWord.string);
             postFilter(new Candidate(candidate, internalFrequency(candidate), suggestWord.score,
                     score(suggestWord.freq, suggestWord.score, dictSize), false), spare, byteSpare, candidates);
@@ -229,8 +228,8 @@ public final class DirectCandidateGenerator extends CandidateGenerator {
             // Merge new candidates into existing ones,
             // deduping:
             final Set<Candidate> set = new HashSet<>(candidates);
-            for (int i = 0; i < this.candidates.length; i++) {
-                set.add(this.candidates[i]);
+            for (Candidate candidate : this.candidates) {
+                set.add(candidate);
             }
             this.candidates = set.toArray(new Candidate[set.size()]);
             // Sort strongest to weakest:
@@ -281,14 +280,24 @@ public final class DirectCandidateGenerator extends CandidateGenerator {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj) return true;
-            if (obj == null) return false;
-            if (getClass() != obj.getClass()) return false;
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
             Candidate other = (Candidate) obj;
             if (term == null) {
-                if (other.term != null) return false;
+                if (other.term != null) {
+                    return false;
+                }
             } else {
-                if (!term.equals(other.term)) return false;
+                if (!term.equals(other.term)) {
+                    return false;
+                }
             }
             return true;
         }

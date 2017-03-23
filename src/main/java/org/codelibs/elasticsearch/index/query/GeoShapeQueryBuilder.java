@@ -19,29 +19,19 @@
 
 package org.codelibs.elasticsearch.index.query;
 
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.ConstantScoreQuery;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.spatial.prefix.PrefixTreeStrategy;
-import org.apache.lucene.spatial.prefix.RecursivePrefixTreeStrategy;
 import org.apache.lucene.spatial.query.SpatialArgs;
 import org.apache.lucene.spatial.query.SpatialOperation;
 import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.geo.ShapeRelation;
-import org.codelibs.elasticsearch.common.geo.ShapesAvailability;
 import org.codelibs.elasticsearch.common.geo.SpatialStrategy;
 import org.codelibs.elasticsearch.common.geo.builders.ShapeBuilder;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
-import org.codelibs.elasticsearch.common.xcontent.NamedXContentRegistry;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.common.xcontent.XContentHelper;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;

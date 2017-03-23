@@ -31,7 +31,7 @@ public interface LeafSearchScript extends ScorerAware, ExecutableScript {
     void setDocument(int doc);
 
     void setSource(Map<String, Object> source);
-    
+
     /**
      * Sets per-document aggregation {@code _value}.
      * <p>

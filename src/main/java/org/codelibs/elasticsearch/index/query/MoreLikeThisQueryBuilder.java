@@ -19,18 +19,10 @@
 
 package org.codelibs.elasticsearch.index.query;
 
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.index.Fields;
-import org.apache.lucene.queries.TermsQuery;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.util.BytesRef;
-import org.codelibs.elasticsearch.ElasticsearchParseException;
 import org.codelibs.elasticsearch.ExceptionsHelper;
 import org.codelibs.elasticsearch.common.Nullable;
 import org.codelibs.elasticsearch.common.ParseField;
-import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.Strings;
 import org.codelibs.elasticsearch.common.bytes.BytesReference;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
@@ -42,7 +34,6 @@ import org.codelibs.elasticsearch.common.lucene.uid.Versions;
 import org.codelibs.elasticsearch.common.xcontent.ToXContent;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentFactory;
-import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentType;
 import org.codelibs.elasticsearch.index.VersionType;
 import org.codelibs.elasticsearch.index.mapper.KeywordFieldMapper.KeywordFieldType;
@@ -51,9 +42,7 @@ import org.codelibs.elasticsearch.index.mapper.StringFieldMapper.StringFieldType
 import org.codelibs.elasticsearch.index.mapper.TextFieldMapper.TextFieldType;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -61,8 +50,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-
-import static org.codelibs.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 /**
  * A more like this query that finds documents that are "like" the provided set of document(s).
@@ -377,8 +364,12 @@ public class MoreLikeThisQueryBuilder extends AbstractQueryBuilder<MoreLikeThisQ
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof Item)) return false;
+            if (this == o) {
+                return true;
+            }
+            if (!(o instanceof Item)) {
+                return false;
+            }
             Item other = (Item) o;
             return Objects.equals(index, other.index) &&
                     Objects.equals(type, other.type) &&

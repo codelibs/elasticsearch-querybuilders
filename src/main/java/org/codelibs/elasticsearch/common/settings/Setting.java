@@ -872,8 +872,12 @@ public class Setting<T> extends ToXContentToBytes {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Setting<?> setting = (Setting<?>) o;
         return Objects.equals(key, setting.key);
     }
@@ -966,8 +970,12 @@ public class Setting<T> extends ToXContentToBytes {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
             SimpleKey simpleKey = (SimpleKey) o;
             return Objects.equals(key, simpleKey.key);
         }
@@ -1068,8 +1076,12 @@ public class Setting<T> extends ToXContentToBytes {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
             AffixKey that = (AffixKey) o;
             return Objects.equals(prefix, that.prefix) &&
                 Objects.equals(suffix, that.suffix);

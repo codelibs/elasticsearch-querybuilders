@@ -28,14 +28,10 @@ import org.codelibs.elasticsearch.common.Strings;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.io.stream.Writeable;
-import org.codelibs.elasticsearch.common.regex.Regex;
 import org.codelibs.elasticsearch.common.unit.Fuzziness;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.query.support.QueryParsers;
 import org.codelibs.elasticsearch.index.search.MatchQuery;
-import org.codelibs.elasticsearch.index.search.MultiMatchQuery;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;

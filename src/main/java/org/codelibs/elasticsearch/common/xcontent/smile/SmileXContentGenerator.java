@@ -20,7 +20,6 @@
 package org.codelibs.elasticsearch.common.xcontent.smile;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.codelibs.elasticsearch.common.Strings;
 import org.codelibs.elasticsearch.common.xcontent.XContentType;
 import org.codelibs.elasticsearch.common.xcontent.json.JsonXContentGenerator;
 

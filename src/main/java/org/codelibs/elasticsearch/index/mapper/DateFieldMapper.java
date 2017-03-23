@@ -19,18 +19,13 @@
 
 package org.codelibs.elasticsearch.index.mapper;
 
-import org.apache.lucene.document.StoredField;
-import org.apache.lucene.document.SortedNumericDocValuesField;
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.index.FieldInfo;
 import org.apache.lucene.index.PointValues;
-import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.search.BoostQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
-import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.action.fieldstats.FieldStats;
 import org.codelibs.elasticsearch.common.Explicit;
 import org.codelibs.elasticsearch.common.Nullable;
@@ -38,10 +33,8 @@ import org.codelibs.elasticsearch.common.joda.DateMathParser;
 import org.codelibs.elasticsearch.common.joda.FormatDateTimeFormatter;
 import org.codelibs.elasticsearch.common.joda.Joda;
 import org.codelibs.elasticsearch.common.settings.Settings;
-import org.codelibs.elasticsearch.common.util.LocaleUtils;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
-import org.codelibs.elasticsearch.index.fielddata.IndexNumericFieldData.NumericType;
 import org.codelibs.elasticsearch.index.mapper.LegacyNumberFieldMapper.Defaults;
 import org.codelibs.elasticsearch.index.query.QueryRewriteContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
@@ -49,10 +42,8 @@ import org.codelibs.elasticsearch.search.DocValueFormat;
 import org.joda.time.DateTimeZone;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 /** A {@link FieldMapper} for ip addresses. */
@@ -157,7 +148,9 @@ public class DateFieldMapper extends FieldMapper {
 
         @Override
         public boolean equals(Object o) {
-            if (!super.equals(o)) return false;
+            if (!super.equals(o)) {
+                return false;
+            }
             DateFieldType that = (DateFieldType) o;
             return Objects.equals(dateTimeFormatter.format(), that.dateTimeFormatter.format()) &&
                    Objects.equals(dateTimeFormatter.locale(), that.dateTimeFormatter.locale());

@@ -19,8 +19,6 @@
 
 package org.codelibs.elasticsearch.index.query;
 
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.BoostQuery;
 import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.automaton.Operations;
@@ -29,22 +27,15 @@ import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
-import org.codelibs.elasticsearch.common.lucene.search.Queries;
-import org.codelibs.elasticsearch.common.regex.Regex;
 import org.codelibs.elasticsearch.common.unit.Fuzziness;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.analysis.NamedAnalyzer;
 import org.codelibs.elasticsearch.index.mapper.*;
-import org.codelibs.elasticsearch.index.query.support.QueryParsers;
 import org.joda.time.DateTimeZone;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;

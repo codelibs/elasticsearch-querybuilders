@@ -21,8 +21,6 @@ package org.codelibs.elasticsearch.search.suggest.completion2x.context;
 
 import org.codelibs.elasticsearch.ElasticsearchParseException;
 import org.codelibs.elasticsearch.Version;
-import org.codelibs.elasticsearch.index.mapper.MapperParsingException;
-
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.SortedMap;

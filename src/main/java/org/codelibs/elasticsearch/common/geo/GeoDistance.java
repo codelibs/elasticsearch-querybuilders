@@ -180,9 +180,13 @@ public enum GeoDistance implements Writeable {
         if (minLat > MIN_LAT && maxLat < MAX_LAT) {
             double deltaLon = Math.asin(Math.sin(radDist) / Math.cos(radLat));
             minLon = radLon - deltaLon;
-            if (minLon < MIN_LON) minLon += 2d * Math.PI;
+            if (minLon < MIN_LON) {
+                minLon += 2d * Math.PI;
+            }
             maxLon = radLon + deltaLon;
-            if (maxLon > MAX_LON) maxLon -= 2d * Math.PI;
+            if (maxLon > MAX_LON) {
+                maxLon -= 2d * Math.PI;
+            }
         } else {
             // a pole is within the distance
             minLat = Math.max(minLat, MIN_LAT);

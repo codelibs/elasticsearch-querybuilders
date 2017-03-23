@@ -40,17 +40,10 @@ import java.util.Map;
 public class ChildrenAggregatorFactory
         extends ValuesSourceAggregatorFactory<ValuesSource.Bytes.WithOrdinals.ParentChild, ChildrenAggregatorFactory> {
 
-    private final String parentType;
-    private final Query parentFilter;
-    private final Query childFilter;
-
     public ChildrenAggregatorFactory(String name, Type type, ValuesSourceConfig<ParentChild> config, String parentType, Query childFilter,
             Query parentFilter, SearchContext context, AggregatorFactory<?> parent, AggregatorFactories.Builder subFactoriesBuilder,
             Map<String, Object> metaData) throws IOException {
         super(name, type, config, context, parent, subFactoriesBuilder, metaData);
-        this.parentType = parentType;
-        this.childFilter = childFilter;
-        this.parentFilter = parentFilter;
     }
 
     @Override

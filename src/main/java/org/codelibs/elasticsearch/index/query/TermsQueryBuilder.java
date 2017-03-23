@@ -19,12 +19,7 @@
 
 package org.codelibs.elasticsearch.index.query;
 
-import org.apache.lucene.index.Term;
-import org.apache.lucene.queries.TermsQuery;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
 import org.codelibs.elasticsearch.common.ParseField;
@@ -34,13 +29,8 @@ import org.codelibs.elasticsearch.common.bytes.BytesReference;
 import org.codelibs.elasticsearch.common.io.stream.BytesStreamOutput;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
-import org.codelibs.elasticsearch.common.lucene.BytesRefs;
-import org.codelibs.elasticsearch.common.lucene.search.Queries;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.common.xcontent.support.XContentMapValues;
-import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-
 import java.io.IOException;
 import java.util.AbstractList;
 import java.util.ArrayList;
@@ -48,7 +38,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -178,7 +167,7 @@ public class TermsQueryBuilder extends AbstractQueryBuilder<TermsQueryBuilder> {
         if (values instanceof List<?>) {
             list = (List<?>) values;
         } else {
-            ArrayList<Object> arrayList = new ArrayList<Object>();
+            ArrayList<Object> arrayList = new ArrayList<>();
             for (Object o : values) {
                 arrayList.add(o);
             }
@@ -226,7 +215,7 @@ public class TermsQueryBuilder extends AbstractQueryBuilder<TermsQueryBuilder> {
                     if (o instanceof BytesRef) {
                         b = (BytesRef) o;
                     } else {
-                        builder.copyChars(o.toString()); 
+                        builder.copyChars(o.toString());
                         b = builder.get();
                     }
                     bytesOut.writeBytes(b.bytes, b.offset, b.length);
@@ -239,11 +228,13 @@ public class TermsQueryBuilder extends AbstractQueryBuilder<TermsQueryBuilder> {
                 }
                 final BytesReference bytes = bytesOut.bytes();
                 return new AbstractList<Object>() {
+                    @Override
                     public Object get(int i) {
                         final int startOffset = i == 0 ? 0 : endOffsets[i-1];
                         final int endOffset = endOffsets[i];
                         return bytes.slice(startOffset, endOffset - startOffset).toBytesRef();
                     }
+                    @Override
                     public int size() {
                         return endOffsets.length;
                     }
@@ -289,18 +280,6 @@ public class TermsQueryBuilder extends AbstractQueryBuilder<TermsQueryBuilder> {
 
     public static Optional<TermsQueryBuilder> fromXContent(QueryParseContext parseContext) throws IOException {
         throw new UnsupportedOperationException("querybuilders does not support this operation.");
-    }
-
-    private static List<Object> parseValues(XContentParser parser) throws IOException {
-        List<Object> values = new ArrayList<>();
-        while (parser.nextToken() != XContentParser.Token.END_ARRAY) {
-            Object value = parser.objectBytes();
-            if (value == null) {
-                throw new ParsingException(parser.getTokenLocation(), "No value specified for terms query");
-            }
-            values.add(value);
-        }
-        return values;
     }
 
     @Override

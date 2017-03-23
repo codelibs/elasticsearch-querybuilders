@@ -19,14 +19,9 @@
 
 package org.codelibs.elasticsearch.index.query;
 
-import org.apache.lucene.document.LatLonPoint;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.spatial.geopoint.document.GeoPointField;
-import org.apache.lucene.spatial.geopoint.search.GeoPointDistanceQuery;
-import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.ParseField;
-import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.Strings;
 import org.codelibs.elasticsearch.common.geo.GeoDistance;
 import org.codelibs.elasticsearch.common.geo.GeoPoint;
@@ -35,10 +30,6 @@ import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
 import org.codelibs.elasticsearch.common.unit.DistanceUnit;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.fielddata.IndexGeoPointFieldData;
-import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
@@ -303,23 +294,6 @@ public class GeoDistanceQueryBuilder extends AbstractQueryBuilder<GeoDistanceQue
                 Objects.equals(optimizeBbox, other.optimizeBbox) &&
                 Objects.equals(geoDistance, other.geoDistance) &&
                 Objects.equals(ignoreUnmapped, other.ignoreUnmapped);
-    }
-
-    private QueryValidationException checkLatLon(boolean indexCreatedBeforeV2_0) {
-        // validation was not available prior to 2.x, so to support bwc percolation queries we only ignore_malformed on 2.x created indexes
-        if (GeoValidationMethod.isIgnoreMalformed(validationMethod) || indexCreatedBeforeV2_0) {
-            return null;
-        }
-
-        QueryValidationException validationException = null;
-        // For everything post 2.0, validate latitude and longitude unless validation was explicitly turned off
-        if (GeoUtils.isValidLatitude(center.getLat()) == false) {
-            validationException = addValidationError("center point latitude is invalid: " + center.getLat(), validationException);
-        }
-        if (GeoUtils.isValidLongitude(center.getLon()) == false) {
-            validationException = addValidationError("center point longitude is invalid: " + center.getLon(), validationException);
-        }
-        return validationException;
     }
 
     @Override

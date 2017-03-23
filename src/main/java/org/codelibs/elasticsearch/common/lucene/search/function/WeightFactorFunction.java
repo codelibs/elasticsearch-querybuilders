@@ -63,7 +63,7 @@ public class WeightFactorFunction extends ScoreFunction {
             public Explanation explainScore(int docId, Explanation subQueryScore) throws IOException {
                 Explanation functionExplanation = leafFunction.explainScore(docId, subQueryScore);
                 return Explanation.match(
-                        functionExplanation.getValue() * (float) getWeight(), "product of:",
+                        functionExplanation.getValue() * getWeight(), "product of:",
                         functionExplanation, explainWeight());
             }
         };

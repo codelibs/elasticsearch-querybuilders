@@ -69,28 +69,4 @@ public class LogConfigurator {
         }
     }
 
-    private static void warnIfOldConfigurationFilePresent(final Path configsPath) throws IOException {
-        // TODO: the warning for unsupported logging configurations can be removed in 6.0.0
-        assert Version.CURRENT.major < 6;
-        final List<String> suffixes = Arrays.asList(".yml", ".yaml", ".json", ".properties");
-        final Set<FileVisitOption> options = EnumSet.of(FileVisitOption.FOLLOW_LINKS);
-        Files.walkFileTree(configsPath, options, Integer.MAX_VALUE, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                final String fileName = file.getFileName().toString();
-                if (fileName.startsWith("logging")) {
-                    for (final String suffix : suffixes) {
-                        if (fileName.endsWith(suffix)) {
-                            Loggers.getLogger(LogConfigurator.class).warn(
-                                "ignoring unsupported logging configuration file [{}], logging is configured via [{}]",
-                                file.toString(),
-                                file.getParent().resolve("log4j2.properties"));
-                        }
-                    }
-                }
-                return FileVisitResult.CONTINUE;
-            }
-        });
-    }
-
 }

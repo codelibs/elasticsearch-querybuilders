@@ -378,7 +378,7 @@ public class PolygonBuilder extends ShapeBuilder {
                     } while (!current.coordinate.equals(prev.coordinate));
                     ++connectedComponents;
                 } else {
-                    visitedEdge.put(current.coordinate, new Tuple<Edge, Edge>(prev, current));
+                    visitedEdge.put(current.coordinate, new Tuple<>(prev, current));
                 }
                 edges.add(current);
                 prev = current;
@@ -438,11 +438,11 @@ public class PolygonBuilder extends ShapeBuilder {
     private static Edge[] edges(Edge[] edges, int numHoles, List<List<Coordinate[]>> components) {
         ArrayList<Edge> mainEdges = new ArrayList<>(edges.length);
 
-        for (int i = 0; i < edges.length; i++) {
-            if (edges[i].component >= 0) {
-                int length = component(edges[i], -(components.size()+numHoles+1), mainEdges);
+        for (Edge edge : edges) {
+            if (edge.component >= 0) {
+                int length = component(edge, -(components.size()+numHoles+1), mainEdges);
                 List<Coordinate[]> component = new ArrayList<>();
-                component.add(coordinates(edges[i], new Coordinate[length+1]));
+                component.add(coordinates(edge, new Coordinate[length+1]));
                 components.add(component);
             }
         }

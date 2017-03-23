@@ -148,6 +148,7 @@ public abstract class InternalSignificantTerms<A extends InternalSignificantTerm
         minDocCount = in.readVLong();
     }
 
+    @Override
     protected final void doWriteTo(StreamOutput out) throws IOException {
         writeSize(requiredSize, out);
         out.writeVLong(minDocCount);

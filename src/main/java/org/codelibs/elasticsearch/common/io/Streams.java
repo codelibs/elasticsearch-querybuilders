@@ -219,12 +219,7 @@ public abstract class Streams {
 
     public static List<String> readAllLines(InputStream input) throws IOException {
         final List<String> lines = new ArrayList<>();
-        readAllLines(input, new Callback<String>() {
-            @Override
-            public void handle(String line) {
-                lines.add(line);
-            }
-        });
+        readAllLines(input, line -> lines.add(line));
         return lines;
     }
 

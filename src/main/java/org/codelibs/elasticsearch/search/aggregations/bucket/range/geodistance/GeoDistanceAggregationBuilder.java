@@ -168,7 +168,7 @@ public class GeoDistanceAggregationBuilder extends ValuesSourceAggregationBuilde
     }
 
     private static Range parseRange(XContentParser parser, QueryParseContext context) throws IOException {
-        ParseFieldMatcher parseFieldMatcher = context.getParseFieldMatcher();
+        context.getParseFieldMatcher();
         String fromAsStr = null;
         String toAsStr = null;
         double from = 0.0;

@@ -19,8 +19,6 @@
 
 package org.codelibs.elasticsearch.search.aggregations.bucket;
 
-import org.codelibs.elasticsearch.common.io.stream.StreamInput;
-import org.codelibs.elasticsearch.common.io.stream.Streamable;
 import org.codelibs.elasticsearch.common.io.stream.Writeable;
 import org.codelibs.elasticsearch.common.util.Comparators;
 import org.codelibs.elasticsearch.common.xcontent.ToXContent;
@@ -29,7 +27,6 @@ import org.codelibs.elasticsearch.search.aggregations.Aggregations;
 import org.codelibs.elasticsearch.search.aggregations.HasAggregations;
 import org.codelibs.elasticsearch.search.aggregations.support.AggregationPath;
 
-import java.io.IOException;
 import java.util.List;
 
 /**

@@ -29,16 +29,11 @@ import org.codelibs.elasticsearch.common.xcontent.ObjectParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.script.Script;
-import org.codelibs.elasticsearch.script.ScriptContext;
-import org.codelibs.elasticsearch.script.SearchScript;
 import org.codelibs.elasticsearch.search.builder.SearchSourceBuilder;
 import org.codelibs.elasticsearch.search.builder.SearchSourceBuilder.ScriptField;
 import org.codelibs.elasticsearch.search.fetch.StoredFieldsContext;
-import org.codelibs.elasticsearch.search.fetch.subphase.DocValueFieldsContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.FetchSourceContext;
-import org.codelibs.elasticsearch.search.fetch.subphase.InnerHitsContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.codelibs.elasticsearch.search.sort.SortAndFormats;
 import org.codelibs.elasticsearch.search.sort.SortBuilder;
 
 import java.io.IOException;
@@ -48,7 +43,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.codelibs.elasticsearch.common.xcontent.XContentParser.Token.END_OBJECT;
@@ -603,8 +597,12 @@ public final class InnerHitBuilder extends ToXContentToBytes implements Writeabl
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         InnerHitBuilder that = (InnerHitBuilder) o;
         return Objects.equals(name, that.name) &&

@@ -65,12 +65,12 @@ class InternalOrder extends Histogram.Order {
     public XContentBuilder toXContent(XContentBuilder builder, Params params) throws IOException {
         return builder.startObject().field(key, asc ? "asc" : "desc").endObject();
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hash(id, key, asc);
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

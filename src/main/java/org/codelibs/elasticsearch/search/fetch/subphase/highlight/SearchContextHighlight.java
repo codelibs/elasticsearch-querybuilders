@@ -39,7 +39,7 @@ public class SearchContextHighlight {
 
     public SearchContextHighlight(Collection<Field> fields) {
         assert fields != null;
-        this.fields = new LinkedHashMap<String, Field>(fields.size());
+        this.fields = new LinkedHashMap<>(fields.size());
         for (Field field : fields) {
             this.fields.put(field.field, field);
         }

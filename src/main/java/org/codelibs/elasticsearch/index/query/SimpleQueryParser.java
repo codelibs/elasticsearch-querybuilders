@@ -31,8 +31,6 @@ import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.SynonymQuery;
 import org.apache.lucene.util.BytesRef;
-import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
@@ -46,14 +44,11 @@ import java.util.ArrayList;
 public class SimpleQueryParser extends org.apache.lucene.queryparser.simple.SimpleQueryParser {
 
     private final Settings settings;
-    private QueryShardContext context;
-
     /** Creates a new parser with custom flags used to enable/disable certain features. */
     public SimpleQueryParser(Analyzer analyzer, Map<String, Float> weights, int flags,
                              Settings settings, QueryShardContext context) {
         super(analyzer, weights, flags);
         this.settings = settings;
-        this.context = context;
     }
 
     /**

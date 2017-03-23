@@ -113,7 +113,7 @@ public class QueryParseContext implements ParseFieldMatcherSupplier {
         Optional<QueryBuilder> result;
         try {
             @SuppressWarnings("unchecked")
-            Optional<QueryBuilder> resultCast = (Optional<QueryBuilder>) parser.namedObject(Optional.class, queryName, this); 
+            Optional<QueryBuilder> resultCast = parser.namedObject(Optional.class, queryName, this);
             result = resultCast;
         } catch (UnknownNamedObjectException e) {
             // Preserve the error message from 5.0 until we have a compellingly better message so we don't break BWC.

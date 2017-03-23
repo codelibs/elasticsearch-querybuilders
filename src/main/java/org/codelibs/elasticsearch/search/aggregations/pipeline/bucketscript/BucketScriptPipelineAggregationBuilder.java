@@ -68,7 +68,7 @@ public class BucketScriptPipelineAggregationBuilder extends AbstractPipelineAggr
     public BucketScriptPipelineAggregationBuilder(StreamInput in) throws IOException {
         super(in, NAME);
         int mapSize = in.readVInt();
-        bucketsPathsMap = new HashMap<String, String>(mapSize);
+        bucketsPathsMap = new HashMap<>(mapSize);
         for (int i = 0; i < mapSize; i++) {
             bucketsPathsMap.put(in.readString(), in.readString());
         }

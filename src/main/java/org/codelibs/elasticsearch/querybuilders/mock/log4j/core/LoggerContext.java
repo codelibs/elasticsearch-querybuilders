@@ -51,9 +51,6 @@ public class LoggerContext extends org.codelibs.elasticsearch.querybuilders.mock
     public void start(final Configuration config) {
     }
 
-    private void setUpShutdownHook() {
-    }
-
     public void close() {
     }
 

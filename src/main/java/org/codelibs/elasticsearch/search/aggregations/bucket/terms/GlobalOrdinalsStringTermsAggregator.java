@@ -39,6 +39,7 @@ import org.codelibs.elasticsearch.search.aggregations.InternalAggregation;
 import org.codelibs.elasticsearch.search.aggregations.InternalAggregations;
 import org.codelibs.elasticsearch.search.aggregations.LeafBucketCollector;
 import org.codelibs.elasticsearch.search.aggregations.LeafBucketCollectorBase;
+import org.codelibs.elasticsearch.search.aggregations.bucket.terms.StringTerms.Bucket;
 import org.codelibs.elasticsearch.search.aggregations.bucket.terms.support.BucketPriorityQueue;
 import org.codelibs.elasticsearch.search.aggregations.bucket.terms.support.IncludeExclude;
 import org.codelibs.elasticsearch.search.aggregations.pipeline.PipelineAggregator;
@@ -180,7 +181,7 @@ public class GlobalOrdinalsStringTermsAggregator extends AbstractStringTermsAggr
         final StringTerms.Bucket[] list = new StringTerms.Bucket[ordered.size()];
         long survivingBucketOrds[] = new long[ordered.size()];
         for (int i = ordered.size() - 1; i >= 0; --i) {
-            final OrdBucket bucket = (OrdBucket) ordered.pop();
+            final OrdBucket bucket = ordered.pop();
             survivingBucketOrds[i] = bucket.bucketOrd;
             BytesRef scratch = new BytesRef();
             copy(globalOrds.lookupOrd(bucket.globalOrd), scratch);
@@ -192,8 +193,8 @@ public class GlobalOrdinalsStringTermsAggregator extends AbstractStringTermsAggr
         runDeferredCollections(survivingBucketOrds);
 
         //Now build the aggs
-        for (int i = 0; i < list.length; i++) {
-            StringTerms.Bucket bucket = list[i];
+        for (Bucket element : list) {
+            StringTerms.Bucket bucket = element;
             bucket.aggregations = bucket.docCount == 0 ? bucketEmptyAggregations() : bucketAggregations(bucket.bucketOrd);
             bucket.docCountError = 0;
         }

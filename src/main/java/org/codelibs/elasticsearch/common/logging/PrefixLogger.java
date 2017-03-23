@@ -39,6 +39,7 @@ class PrefixLogger extends MockLogger {
     PrefixLogger(final ExtendedLogger logger, final String name, final String prefix) {
     }
 
+    @Override
     public void logMessage(final String fqcn, final Level level, final Marker marker, final Message message, final Throwable t) {
         throw new UnsupportedOperationException();
     }

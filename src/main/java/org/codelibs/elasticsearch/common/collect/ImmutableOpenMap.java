@@ -177,12 +177,18 @@ public final class ImmutableOpenMap<KType, VType> implements Iterable<ObjectObje
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ImmutableOpenMap that = (ImmutableOpenMap) o;
 
-        if (!map.equals(that.map)) return false;
+        if (!map.equals(that.map)) {
+            return false;
+        }
 
         return true;
     }

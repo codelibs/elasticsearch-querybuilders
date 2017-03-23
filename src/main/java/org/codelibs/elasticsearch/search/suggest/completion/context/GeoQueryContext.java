@@ -88,14 +88,24 @@ public final class GeoQueryContext implements ToXContent {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         GeoQueryContext that = (GeoQueryContext) o;
 
-        if (boost != that.boost) return false;
-        if (precision != that.precision) return false;
-        if (geoPoint != null ? !geoPoint.equals(that.geoPoint) : that.geoPoint != null) return false;
+        if (boost != that.boost) {
+            return false;
+        }
+        if (precision != that.precision) {
+            return false;
+        }
+        if (geoPoint != null ? !geoPoint.equals(that.geoPoint) : that.geoPoint != null) {
+            return false;
+        }
         return neighbours != null ? neighbours.equals(that.neighbours) : that.neighbours == null;
 
     }

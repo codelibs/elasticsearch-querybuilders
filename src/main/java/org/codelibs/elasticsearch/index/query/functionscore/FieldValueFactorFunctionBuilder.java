@@ -19,7 +19,6 @@
 
 package org.codelibs.elasticsearch.index.query.functionscore;
 
-import org.codelibs.elasticsearch.ElasticsearchException;
 import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
@@ -27,8 +26,6 @@ import org.codelibs.elasticsearch.common.lucene.search.function.FieldValueFactor
 import org.codelibs.elasticsearch.common.lucene.search.function.ScoreFunction;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.fielddata.IndexNumericFieldData;
-import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 

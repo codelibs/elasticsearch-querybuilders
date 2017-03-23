@@ -25,7 +25,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/** 
+/**
  * Utilities for creating a Path from names,
  * or accessing the default FileSystem.
  * <p>
@@ -36,14 +36,14 @@ import java.nio.file.Paths;
 public final class PathUtils {
     /** no instantiation */
     private PathUtils() {}
-    
+
     /** the actual JDK default */
     static final FileSystem ACTUAL_DEFAULT = FileSystems.getDefault();
-    
+
     /** can be changed by tests */
     static volatile FileSystem DEFAULT = ACTUAL_DEFAULT;
-    
-    /** 
+
+    /**
      * Returns a {@code Path} from name components.
      * <p>
      * This works just like {@code Paths.get()}.
@@ -56,8 +56,8 @@ public final class PathUtils {
     public static Path get(String first, String... more) {
         return DEFAULT.getPath(first, more);
     }
-    
-    /** 
+
+    /**
      * Returns a {@code Path} from a URI
      * <p>
      * This works just like {@code Paths.get()}.

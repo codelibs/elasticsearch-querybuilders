@@ -65,7 +65,7 @@ public class GeoHashUtils {
         long b;
         long l = 0L;
         for(char c : hash.toCharArray()) {
-            b = (long)(BASE_32_STRING.indexOf(c));
+            b = (BASE_32_STRING.indexOf(c));
             l |= (b<<(level--*5));
         }
         return (l<<4)|hash.length();
@@ -159,7 +159,7 @@ public class GeoHashUtils {
         long b;
         long l = 0L;
         for(char c : hash.toCharArray()) {
-            b = (long)(BASE_32_STRING.indexOf(c));
+            b = (BASE_32_STRING.indexOf(c));
             l |= (b<<((level--*5) + MORTON_OFFSET));
         }
         return BitUtil.flipFlop(l);

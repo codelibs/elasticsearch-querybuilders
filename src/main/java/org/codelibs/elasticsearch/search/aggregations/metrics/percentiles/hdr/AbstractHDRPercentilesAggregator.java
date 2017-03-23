@@ -20,10 +20,8 @@
 package org.codelibs.elasticsearch.search.aggregations.metrics.percentiles.hdr;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.codelibs.elasticsearch.common.lease.Releasables;
 import org.codelibs.elasticsearch.common.util.ArrayUtils;
 import org.codelibs.elasticsearch.common.util.BigArrays;
-import org.codelibs.elasticsearch.common.util.ObjectArray;
 import org.codelibs.elasticsearch.index.fielddata.SortedNumericDoubleValues;
 import org.codelibs.elasticsearch.search.DocValueFormat;
 import org.codelibs.elasticsearch.search.aggregations.Aggregator;
@@ -68,7 +66,7 @@ public abstract class AbstractHDRPercentilesAggregator extends NumericMetricsAgg
         if (valuesSource == null) {
             return LeafBucketCollector.NO_OP_COLLECTOR;
         }
-        final BigArrays bigArrays = context.bigArrays();
+        context.bigArrays();
         final SortedNumericDoubleValues values = valuesSource.doubleValues(ctx);
         return new LeafBucketCollectorBase(sub, values) {
             @Override

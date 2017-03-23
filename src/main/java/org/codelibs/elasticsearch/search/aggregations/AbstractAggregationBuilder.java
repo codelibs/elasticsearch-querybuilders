@@ -160,20 +160,26 @@ public abstract class AbstractAggregationBuilder<AB extends AbstractAggregationB
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null)
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         @SuppressWarnings("unchecked")
         AbstractAggregationBuilder<AB> other = (AbstractAggregationBuilder<AB>) obj;
-        if (!Objects.equals(name, other.name))
+        if (!Objects.equals(name, other.name)) {
             return false;
-        if (!Objects.equals(type, other.type))
+        }
+        if (!Objects.equals(type, other.type)) {
             return false;
-        if (!Objects.equals(metaData, other.metaData))
+        }
+        if (!Objects.equals(metaData, other.metaData)) {
             return false;
-        if (!Objects.equals(factoriesBuilder, other.factoriesBuilder))
+        }
+        if (!Objects.equals(factoriesBuilder, other.factoriesBuilder)) {
             return false;
+        }
         return doEquals(obj);
     }
 

@@ -19,22 +19,16 @@
 
 package org.codelibs.elasticsearch.search.suggest.completion.context;
 
-import org.apache.lucene.index.IndexableField;
 import org.codelibs.elasticsearch.ElasticsearchParseException;
 import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -128,9 +122,15 @@ public class CategoryContextMapping extends ContextMapping<CategoryQueryContext>
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         CategoryContextMapping mapping = (CategoryContextMapping) o;
         return !(fieldName != null ? !fieldName.equals(mapping.fieldName) : mapping.fieldName != null);
     }

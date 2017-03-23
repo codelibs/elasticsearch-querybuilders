@@ -40,7 +40,9 @@ import org.codelibs.elasticsearch.common.xcontent.ToXContent;
  */
 public abstract class SearchExtBuilder implements NamedWriteable, ToXContent {
 
+    @Override
     public abstract int hashCode();
 
+    @Override
     public abstract boolean equals(Object obj);
 }

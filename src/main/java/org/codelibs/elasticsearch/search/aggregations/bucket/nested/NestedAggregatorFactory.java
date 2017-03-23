@@ -46,17 +46,4 @@ public class NestedAggregatorFactory extends AggregatorFactory<NestedAggregatorF
         throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
-    private static final class Unmapped extends NonCollectingAggregator {
-
-        public Unmapped(String name, SearchContext context, Aggregator parent, List<PipelineAggregator> pipelineAggregators,
-                Map<String, Object> metaData) throws IOException {
-            super(name, context, parent, pipelineAggregators, metaData);
-        }
-
-        @Override
-        public InternalAggregation buildEmptyAggregation() {
-            return new InternalNested(name, 0, buildEmptySubAggregations(), pipelineAggregators(), metaData());
-        }
-    }
-
 }

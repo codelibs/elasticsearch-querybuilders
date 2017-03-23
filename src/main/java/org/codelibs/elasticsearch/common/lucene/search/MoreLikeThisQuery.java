@@ -95,40 +95,56 @@ public class MoreLikeThisQuery extends Query {
             return false;
         }
         MoreLikeThisQuery other = (MoreLikeThisQuery) obj;
-        if (!analyzer.equals(other.analyzer))
+        if (!analyzer.equals(other.analyzer)) {
             return false;
-        if (boostTerms != other.boostTerms)
+        }
+        if (boostTerms != other.boostTerms) {
             return false;
-        if (boostTermsFactor != other.boostTermsFactor)
+        }
+        if (boostTermsFactor != other.boostTermsFactor) {
             return false;
-        if (!(Arrays.equals(likeText, other.likeText)))
+        }
+        if (!(Arrays.equals(likeText, other.likeText))) {
             return false;
-        if (maxDocFreq != other.maxDocFreq)
+        }
+        if (maxDocFreq != other.maxDocFreq) {
             return false;
-        if (maxQueryTerms != other.maxQueryTerms)
+        }
+        if (maxQueryTerms != other.maxQueryTerms) {
             return false;
-        if (maxWordLen != other.maxWordLen)
+        }
+        if (maxWordLen != other.maxWordLen) {
             return false;
-        if (minDocFreq != other.minDocFreq)
+        }
+        if (minDocFreq != other.minDocFreq) {
             return false;
-        if (minTermFrequency != other.minTermFrequency)
+        }
+        if (minTermFrequency != other.minTermFrequency) {
             return false;
-        if (minWordLen != other.minWordLen)
+        }
+        if (minWordLen != other.minWordLen) {
             return false;
-        if (!Arrays.equals(moreLikeFields, other.moreLikeFields))
+        }
+        if (!Arrays.equals(moreLikeFields, other.moreLikeFields)) {
             return false;
-        if (!minimumShouldMatch.equals(other.minimumShouldMatch))
+        }
+        if (!minimumShouldMatch.equals(other.minimumShouldMatch)) {
             return false;
+        }
         if (similarity == null) {
-            if (other.similarity != null)
+            if (other.similarity != null) {
                 return false;
-        } else if (!similarity.equals(other.similarity))
+            }
+        } else if (!similarity.equals(other.similarity)) {
             return false;
+        }
         if (stopWords == null) {
-            if (other.stopWords != null)
+            if (other.stopWords != null) {
                 return false;
-        } else if (!stopWords.equals(other.stopWords))
+            }
+        } else if (!stopWords.equals(other.stopWords)) {
             return false;
+        }
         return true;
     }
 

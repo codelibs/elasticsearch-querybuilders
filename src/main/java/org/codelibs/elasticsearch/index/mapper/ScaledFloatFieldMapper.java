@@ -20,10 +20,7 @@
 package org.codelibs.elasticsearch.index.mapper;
 
 import org.apache.lucene.index.DocValues;
-import org.apache.lucene.index.IndexableField;
-import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.NumericDocValues;
 import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.search.BoostQuery;
@@ -33,30 +30,22 @@ import org.codelibs.elasticsearch.common.Explicit;
 import org.codelibs.elasticsearch.common.settings.Setting;
 import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
 import org.codelibs.elasticsearch.index.fielddata.AtomicNumericFieldData;
 import org.codelibs.elasticsearch.index.fielddata.FieldData;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
-import org.codelibs.elasticsearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.codelibs.elasticsearch.index.fielddata.IndexNumericFieldData;
 import org.codelibs.elasticsearch.index.fielddata.NumericDoubleValues;
 import org.codelibs.elasticsearch.index.fielddata.ScriptDocValues;
 import org.codelibs.elasticsearch.index.fielddata.SortedBinaryDocValues;
 import org.codelibs.elasticsearch.index.fielddata.SortedNumericDoubleValues;
-import org.codelibs.elasticsearch.index.fielddata.fieldcomparator.DoubleValuesComparatorSource;
 import org.codelibs.elasticsearch.index.mapper.LegacyNumberFieldMapper.Defaults;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 import org.codelibs.elasticsearch.search.DocValueFormat;
-import org.codelibs.elasticsearch.search.MultiValueMode;
 import org.joda.time.DateTimeZone;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /** A {@link FieldMapper} for scaled floats. Values are internally multiplied
  *  by a scaling factor and rounded to the closest long. */
@@ -354,74 +343,5 @@ public class ScaledFloatFieldMapper extends FieldMapper {
         } else if (includeDefaults) {
             builder.field("include_in_all", false);
         }
-    }
-
-    private static class ScaledFloatLeafFieldData implements AtomicNumericFieldData {
-
-        private final AtomicNumericFieldData scaledFieldData;
-        private final double scalingFactorInverse;
-
-        ScaledFloatLeafFieldData(AtomicNumericFieldData scaledFieldData, double scalingFactor) {
-            this.scaledFieldData = scaledFieldData;
-            this.scalingFactorInverse = 1d / scalingFactor;
-        }
-
-        @Override
-        public ScriptDocValues.Doubles getScriptValues() {
-            return new ScriptDocValues.Doubles(getDoubleValues());
-        }
-
-        @Override
-        public SortedBinaryDocValues getBytesValues() {
-            return FieldData.toString(getDoubleValues());
-        }
-
-        @Override
-        public long ramBytesUsed() {
-            return scaledFieldData.ramBytesUsed();
-        }
-
-        @Override
-        public void close() {
-            scaledFieldData.close();
-        }
-
-        @Override
-        public SortedNumericDocValues getLongValues() {
-            return FieldData.castToLong(getDoubleValues());
-        }
-
-        @Override
-        public SortedNumericDoubleValues getDoubleValues() {
-            final SortedNumericDocValues values = scaledFieldData.getLongValues();
-            final NumericDocValues singleValues = DocValues.unwrapSingleton(values);
-            if (singleValues != null) {
-                return FieldData.singleton(new NumericDoubleValues() {
-                    @Override
-                    public double get(int docID) {
-                        return singleValues.get(docID) * scalingFactorInverse;
-                    }
-                }, DocValues.unwrapSingletonBits(values));
-            } else {
-                return new SortedNumericDoubleValues() {
-
-                    @Override
-                    public double valueAt(int index) {
-                        return values.valueAt(index) * scalingFactorInverse;
-                    }
-
-                    @Override
-                    public void setDocument(int doc) {
-                        values.setDocument(doc);
-                    }
-
-                    @Override
-                    public int count() {
-                        return values.count();
-                    }
-                };
-            }
-        }
-
     }
 }

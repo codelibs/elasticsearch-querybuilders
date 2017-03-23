@@ -30,7 +30,6 @@ import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.index.query.QueryShardException;
 import org.codelibs.elasticsearch.script.ExecutableScript;
 import org.codelibs.elasticsearch.script.Script;
-import org.codelibs.elasticsearch.script.ScriptContext;
 import org.codelibs.elasticsearch.search.aggregations.InternalAggregation;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
 

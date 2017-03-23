@@ -25,9 +25,7 @@ import java.util.List;
 
 import org.apache.lucene.analysis.LegacyNumericTokenStream;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.SortedNumericDocValuesField;
 import org.apache.lucene.index.IndexOptions;
-import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.common.Explicit;
 import org.codelibs.elasticsearch.common.Nullable;
@@ -103,6 +101,7 @@ public abstract class LegacyNumberFieldMapper extends FieldMapper {
             return Defaults.COERCE;
         }
 
+        @Override
         protected void setupFieldType(BuilderContext context) {
             super.setupFieldType(context);
             int precisionStep = fieldType.numericPrecisionStep();
@@ -137,6 +136,7 @@ public abstract class LegacyNumberFieldMapper extends FieldMapper {
             }
         }
 
+        @Override
         public abstract NumberFieldType clone();
 
         @Override

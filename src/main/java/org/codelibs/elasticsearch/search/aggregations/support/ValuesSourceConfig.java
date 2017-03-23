@@ -22,14 +22,10 @@ import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.common.Nullable;
 import org.codelibs.elasticsearch.common.geo.GeoPoint;
 import org.codelibs.elasticsearch.common.geo.GeoUtils;
-import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
 import org.codelibs.elasticsearch.index.fielddata.IndexGeoPointFieldData;
 import org.codelibs.elasticsearch.index.fielddata.IndexNumericFieldData;
-import org.codelibs.elasticsearch.index.fielddata.IndexOrdinalsFieldData;
-import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 import org.codelibs.elasticsearch.script.Script;
-import org.codelibs.elasticsearch.script.ScriptContext;
 import org.codelibs.elasticsearch.script.SearchScript;
 import org.codelibs.elasticsearch.search.DocValueFormat;
 import org.codelibs.elasticsearch.search.aggregations.AggregationExecutionException;
@@ -55,21 +51,6 @@ public class ValuesSourceConfig<VS extends ValuesSource> {
             String format) {
 
         throw new UnsupportedOperationException("querybuilders does not support this operation.");
-    }
-
-    private static SearchScript createScript(Script script, QueryShardContext context) {
-        throw new UnsupportedOperationException("querybuilders does not support this operation.");
-    }
-
-    private static DocValueFormat resolveFormat(@Nullable String format, @Nullable ValueType valueType) {
-        if (valueType == null) {
-            return DocValueFormat.RAW; // we can't figure it out
-        }
-        DocValueFormat valueFormat = valueType.defaultFormat;
-        if (valueFormat instanceof DocValueFormat.Decimal && format != null) {
-            valueFormat = new DocValueFormat.Decimal(format);
-        }
-        return valueFormat;
     }
 
     private final ValuesSourceType valueSourceType;

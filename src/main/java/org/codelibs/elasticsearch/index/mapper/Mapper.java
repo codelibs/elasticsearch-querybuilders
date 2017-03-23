@@ -23,12 +23,8 @@ import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.Nullable;
 import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.xcontent.ToXContent;
-import org.codelibs.elasticsearch.index.query.QueryShardContext;
-
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 public abstract class Mapper implements ToXContent, Iterable<Mapper> {
 

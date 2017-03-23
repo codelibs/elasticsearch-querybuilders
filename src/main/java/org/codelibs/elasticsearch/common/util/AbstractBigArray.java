@@ -82,14 +82,6 @@ abstract class AbstractBigArray extends AbstractArray {
         return ((long) pageIndex(size - 1) + 1) * pageSize() * numBytesPerElement();
     }
 
-    private static <T> T[] grow(T[] array, int minSize) {
-        if (array.length < minSize) {
-            final int newLen = ArrayUtil.oversize(minSize, RamUsageEstimator.NUM_BYTES_OBJECT_REF);
-            array = Arrays.copyOf(array, newLen);
-        }
-        return array;
-    }
-
     protected final byte[] newBytePage(int page) {
         if (recycler != null) {
             throw new UnsupportedOperationException("querybuilders does not support this operation.");

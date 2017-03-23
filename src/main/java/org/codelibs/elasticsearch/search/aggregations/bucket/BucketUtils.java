@@ -28,7 +28,7 @@ public final class BucketUtils {
     /**
      * Heuristic used to determine the size of shard-side PriorityQueues when
      * selecting the top N terms from a distributed index.
-     * 
+     *
      * @param finalSize
      *            The number of terms required in the final reduce phase.
      * @param numberOfShards
@@ -53,5 +53,5 @@ public final class BucketUtils {
         final long shardSampleSize = (long) (finalSize * 1.5 + 10);
         return (int) Math.min(Integer.MAX_VALUE, shardSampleSize);
     }
-    
+
 }

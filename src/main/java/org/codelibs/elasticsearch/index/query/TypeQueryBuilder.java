@@ -19,7 +19,6 @@
 
 package org.codelibs.elasticsearch.index.query;
 
-import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.common.ParseField;

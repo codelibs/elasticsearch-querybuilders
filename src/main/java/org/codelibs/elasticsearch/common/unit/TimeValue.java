@@ -360,7 +360,7 @@ public class TimeValue implements Writeable, Comparable<TimeValue> {
             return Long.parseLong(s);
         } catch (final NumberFormatException e) {
             try {
-                @SuppressWarnings("unused") final double ignored = Double.parseDouble(s);
+                Double.parseDouble(s);
                 throw new ElasticsearchParseException("failed to parse [{}], fractional time values are not supported", e, initialInput);
             } catch (final NumberFormatException ignored) {
                 throw new ElasticsearchParseException("failed to parse [{}]", e, initialInput);
@@ -378,8 +378,12 @@ public class TimeValue implements Writeable, Comparable<TimeValue> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         return this.compareTo(((TimeValue) o)) == 0;
     }

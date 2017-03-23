@@ -74,7 +74,7 @@ public abstract class AbstractTDigestPercentilesAggregator extends NumericMetric
         if (valuesSource == null) {
             return LeafBucketCollector.NO_OP_COLLECTOR;
         }
-        final BigArrays bigArrays = context.bigArrays();
+        context.bigArrays();
         final SortedNumericDoubleValues values = valuesSource.doubleValues(ctx);
         return new LeafBucketCollectorBase(sub, values) {
             @Override

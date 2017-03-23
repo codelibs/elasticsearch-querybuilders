@@ -80,7 +80,7 @@ public abstract class InternalMappedTerms<A extends InternalTerms<A, B>, B exten
 
     @Override
     protected void setDocCountError(long docCountError) {
-        this.docCountError = docCountError; 
+        this.docCountError = docCountError;
     }
 
     @Override

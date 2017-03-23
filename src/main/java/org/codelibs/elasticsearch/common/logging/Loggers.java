@@ -29,12 +29,7 @@ import org.codelibs.elasticsearch.querybuilders.mock.log4j.core.config.Configura
 import org.codelibs.elasticsearch.querybuilders.mock.log4j.core.config.LoggerConfig;
 import org.codelibs.elasticsearch.common.settings.Settings;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-
-import static java.util.Arrays.asList;
-import static org.codelibs.elasticsearch.common.util.CollectionUtils.asArrayList;
 
 /**
  * A set of utilities around Logging.

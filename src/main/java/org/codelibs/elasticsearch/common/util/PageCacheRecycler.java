@@ -20,13 +20,11 @@
 package org.codelibs.elasticsearch.common.util;
 
 import org.codelibs.elasticsearch.common.lease.Releasable;
-import org.codelibs.elasticsearch.common.lease.Releasables;
 import org.codelibs.elasticsearch.common.settings.Setting;
 import org.codelibs.elasticsearch.common.settings.Setting.Property;
 import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.unit.ByteSizeValue;
 
-import java.util.Arrays;
 import java.util.Locale;
 
 /** A recycler of fixed-size pages. */
@@ -51,7 +49,7 @@ public class PageCacheRecycler implements Releasable {
     }
 
     protected PageCacheRecycler(Settings settings) {
-        final Type type = TYPE_SETTING .get(settings);
+        TYPE_SETTING .get(settings);
         final long limit = LIMIT_HEAP_SETTING .get(settings).getBytes();
 
         // We have a global amount of memory that we need to divide across data types.

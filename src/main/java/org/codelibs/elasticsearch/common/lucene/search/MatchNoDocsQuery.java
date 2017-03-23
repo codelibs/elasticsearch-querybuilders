@@ -44,6 +44,7 @@ public class MatchNoDocsQuery extends Query {
         this.reason = reason;
     }
 
+    @Override
     public Weight createWeight(IndexSearcher searcher, boolean needsScores) throws IOException {
         return new ConstantScoreWeight(this) {
             @Override

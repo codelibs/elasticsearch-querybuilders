@@ -34,7 +34,7 @@ import org.codelibs.elasticsearch.common.util.LongArray;
 import java.io.IOException;
 
 /**
- * A frequency terms enum that maintains a cache of docFreq, totalTermFreq, or both for repeated term lookup. 
+ * A frequency terms enum that maintains a cache of docFreq, totalTermFreq, or both for repeated term lookup.
  */
 public class FreqTermsEnum extends FilterableTermsEnum implements Releasable {
 
@@ -84,11 +84,11 @@ public class FreqTermsEnum extends FilterableTermsEnum implements Releasable {
             current = found ? text : null;
             return found;
         }
-        
+
         //Cache miss - gather stats
         final boolean found = super.seekExact(text);
 
-        //Cache the result - found or not. 
+        //Cache the result - found or not.
         if (needDocFreqs) {
             termDocFreqs = bigArrays.grow(termDocFreqs, currentTermOrd + 1);
             termDocFreqs.set(currentTermOrd, currentDocFreq);

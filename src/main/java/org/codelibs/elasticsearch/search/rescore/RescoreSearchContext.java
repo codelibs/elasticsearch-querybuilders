@@ -26,7 +26,7 @@ package org.codelibs.elasticsearch.search.rescore;
 public class RescoreSearchContext {
 
     private int windowSize;
-    
+
     private final String type;
 
     private final Rescorer rescorer;
@@ -37,7 +37,7 @@ public class RescoreSearchContext {
         this.windowSize = windowSize;
         this.rescorer = rescorer;
     }
-    
+
     public Rescorer rescorer() {
         return rescorer;
     }
@@ -53,5 +53,5 @@ public class RescoreSearchContext {
     public int window() {
         return windowSize;
     }
-    
+
 }

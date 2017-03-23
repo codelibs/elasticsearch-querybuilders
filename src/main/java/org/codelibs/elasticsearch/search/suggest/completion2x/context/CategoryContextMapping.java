@@ -19,8 +19,6 @@
 
 package org.codelibs.elasticsearch.search.suggest.completion2x.context;
 
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.util.automaton.Automata;
 import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.Operations;

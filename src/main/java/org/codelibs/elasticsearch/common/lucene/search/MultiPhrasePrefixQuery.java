@@ -20,16 +20,8 @@
 package org.codelibs.elasticsearch.common.lucene.search;
 
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.index.Terms;
-import org.apache.lucene.index.TermsEnum;
-import org.apache.lucene.search.MatchNoDocsQuery;
-import org.apache.lucene.search.MultiPhraseQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.util.BytesRef;
-import org.apache.lucene.util.StringHelper;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,8 +34,6 @@ public class MultiPhrasePrefixQuery extends Query {
     private String field;
     private ArrayList<Term[]> termArrays = new ArrayList<>();
     private ArrayList<Integer> positions = new ArrayList<>();
-    private int maxExpansions = Integer.MAX_VALUE;
-
     private int slop = 0;
 
     /**
@@ -56,7 +46,6 @@ public class MultiPhrasePrefixQuery extends Query {
     }
 
     public void setMaxExpansions(int maxExpansions) {
-        this.maxExpansions = maxExpansions;
     }
 
     /**
@@ -85,8 +74,9 @@ public class MultiPhrasePrefixQuery extends Query {
      */
     public void add(Term[] terms) {
         int position = 0;
-        if (positions.size() > 0)
+        if (positions.size() > 0) {
             position = positions.get(positions.size() - 1) + 1;
+        }
 
         add(terms, position);
     }
@@ -99,14 +89,15 @@ public class MultiPhrasePrefixQuery extends Query {
      * @see org.apache.lucene.search.PhraseQuery.Builder#add(Term, int)
      */
     public void add(Term[] terms, int position) {
-        if (termArrays.size() == 0)
+        if (termArrays.size() == 0) {
             field = terms[0].field();
+        }
 
-        for (int i = 0; i < terms.length; i++) {
-            if (terms[i].field() != field) {
+        for (Term term : terms) {
+            if (term.field() != field) {
                 throw new IllegalArgumentException(
                         "All phrase terms must be in the same field (" + field + "): "
-                                + terms[i]);
+                                + term);
             }
         }
 
@@ -119,8 +110,9 @@ public class MultiPhrasePrefixQuery extends Query {
      */
     public int[] getPositions() {
         int[] result = new int[positions.size()];
-        for (int i = 0; i < positions.size(); i++)
+        for (int i = 0; i < positions.size(); i++) {
             result[i] = positions.get(i);
+        }
         return result;
     }
 

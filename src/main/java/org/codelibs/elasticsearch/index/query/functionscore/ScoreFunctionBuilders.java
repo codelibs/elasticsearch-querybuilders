@@ -83,9 +83,9 @@ public class ScoreFunctionBuilders {
     public static RandomScoreFunctionBuilder randomFunction(String seed) {
         return (new RandomScoreFunctionBuilder()).seed(seed);
     }
-    
+
     public static WeightBuilder weightFactorFunction(float weight) {
-        return (WeightBuilder)(new WeightBuilder().setWeight(weight));
+        return (new WeightBuilder().setWeight(weight));
     }
 
     public static FieldValueFactorFunctionBuilder fieldValueFactorFunction(String fieldName) {

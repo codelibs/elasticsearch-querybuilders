@@ -19,46 +19,22 @@
 package org.codelibs.elasticsearch.search.suggest.phrase;
 
 
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.MultiFields;
-import org.apache.lucene.index.Terms;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.spell.DirectSpellChecker;
 import org.apache.lucene.util.BytesRef;
-import org.apache.lucene.util.BytesRefBuilder;
 import org.apache.lucene.util.CharsRefBuilder;
-import org.codelibs.elasticsearch.common.bytes.BytesReference;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
-import org.codelibs.elasticsearch.common.lucene.Lucene;
 import org.codelibs.elasticsearch.common.text.Text;
-import org.codelibs.elasticsearch.common.xcontent.XContentFactory;
-import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.query.MatchNoneQueryBuilder;
-import org.codelibs.elasticsearch.index.query.ParsedQuery;
-import org.codelibs.elasticsearch.index.query.QueryBuilder;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
-import org.codelibs.elasticsearch.index.query.QueryShardContext;
-import org.codelibs.elasticsearch.script.ExecutableScript;
 import org.codelibs.elasticsearch.search.suggest.Suggest.Suggestion;
 import org.codelibs.elasticsearch.search.suggest.Suggest.Suggestion.Entry;
 import org.codelibs.elasticsearch.search.suggest.Suggest.Suggestion.Entry.Option;
 import org.codelibs.elasticsearch.search.suggest.Suggester;
 import org.codelibs.elasticsearch.search.suggest.SuggestionBuilder;
 import org.codelibs.elasticsearch.search.suggest.SuggestionSearchContext.SuggestionContext;
-import org.codelibs.elasticsearch.search.suggest.phrase.NoisyChannelSpellChecker.Result;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
 
 public final class PhraseSuggester extends Suggester<PhraseSuggestionContext> {
     private final BytesRef SEPARATOR = new BytesRef(" ");
-    private static final String SUGGESTION_TEMPLATE_VAR_NAME = "suggestion";
-
     public static final PhraseSuggester INSTANCE = new PhraseSuggester();
 
     private PhraseSuggester() {}
@@ -75,11 +51,6 @@ public final class PhraseSuggester extends Suggester<PhraseSuggestionContext> {
     public Suggestion<? extends Entry<? extends Option>> innerExecute(String name, PhraseSuggestionContext suggestion,
             IndexSearcher searcher, CharsRefBuilder spare) throws IOException {
         throw new UnsupportedOperationException("querybuilders does not support this operation.");
-    }
-
-    private static PhraseSuggestion.Entry buildResultEntry(SuggestionContext suggestion, CharsRefBuilder spare, double cutoffScore) {
-        spare.copyUTF8Bytes(suggestion.getText());
-        return new PhraseSuggestion.Entry(new Text(spare.toString()), 0, spare.length(), cutoffScore);
     }
 
     @Override

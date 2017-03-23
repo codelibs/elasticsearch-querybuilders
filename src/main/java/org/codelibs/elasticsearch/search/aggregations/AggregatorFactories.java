@@ -27,8 +27,6 @@ import org.codelibs.elasticsearch.search.aggregations.pipeline.PipelineAggregato
 import org.codelibs.elasticsearch.search.aggregations.support.AggregationPath;
 import org.codelibs.elasticsearch.search.aggregations.support.AggregationPath.PathElement;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
-import org.codelibs.elasticsearch.search.profile.aggregation.ProfilingAggregator;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -198,8 +196,8 @@ public class AggregatorFactories {
                 aggBuildersMap.put(aggBuilder.name, aggBuilder);
             }
             List<PipelineAggregationBuilder> orderedPipelineAggregatorrs = new LinkedList<>();
-            List<PipelineAggregationBuilder> unmarkedBuilders = new ArrayList<PipelineAggregationBuilder>(pipelineAggregatorBuilders);
-            Set<PipelineAggregationBuilder> temporarilyMarked = new HashSet<PipelineAggregationBuilder>();
+            List<PipelineAggregationBuilder> unmarkedBuilders = new ArrayList<>(pipelineAggregatorBuilders);
+            Set<PipelineAggregationBuilder> temporarilyMarked = new HashSet<>();
             while (!unmarkedBuilders.isEmpty()) {
                 PipelineAggregationBuilder builder = unmarkedBuilders.get(0);
                 resolvePipelineAggregatorOrder(aggBuildersMap, pipelineAggregatorBuildersMap, orderedPipelineAggregatorrs, unmarkedBuilders,
@@ -310,15 +308,19 @@ public class AggregatorFactories {
 
         @Override
         public boolean equals(Object obj) {
-            if (obj == null)
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             Builder other = (Builder) obj;
-            if (!Objects.equals(aggregationBuilders, other.aggregationBuilders))
+            if (!Objects.equals(aggregationBuilders, other.aggregationBuilders)) {
                 return false;
-            if (!Objects.equals(pipelineAggregatorBuilders, other.pipelineAggregatorBuilders))
+            }
+            if (!Objects.equals(pipelineAggregatorBuilders, other.pipelineAggregatorBuilders)) {
                 return false;
+            }
             return true;
         }
     }

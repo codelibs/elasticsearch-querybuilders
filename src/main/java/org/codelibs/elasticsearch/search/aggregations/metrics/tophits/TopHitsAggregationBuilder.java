@@ -28,8 +28,6 @@ import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.script.Script;
-import org.codelibs.elasticsearch.script.ScriptContext;
-import org.codelibs.elasticsearch.script.SearchScript;
 import org.codelibs.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.codelibs.elasticsearch.search.aggregations.AggregationInitializationException;
 import org.codelibs.elasticsearch.search.aggregations.AggregatorFactories.Builder;
@@ -40,11 +38,9 @@ import org.codelibs.elasticsearch.search.builder.SearchSourceBuilder;
 import org.codelibs.elasticsearch.search.builder.SearchSourceBuilder.ScriptField;
 import org.codelibs.elasticsearch.search.fetch.StoredFieldsContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.FetchSourceContext;
-import org.codelibs.elasticsearch.search.fetch.subphase.ScriptFieldsContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.codelibs.elasticsearch.search.internal.SearchContext;
 import org.codelibs.elasticsearch.search.sort.ScoreSortBuilder;
-import org.codelibs.elasticsearch.search.sort.SortAndFormats;
 import org.codelibs.elasticsearch.search.sort.SortBuilder;
 import org.codelibs.elasticsearch.search.sort.SortBuilders;
 import org.codelibs.elasticsearch.search.sort.SortOrder;
@@ -55,7 +51,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 public class TopHitsAggregationBuilder extends AbstractAggregationBuilder<TopHitsAggregationBuilder> {

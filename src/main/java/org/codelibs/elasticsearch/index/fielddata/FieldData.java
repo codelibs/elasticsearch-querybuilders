@@ -357,13 +357,10 @@ public enum FieldData {
      * NOTE: this is very slow!
      */
     public static SortedBinaryDocValues toString(final SortedNumericDocValues values) {
-        return toString(new ToStringValues() {
-            @Override
-            public void get(int docID, List<CharSequence> list) {
-                values.setDocument(docID);
-                for (int i = 0, count = values.count(); i < count; ++i) {
-                    list.add(Long.toString(values.valueAt(i)));
-                }
+        return toString((docID, list) -> {
+            values.setDocument(docID);
+            for (int i = 0, count = values.count(); i < count; ++i) {
+                list.add(Long.toString(values.valueAt(i)));
             }
         });
     }
@@ -374,13 +371,10 @@ public enum FieldData {
      * NOTE: this is very slow!
      */
     public static SortedBinaryDocValues toString(final SortedNumericDoubleValues values) {
-        return toString(new ToStringValues() {
-            @Override
-            public void get(int docID, List<CharSequence> list) {
-                values.setDocument(docID);
-                for (int i = 0, count = values.count(); i < count; ++i) {
-                    list.add(Double.toString(values.valueAt(i)));
-                }
+        return toString((docID, list) -> {
+            values.setDocument(docID);
+            for (int i = 0, count = values.count(); i < count; ++i) {
+                list.add(Double.toString(values.valueAt(i)));
             }
         });
     }
@@ -416,13 +410,10 @@ public enum FieldData {
      * NOTE: this is very slow!
      */
     public static SortedBinaryDocValues toString(final MultiGeoPointValues values) {
-        return toString(new ToStringValues() {
-            @Override
-            public void get(int docID, List<CharSequence> list) {
-                values.setDocument(docID);
-                for (int i = 0, count = values.count(); i < count; ++i) {
-                    list.add(values.valueAt(i).toString());
-                }
+        return toString((docID, list) -> {
+            values.setDocument(docID);
+            for (int i = 0, count = values.count(); i < count; ++i) {
+                list.add(values.valueAt(i).toString());
             }
         });
     }

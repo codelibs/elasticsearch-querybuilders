@@ -23,7 +23,6 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
-import org.codelibs.elasticsearch.script.CompiledScript;
 import org.codelibs.elasticsearch.script.ExecutableScript;
 import org.codelibs.elasticsearch.search.suggest.DirectSpellcheckerSettings;
 import org.codelibs.elasticsearch.search.suggest.SuggestionSearchContext.SuggestionContext;

@@ -28,7 +28,6 @@ import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
-import org.codelibs.elasticsearch.common.lucene.search.Queries;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 
@@ -39,8 +38,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
-
-import static org.codelibs.elasticsearch.common.lucene.search.Queries.fixNegativeQueryIfNeeded;
 
 /**
  * A Query that matches documents matching boolean combinations of other queries.
@@ -412,24 +409,6 @@ public class BoolQueryBuilder extends AbstractQueryBuilder<BoolQueryBuilder> {
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
         throw new UnsupportedOperationException("querybuilders does not support this operation.");
-    }
-
-    private static void addBooleanClauses(QueryShardContext context, BooleanQuery.Builder booleanQueryBuilder,
-                                          List<QueryBuilder> clauses, Occur occurs) throws IOException {
-        for (QueryBuilder query : clauses) {
-            Query luceneQuery = null;
-            switch (occurs) {
-                case MUST:
-                case SHOULD:
-                    luceneQuery = query.toQuery(context);
-                    break;
-                case FILTER:
-                case MUST_NOT:
-                    luceneQuery = query.toFilter(context);
-                    break;
-            }
-            booleanQueryBuilder.add(new BooleanClause(luceneQuery, occurs));
-        }
     }
 
     @Override

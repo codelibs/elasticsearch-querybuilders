@@ -1030,26 +1030,16 @@ public final class XMoreLikeThis {
         String word;
         String topField;
         float score;
-        float idf;
-        int docFreq;
-        int tf;
-
         ScoreTerm(String word, String topField, float score, float idf, int docFreq, int tf) {
             this.word = word;
             this.topField = topField;
             this.score = score;
-            this.idf = idf;
-            this.docFreq = docFreq;
-            this.tf = tf;
         }
 
         void update(String word, String topField, float score, float idf, int docFreq, int tf) {
             this.word = word;
             this.topField = topField;
             this.score = score;
-            this.idf = idf;
-            this.docFreq = docFreq;
-            this.tf = tf;
         }
     }
 

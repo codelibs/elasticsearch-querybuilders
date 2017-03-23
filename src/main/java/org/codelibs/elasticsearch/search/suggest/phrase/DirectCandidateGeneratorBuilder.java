@@ -36,7 +36,6 @@ import org.codelibs.elasticsearch.common.xcontent.ObjectParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentFactory;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
-import org.codelibs.elasticsearch.search.suggest.SortBy;
 import org.codelibs.elasticsearch.search.suggest.phrase.PhraseSuggestionBuilder.CandidateGenerator;
 
 import java.io.IOException;
@@ -442,44 +441,6 @@ public final class DirectCandidateGeneratorBuilder implements CandidateGenerator
             throw new IllegalArgumentException("[" + TYPE + "] expects exactly one field parameter, but found " + tmpFieldName);
         }
         return replaceField(tmpFieldName.iterator().next(), tempGenerator);
-    }
-
-    private static SuggestMode resolveSuggestMode(String suggestMode) {
-        suggestMode = suggestMode.toLowerCase(Locale.US);
-        if ("missing".equals(suggestMode)) {
-            return SuggestMode.SUGGEST_WHEN_NOT_IN_INDEX;
-        } else if ("popular".equals(suggestMode)) {
-            return SuggestMode.SUGGEST_MORE_POPULAR;
-        } else if ("always".equals(suggestMode)) {
-            return SuggestMode.SUGGEST_ALWAYS;
-        } else {
-            throw new IllegalArgumentException("Illegal suggest mode " + suggestMode);
-        }
-    }
-
-    private static StringDistance resolveDistance(String distanceVal) {
-        distanceVal = distanceVal.toLowerCase(Locale.US);
-        if ("internal".equals(distanceVal)) {
-            return DirectSpellChecker.INTERNAL_LEVENSHTEIN;
-        } else if ("damerau_levenshtein".equals(distanceVal) || "damerauLevenshtein".equals(distanceVal)) {
-            return new LuceneLevenshteinDistance();
-        } else if ("levenstein".equals(distanceVal)) {
-            return new LevensteinDistance();
-            // TODO Jaro and Winkler are 2 people - so apply same naming logic
-            // as damerau_levenshtein
-        } else if ("jarowinkler".equals(distanceVal)) {
-            return new JaroWinklerDistance();
-        } else if ("ngram".equals(distanceVal)) {
-            return new NGramDistance();
-        } else {
-            throw new IllegalArgumentException("Illegal distance option " + distanceVal);
-        }
-    }
-
-    private static <T> void transferIfNotNull(T value, Consumer<T> consumer) {
-        if (value != null) {
-            consumer.accept(value);
-        }
     }
 
     @Override

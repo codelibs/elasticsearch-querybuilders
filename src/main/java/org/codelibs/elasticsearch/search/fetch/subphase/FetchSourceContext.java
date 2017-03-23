@@ -19,7 +19,6 @@
 
 package org.codelibs.elasticsearch.search.fetch.subphase;
 
-import org.codelibs.elasticsearch.common.Booleans;
 import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.ParseFieldMatcher;
 import org.codelibs.elasticsearch.common.ParsingException;
@@ -176,14 +175,24 @@ public class FetchSourceContext implements Writeable, ToXContent {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         FetchSourceContext that = (FetchSourceContext) o;
 
-        if (fetchSource != that.fetchSource) return false;
-        if (!Arrays.equals(excludes, that.excludes)) return false;
-        if (!Arrays.equals(includes, that.includes)) return false;
+        if (fetchSource != that.fetchSource) {
+            return false;
+        }
+        if (!Arrays.equals(excludes, that.excludes)) {
+            return false;
+        }
+        if (!Arrays.equals(includes, that.includes)) {
+            return false;
+        }
 
         return true;
     }

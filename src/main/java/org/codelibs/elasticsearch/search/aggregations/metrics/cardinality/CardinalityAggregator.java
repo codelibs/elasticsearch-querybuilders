@@ -24,15 +24,12 @@ import com.carrotsearch.hppc.BitMixer;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.RandomAccessOrds;
 import org.apache.lucene.index.SortedNumericDocValues;
-import org.apache.lucene.search.DocIdSetIterator;
-import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.FixedBitSet;
 import org.apache.lucene.util.RamUsageEstimator;
 import org.codelibs.elasticsearch.common.Nullable;
 import org.codelibs.elasticsearch.common.lease.Releasable;
 import org.codelibs.elasticsearch.common.lease.Releasables;
 import org.codelibs.elasticsearch.common.util.BigArrays;
-import org.codelibs.elasticsearch.common.util.LongArray;
 import org.codelibs.elasticsearch.common.util.ObjectArray;
 import org.codelibs.elasticsearch.index.fielddata.SortedBinaryDocValues;
 import org.codelibs.elasticsearch.index.fielddata.SortedNumericDoubleValues;
@@ -226,7 +223,6 @@ public class CardinalityAggregator extends NumericMetricsAggregator.SingleValue 
         private final BigArrays bigArrays;
         private final RandomAccessOrds values;
         private final int maxOrd;
-        private final HyperLogLogPlusPlus counts;
         private ObjectArray<FixedBitSet> visitedOrds;
 
         OrdinalsCollector(HyperLogLogPlusPlus counts, RandomAccessOrds values, BigArrays bigArrays) {
@@ -235,7 +231,6 @@ public class CardinalityAggregator extends NumericMetricsAggregator.SingleValue 
             }
             maxOrd = (int) values.getValueCount();
             this.bigArrays = bigArrays;
-            this.counts = counts;
             this.values = values;
             visitedOrds = bigArrays.newObjectArray(1);
         }

@@ -28,10 +28,8 @@ import org.codelibs.elasticsearch.search.aggregations.metrics.InternalNumericMet
 import org.codelibs.elasticsearch.search.aggregations.pipeline.PipelineAggregator;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.DataFormatException;
 
 abstract class AbstractInternalHDRPercentiles extends InternalNumericMetricsAggregation.MultiValue {
 
@@ -81,9 +79,9 @@ abstract class AbstractInternalHDRPercentiles extends InternalNumericMetricsAggr
     public XContentBuilder doXContentBody(XContentBuilder builder, Params params) throws IOException {
         if (keyed) {
             builder.startObject(CommonFields.VALUES);
-            for(int i = 0; i < keys.length; ++i) {
-                String key = String.valueOf(keys[i]);
-                double value = value(keys[i]);
+            for (double key2 : keys) {
+                String key = String.valueOf(key2);
+                double value = value(key2);
                 builder.field(key, value);
                 if (format != DocValueFormat.RAW) {
                     builder.field(key + "_as_string", format.format(value));
@@ -92,10 +90,10 @@ abstract class AbstractInternalHDRPercentiles extends InternalNumericMetricsAggr
             builder.endObject();
         } else {
             builder.startArray(CommonFields.VALUES);
-            for (int i = 0; i < keys.length; i++) {
-                double value = value(keys[i]);
+            for (double key : keys) {
+                double value = value(key);
                 builder.startObject();
-                builder.field(CommonFields.KEY, keys[i]);
+                builder.field(CommonFields.KEY, key);
                 builder.field(CommonFields.VALUE, value);
                 if (format != DocValueFormat.RAW) {
                     builder.field(CommonFields.VALUE_AS_STRING, format.format(value));

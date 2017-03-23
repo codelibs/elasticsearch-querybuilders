@@ -32,7 +32,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public abstract class InternalMappedSignificantTerms<
-            A extends InternalMappedSignificantTerms<A, B>, 
+            A extends InternalMappedSignificantTerms<A, B>,
             B extends InternalSignificantTerms.Bucket<B>>
         extends InternalSignificantTerms<A, B> {
 

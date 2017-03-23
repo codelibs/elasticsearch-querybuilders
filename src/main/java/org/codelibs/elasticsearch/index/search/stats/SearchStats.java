@@ -27,8 +27,6 @@ import org.codelibs.elasticsearch.common.io.stream.Streamable;
 import org.codelibs.elasticsearch.common.unit.TimeValue;
 import org.codelibs.elasticsearch.common.xcontent.ToXContent;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.common.xcontent.XContentFactory;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;

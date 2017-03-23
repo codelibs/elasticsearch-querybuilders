@@ -261,7 +261,10 @@ public class RangeAggregator extends BucketsAggregator {
             }
             mid = (lo + hi) >>> 1;
         }
-        if (lo > hi) return lo; // no potential candidate
+        if (lo > hi)
+         {
+            return lo; // no potential candidate
+        }
 
         // binary search the lower bound
         int startLo = lo, startHi = mid;
@@ -321,8 +324,7 @@ public class RangeAggregator extends BucketsAggregator {
     public InternalAggregation buildEmptyAggregation() {
         InternalAggregations subAggs = buildEmptySubAggregations();
         List<org.codelibs.elasticsearch.search.aggregations.bucket.range.Range.Bucket> buckets = new ArrayList<>(ranges.length);
-        for (int i = 0; i < ranges.length; i++) {
-            Range range = ranges[i];
+        for (Range range : ranges) {
             org.codelibs.elasticsearch.search.aggregations.bucket.range.Range.Bucket bucket =
                     rangeFactory.createBucket(range.key, range.from, range.to, 0, subAggs, keyed, format);
             buckets.add(bucket);

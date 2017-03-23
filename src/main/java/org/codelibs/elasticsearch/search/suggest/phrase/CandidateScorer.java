@@ -69,8 +69,8 @@ final class CandidateScorer {
             path[ord] = current.originalTerm;
             updateTop(candidates, path, corrections, cutoffScore, pathScore + scorer.score(path, candidates, ord, gramSize));
             if (numMissspellingsLeft > 0) {
-                for (int i = 0; i < current.candidates.length; i++) {
-                    path[ord] = current.candidates[i];
+                for (Candidate candidate : current.candidates) {
+                    path[ord] = candidate;
                     updateTop(candidates, path, corrections, cutoffScore, pathScore + scorer.score(path, candidates, ord, gramSize));
                 }
             }
@@ -78,8 +78,8 @@ final class CandidateScorer {
             if (numMissspellingsLeft > 0) {
                 path[ord] = current.originalTerm;
                 findCandidates(candidates, path, ord + 1, numMissspellingsLeft, corrections, cutoffScore, pathScore + scorer.score(path, candidates, ord, gramSize));
-                for (int i = 0; i < current.candidates.length; i++) {
-                    path[ord] = current.candidates[i];
+                for (Candidate candidate : current.candidates) {
+                    path[ord] = candidate;
                     findCandidates(candidates, path, ord + 1, numMissspellingsLeft - 1, corrections, cutoffScore, pathScore + scorer.score(path, candidates, ord, gramSize));
                 }
             } else {

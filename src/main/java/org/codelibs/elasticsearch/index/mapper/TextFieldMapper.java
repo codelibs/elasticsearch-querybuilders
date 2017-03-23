@@ -19,26 +19,17 @@
 
 package org.codelibs.elasticsearch.index.mapper;
 
-import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexOptions;
-import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.search.Query;
-import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.settings.Settings;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.common.xcontent.support.XContentMapValues;
 import org.codelibs.elasticsearch.index.analysis.NamedAnalyzer;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-
 import static java.util.Collections.unmodifiableList;
 
 /** A {@link FieldMapper} for full-text fields. */
@@ -164,6 +155,7 @@ public class TextFieldMapper extends FieldMapper {
             this.fielddataMinSegmentSize = ref.fielddataMinSegmentSize;
         }
 
+        @Override
         public TextFieldType clone() {
             return new TextFieldType(this);
         }

@@ -26,11 +26,8 @@ import org.apache.lucene.search.vectorhighlight.FieldFragList.WeightedFragInfo;
 import org.apache.lucene.search.vectorhighlight.FieldFragList.WeightedFragInfo.SubInfo;
 import org.apache.lucene.search.vectorhighlight.FragmentsBuilder;
 import org.apache.lucene.util.CollectionUtil;
-import org.apache.lucene.util.Version;
-import org.codelibs.elasticsearch.index.analysis.NamedAnalyzer;
 import org.codelibs.elasticsearch.index.mapper.FieldMapper;
 
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -56,13 +53,10 @@ public final class FragmentBuilderHelper {
              * the FastVectorHighlighter. Yet, this is really a lucene problem and should be fixed in lucene rather
              * than in this hack... aka. "we are are working on in!" */
             final List<SubInfo> subInfos = fragInfo.getSubInfos();
-            CollectionUtil.introSort(subInfos, new Comparator<SubInfo>() {
-                @Override
-                public int compare(SubInfo o1, SubInfo o2) {
-                    int startOffset = o1.getTermsOffsets().get(0).getStartOffset();
-                    int startOffset2 = o2.getTermsOffsets().get(0).getStartOffset();
-                    return FragmentBuilderHelper.compare(startOffset, startOffset2);
-                }
+            CollectionUtil.introSort(subInfos, (o1, o2) -> {
+                int startOffset = o1.getTermsOffsets().get(0).getStartOffset();
+                int startOffset2 = o2.getTermsOffsets().get(0).getStartOffset();
+                return FragmentBuilderHelper.compare(startOffset, startOffset2);
             });
             return new WeightedFragInfo(Math.min(fragInfo.getSubInfos().get(0).getTermsOffsets().get(0).getStartOffset(),
                     fragInfo.getStartOffset()), fragInfo.getEndOffset(), subInfos, fragInfo.getTotalBoost());

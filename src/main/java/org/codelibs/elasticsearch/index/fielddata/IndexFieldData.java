@@ -35,11 +35,7 @@ import org.apache.lucene.search.join.BitSetProducer;
 import org.apache.lucene.util.BitDocIdSet;
 import org.apache.lucene.util.BitSet;
 import org.apache.lucene.util.BytesRef;
-import org.codelibs.elasticsearch.common.Nullable;
 import org.codelibs.elasticsearch.index.IndexComponent;
-import org.codelibs.elasticsearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
-
 import java.io.IOException;
 
 /**
@@ -184,7 +180,7 @@ public interface IndexFieldData<FD extends AtomicFieldData> extends IndexCompone
                 case STRING:
                 case STRING_VAL:
                     if (missingValue instanceof BytesRef) {
-                        return (BytesRef) missingValue;
+                        return missingValue;
                     } else if (missingValue instanceof byte[]) {
                         return new BytesRef((byte[]) missingValue);
                     } else {

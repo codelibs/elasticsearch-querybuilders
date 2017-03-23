@@ -25,12 +25,7 @@ import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.spatial.geopoint.document.GeoPointField;
 import org.codelibs.elasticsearch.Version;
 import org.codelibs.elasticsearch.common.Explicit;
-import org.codelibs.elasticsearch.common.geo.GeoPoint;
-import org.codelibs.elasticsearch.common.geo.GeoUtils;
 import org.codelibs.elasticsearch.common.settings.Settings;
-
-import java.io.IOException;
-import java.util.Map;
 
 /**
  * Parsing: We handle:

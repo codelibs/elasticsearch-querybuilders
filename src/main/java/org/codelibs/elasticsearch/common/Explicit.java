@@ -23,11 +23,11 @@ package org.codelibs.elasticsearch.common;
  * Holds a value that is either:
  * a) set implicitly e.g. through some default value
  * b) set explicitly e.g. from a user selection
- * 
+ *
  * When merging conflicting configuration settings such as
  * field mapping settings it is preferable to preserve an explicit
- * choice rather than a choice made only made implicitly by defaults. 
- * 
+ * choice rather than a choice made only made implicitly by defaults.
+ *
  */
 public class Explicit<T> {
 
@@ -48,7 +48,7 @@ public class Explicit<T> {
     }
 
     /**
-     * 
+     *
      * @return true if the value passed is a conscious decision, false if using some kind of default
      */
     public boolean explicit() {

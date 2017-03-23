@@ -52,49 +52,10 @@ public final class QueryRescorer implements Rescorer {
         throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
-    private static final Comparator<ScoreDoc> SCORE_DOC_COMPARATOR = new Comparator<ScoreDoc>() {
-        @Override
-        public int compare(ScoreDoc o1, ScoreDoc o2) {
-            int cmp = Float.compare(o2.score, o1.score);
-            return cmp == 0 ?  Integer.compare(o1.doc, o2.doc) : cmp;
-        }
+    private static final Comparator<ScoreDoc> SCORE_DOC_COMPARATOR = (o1, o2) -> {
+        int cmp = Float.compare(o2.score, o1.score);
+        return cmp == 0 ?  Integer.compare(o1.doc, o2.doc) : cmp;
     };
-
-    /** Returns a new {@link TopDocs} with the topN from the incoming one, or the same TopDocs if the number of hits is already &lt;=
-     *  topN. */
-    private TopDocs topN(TopDocs in, int topN) {
-        if (in.totalHits < topN) {
-            assert in.scoreDocs.length == in.totalHits;
-            return in;
-        }
-
-        ScoreDoc[] subset = new ScoreDoc[topN];
-        System.arraycopy(in.scoreDocs, 0, subset, 0, topN);
-
-        return new TopDocs(in.totalHits, subset, in.getMaxScore());
-    }
-
-    /** Modifies incoming TopDocs (in) by replacing the top hits with resorted's hits, and then resorting all hits. */
-    private TopDocs combine(TopDocs in, TopDocs resorted, QueryRescoreContext ctx) {
-
-        System.arraycopy(resorted.scoreDocs, 0, in.scoreDocs, 0, resorted.scoreDocs.length);
-        if (in.scoreDocs.length > resorted.scoreDocs.length) {
-            // These hits were not rescored (beyond the rescore window), so we treat them the same as a hit that did get rescored but did
-            // not match the 2nd pass query:
-            for(int i=resorted.scoreDocs.length;i<in.scoreDocs.length;i++) {
-                // TODO: shouldn't this be up to the ScoreMode?  I.e., we should just invoke ScoreMode.combine, passing 0.0f for the
-                // secondary score?
-                in.scoreDocs[i].score *= ctx.queryWeight();
-            }
-
-            // TODO: this is wrong, i.e. we are comparing apples and oranges at this point.  It would be better if we always rescored all
-            // incoming first pass hits, instead of allowing recoring of just the top subset:
-            Arrays.sort(in.scoreDocs, SCORE_DOC_COMPARATOR);
-        }
-        // update the max score after the resort
-        in.setMaxScore(in.scoreDocs[0].score);
-        return in;
-    }
 
     public static class QueryRescoreContext extends RescoreSearchContext {
 

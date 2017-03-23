@@ -161,16 +161,30 @@ public class FuzzyOptions implements ToXContent, Writeable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         FuzzyOptions that = (FuzzyOptions) o;
 
-        if (editDistance != that.editDistance) return false;
-        if (transpositions != that.transpositions) return false;
-        if (fuzzyMinLength != that.fuzzyMinLength) return false;
-        if (fuzzyPrefixLength != that.fuzzyPrefixLength) return false;
-        if (unicodeAware != that.unicodeAware) return false;
+        if (editDistance != that.editDistance) {
+            return false;
+        }
+        if (transpositions != that.transpositions) {
+            return false;
+        }
+        if (fuzzyMinLength != that.fuzzyMinLength) {
+            return false;
+        }
+        if (fuzzyPrefixLength != that.fuzzyPrefixLength) {
+            return false;
+        }
+        if (unicodeAware != that.unicodeAware) {
+            return false;
+        }
         return maxDeterminizedStates == that.maxDeterminizedStates;
 
     }

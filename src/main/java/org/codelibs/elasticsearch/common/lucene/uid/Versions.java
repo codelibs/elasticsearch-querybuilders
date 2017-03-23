@@ -53,13 +53,10 @@ public class Versions {
     static final ConcurrentMap<Object, CloseableThreadLocal<PerThreadIDAndVersionLookup>> lookupStates = ConcurrentCollections.newConcurrentMapWithAggressiveConcurrency();
 
     // Evict this reader from lookupStates once it's closed:
-    private static final CoreClosedListener removeLookupState = new CoreClosedListener() {
-        @Override
-        public void onClose(Object key) {
-            CloseableThreadLocal<PerThreadIDAndVersionLookup> ctl = lookupStates.remove(key);
-            if (ctl != null) {
-                ctl.close();
-            }
+    private static final CoreClosedListener removeLookupState = key -> {
+        CloseableThreadLocal<PerThreadIDAndVersionLookup> ctl = lookupStates.remove(key);
+        if (ctl != null) {
+            ctl.close();
         }
     };
 

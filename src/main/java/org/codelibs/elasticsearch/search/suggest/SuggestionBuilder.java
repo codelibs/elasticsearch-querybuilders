@@ -19,7 +19,6 @@
 
 package org.codelibs.elasticsearch.search.suggest;
 
-import org.apache.lucene.analysis.Analyzer;
 import org.codelibs.elasticsearch.ElasticsearchParseException;
 import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.ParseFieldMatcher;
@@ -27,11 +26,9 @@ import org.codelibs.elasticsearch.common.ParsingException;
 import org.codelibs.elasticsearch.common.io.stream.NamedWriteable;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
-import org.codelibs.elasticsearch.common.lucene.BytesRefs;
 import org.codelibs.elasticsearch.common.xcontent.ToXContent;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
-import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
 import org.codelibs.elasticsearch.search.suggest.SuggestionSearchContext.SuggestionContext;
@@ -256,7 +253,7 @@ public abstract class SuggestionBuilder<T extends SuggestionBuilder<T>> implemen
     static SuggestionBuilder<?> fromXContent(QueryParseContext parseContext, Suggesters suggesters)
             throws IOException {
         XContentParser parser = parseContext.parser();
-        ParseFieldMatcher parsefieldMatcher = parseContext.getParseFieldMatcher();
+        parseContext.getParseFieldMatcher();
         XContentParser.Token token;
         String currentFieldName = null;
         String suggestText = null;

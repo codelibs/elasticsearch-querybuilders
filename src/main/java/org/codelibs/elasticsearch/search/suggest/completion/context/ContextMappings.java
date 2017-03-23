@@ -21,7 +21,6 @@ package org.codelibs.elasticsearch.search.suggest.completion.context;
 
 import org.apache.lucene.search.suggest.document.CompletionQuery;
 import org.apache.lucene.search.suggest.document.ContextQuery;
-import org.apache.lucene.search.suggest.document.ContextSuggestField;
 import org.apache.lucene.util.CharsRefBuilder;
 import org.codelibs.elasticsearch.ElasticsearchParseException;
 import org.codelibs.elasticsearch.Version;
@@ -37,10 +36,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
-import static org.codelibs.elasticsearch.search.suggest.completion.context.ContextMapping.FIELD_NAME;
-import static org.codelibs.elasticsearch.search.suggest.completion.context.ContextMapping.FIELD_TYPE;
-import static org.codelibs.elasticsearch.search.suggest.completion.context.ContextMapping.Type;
 
 /**
  * ContextMappings indexes context-enabled suggestion fields
@@ -162,15 +157,6 @@ public class ContextMappings implements ToXContent {
 
     private static ContextMapping load(Map<String, Object> contextConfig, Version indexVersionCreated) {
         throw new UnsupportedOperationException("querybuilders does not support this operation.");
-    }
-
-    private static String extractRequiredValue(Map<String, Object> contextConfig, String paramName) {
-        final Object paramValue = contextConfig.get(paramName);
-        if (paramValue == null) {
-            throw new ElasticsearchParseException("missing [" + paramName + "] in context mapping");
-        }
-        contextConfig.remove(paramName);
-        return paramValue.toString();
     }
 
     /**

@@ -19,12 +19,6 @@
 
 package org.codelibs.elasticsearch.search.sort;
 
-import org.apache.lucene.index.BinaryDocValues;
-import org.apache.lucene.index.LeafReaderContext;
-import org.apache.lucene.search.Scorer;
-import org.apache.lucene.search.SortField;
-import org.apache.lucene.util.BytesRef;
-import org.apache.lucene.util.BytesRefBuilder;
 import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
@@ -32,25 +26,10 @@ import org.codelibs.elasticsearch.common.io.stream.Writeable;
 import org.codelibs.elasticsearch.common.xcontent.ConstructingObjectParser;
 import org.codelibs.elasticsearch.common.xcontent.ObjectParser.ValueType;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
-import org.codelibs.elasticsearch.index.fielddata.FieldData;
-import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
-import org.codelibs.elasticsearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.codelibs.elasticsearch.index.fielddata.NumericDoubleValues;
-import org.codelibs.elasticsearch.index.fielddata.SortedBinaryDocValues;
-import org.codelibs.elasticsearch.index.fielddata.SortedNumericDoubleValues;
-import org.codelibs.elasticsearch.index.fielddata.fieldcomparator.BytesRefFieldComparatorSource;
-import org.codelibs.elasticsearch.index.fielddata.fieldcomparator.DoubleValuesComparatorSource;
 import org.codelibs.elasticsearch.index.query.QueryBuilder;
 import org.codelibs.elasticsearch.index.query.QueryParseContext;
 import org.codelibs.elasticsearch.index.query.QueryShardContext;
-import org.codelibs.elasticsearch.index.query.QueryShardException;
-import org.codelibs.elasticsearch.script.LeafSearchScript;
 import org.codelibs.elasticsearch.script.Script;
-import org.codelibs.elasticsearch.script.ScriptContext;
-import org.codelibs.elasticsearch.script.SearchScript;
-import org.codelibs.elasticsearch.search.DocValueFormat;
-import org.codelibs.elasticsearch.search.MultiValueMode;
-
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;

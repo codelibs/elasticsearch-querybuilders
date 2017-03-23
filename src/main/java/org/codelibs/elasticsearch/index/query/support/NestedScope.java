@@ -19,10 +19,6 @@
 
 package org.codelibs.elasticsearch.index.query.support;
 
-
-import java.util.Deque;
-import java.util.LinkedList;
-
 /**
  * During query parsing this keeps track of the current nested level.
  */

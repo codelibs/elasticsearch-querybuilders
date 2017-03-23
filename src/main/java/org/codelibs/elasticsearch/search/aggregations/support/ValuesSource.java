@@ -31,12 +31,10 @@ import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.common.lucene.ScorerAware;
 import org.codelibs.elasticsearch.index.fielddata.AtomicOrdinalsFieldData;
-import org.codelibs.elasticsearch.index.fielddata.AtomicParentChildFieldData;
 import org.codelibs.elasticsearch.index.fielddata.IndexFieldData;
 import org.codelibs.elasticsearch.index.fielddata.IndexGeoPointFieldData;
 import org.codelibs.elasticsearch.index.fielddata.IndexNumericFieldData;
 import org.codelibs.elasticsearch.index.fielddata.IndexOrdinalsFieldData;
-import org.codelibs.elasticsearch.index.fielddata.IndexParentChildFieldData;
 import org.codelibs.elasticsearch.index.fielddata.MultiGeoPointValues;
 import org.codelibs.elasticsearch.index.fielddata.SortedBinaryDocValues;
 import org.codelibs.elasticsearch.index.fielddata.SortedNumericDoubleValues;
@@ -509,6 +507,7 @@ public abstract class ValuesSource {
                 return indexFieldData.load(context).getBytesValues();
             }
 
+            @Override
             public org.codelibs.elasticsearch.index.fielddata.MultiGeoPointValues geoPointValues(LeafReaderContext context) {
                 return indexFieldData.load(context).getGeoPointValues();
             }

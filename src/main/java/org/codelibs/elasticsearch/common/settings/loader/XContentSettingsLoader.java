@@ -77,7 +77,9 @@ public abstract class XContentSettingsLoader implements SettingsLoader {
         // ensure we reached the end of the stream
         XContentParser.Token lastToken = null;
         try {
-            while (!jp.isClosed() && (lastToken = jp.nextToken()) == null);
+            while (!jp.isClosed() && (lastToken = jp.nextToken()) == null) {
+                ;
+            }
         } catch (Exception e) {
             throw new ElasticsearchParseException(
                     "malformed, expected end of settings but encountered additional content starting at line number: [{}], "

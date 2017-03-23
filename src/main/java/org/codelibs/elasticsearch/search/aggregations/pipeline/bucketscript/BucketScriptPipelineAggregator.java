@@ -21,31 +21,15 @@ package org.codelibs.elasticsearch.search.aggregations.pipeline.bucketscript;
 
 import org.codelibs.elasticsearch.common.io.stream.StreamInput;
 import org.codelibs.elasticsearch.common.io.stream.StreamOutput;
-import org.codelibs.elasticsearch.script.CompiledScript;
-import org.codelibs.elasticsearch.script.ExecutableScript;
 import org.codelibs.elasticsearch.script.Script;
-import org.codelibs.elasticsearch.script.ScriptContext;
 import org.codelibs.elasticsearch.search.DocValueFormat;
-import org.codelibs.elasticsearch.search.aggregations.AggregationExecutionException;
 import org.codelibs.elasticsearch.search.aggregations.InternalAggregation;
 import org.codelibs.elasticsearch.search.aggregations.InternalAggregation.ReduceContext;
-import org.codelibs.elasticsearch.search.aggregations.InternalAggregations;
-import org.codelibs.elasticsearch.search.aggregations.InternalMultiBucketAggregation;
-import org.codelibs.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation.Bucket;
 import org.codelibs.elasticsearch.search.aggregations.pipeline.BucketHelpers.GapPolicy;
-import org.codelibs.elasticsearch.search.aggregations.pipeline.InternalSimpleValue;
 import org.codelibs.elasticsearch.search.aggregations.pipeline.PipelineAggregator;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.codelibs.elasticsearch.search.aggregations.pipeline.BucketHelpers.resolveBucketValue;
 
 public class BucketScriptPipelineAggregator extends PipelineAggregator {
     private final DocValueFormat formatter;

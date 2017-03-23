@@ -19,19 +19,11 @@
 
 package org.codelibs.elasticsearch.search.aggregations.bucket.significant;
 
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.PostingsEnum;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause.Occur;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.BytesRef;
 import org.codelibs.elasticsearch.common.ParseField;
 import org.codelibs.elasticsearch.common.lease.Releasable;
 import org.codelibs.elasticsearch.common.lucene.index.FilterableTermsEnum;
-import org.codelibs.elasticsearch.common.lucene.index.FreqTermsEnum;
 import org.codelibs.elasticsearch.index.mapper.MappedFieldType;
 import org.codelibs.elasticsearch.index.query.QueryBuilder;
 import org.codelibs.elasticsearch.search.DocValueFormat;
@@ -65,8 +57,6 @@ public class SignificantTermsAggregatorFactory extends ValuesSourceAggregatorFac
     private String indexedFieldName;
     private MappedFieldType fieldType;
     private FilterableTermsEnum termsEnum;
-    private int numberOfAggregatorsCreated;
-    private final Query filter;
     private final int supersetNumDocs;
     private final TermsAggregator.BucketCountThresholds bucketCountThresholds;
     private final SignificanceHeuristic significanceHeuristic;
@@ -79,22 +69,11 @@ public class SignificantTermsAggregatorFactory extends ValuesSourceAggregatorFac
         throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
-    private void setFieldInfo(SearchContext context) {
-        if (!config.unmapped()) {
-            this.indexedFieldName = config.fieldContext().field();
-            fieldType = context.smartNameFieldType(indexedFieldName);
-        }
-    }
-
     /**
      * Get the number of docs in the superset.
      */
     public long getSupersetNumDocs() {
         return supersetNumDocs;
-    }
-
-    private FilterableTermsEnum getTermsEnum(String field) throws IOException {
-        throw new UnsupportedOperationException("querybuilders does not support this operation.");
     }
 
     private long getBackgroundFrequency(String value) throws IOException {
@@ -131,7 +110,6 @@ public class SignificantTermsAggregatorFactory extends ValuesSourceAggregatorFac
             return asMultiBucketAggregator(this, context, parent);
         }
 
-        numberOfAggregatorsCreated++;
         BucketCountThresholds bucketCountThresholds = new BucketCountThresholds(this.bucketCountThresholds);
         if (bucketCountThresholds.getShardSize() == SignificantTermsAggregationBuilder.DEFAULT_BUCKET_COUNT_THRESHOLDS.getShardSize()) {
             // The user has not made a shardSize selection .

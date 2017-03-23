@@ -4,8 +4,6 @@
 package org.codelibs.elasticsearch.querybuilders.mock.log4j;
 
 import java.io.Serializable;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 
 public final class Level implements Comparable<Level>, Serializable {

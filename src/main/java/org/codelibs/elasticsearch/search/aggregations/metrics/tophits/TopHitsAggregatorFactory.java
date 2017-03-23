@@ -25,7 +25,6 @@ import org.codelibs.elasticsearch.search.aggregations.AggregatorFactory;
 import org.codelibs.elasticsearch.search.aggregations.InternalAggregation.Type;
 import org.codelibs.elasticsearch.search.aggregations.pipeline.PipelineAggregator;
 import org.codelibs.elasticsearch.search.fetch.StoredFieldsContext;
-import org.codelibs.elasticsearch.search.fetch.subphase.DocValueFieldsContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.ScriptFieldsContext;
 import org.codelibs.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
@@ -39,35 +38,12 @@ import java.util.Optional;
 
 public class TopHitsAggregatorFactory extends AggregatorFactory<TopHitsAggregatorFactory> {
 
-    private final int from;
-    private final int size;
-    private final boolean explain;
-    private final boolean version;
-    private final boolean trackScores;
-    private final Optional<SortAndFormats> sort;
-    private final HighlightBuilder highlightBuilder;
-    private final StoredFieldsContext storedFieldsContext;
-    private final List<String> docValueFields;
-    private final List<ScriptFieldsContext.ScriptField> scriptFields;
-    private final FetchSourceContext fetchSourceContext;
-
     public TopHitsAggregatorFactory(String name, Type type, int from, int size, boolean explain, boolean version, boolean trackScores,
             Optional<SortAndFormats> sort, HighlightBuilder highlightBuilder, StoredFieldsContext storedFieldsContext,
             List<String> docValueFields, List<ScriptFieldsContext.ScriptField> scriptFields, FetchSourceContext fetchSourceContext,
             SearchContext context, AggregatorFactory<?> parent, AggregatorFactories.Builder subFactories, Map<String, Object> metaData)
             throws IOException {
         super(name, type, context, parent, subFactories, metaData);
-        this.from = from;
-        this.size = size;
-        this.explain = explain;
-        this.version = version;
-        this.trackScores = trackScores;
-        this.sort = sort;
-        this.highlightBuilder = highlightBuilder;
-        this.storedFieldsContext = storedFieldsContext;
-        this.docValueFields = docValueFields;
-        this.scriptFields = scriptFields;
-        this.fetchSourceContext = fetchSourceContext;
     }
 
     @Override

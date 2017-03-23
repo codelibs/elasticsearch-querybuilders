@@ -21,10 +21,6 @@ package org.codelibs.elasticsearch.search.suggest.completion2x.context;
 
 import com.carrotsearch.hppc.IntHashSet;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.index.DocValuesType;
-import org.apache.lucene.index.IndexableField;
-import org.apache.lucene.spatial.geopoint.document.GeoPointField;
 import org.apache.lucene.util.automaton.Automata;
 import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.Operations;
@@ -37,8 +33,6 @@ import org.codelibs.elasticsearch.common.unit.DistanceUnit;
 import org.codelibs.elasticsearch.common.xcontent.XContentBuilder;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser;
 import org.codelibs.elasticsearch.common.xcontent.XContentParser.Token;
-import org.codelibs.elasticsearch.index.mapper.FieldMapper;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -406,27 +400,36 @@ public class GeolocationContextMapping extends ContextMapping {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         GeolocationContextMapping other = (GeolocationContextMapping) obj;
         if (defaultLocations == null) {
-            if (other.defaultLocations != null)
+            if (other.defaultLocations != null) {
                 return false;
-        } else if (!defaultLocations.equals(other.defaultLocations))
+            }
+        } else if (!defaultLocations.equals(other.defaultLocations)) {
             return false;
+        }
         if (fieldName == null) {
-            if (other.fieldName != null)
+            if (other.fieldName != null) {
                 return false;
-        } else if (!fieldName.equals(other.fieldName))
+            }
+        } else if (!fieldName.equals(other.fieldName)) {
             return false;
-        if (neighbors != other.neighbors)
+        }
+        if (neighbors != other.neighbors) {
             return false;
-        if (!Arrays.equals(precision, other.precision))
+        }
+        if (!Arrays.equals(precision, other.precision)) {
             return false;
+        }
         return true;
     }
 
@@ -597,12 +600,10 @@ public class GeolocationContextMapping extends ContextMapping {
 
     private static class GeoConfig extends ContextConfig {
 
-        private final GeolocationContextMapping mapping;
         private final Collection<String> locations;
 
         public GeoConfig(GeolocationContextMapping mapping, Collection<String> locations) {
             this.locations = locations;
-            this.mapping = mapping;
         }
 
         @Override

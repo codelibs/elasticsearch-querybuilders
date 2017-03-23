@@ -467,14 +467,24 @@ public class Suggest implements Iterable<Suggest.Suggestion<? extends Entry<? ex
 
             @Override
             public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
+                if (this == o) {
+                    return true;
+                }
+                if (o == null || getClass() != o.getClass()) {
+                    return false;
+                }
 
                 Entry<?> entry = (Entry<?>) o;
 
-                if (length != entry.length) return false;
-                if (offset != entry.offset) return false;
-                if (!this.text.equals(entry.text)) return false;
+                if (length != entry.length) {
+                    return false;
+                }
+                if (offset != entry.offset) {
+                    return false;
+                }
+                if (!this.text.equals(entry.text)) {
+                    return false;
+                }
 
                 return true;
             }
@@ -644,8 +654,12 @@ public class Suggest implements Iterable<Suggest.Suggestion<? extends Entry<? ex
 
                 @Override
                 public boolean equals(Object o) {
-                    if (this == o) return true;
-                    if (o == null || getClass() != o.getClass()) return false;
+                    if (this == o) {
+                        return true;
+                    }
+                    if (o == null || getClass() != o.getClass()) {
+                        return false;
+                    }
 
                     Option that = (Option) o;
                     return text.equals(that.text);

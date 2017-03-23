@@ -113,12 +113,18 @@ public class RegexOptions implements ToXContent, Writeable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         RegexOptions that = (RegexOptions) o;
 
-        if (flagsValue != that.flagsValue) return false;
+        if (flagsValue != that.flagsValue) {
+            return false;
+        }
         return maxDeterminizedStates == that.maxDeterminizedStates;
 
     }
