@@ -3,7 +3,7 @@
   <groupId>org.codelibs</groupId>
   <artifactId>elasticsearch-querybuilders</artifactId>
   <packaging>jar</packaging>
-  <version>5.2.1</version>
+  <version>5.2.2-SNAPSHOT</version>
   <name>elasticsearch-querybuilders</name>
   <url>http://fess.codelibs.org/</url>
   <inceptionYear>2009</inceptionYear>
